@@ -1,0 +1,53 @@
+name: Documentation
+
+# MkDocs Material -> GitHub Pages.
+# Valide la construction sur toute branche (y compris depot prive, test en
+# amont) ; ne deploie les Pages que depuis `main` (depot public cible).
+# DECLENCHEMENT MANUEL UNIQUEMENT -- meme consigne d'Egan du 2026-09-02 et
+# meme motif que `ci.yml` : chaque push sur `main` relançait la construction
+# MkDocs et consommait des minutes d'Actions sur un depot prive. La
+# documentation se publie desormais quand on le decide.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Installer MkDocs
+        run: |
+          python -m pip install --upgrade pip
+          pip install mkdocs mkdocs-material mkdocs-git-revision-date-localized-plugin mkdocs-git-authors-plugin
+      - name: Construire le site (strict)
+        run: mkdocs build --strict
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Installer MkDocs
+        run: |
+          python -m pip install --upgrade pip
+          pip install mkdocs mkdocs-material mkdocs-git-revision-date-localized-plugin mkdocs-git-authors-plugin
+      - name: Deploy (gh-pages)
+        run: mkdocs gh-deploy --force

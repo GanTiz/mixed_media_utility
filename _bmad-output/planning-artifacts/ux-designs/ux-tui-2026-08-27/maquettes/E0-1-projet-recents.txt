@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · — aucun projet —                                                  v0.1 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Ouvrir un projet                                                           │
+│                                                                              │
+│    ▸ projet_demo                     ouvert le 26/08 · 3 rushes · 5 lots     │
+│      film_court_2026                 ouvert le 21/08 · 1 rush  · 2 lots      │
+│      tests_calibration               ouvert le 14/08 · 0 rush  · 0 lot       │
+│                                                                              │
+│   ────────────────────────────────────────────────────────────────────────   │
+│                                                                              │
+│      Ouvrir un autre dossier…          Tab, puis le chemin du projet         │
+│                                                                              │
+│      Suppr retire de la liste — le dossier du projet n'est pas touché        │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│ ⏎ ouvrir  ↑↓ naviguer  Suppr retirer  Tab chemin  Q quitter                  │
+└──────────────────────────────────────────────────────────────────────────────┘

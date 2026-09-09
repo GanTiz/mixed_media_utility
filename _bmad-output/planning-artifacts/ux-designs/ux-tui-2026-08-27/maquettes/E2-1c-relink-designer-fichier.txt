@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                         rush_hiver · désigner │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Quel fichier est rush_hiver ?                                              │
+│                                                                              │
+│    ←  …\03_tournage_mai\                                                     │
+│      Fichier              D:\HOKO\Documents\rushes_2026\03_tournage_mai\hd   │
+│   ────────────────────────────────────────────────────────────────────────   │
+│      proxy/                                                     3 fichiers   │
+│      rush_hiver.mov                                                12,4 Go   │
+│    ▸ rush_hiver_v2.mov                                             12,4 Go   │
+│      rush_printemps.mov                                             8,1 Go   │
+│      derushage.csv                                        · pas une source   │
+│      …                                                          1-5 sur 34   │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│   ────────────────────────────────────────────────────────────────────────   │
+│    ⏎  Valider   rush_hiver_v2.mov   12,4 Go                                  │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 34 fichiers · 31 vidéos, 3 ignorés                                           │
+│ Explorateur  ⏎ valider  → entrer  ← parent  Échap rushes                     │
+└──────────────────────────────────────────────────────────────────────────────┘

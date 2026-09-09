@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf · Calibration                                        │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ Écrit ───────────────────────────────────────────────────────────────┐   │
+│   │ ● projet_demo_hp-envy-4520-t…-73881cda_calibration.pdf  1 page       │   │
+│   │                                                                      │   │
+│   │ Chaîne                hp-envy-4520-tiff-600-dpi-auto-corr-off        │   │
+│   │ Pastilles             164            130 treillis + 34 témoins       │   │
+│   │ Emplacement           projet_demo/patches/                           │   │
+│   │                                                                      │   │
+│   │ À imprimer AVEC les planches, puis à scanner UNE fois : c'est        │   │
+│   │ l'atelier Scan qui en tire le profil de cette chaîne.                │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│    ▸ Ouvrir le dossier                                                       │
+│      Générer une autre mire                                                  │
+│      Mettre des lots en planches                                             │
+│      Retour aux ateliers                                                     │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ●  1 page écrite · 164 pastilles · aucun refus                               │
+│ ⏎ choisir  ↑↓ naviguer  Tab journal  Échap ateliers  F1 aide                 │
+└──────────────────────────────────────────────────────────────────────────────┘

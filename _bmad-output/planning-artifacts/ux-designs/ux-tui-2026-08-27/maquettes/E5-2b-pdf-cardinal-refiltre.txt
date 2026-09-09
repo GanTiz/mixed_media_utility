@@ -1,0 +1,85 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf                                  2 lots · 164 frames │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Réglages des planches                                                      │
+│                                                                              │
+│      Orientation          ( ) paysage      (•) portrait                      │
+│      Format · DPI         A4 · 600                                           │
+│      Marge de travail     0            0 · 2 · 5 mm                          │
+│                                                                              │
+│   ── Frames par page ─────────────────────────────────────────────────────   │
+│      ( ) 1    184,0 × 103,5 mm   190,4 cm²   164 pages                       │
+│      ( ) 2●   184,0 × 103,5 mm   190,4 cm²    82 pages                       │
+│      ( ) 3●   126,6 ×  71,2 mm    90,2 cm²    56 pages                       │
+│      ( ) 4     92,7 ×  52,2 mm    48,4 cm²    41 pages                       │
+│    ▸ (•) 8●    90,5 ×  50,9 mm    46,1 cm²    21 pages                       │
+│      ● choix optimal                                                         │
+│                           Valider                                            │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ▲  6 f/page n'existe pas en portrait — ramené à 8                            │
+│ ⏎ sélectionner et Valider  Tab champ  ↑↓ choisir  Échap retour  F1 aide      │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : un peu lourd comme avertissement. Un petit message en bas aurait suffi.
+
+  -> EPIC11-ARB-35 : cartouche supprime, un message en ligne d'etat suffit.
+
+NOTE (2026-09-01, v5 n°2 à 4, portées ici) : tes quatre notes nomment `E5-2` ;
+`E5-2b` est le même écran dans l'autre orientation et prend donc les mêmes
+corrections. Le détail des trois réponses est sous `E5-2` -- ici, ce que cet
+écran-là montre en plus.
+
+  -> LE FOCUS EST DANS LA LISTE, et c'est le partage voulu avec `E5-2` : là-bas
+     le focus est sur le bouton `Valider` (« ⏎ valider »), ici sur l'entrée que
+     le produit a imposée (« ⏎ sélectionner »). Chacun des deux mécanismes neufs
+     de tes notes 2 et 3 se voit donc au moins une fois, et la ligne de
+     raccourcis change avec le champ, comme le veut `DESIGN.md` §4.
+
+     LA LISTE EST CELLE DU PORTRAIT, et elle est plus courte d'un barreau : le
+     vocabulaire v2 du portrait est `1 · 2 · 3 · 4 · 8`. `6 f/page n'existe pas
+     en portrait` -- ce n'est pas un choix de maquette, c'est
+     `page_templates.frames_per_page_vocabulary("portrait", "v2")`, et le motif
+     du retrait est celui que la ligne d'état recopie du cœur
+     (`retired_cardinal_reason`) : même surface par frame qu'à 8, pour 33 % de
+     papier en plus.
+
+     `4 f/page` est retenu et n'a PAS de glyphe : `paysage 4f` rend 72,1 cm² sur
+     les mêmes 41 pages, contre 48,4 cm². C'est exactement le cas que la note 4
+     décrit -- une entrée sans glyphe à cause d'une combinaison de l'autre
+     orientation --, et c'est pour ça que la ligne « ▲ 4 frames paysage est plus
+     optimal » reste : sans elle, l'absence de glyphe sur la ligne retenue serait
+     illisible. La mesure complète est collée sous `E5-2`.
+
+NOTE (2026-09-02, EPIC11-ARB-179) : CET ECRAN ETAIT FAUX, et le paragraphe
+ci-dessus l'est donc devenu.
+
+  -> Il montrait un repli de `6 f paysage` vers `4 f portrait`. La regle tranchee
+     par Egan le 2026-09-02 fait MONTER au cardinal offert immediatement
+     superieur (« on economise le papier ») : le repli correct est `8`, pas `4`.
+     Descendre a `4` coutait 15 feuilles de plus sur un lot de 124 (31 contre 16)
+     pour +5 % de surface par frame.
+     Le coeur disait deja la meme chose : `retired_cardinal_reason("v2", 6,
+     "portrait")` nomme son remplacant, « Utiliser 8 pour la meme surface par
+     frame sur moins de papier ».
+     CE QUE LA CORRECTION EMPORTE : `8` porte le glyphe de choix optimal, donc la
+     ligne de conseil tombe et la demonstration « une entree SANS glyphe a cause
+     de l'autre orientation » quitte cet ecran. Elle n'est pas perdue -- `E5-2` la
+     porte entiere, `paysage 6 f` retenu sans glyphe sous « 8 frames portrait est
+     plus optimal ». Le paragraphe precedent, qui la placait ici, ne vaut plus.
+     LA LIGNE D'ETAT GARDE SA FORME VALIDEE, et c'est un retour du soir.
+
+NOTE (2026-09-02, planche v8, ancre `refiltre-etat-dit`) : « Non, on laisse la ligne
+du bas avec les infos. Pas besoin de nouvelle validation pour ca. »
+
+  -> J'avais propose que cette ligne annonce « cardinal demande, retenu, motif ».
+     REFUSE, et le motif implicite est coherent avec `EPIC11-ARB-56` qu'Egan a
+     lui-meme pose : la ligne d'etat porte des CONSTATS, pas des explications de
+     mecanisme. « retenu 8 : moins de papier » en etait une.
+     La forme validee est donc remise. `EPIC11-ARB-179` n'y change qu'un chiffre --
+     et emporte une clause avec lui : la ligne disait « meme surface qu'a 8 f,
+     ramene a 4 », ou `8` servait a justifier une descente vers `4`. Le repli qui
+     monte retient `8` ; la clause et le cardinal retenu se confondent, et la garder
+     ecrirait deux fois le meme chiffre dans la meme phrase.

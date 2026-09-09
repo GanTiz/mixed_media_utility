@@ -1,0 +1,34 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan                            temps 1 sur 2 · détecter │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Que faut-il détecter ?                                                     │
+│                                                                              │
+│      Source               D:\HOKO\scans\planches_lot25.pdf                   │
+│                                                                              │
+│      Résolution de scan > ·                                requis · dpi      │
+│      Reprendre la mesure  600 dpi       les 8 pages déclarent 600 dpi        │
+│                                                                              │
+│   ── Ce qui sera lu ──────────────────────────────────────────────────────   │
+│                                                                              │
+│      1 PDF · 8 pages · 1,2 Go                                                │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                           Valider                    résolution requise      │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ✕  résolution de scan requise — la détection ne peut pas partir              │
+│ Tab champ  Échap ateliers  F1 aide  Q quitter                                │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE (retour terrain d'Egan, 2026-09-06) : « sur l'ecran de parametrage [scan] une
+fois le chemin specifie il manque un bouton valider. Le seul moyen de valider est
+de faire Enter sur le DPI, pas intuitif. » Meme grief qu'`EPIC11-ARB-158` sur E3-9,
+et la forme en est declinee : `Valider` est une LIGNE DU FORMULAIRE, en bas, avec
+sa mention de refus a droite. Deux ecarts assumes avec E3-9, tous deux mesures :
+elle s'atteint par `Tab` (les fleches font defiler la liste des sources sur cet
+ecran-la), et elle n'a PAS de seconde colonne -- c'est la forme d'E5-2, dont Egan
+a fait retirer la sienne le 2026-09-02. Le pied dit desormais le geste de la ligne
+courante : « ⏎ détecter » n'est annonce que sur `Valider`.

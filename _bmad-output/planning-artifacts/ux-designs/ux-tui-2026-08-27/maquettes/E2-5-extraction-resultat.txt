@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                       rush_01 · 25 fps · 4:12 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ Écrit ───────────────────────────────────────────────────────────────┐   │
+│   │ ● projet_demo_rush_01_25fps     124 frames · 25 fps   · 2,1 Go       │   │
+│   │ ● projet_demo_rush_01_25s3       42 frames · 25/3 fps · 0,7 Go       │   │
+│   │                                                                      │   │
+│   │ Manifest mis à jour             projet_demo/manifest.json            │   │
+│   │ Durée                           2 min 41                             │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│    ▸ Ouvrir le dossier des lots                                              │
+│      Composer les planches de ces lots          (atelier Pdf)                │
+│      Extraire un autre rush                                                  │
+│      Retour aux ateliers                                                     │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ●  2 lots écrits, 166 frames, aucun refus                                    │
+│ ⏎ choisir  ↑↓ naviguer  Tab journal  Échap ateliers  F1 aide                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : parfait aussi surtout le lien avec l'atelier suivant !!!
+
+  -> approbation, rien change.

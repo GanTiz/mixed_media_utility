@@ -1,0 +1,119 @@
+# Politique de bande passante Git LFS -- pose le 2026-09-03, apres saturation
+# du quota gratuit (10 Go) en deux jours, puis revise le meme jour.
+#
+# CE FICHIER EST VERSIONNE, donc il vaut pour TOUT clone : session cloud,
+# runner de CI, machine d'Egan. C'est sa raison d'etre -- un reglage local
+# aurait ete a reposer dans chaque conteneur, et un conteneur neuf est
+# exactement ce qui a coute les 10 Go.
+#
+# ## Pourquoi `projects/**` et non plus `*`
+#
+# La premiere redaction excluait TOUT (`fetchexclude = *`). C'etait la bonne
+# reponse tant que `projects/` etait versionne, et c'est devenu la mauvaise des
+# lors qu'Egan a tranche de ne plus le versionner : elle bloquait aussi les
+# medias de `tests/`, que la CI et les bancs doivent au contraire recevoir
+# automatiquement.
+#
+# `projects/**` reste exclu **pour toujours** : ces objets ne sont plus dans
+# `HEAD`, mais ils restent dans l'HISTORIQUE. Un `git checkout` d'un commit
+# d'avant le 2026-09-03, ou d'une branche restee en arriere, les
+# retelechargerait -- 2 217 Mo, soit un cinquieme du quota mensuel, pour un
+# dossier que personne ne lit. Cette ligne est la seule chose qui l'empeche.
+#
+# ## Ce qui descend donc automatiquement, et c'est voulu
+#
+#     tests/fixtures/scans/**     PDF de scans reels      25 Mo
+#     tests/TEST_FILE.mp4         le rush reel          2,75 Mo
+#
+# **28 Mo au total**, mesures sur l'arbre reel le 2026-09-09 -- quatre objets.
+# `tests/fixtures/rasters/**` figurait ici jusqu'a ce jour pour 23 Mo : retire,
+# ses deux TIFF etant des doublons d'OID de `tests/fixtures/lots/` que ne lisait
+# aucun banc.
+#
+# ## Les objets LFS HERITES, et pourquoi ils sont exclus depuis le 2026-09-09
+#
+# Un objet entre en LFS avant la revision du 2026-09-03 y reste :
+# `.gitattributes` ne le route plus, mais un pointeur deja commite reste un
+# pointeur. Ils DESCENDENT quand meme -- c'est ce qui rendait le total faux a
+# chaque fois qu'on l'ecrivait ici (63, puis 86, puis 92 Mo).
+#
+# Sous `tests/` il n'en reste AUCUN : `EPIC11-ARB-247` a normalise les quatre
+# petits rushes le 2026-09-06, et `synthetic_review_video.mp4` -- le dernier,
+# 2,1 Ko, lu par aucun banc -- a ete retire le 2026-09-09.
+#
+# Les DOUZE autres vivent hors `tests/` et pesent **41,9 Mo** :
+#
+#     _bmad-output/test-artifacts/**   onze PDF et MP4          16,6 Mo
+#     docs/tuto_TEST_FILE_TEST_FILE_12p5_planches.pdf           25,3 Mo
+#
+# Mesure du 2026-09-09 : AUCUN banc ne les lit -- le seul fichier de
+# `test-artifacts/` qu'un banc atteint est `cible_lut_v3.**json**`, du texte --
+# et AUCUN n'est publie : `scripts/depot_public.py` exclut `_bmad-output/` et
+# nomme le PDF tuto explicitement. Ils descendaient donc a chaque conteneur
+# neuf pour rien.
+#
+# Les exclure du fetch ferme un second defaut, celui-la documente dans
+# `CLAUDE.md` : ces douze-la sont des orphelins de leurs attributs, donc le
+# filtre `clean` ne les reconvertit PAS en pointeur et un `git add` y indexe le
+# binaire BRUT -- 26 Mo de PDF nu mesures le 2026-09-03. Un fichier jamais
+# materialise reste un pointeur de 133 octets : `git add` dessus redevient un
+# non-evenement.
+#
+# ## Et ce qui NE descend pas, alors qu'il est bien dans le depot
+#
+# `tests/fixtures/lots/**` porte un LOT COMPLET de terrain -- les 13 frames du
+# lot `TEST_FILE_12p5` et le PDF de son scan, **178 Mo**. Il est versionne, donc
+# partageable et reproductible ; il n'est pas tire par defaut, parce que 178 Mo
+# par conteneur neuf, c'est la saturation en trois jours. **C'est ici, et non
+# dans `.gitattributes`, que le "seuil" s'exprime** : git n'apparie que des
+# chemins, jamais des tailles. Pour l'obtenir :
+#
+#     git lfs pull --include="tests/fixtures/lots/**" --exclude=""
+#
+# Meme regime pour `tests/fixtures/rushes/reels/**` : le rush REEL 4K du terrain
+# (64 Mo, h264 3840x2160 a 25 im/s), a cote duquel les cinq rushes de synthese
+# pesent 200 Ko et vivent, eux, en git ORDINAIRE depuis `EPIC11-ARB-247` : ils
+# sont donc la dans tout clone, sans LFS et sans reparation. Il sert a
+# reproduire des frames depuis une vraie source plutot qu'une fabrique :
+#
+#     git lfs pull --include="tests/fixtures/rushes/reels/**" --exclude=""
+#
+# A ce prix -- 86 Mo par clone -- 10 Go de quota mensuel valent plus de 115
+# clones complets : la bande passante cesse d'etre une ressource qu'on sature
+# par accident.
+#
+# ## POURQUOI `--exclude=""`, et ce que sa premiere redaction coutait
+#
+# Les trois commandes ci-dessus portaient `--include=` SEUL jusqu'au
+# 2026-09-07. Elles ne tiraient RIEN. `--include` remplace `lfs.fetchinclude`
+# pour la commande ; il ne touche pas a `lfs.fetchexclude`, qui continue de
+# s'appliquer par-dessus depuis ce fichier-ci. Un chemin nomme dans les deux
+# reste exclu -- et c'est le cas de tout ce que ce paragraphe explique comment
+# obtenir.
+#
+# Mesure du 2026-09-07 (git-lfs 3.4.1), trois appels de suite, seule la
+# troisieme ligne differe de la deuxieme :
+#
+#     -I "tests/**"                            -> 0,22 s, RIEN
+#     -I "tests/fixtures/lots/**,.../reels/**" -> 0,04 s, RIEN
+#     ... le meme, plus -X ""                  -> 15,2 s, 243 Mo
+#
+# Et l'echec est MUET des deux cotes : `git lfs pull` affiche la meme chose
+# quand il tire 243 Mo et quand il ne fait rien -- meme famille que
+# « `git lfs fetch` ne dit rien quand il ne fait rien » dans CLAUDE.md. Le
+# verdict se lit sur la TAILLE du fichier apres coup, jamais sur la sortie.
+#
+# Ce qui rendait la faute durable : la frontiere qui garde ce paragraphe
+# (`test_le_lfsconfig_dit_COMMENT_materialiser_ce_qui_est_exclu`) mesurait la
+# PRESENCE d'une issue, pas son EFFET -- un `assert "git lfs pull --include="
+# in texte` que la forme inerte satisfaisait parfaitement. Elle mesure
+# desormais que chaque commande porte AUSSI son exclusion vide.
+#
+# ## Si un objet de `projects/` est malgre tout necessaire
+#
+# L'exclusion n'est pas un blocage sec : elle se contourne explicitement, par
+# chemin, et seulement pour ce dont on a besoin.
+#
+#     git lfs pull --include="projects/chendj-mat/scans/scan-WIN/**" --exclude=""
+[lfs]
+	fetchexclude = projects/**,tests/fixtures/lots/**,tests/fixtures/rushes/reels/**,_bmad-output/test-artifacts/**,docs/tuto_TEST_FILE_TEST_FILE_12p5_planches.pdf

@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · — aucun projet —                                                  v0.1 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Ouvrir un projet                                                           │
+│                                                                              │
+│    ▸ projet_demo                            26/08   3R · 5L · 8P · 2S · 1M   │
+│      chendj_mat                             21/08   1R · 2L · 4P · 1S · ·M   │
+│      tests_calibration                      14/08   0R · 0L · 0P · 0S · 0M   │
+│                                                                              │
+│   ────────────────────────────────────────────────────────────────────────   │
+│                                                                              │
+│      Ouvrir un autre dossier…                                                │
+│                                                                              │
+│      Suppr retire de la liste — le dossier du projet n'est pas touche        │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ R rushes · L lots · P planches · S scans · M masters                         │
+│ ⏎ ouvrir  ↑↓ liste  Suppr retirer  Tab explorateur  F1 aide  Q quitter       │
+└──────────────────────────────────────────────────────────────────────────────┘

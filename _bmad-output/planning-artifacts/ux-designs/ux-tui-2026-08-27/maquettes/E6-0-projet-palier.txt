@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Projet                       3 rushes · 5 lots · 12,7 Go │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Que faire sur projet_demo lui-même ?                                       │
+│                                                                              │
+│    ▸ Gestion des médias                                                      │
+│      Gérer les médias du projet : ajout, relink et suppression               │
+│                                                                              │
+│      Profil de calibration par défaut                                        │
+│      Poser le profil que les scans utiliseront sans le répéter               │
+│                                                                              │
+│      Reconstruire le projet depuis des QR lus                                │
+│      Rebâtir un project.json depuis les payloads de page                     │
+│                                                                              │
+│   ────────────────────────────────────────────────────────────────────────   │
+│                                                                              │
+│      Profil par défaut    mire-hp-envy-4520-26aout.json                      │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 3 rushes · 5 lots · 20 objets · 801 fichiers · 12,7 Go · 4 écarts            │
+│ ⏎ choisir  ↑↓ naviguer  Échap ateliers  F1 aide  Q quitter                   │
+└──────────────────────────────────────────────────────────────────────────────┘

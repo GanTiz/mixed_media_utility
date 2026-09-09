@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction          plan séquence 12.mov · 25 fps · 4:12 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ À déclarer ──────────────────────────────────────────────────────────┐   │
+│   │ Nom du fichier           plan séquence 12.mov                        │   │
+│   │ Chemin complet           D:\HOKO\Documents\rushes\2026\              │   │
+│   │                          03_tournage_mai\hd\plan séquence 12.mov     │   │
+│   │ Codec · format de pixel  prores_ks · yuv422p10le                     │   │
+│   │ Cadence source           25 fps                        (exacte 25/1) │   │
+│   │ Résolution               1920 × 1080 · 4:12                          │   │
+│   │ Timecode de départ       00:00:04:12                                 │   │
+│   │ Espace couleur           bt709                                       │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      Déclarer le rush                                                        │
+│    ▸ Désigner un autre fichier                                               │
+│      Annuler                                                                 │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 4e rush du projet — rien n'a encore été écrit                                │
+│ ⏎ valider  ↑↓ choisir  Échap retour  F1 aide                                 │
+└──────────────────────────────────────────────────────────────────────────────┘

@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                        rush_hiver · retrouver │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   La recherche s'est arrêtée                                                 │
+│                                                                              │
+│   ┌ Refus ───────────────────────────────────────────────────────────────┐   │
+│   │ ✕ candidats-multiples                                                │   │
+│   │                                                                      │   │
+│   │ 3 fichiers de 03_tournage_mai/ vérifient les trois critères          │   │
+│   │ d'identité de rush_hiver : nom de base, 3 012 frames, timecode.      │   │
+│   │                                                                      │   │
+│   │    hd\rush_hiver.mov                       12,4 Go                   │   │
+│   │    hd\rush_hiver_v2.mov                    12,4 Go                   │   │
+│   │    proxy\rush_hiver.mov                     1,1 Go                   │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│    ▸ Le désigner à la main         choisir lequel des trois                  │
+│      Chercher dans un autre dossier                                          │
+│      Revenir à la liste des rushes                                           │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ✕  candidats-multiples · 3 candidats · le manifest est inchangé              │
+│ ⏎ choisir  ↑↓ naviguer  Échap rushes  F1 aide                                │
+└──────────────────────────────────────────────────────────────────────────────┘

@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan                       détection · 24 pages · 2 lots │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Ce que la détection a trouvé — rien n'est encore écrit                     │
+│                                                                              │
+│   ┌ Lots reconnus ───────────────────────────────────────────────────────┐   │
+│   │ ● lot_25fps          8 pages / 8      124 frames / 124    complet    │   │
+│   │ ● lot_12p5           4 pages / 4       62 frames / 62     complet    │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      En attente de lecture   ·  aucun fichier non rattaché                   │
+│                                                                              │
+│    ▸ Écrire les frames de ces 2 lots                                         │
+│      Reprendre avec d'autres fichiers                                        │
+│      Annuler                                                                 │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ●  Document de détection écrit : versions/detection/26aout_1502.json         │
+│ ⏎ choisir  ↑↓ naviguer  Tab journal  Échap ateliers  F1 aide                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : ok
+
+  -> approbation, rien change.

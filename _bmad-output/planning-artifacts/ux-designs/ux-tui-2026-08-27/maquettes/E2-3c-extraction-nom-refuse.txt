@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                       rush_01 · 25 fps · 4:12 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ À écrire — édition des noms ─────────────────────────────────────────┐   │
+│   │ Lots créés               2                                           │   │
+│   │ Frames écrites           124  +  42        =  166                    │   │
+│   │ Espace disque            ~ 2,8 Go                    (majorant)      │   │
+│   │                                                                      │   │
+│   │ Noms produits          > projet_demo_rush_01_25fps_hiver_2█  ✕ 50/48 │   │
+│   │                          projet_demo_rush_01_25s3            24/48   │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      ✕ Le nom est trop long : 50 caractères pour 48 admis.                   │
+│                                                                              │
+│      Retirez 2 caractères, ou Ctrl+R pour remettre le nom proposé.           │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ✕  50 caractères sur 48 admis — l'action « Extraire » reste inaccessible     │
+│ ⌫ effacer  Ctrl+R remettre  Tab les choix  Échap annuler                     │
+└──────────────────────────────────────────────────────────────────────────────┘

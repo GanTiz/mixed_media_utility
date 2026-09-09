@@ -1,0 +1,31 @@
+{
+  "_comment": "Sortie d'un build ffprobe qui, contrairement au 6.1.1 mesure pour ce projet, EMET les sentinelles litterales au lieu d'omettre les cles: 'unknown', 'unspecified', 'reserved', 'N/A' et la chaine vide. sample_aspect_ratio vaut '0:1', forme que ffprobe rend pour un ratio non renseigne. Toutes ces formes doivent normaliser vers la meme absence que la cle manquante, sans quoi 'unknown' serait affiche comme une valeur puis persiste comme une colorimetrie declaree.",
+  "streams": [
+    {
+      "index": 0,
+      "codec_name": "mpeg2video",
+      "codec_type": "video",
+      "width": 720,
+      "height": 576,
+      "sample_aspect_ratio": "0:1",
+      "display_aspect_ratio": "0:1",
+      "pix_fmt": "yuv420p",
+      "color_range": "unknown",
+      "color_space": "unspecified",
+      "color_transfer": "reserved",
+      "color_primaries": "N/A",
+      "bits_per_raw_sample": "",
+      "r_frame_rate": "25/1",
+      "avg_frame_rate": "25/1",
+      "time_base": "1/25",
+      "duration": "2.000000",
+      "nb_frames": "50"
+    }
+  ],
+  "format": {
+    "filename": "rush_legacy.mpg",
+    "nb_streams": 1,
+    "format_name": "mpeg",
+    "duration": "2.000000"
+  }
+}

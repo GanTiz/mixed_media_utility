@@ -1,0 +1,982 @@
+name: CI
+
+# DECLENCHEMENT MANUEL ET RELEASES UNIQUEMENT -- consigne d'Egan du 2026-09-02.
+#
+# Ce workflow partait sur `push: branches: ["**"]` plus `pull_request`, donc sur
+# CHAQUE push de CHAQUE branche, cinq jobs a chaque fois. Avec plusieurs agents
+# qui poussent en continu -- 149 runs mesures en 28 heures --, il a consomme les
+# 3000 minutes d'Actions incluses du compte. GitHub a ensuite refuse de demarrer
+# les jobs (« The job was not started because recent account payments have
+# failed or your spending limit needs to be increased »), ce qui a produit des
+# centaines de runs rouges a 0 ms facturee : des echecs qui ne coutaient plus
+# rien mais ne validaient plus rien non plus.
+#
+# Les minutes ne sont comptees que sur un depot PRIVE. Sur un depot public, les
+# runners standard sont gratuits et sans plafond de minutes.
+#
+# CE N'EST PAS UNE OPTION D'OUTILLAGE, et la precision vient d'une revue de
+# l'agent d'`oc/epic-11-TUI` le 2026-09-02 : la premiere redaction presentait le
+# passage en public comme une simple « piste a arbitrer », ce qu'une relecture
+# pressee pourrait prendre pour un feu vert. Ce depot porte des rushes de
+# tournage et des projets clients (`projects/chendj-mat/`, ~1,4 Go en Git LFS) ;
+# rendre CE depot-ci public les exposerait, historique compris, et l'arbitrage
+# appartient a Egan seul.
+#
+# Le depot public est un objet different, et il EXISTE depuis le 2026-09-06 :
+# `GanTiz/mixed_media_utility` (ce depot-ci a ete renomme `-dev` le meme jour),
+# renseigne dans `scripts/public-repo.env`. C'est lui qui porte une CI gratuite
+# -- les minutes ne sont comptees que sur un depot prive --, sans exposer autre
+# chose que le code publie. Il reste vide tant que la question de l'historique
+# LFS n'est pas tranchee.
+#
+# Ce qui reste :
+#   * `workflow_dispatch` -- on la lance deliberement, depuis l'onglet Actions
+#     ou par `gh workflow run ci.yml` ;
+#   * `push: tags: ["v*"]` -- une release reste validee avant publication, le
+#     meme tag declenchant `publish.yml`.
+#   * `workflow_call` -- `publish.yml` l'appelle comme PORTE de release, pour
+#     que rien ne soit publie sans avoir ete valide. Voir la note d'ordre dans
+#     `publish.yml` : sans cette porte, un tag lance les deux workflows EN
+#     PARALLELE et une release peut partir sur un arbre rouge.
+on:
+  workflow_dispatch:
+    inputs:
+      lot:
+        description: "Quels jobs jouer"
+        required: false
+        default: tout
+        type: choice
+        options: [tout, garde-installation, tests]
+  workflow_call:
+  # LE `push: tags` A ETE RETIRE le 2026-09-08 (triage de la revue 8.10,
+  # finding C6 de la couche 1 ; arbitrage d'Egan par invite le meme jour).
+  #
+  # Il faisait tourner ci.yml DEUX FOIS sur un seul tag `v*` : une fois par
+  # lui-meme, une fois par `publish.yml` dont le job `valider` fait
+  # `uses: ./.github/workflows/ci.yml` (publish.yml:105-107) et dont tous les
+  # autres jobs dependent par `needs:`. La porte de release restait donc
+  # entiere -- c'est `publish.yml` qui la tient, pas ce declencheur -- pendant
+  # que la matrice a quatre environnements se payait deux fois.
+  #
+  # Ce que ca ne change PAS, et c'est ce qui rend le retrait sur : un tag `v*`
+  # declenche toujours `publish.yml`, qui appelle toujours ce workflow en
+  # entier AVANT toute construction. Rien ne se publie sans lui.
+
+# POURQUOI UN CHOIX DE LOT, et il repond a une question payee le 2026-09-09 :
+# « pourra-t-on corriger et relancer uniquement le job bloque ? »
+#
+# La reponse de GitHub est NON, et elle est structurelle : **rejouer un job
+# rejoue le fichier de workflow du commit d'ORIGINE**, jamais celui qu'on
+# vient de corriger. « Re-run » garde le meme `GITHUB_SHA` et la meme
+# definition -- c'est voulu, pour que rejouer soit reproductible. Un libelle
+# de runner fautif ne se repare donc jamais par un rejeu : il faut un
+# declenchement NEUF, apres que la correction a atterri sur la reference.
+#
+# Ce qui SE peut, en revanche, c'est ne declencher que le lot utile. Sans ce
+# choix, verifier une correction d'une ligne dans la garde d'installation
+# repayait les trois matrices de tests -- une trentaine de minutes, pour une
+# question a laquelle une minute de macOS repond.
+#
+# `workflow_call` n'a deliberement PAS cet argument : `publish.yml` appelle ce
+# workflow comme PORTE de release, et une porte qui pourrait ne jouer qu'une
+# moitie n'est plus une porte. Le defaut vaut donc `tout` des deux cotes.
+
+# Permet de tester le packaging en amont (depot prive) avant la release
+# publique : ce workflow tourne sur les deux depots de facon identique.
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Tests (Python ${{ matrix.python-version }})
+    # `inputs.lot == ''` N'EST PAS DECORATIF, et c'est le trou que cette
+    # clause ferme (mesure le 2026-09-09, sur question d'Egan « rien ne bloque
+    # la publication si les tests echouent ? »).
+    #
+    # Sous `workflow_call`, le contexte `inputs` est celui du workflow APPELE,
+    # et `workflow_call:` ne declare AUCUNE entree ici -- `inputs.lot` y vaut
+    # donc la chaine vide. `github.event_name`, lui, est celui de l'APPELANT.
+    # Sur un tag `v*`, l'appelant est un `push` : la premiere clause suffit et
+    # les tests jouent. Mais sur un `workflow_dispatch` de `publish.yml` -- la
+    # repetition TestPyPI depuis `-dev` --, `event_name` vaut
+    # `workflow_dispatch` ET `inputs.lot` est vide : les deux autres clauses
+    # tombent, ce job est SAUTE, et un job saute ne fait pas echouer son
+    # appelant. `valider` rendait donc vert SANS avoir joue un seul test, et
+    # `publish` televersait sur TestPyPI derriere.
+    #
+    # La clause vide ne peut que faire JOUER les tests plus souvent, jamais
+    # moins : un lot explicitement demande porte une valeur non vide et
+    # continue d'ecarter ce qu'il ecarte.
+    if: >-
+      ${{ (github.event_name != 'workflow_dispatch')
+          || (inputs.lot == '') || (inputs.lot == null)
+          || (inputs.lot == 'tout') || (inputs.lot == 'tests') }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Les frontieres de perimetre des stories comparent l'historique a un
+          # baseline LITTERAL (`16f8fb3` pour 5.28, et d'autres). Un clone
+          # superficiel -- le defaut d'`actions/checkout` -- ne les contient
+          # pas : `git log <baseline>..HEAD` sort en erreur 128 et 26 tests
+          # echouent sur une CalledProcessError illisible. Mesure du
+          # 2026-08-31 : meme symptome en session, gueri par
+          # `git fetch --unshallow` (57 -> 1410 commits), et les 26 passent.
+          fetch-depth: 0
+          # `lfs: true` a ete RETIRE le 2026-09-03 : il tirait TOUT le LFS de
+          # la branche -- 718 Mo mesures sur `main` -- pour un seul fichier de
+          # 2,9 Mo. Quatorze runs epuisaient le quota mensuel de 10 Go, et il y
+          # en a eu 231. Voir tests/unit/test_politique_lfs.py.
+          lfs: false
+      # Le seul objet LFS dont la suite a besoin, tire PAR CHEMIN : 2,9 Mo au
+      # lieu de 718. Sans lui, `tests/TEST_FILE.mp4` vaut 132 octets et
+      # test_color_calibration.py::test_aller_retour_nominal_sur_le_rush_reel
+      # echoue sur << moov atom not found >>.
+      #
+      # `continue-on-error` parce qu'un quota LFS epuise n'est PAS un defaut du
+      # code : le job doit alors nommer la cause plutot que rougir.
+      # LES BINAIRES EXTERNES DU PRODUIT -- ajoute le 2026-09-08, sur le run
+      # 34197301716 : `ffmpeg` n'est PAS dans l'image `ubuntu-latest`, et les
+      # trois jobs sont morts au meme test, de facon deterministe :
+      #
+      #   EncoderUnavailableError: Binaire ffmpeg introuvable dans le PATH
+      #
+      # Ce n'est pas une commodite de banc : `scripts/install.sh` installe
+      # ffmpeg pour l'utilisateur, et la documentation le declare prerequis.
+      # Une CI qui ne l'a pas mesure le produit dans un etat ou aucun
+      # utilisateur ne se trouve. `ffprobe` vient du meme paquet.
+      #
+      # `tests/unit/test_deux_distributions.py` mesure que ce que le produit
+      # cherche dans le PATH est bien ce que la CI installe, en LISANT les
+      # defauts declares dans `src/` plutot qu'en les recopiant ici.
+      - name: Installer les binaires externes du produit
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          ffmpeg -version | head -1
+          ffprobe -version | head -1
+      # TOUT CE QU'UN CLONE ORDINAIRE RECOIT, et pas un fichier choisi a la
+      # main -- corrige le 2026-09-08 sur le run 34199064637, ou le job 3.11
+      # est mort apres 4 387 verts sur :
+      #
+      #   PdfIngestError: Document PDF inexploitable: .../Page calibration HP
+      #   ENVY La Seyne.pdf (PDFium: Data format error)
+      #
+      # Ce PDF est un objet LFS de `tests/fixtures/scans/`, que l'ancien
+      # `--include="tests/TEST_FILE.mp4"` ne tirait pas : le banc lisait un
+      # POINTEUR de 133 octets. C'est la panne que CLAUDE.md decrit mot pour
+      # mot -- « un pointeur ne leve aucune erreur, le banc echoue plus loin
+      # sur un message de decodage incomprehensible ».
+      #
+      # `git lfs pull` NU est borne par `.lfsconfig`, qui exclut deja du fetch
+      # `projects/**`, `tests/fixtures/lots/**` (178 Mo) et
+      # `tests/fixtures/rushes/reels/**` (64 Mo). La CI recoit donc exactement
+      # ce que recoit un utilisateur qui clone -- ~53 Mo --, ce qui est aussi
+      # le seul etat qu'elle a un interet a mesurer. La regle de CLAUDE.md
+      # visait `lfs: true` du checkout, qui tirait 718 Mo par run ; elle n'est
+      # pas contournee ici, elle est respectee par `.lfsconfig`.
+      # LES OBJETS LFS SE CACHENT, sans quoi le prix se paie a CHAQUE run.
+      # Ils sont adressables par contenu : un cache perime ne peut pas mentir,
+      # il peut seulement etre incomplet -- et ce qui manque est alors tire.
+      # C'est ce qui rend abordable de materialiser AUSSI les deux arbres que
+      # `.lfsconfig` exclut du fetch par defaut (voir l'etape suivante).
+      - name: Cache des objets LFS
+        uses: actions/cache@v4
+        with:
+          path: .git/lfs/objects
+          # LA CLE PORTE LE JEU DE FIXTURES, PAS LE COMMIT. Avec
+          # `lfs-${{ github.sha }}`, chaque commit ouvrait une entree NEUVE :
+          # les trois jobs de la matrice partent en parallele, aucun n'a encore
+          # ecrit le cache, donc les TROIS manquaient et tiraient 291 Mio
+          # chacun -- 874 Mio par run froid. Les pointeurs LFS sont lus ICI,
+          # avant la materialisation : leur contenu EST l'empreinte des objets,
+          # donc la cle ne bouge que si le jeu de fixtures bouge, c'est-a-dire
+          # quasiment jamais. Le `restore-keys` reste le filet : un cache
+          # adressable par contenu ne peut pas mentir, seulement etre
+          # incomplet, et ce qui manque est alors tire.
+          key: lfs-${{ hashFiles('tests/TEST_FILE.mp4', 'tests/fixtures/scans/**', 'tests/fixtures/lots/**/*.tiff', 'tests/fixtures/lots/**/*.pdf', 'tests/fixtures/rushes/reels/**') }}
+          restore-keys: |
+            lfs-
+      - name: Materialiser les objets LFS d'un clone ordinaire
+        continue-on-error: true
+        run: |
+          git lfs install --local
+          git lfs pull || {
+            echo "::warning::git lfs pull a echoue -- quota de bande passante"
+            echo "::warning::epuise ? les fixtures resteront des pointeurs."
+          }
+          # ... PUIS LES DEUX ARBRES QUE `.lfsconfig` EXCLUT DU FETCH.
+          #
+          # `fetchexclude` porte `tests/fixtures/lots/**` (178 Mo) et
+          # `tests/fixtures/rushes/reels/**` (64 Mo) : c'est une politique de
+          # BANDE PASSANTE pour les clones humains, pas une declaration que
+          # personne n'en a besoin. Trois bancs les lisent, et ils sont rouges
+          # sur les trois jobs du run 34200882803 -- un PDF de scan lu comme
+          # pointeur (`PDFium: Data format error`) et deux rushes a 133 octets.
+          # `EPIC11-ARB-241` interdit de les faire sauter : un pointeur ROUGIT.
+          #
+          # `--exclude=""` est indispensable et son absence est MUETTE :
+          # `--include` ne remplace que `fetchinclude`, `fetchexclude`
+          # continuant de s'appliquer par-dessus. Mesure du 2026-09-07 dans
+          # `.lfsconfig` : sans lui, 0,04 s et RIEN ; avec lui, 15,2 s et
+          # 243 Mo. Le cache ci-dessus fait que ce prix se paie une fois.
+          git lfs pull \
+            --include="tests/fixtures/lots/**,tests/fixtures/rushes/reels/**" \
+            --exclude="" || {
+            echo "::warning::les arbres exclus de .lfsconfig n'ont pas pu etre"
+            echo "::warning::materialises -- trois bancs de terrain rougiront."
+          }
+          # Le verdict se lit sur la TAILLE, jamais sur la sortie de la
+          # commande : `git lfs pull` ne dit rien quand il ne fait rien.
+          # LA SONDE COMPTE, ET SON DERNIER TOUR NE TUE PLUS L'ETAPE.
+          #
+          # Defaut mesure le 2026-09-09 sur la premiere CI publique : le
+          # `[ ... ] && echo` rend FAUX sur un fichier sain, donc la boucle
+          # rendait 1 sur son dernier tour et `bash -e` tuait l'etape -- avant
+          # le `ls`, et sans un mot. L'etape etant `continue-on-error`, elle
+          # affichait « erreur » en permanence : une alarme qui crie toujours
+          # n'est plus lue, et c'est ainsi qu'un VRAI defaut passerait.
+          #
+          # Une heure a ete perdue a croire que le LFS etait la cause des
+          # 101 rouges de ce run, alors que la sonde n'avait trouve AUCUN
+          # pointeur -- elle n'avait simplement jamais pu le dire.
+          restants=0
+          for f in $(git lfs ls-files -n); do
+            [ -f "$f" ] || continue
+            t=$(stat -c%s "$f")
+            if [ "$t" -lt 500 ]; then
+              echo "::warning::POINTEUR $f ($t o)"
+              restants=$((restants + 1))
+            fi
+          done
+          echo "pointeurs restants : ${restants}"
+          ls -l tests/TEST_FILE.mp4
+
+      # LE DIAGNOSTIC DE L'ENVIRONNEMENT VIDEO, pose le 2026-09-09 apres un run
+      # ou 83 rouges portaient sur ffprobe -- « Sortie ffprobe illisible » sur
+      # des fichiers dont les octets sont IDENTIQUES a ceux qui passent en
+      # local, sous la MEME version de ffprobe (6.1.1-3ubuntu5).
+      #
+      # On ne devine pas un environnement, on le fait parler : quel binaire
+      # repond, d'ou il vient, et ce qu'il rend sur une fixture temoin. Sans
+      # ca, chaque hypothese coute une course de quarante minutes.
+      - name: Diagnostic de l'environnement video
+        continue-on-error: true
+        run: |
+          echo "--- quel ffprobe repond, et d'ou ---"
+          command -v ffprobe ffmpeg || true
+          ffprobe -version | head -2
+          echo "--- ce qu'il rend sur une fixture TEMOIN, en git ORDINAIRE ---"
+          t=tests/fixtures/rushes/rush_test_16x9_1920x1080_25fps.mp4
+          ls -l "$t"
+          md5sum "$t"
+          echo "sortie brute (200 premiers octets) :"
+          ffprobe -v quiet -print_format json -show_streams "$t" | head -c 200
+          echo
+          echo "code de sortie : $?"
+          echo "--- et son stderr, que le produit ne montre pas ---"
+          ffprobe -print_format json -show_streams "$t" 2>&1 >/dev/null | head -20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      # `.[test]` ET NON `pytest` SEUL, et ce n'est pas un confort. L'extra
+      # porte `hatchling`, sans lequel `test_deux_distributions.py` SAUTE ses
+      # huit controles de roue -- ceux qui verifient que les deux roues ne
+      # livrent aucun fichier en commun, que chacune declare la commande que
+      # `pip` posera, et que `mmu-cli` ne porte aucun chemin `tui/`.
+      #
+      # Le saut est structurel et un garde mesure que `hatchling` reste
+      # DECLARE dans les extras. Mais rien ne mesurait que la CI l'INSTALLE :
+      # la declaration existait, la CI ne s'en servait pas, et les huit
+      # controles sautaient en silence en restant verts. Mesure du 2026-09-07,
+      # revue 8.9 couche 1 : les huit sautent ici, donc la seule verification
+      # de la scission en deux distributions ne tournait nulle part.
+      # LES DEUX DISTRIBUTIONS, et l'ORDRE compte : `mmu-tui` epingle
+      # `mmu-cli==0.1.0`, qui n'est pas encore sur l'index public. Installe
+      # seul, il part chercher cette version sur PyPI et echoue
+      # (« No matching distribution found for mmu-cli==0.1.0 » -- mesure du
+      # 2026-09-08 en environnement jetable). Installe APRES le editable de la
+      # racine, pip resout l'epingle sur la distribution deja presente.
+      #
+      # Pourquoi installer la TUI plutot que d'ecarter ses tests : sans
+      # `textual`, `tests/unit/test_raccords_du_nommage_des_cadences.py`
+      # importe `mixed_media_utility.tui` et rend une ERREUR de collecte --
+      # run 34196942658, `ModuleNotFoundError: No module named 'textual'`,
+      # et `-x` a arrete la suite entiere dessus. L'ecarter aurait rendu la
+      # CI verte en cessant de mesurer la moitie du produit ; l'installer
+      # mesure le produit tel qu'il est distribue.
+      #
+      # `textual` n'est PAS ajoute a un extra de `mmu-cli` : il appartient a
+      # la zone TUI, et `test_contrat_de_dependances.py` mesure cette
+      # frontiere de zone. C'est la DISTRIBUTION qui s'installe, pas le
+      # paquet qui se recopie.
+      - name: Installer les dependances core
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[test]
+          pip install -e ./packaging/mmu-tui
+      # Pas de `--ignore=tests/unit/gui` : ce filtre par CHEMIN supposait que
+      # tout test exigeant une dependance optionnelle vit dans ce dossier.
+      # C'etait faux pour OpenCV -- 31 fichiers hors du dossier importent `cv2`,
+      # ce que EPIC8-ARB-1 corrige a la racine en faisant d'OpenCV une
+      # dependance de base.
+      #
+      # RECTIFICATION (revue du 2026-08-31) : la premiere redaction ajoutait
+      # « et 4 important PySide6 ». C'ETAIT FAUX -- les trois couches de revue
+      # l'ont trouve independamment. Ces quatre fichiers (`test_*_previz.py`)
+      # CITENT le nom en litteral de chaine, dans les listes d'imports interdits
+      # de leurs propres frontieres ; ils sont collectes et passent sans Qt. Le
+      # filtre ecarte donc aujourd'hui le MEME ensemble que l'ancien `--ignore`.
+      # Sa superiorite est ailleurs : il ne repose plus sur une hypothese de
+      # chemin, et il est mesure par
+      # `tests/unit/test_selection_par_dependance.py`.
+      # AUCUN BANC N'EST ECARTE ICI, ET C'EST LE RESULTAT D'UNE MESURE
+      # PLUTOT QUE D'UN RENONCEMENT.
+      #
+      # Ce bloc a porte jusqu'a SIX `--ignore`, pour les bancs qui rougissent
+      # sur le depot public : `EPIC11-ARB-268` y laisse `_bmad-output/` hors de
+      # l'orphelin, et une famille de bancs garde le perimetre de sa story
+      # contre un commit ecrit en dur, qu'un historique orphelin ne portera
+      # JAMAIS. Les six sont tombes un par un, chacun par un mecanisme qui ne
+      # DERIVE pas -- c'est ce qui compte, une liste ecrite ici derivant des
+      # qu'un banc neuf lit un document de plus, sans que rien ne le dise :
+      #
+      #   * quatre bancs d'archive s'ecartent seuls a la collecte
+      #     (`tests/conftest.py`, `_archives_absentes`), sur l'AST de leur
+      #     propre source ;
+      #   * les 27 rouges de perimetre se sautent par REGIME
+      #     (`tests/_regime_du_depot.py`, `echoue_ou_saute`) : reference
+      #     fabriquee ou une seule reference joignable -> echec dur, inchange ;
+      #     AUCUNE joignable -> ce n'est pas le meme depot. Mesure : depot de
+      #     travail 14 references sur 14, orphelin public 0 sur 14 ;
+      #   * `test_perimetre_public.py` et `test_outillage_de_budget.py` sont
+      #     fermes a la source -- le dixieme chemin (2 902 octets) est PORTE au
+      #     public plutot qu'exempte, ce qui garde ses trois frontieres vivantes
+      #     sur la CI publique au lieu de les eteindre.
+      #
+      # Il ne reste donc RIEN a ecarter, et surtout aucun registre a tenir des
+      # deux cotes. La commande est la meme sur les deux depots.
+      # SANS `-x`, et c'est une correction de methode plutot qu'un confort.
+      # CLAUDE.md : « on compare des LISTES de verdicts, jamais des
+      # compteurs », et « on compare TOUS les verdicts, pas seulement les
+      # rouges ». `-x` empeche structurellement de produire cette liste : il
+      # rend le PREMIER rouge et tait les autres, si bien que chaque correctif
+      # coute un run complet pour decouvrir le suivant. Mesure le 2026-09-08
+      # sur cinq runs successifs, ou cinq pannes independantes se sont
+      # revelees une a une, chacune masquant les suivantes.
+      #
+      # `-v` pour que les noms sortent au fil de l'eau, comme
+      # `scripts/mesure/mesure.py` l'impose aux courses locales et pour le
+      # meme motif : une course interrompue garde un verdict partiel
+      # comparable.
+      - name: Lancer les tests (les tests Qt s'ecartent d'eux-memes)
+        run: pytest tests/unit -v
+
+  build:
+    # `inputs.lot == ''` N'EST PAS DECORATIF, et c'est le trou que cette
+    # clause ferme (mesure le 2026-09-09, sur question d'Egan « rien ne bloque
+    # la publication si les tests echouent ? »).
+    #
+    # Sous `workflow_call`, le contexte `inputs` est celui du workflow APPELE,
+    # et `workflow_call:` ne declare AUCUNE entree ici -- `inputs.lot` y vaut
+    # donc la chaine vide. `github.event_name`, lui, est celui de l'APPELANT.
+    # Sur un tag `v*`, l'appelant est un `push` : la premiere clause suffit et
+    # les tests jouent. Mais sur un `workflow_dispatch` de `publish.yml` -- la
+    # repetition TestPyPI depuis `-dev` --, `event_name` vaut
+    # `workflow_dispatch` ET `inputs.lot` est vide : les deux autres clauses
+    # tombent, ce job est SAUTE, et un job saute ne fait pas echouer son
+    # appelant. `valider` rendait donc vert SANS avoir joue un seul test, et
+    # `publish` televersait sur TestPyPI derriere.
+    #
+    # La clause vide ne peut que faire JOUER les tests plus souvent, jamais
+    # moins : un lot explicitement demande porte une valeur non vide et
+    # continue d'ecarter ce qu'il ecarte.
+    if: >-
+      ${{ (github.event_name != 'workflow_dispatch')
+          || (inputs.lot == '') || (inputs.lot == null)
+          || (inputs.lot == 'tout') || (inputs.lot == 'tests') }}
+    name: Build wheel + sdist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Installer build
+        run: python -m pip install --upgrade build
+      # DEUX distributions depuis `EPIC8-ARB-6`, et ce job n'en construisait
+      # qu'une. `python -m build` a la racine ne produit que `mmu-cli`, dont le
+      # `[project.scripts]` declare `mmu` et RIEN d'autre -- le commentaire de
+      # `pyproject.toml` le dit explicitement : « `mmu-tui` est pose par
+      # l'AUTRE distribution ». Le smoke test qui suivait lancait pourtant
+      # `mmu-tui --help`, donc ce job rougissait a coup sur, et il se declenche
+      # sur le tag `v*`, LE MEME que `publish.yml`.
+      #
+      # Mesure de la panne, jouee de bout en bout le 2026-09-07 avant ce
+      # correctif : la roue construite ici declare le seul point d'entree
+      # `mmu = mixed_media_utility.cli:main`, elle porte ZERO module `tui/`, et
+      # `mmu-tui --help` rend **127 command not found**. Ce n'etait pas une
+      # lecture de declarations : la roue a ete construite, installee dans un
+      # venv jetable, et la commande jouee.
+      #
+      # Le bloc date de `d8cc7736`, ou il n'y avait qu'une distribution. La
+      # scission ne l'a pas porte -- meme famille que le defaut `5635d70a`
+      # (« un module porte sans sa mesure »).
+      #
+      # `--wheel` sur `mmu-tui` n'est pas un raccourci : `build` construit le
+      # sdist PUIS la roue DEPUIS ce sdist, et le sdist de `mmu-tui` ne contient
+      # que `packaging/mmu-tui/` (zero ligne de code), si bien que le
+      # `force-include` qui vise `../../src/.../tui` ne trouve plus rien. C'est
+      # ce que `EPIC8-ARB-18` a tranche, et `publish.yml` fait de meme.
+      #
+      # `--outdir dist` SUR LES DEUX, et ce n'est pas cosmetique : sans lui,
+      # `build` ecrit la roue de `mmu-tui` dans `packaging/mmu-tui/dist/`,
+      # c'est-a-dire PAS dans le dossier que le `pip install` ci-dessous lit.
+      # Le correctif du 2026-09-07 avait construit la seconde roue sans la
+      # deposer la ou on l'installe -- le commentaire annoncait « dans le meme
+      # dossier », ce qui etait faux, et le premier run de CI reel
+      # (34196288009, 2026-09-08) a rendu le MEME `mmu-tui: command not found`,
+      # exit 127, que ce correctif etait cense fermer.
+      - name: Construire les DEUX distributions
+        run: |
+          python -m build --outdir dist .                       # mmu-cli : roue + sdist
+          python -m build --wheel --outdir dist packaging/mmu-tui  # mmu-tui : roue SEULE
+      # Les deux roues sont installees d'un seul `pip install`, et elles sont
+      # VRAIMENT dans le meme dossier depuis la ligne ci-dessus : `mmu-tui`
+      # depend de `mmu-cli==0.1.0`, que pip resout localement puisque les deux
+      # roues lui sont donnees ensemble.
+      - name: Smoke test des DEUX points d'entree
+        run: |
+          pip install dist/*.whl
+          mmu --help
+          mmu-tui --help
+          mmu-tui --diagnostic-chemin
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/*
+          if-no-files-found: error
+
+  # ===========================================================================
+  #  QUATRE ENVIRONNEMENTS, ET C'EST UNE CONDITION DE RELEASE, PAS UN CONFORT
+  # ===========================================================================
+  # Condition posee par Egan le 2026-09-08 : « la release ne part QUE quand le
+  # one-liner d'installation est eprouve sur les trois environnements ». Elle
+  # devient EXECUTOIRE ici plutot que declarative, parce que `publish.yml`
+  # (l. 105-107) fait de ce workflow sa porte de validation -- son job
+  # `valider` fait `uses: ./.github/workflows/ci.yml` et tous les autres jobs
+  # en dependent par `needs:`. Etendre CE job-la met la preuve sur le chemin
+  # obligatoire de la release ; un workflow separe ne l'aurait pas fait, et
+  # serait de plus tombe sous les deux frontieres de
+  # tests/unit/test_declenchement_des_workflows.py des sa creation.
+  #
+  # CE QUE CE JOB MESURAIT AVANT, ET C'ETAIT LA SYNTAXE SEULE : `bash -n` sur
+  # install.sh, `[Parser]::ParseFile` sur install.ps1 -- sous `pwsh` mais SUR
+  # LINUX --, puis un `--dry-run` qui affiche un PLAN. Les 935 lignes
+  # d'install.ps1 n'avaient jamais ete EXECUTEES, aucune branche macOS n'avait
+  # jamais ete jouee autrement qu'avec les `uname` / `sw_vers` / `brew`
+  # factices de tests/unit/test_installateur_interactif.py, et aucune
+  # installation n'avait jamais eu lieu dans la CI.
+  #
+  # LE MOTIF DE CHAQUE ENVIRONNEMENT :
+  #
+  #   ubuntu-latest   le systeme du one-liner le plus courant, et le seul ou
+  #                   `pwsh` est preinstalle sans etre le systeme cible ;
+  #   macos-15-intel        le runner INTEL. Seul a rendre VRAI
+  #                   `mac_intel_sans_bouteilles` (install.sh:400-407) : sur
+  #                   l'API Homebrew, python@3.12, openssl@3 et mpdecimal n'ont
+  #                   AUCUNE bouteille macOS Intel. La question de compilation
+  #                   se pose donc, et SANS TERMINAL le defaut est pris et
+  #                   annonce.
+  #
+  #                   CE MOTIF DISAIT L'INVERSE DE CE QUE LA BRANCHE FAIT, et
+  #                   c'est la revue 8.10 (couche 1, finding C8) qui l'a vu.
+  #                   Il annoncait « le defaut (non) est pris, ffmpeg n'est
+  #                   pas pose ». C'etait vrai quand il a ete ecrit ; la story
+  #                   8.11 a RENVERSE ce defaut par des commits intercales sur
+  #                   la meme branche. `demander 2` (install.sh) designe
+  #                   desormais l'option 2, « poser le binaire precompile
+  #                   officiel ». En --non-interactif sur macos-15-intel, la jambe
+  #                   TELECHARGE donc ffmpeg et ffprobe depuis evermeet.cx,
+  #                   condensat SHA-256 verifie, sur le runner facture x10.
+  #
+  #                   CONSEQUENCE, ET ELLE EST TRANCHEE : la porte de release
+  #                   depend desormais d'un tiers. Egan l'a arbitre le
+  #                   2026-09-08, par invite -- le repli EST exerce ici, parce
+  #                   que c'est le seul endroit ou il l'est jamais, ET son
+  #                   echec devient VISIBLE. C'est ce que mesure l'etape
+  #                   « ffmpeg et ffprobe repondent (macOS) » plus bas :
+  #                   install.sh degrade proprement (`|| alerte`, ce
+  #                   qu'EPIC11-ARB-89 exige d'un installateur), donc sans
+  #                   cette etape la jambe resterait VERTE en n'ayant rien
+  #                   eprouve -- exactement le defaut que les trois couches de
+  #                   la revue viennent de trouver ailleurs ;
+  #   macos-14        Apple Silicon : la question ne se pose pas, chemin
+  #                   nominal. C'est l'AUTRE cote du meme drapeau -- une garde
+  #                   qui ne le fait pas varier ne mesure qu'une moitie du
+  #                   produit et l'annonce verte ;
+  #   windows-latest  le seul endroit ou install.ps1 est EXECUTE.
+  garde-installation:
+    # Le `name` porte l'OS : sans lui les quatre courses sont homonymes dans
+    # l'onglet Actions, et un rouge ne dit pas QUEL systeme a echoue.
+    name: Garde des scripts d'installation (${{ matrix.os }})
+    # AUCUN `if:` SUR CE JOB, ET C'EST DELIBERE. Une frontiere l'exige --
+    # `test_le_JOB_lui_meme_ne_peut_pas_etre_neutralise_en_silence`, ecrite
+    # apres DEUX mutants survivants ou le job cessait de tourner pendant que
+    # les treize autres frontieres restaient vertes, parce qu'elles lisent un
+    # FICHIER et non une execution. La porte de release devenait decorative.
+    #
+    # Le choix de lot du 2026-09-09 a d'abord ete pose ICI aussi, et la
+    # frontiere l'a refuse. Elle avait raison : le lot se selectionne en
+    # ecartant les jobs COUTEUX (`test`, `build`), jamais en eteignant la
+    # porte. Jouer `lot: garde-installation` rend donc exactement cette
+    # matrice-ci et rien d'autre -- ce qui etait le besoin --, et aucun lot ne
+    # peut l'eteindre.
+    runs-on: ${{ matrix.os }}
+    # LE COUT EST BORNE, ET LE PLAFOND N'EST PAS DECORATIF. Sans lui, une
+    # compilation Homebrew partie par accident sur macos-15-intel tourne jusqu'au
+    # defaut de GitHub -- SIX HEURES -- au tarif macOS, dix fois celui de
+    # Linux.
+    #
+    # LE PLAFOND EST PAR OS depuis le 2026-09-08 (triage de la revue 8.10,
+    # arbitrage d'Egan par invite). Un plafond UNIQUE de 25 min etait
+    # disproportionne dans les deux sens : trop large la ou la minute coute
+    # dix fois plus, et sans rapport avec la duree mesuree. L'aller-retour
+    # complet -- `install.sh --non-interactif --testpypi --sans-raccourci`
+    # puis `--desinstaller` -- a ete CHRONOMETRE le 2026-09-08 dans un
+    # conteneur Linux sans pipx au depart : **41 secondes**, dont 40 pour
+    # l'installation (93 Mo de roues, dont 59 pour opencv-python-headless
+    # seul) et 1 pour le retrait. Les plafonds ci-dessous laissent donc de
+    # quatre a quinze fois la duree mesuree selon la lenteur attendue de
+    # l'image, et ferment la porte aux six heures.
+    #
+    # OU CE PLAFOND COMPTE, ET OU IL NE COMPTE PAS -- mesure le 2026-09-08 sur
+    # l'API GitHub : `GanTiz/mixed_media_utility` est `"private": false`, et
+    # les runners standard sont gratuits et sans plafond sur un depot public.
+    # La RELEASE se fait la-bas (tag `v*`, environnement `pypi`) : elle ne
+    # coute donc rien. Seul `-dev`, prive, facture -- et il ne lance ce
+    # workflow qu'a la main.
+    timeout-minutes: ${{ matrix.plafond }}
+    strategy:
+      # `fail-fast: false` : un echec sur macOS ne doit pas ANNULER Windows.
+      # Le premier echec probable est nomme et attendu -- si pipx manque sur
+      # l'image macOS, le repli `pip install --user pipx` d'install.sh
+      # (l. 1022-1025) tourne sans `|| true` sous `set -euo pipefail` --, et il
+      # emporterait sinon la seule mesure jamais faite d'install.ps1 en
+      # execution.
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-15-intel, macos-14, windows-latest]
+        # Le plafond suit le TARIF autant que la lenteur attendue : une minute
+        # macOS est facturee dix fois une minute Linux, une minute Windows deux
+        # fois. Les quatre valeurs sont donc lues comme un cout, pas comme une
+        # patience. Pire cas de la matrice : 8x1 + 15x10 + 15x10 + 20x2 = 348
+        # minutes facturees, contre 575 avec le plafond unique de 25.
+        include:
+          - os: ubuntu-latest
+            plafond: 8
+          # macOS a le plafond le plus large en MINUTES et le plus cher en
+          # FACTURE : c'est la que le repli precompile de la story 8.11
+          # telecharge ffmpeg et ffprobe depuis evermeet (52 Mo), en plus des
+          # 93 Mo de roues.
+          - os: macos-15-intel
+            plafond: 15
+          - os: macos-14
+            plafond: 15
+          # Windows est le plus lent a demarrer (winget, PATH utilisateur) et
+          # n'a jamais ete execute : son plafond est le plus large des quatre
+          # en attendant la premiere mesure reelle.
+          - os: windows-latest
+            plafond: 20
+    steps:
+      # Volontairement SANS bloc `with:`. Pas de `lfs: true` : ce job ne lit
+      # aucun media, et ce drapeau -- present sur onze branches -- tirait
+      # 718 Mo par run pour un fichier de 2,9 Mo et a sature le quota de 10 Go
+      # en deux jours. Pas de materialisation LFS non plus : le bloc du job
+      # `test` appartient au job `test`, qui en a besoin ; celui-ci non.
+      - uses: actions/checkout@v4
+
+      # Les deux scripts doivent EXISTER. C'est la moitie de la garantie
+      # demandee : le jour ou le contenu part vers le depot public, un oubli
+      # de `scripts/` fait rougir la CI du depot public au lieu de laisser une
+      # URL d'installation morte chez l'utilisateur.
+      #
+      # `shell: bash` est EXPLICITE partout dans ce job : sur windows-latest le
+      # shell par defaut est `pwsh`, et une etape bash sans cette ligne y
+      # tournerait en PowerShell.
+      - name: Presence des deux scripts
+        shell: bash
+        run: |
+          manquants=""
+          for f in scripts/install.sh scripts/install.ps1 scripts/public-repo.env; do
+            [ -f "$f" ] || manquants="${manquants} ${f}"
+          done
+          if [ -n "${manquants}" ]; then
+            echo "::error::Fichier(s) d'installation manquant(s) :${manquants}"
+            exit 1
+          fi
+          echo "Les trois fichiers d'installation sont presents."
+
+      # Hors Windows, et le motif n'est pas la portabilite de `bash -n` : c'est
+      # que le depot ne declare AUCUN `text eol=lf` pour `*.sh`. Sur un runner
+      # Windows, le script peut donc etre materialise en CRLF selon le
+      # `core.autocrlf` de l'image, et `bash -n` mesurerait alors le checkout
+      # plutot que le script. install.sh refuse de toute facon Windows
+      # explicitement (l. 318-322, « Sur Windows, utiliser scripts/install.ps1 »).
+      - name: Compilation du script bash
+        if: matrix.os != 'windows-latest'
+        shell: bash
+        run: bash -n scripts/install.sh
+
+      # UNE SEULE FOIS, sur ubuntu-latest, et le motif est que cette etape est
+      # INDEPENDANTE DU SYSTEME : `pwsh` est preinstalle sur les runners ubuntu
+      # et le parseur rend le meme verdict partout. La jouer quatre fois
+      # coute des minutes sans rien mesurer de plus.
+      #
+      # Elle reste jouee, et elle n'est pas rendue inutile par l'execution
+      # reelle sur Windows : une erreur de SYNTAXE y est attrapee plus tot et
+      # plus clairement qu'au milieu d'une installation.
+      - name: Compilation du script PowerShell
+        if: matrix.os == 'ubuntu-latest'
+        shell: pwsh
+        run: |
+          $erreurs = $null
+          $null = [System.Management.Automation.Language.Parser]::ParseFile(
+              (Resolve-Path './scripts/install.ps1'), [ref]$null, [ref]$erreurs)
+          if ($erreurs) {
+              $erreurs | ForEach-Object { Write-Host "::error::$($_.Message)" }
+              exit 1
+          }
+          Write-Host "install.ps1 compile."
+
+      # La simulation garde sa valeur PROPRE et n'est pas remplacee par
+      # l'installation reelle : elle mesure le PLAN, et c'est la seule etape
+      # qui tourne encore quand le reseau est coupe. L'installation reelle
+      # s'AJOUTE. Hors Windows pour le meme motif que `bash -n` : install.sh y
+      # refuse de tourner.
+      - name: Simulation d'installation (bash)
+        if: matrix.os != 'windows-latest'
+        shell: bash
+        run: bash scripts/install.sh --dry-run
+
+      # =====================================================================
+      #  L'ALLER-RETOUR REEL -- ET LE VERDICT SE LIT SUR L'ETAT DE LA MACHINE
+      # =====================================================================
+      # Pourquoi on ne se fie PAS au code de retour d'install.sh, et c'est
+      # mesure : sa verification finale (l. 1249-1267) rend ses echecs en
+      # `alerte`, jamais en `exit 1` -- un `--verifier` qui echoue NE FAIT PAS
+      # ROUGIR le script. L'etape rejoue donc elle-meme `mmu-test --version`
+      # et exige 0.1.0.
+      #
+      # Le suffixe `-test` porte sur QUATRE noms, pas deux (install.sh:200-205) :
+      # les distributions du bac a sable sont `mmu-cli-test` et `mmu-tui-test`,
+      # et les commandes qu'elles exposent sont `mmu-test` et `mmu-tui-test`.
+      # Exiger la version ferme la seule autre issue possible : un `mmu` REEL
+      # deja present sur la machine, qui ferait passer pour verifiee une
+      # installation de bac a sable jamais exercee.
+      - name: Installation REELLE depuis TestPyPI (bash)
+        if: matrix.os != 'windows-latest'
+        shell: bash
+        run: |
+          set -eu
+          bash scripts/install.sh --non-interactif --testpypi --sans-raccourci
+
+          # Le repertoire ou pipx expose ses applications se DEMANDE a pipx :
+          # il change selon la plateforme et selon PIPX_HOME. `~/.local/bin`
+          # d'abord, parce que c'est la que pipx atterrit quand il a ete pose
+          # par `pip --user` et qu'il n'est pas encore sur le PATH de ce shell.
+          PATH="${HOME}/.local/bin:${PATH}"
+          export PATH
+          if command -v pipx >/dev/null 2>&1; then
+            bin_pipx="$(pipx environment --value PIPX_BIN_DIR 2>/dev/null || true)"
+            if [ -n "${bin_pipx}" ]; then
+              PATH="${bin_pipx}:${PATH}"
+              export PATH
+            fi
+          fi
+
+          if ! command -v mmu-test >/dev/null 2>&1; then
+            echo "::error::mmu-test absent du PATH apres une installation qui a rendu 0."
+            echo "  PATH cherche : ${PATH}"
+            exit 1
+          fi
+          if ! version="$(mmu-test --version 2>&1)"; then
+            echo "::error::mmu-test --version a echoue : ${version}"
+            exit 1
+          fi
+          case "${version}" in
+            *0.1.0*) printf 'ok  mmu-test --version -> %s\n' "${version}" ;;
+            *) echo "::error::mmu-test --version attendait 0.1.0, rendu : ${version}"
+               exit 1 ;;
+          esac
+          if ! command -v mmu-tui-test >/dev/null 2>&1; then
+            echo "::error::mmu-tui-test absent du PATH apres l'installation."
+            exit 1
+          fi
+          echo "ok  mmu-tui-test est sur le PATH."
+
+      # L'ECHEC DU REPLI PRECOMPILE DEVIENT VISIBLE ICI, et c'est un
+      # arbitrage d'Egan du 2026-09-08, pose par invite apres le finding C8
+      # de la couche 1 de la revue.
+      #
+      # Le probleme, et il n'etait pas prevu : la story 8.11 a rendu
+      # `install.sh` capable de POSER ffmpeg et ffprobe lui-meme depuis
+      # evermeet.cx quand Homebrew compilerait -- c'est-a-dire, en
+      # --non-interactif, sur macos-15-intel. Le script degrade PROPREMENT si ce
+      # repli echoue (`|| alerte`), ce qu'`EPIC11-ARB-89` exige d'un
+      # installateur : un utilisateur ne doit pas etre bloque parce qu'un
+      # tiers est tombe. Mais la CONSEQUENCE en CI est l'inverse de ce qu'on
+      # veut : la jambe resterait VERTE en n'ayant rien eprouve, et
+      # `install.sh` declare lui-meme que ce qui rougit quand la version
+      # epinglee disparait est « RIEN dans ce depot ».
+      #
+      # Ce qui est bon pour l'utilisateur est donc mauvais pour la garde. Cette
+      # etape retablit l'asymetrie : sur macOS, ffmpeg ET ffprobe doivent
+      # repondre a la fin de l'installation, quelle que soit la voie par
+      # laquelle ils sont arrives -- preinstalles sur l'image, poses par
+      # Homebrew sur Apple Silicon, ou telecharges par le repli sur Intel.
+      #
+      # POURQUOI macOS SEULEMENT : sur Linux le repli n'existe pas (les
+      # gestionnaires de paquets ne compilent pas), et sur Windows c'est
+      # install.ps1 qui joue, lequel n'a recu AUCUN repli precompile
+      # (AC8 de la 8.11). Etendre cette etape aux quatre ferait rougir des
+      # jambes pour un chemin qu'elles ne parcourent pas.
+      #
+      # Il faut ffmpeg ET ffprobe : le produit lit les metadonnees video par
+      # ffprobe (video_metadata.py), et certains paquets minimalistes ne
+      # fournissent que le premier.
+      - name: ffmpeg et ffprobe repondent (macOS)
+        if: startsWith(matrix.os, 'macos')
+        shell: bash
+        run: |
+          set -eu
+          manquants=""
+          for outil in ffmpeg ffprobe; do
+            if ! command -v "${outil}" >/dev/null 2>&1; then
+              manquants="${manquants} ${outil}"
+              continue
+            fi
+            if ! "${outil}" -version >/dev/null 2>&1; then
+              echo "::error::${outil} est sur le PATH mais ne demarre pas."
+              echo "  Sur macOS, un binaire telecharge peut porter"
+              echo "  com.apple.quarantine, ou ne pas correspondre a"
+              echo "  l architecture. Le repli precompile de la story 8.11"
+              echo "  retire l attribut ET lance le binaire ; si cette ligne"
+              echo "  est atteinte, l une des deux n a pas tenu."
+              exit 1
+            fi
+            printf 'ok  %s -> %s\n' "${outil}" "$("${outil}" -version 2>&1 | head -n1)"
+          done
+          if [ -n "${manquants}" ]; then
+            echo "::error::absents apres l installation :${manquants}"
+            echo "  install.sh degrade proprement quand son repli precompile"
+            echo "  echoue (EPIC11-ARB-89), donc son code de retour ne dit"
+            echo "  RIEN de cet echec. C est cette etape qui le rend visible."
+            echo "  Causes a regarder, dans cet ordre : evermeet.cx"
+            echo "  injoignable, version epinglee disparue, condensat"
+            echo "  SHA-256 different de la constante d install.sh."
+            exit 1
+          fi
+
+      # `--desinstaller` NE NOMME AUCUN PAQUET qu'il a retire : il annonce
+      # « vont etre retires, s'ils existent », retire ses quatre distributions
+      # avec `|| true` (install.sh:625-629), et rend 0 A L'IDENTIQUE qu'il ait
+      # tout retire ou rien. Sa sortie ne peut donc pas servir de verdict :
+      # c'est l'ABSENCE qui se mesure, et sur le MEME PATH que la presence --
+      # un PATH plus etroit rendrait l'absence vraie sans rien avoir retire.
+      - name: Desinstallation et mesure de l'ABSENCE (bash)
+        if: matrix.os != 'windows-latest'
+        shell: bash
+        run: |
+          set -eu
+          PATH="${HOME}/.local/bin:${PATH}"
+          export PATH
+          if command -v pipx >/dev/null 2>&1; then
+            bin_pipx="$(pipx environment --value PIPX_BIN_DIR 2>/dev/null || true)"
+            if [ -n "${bin_pipx}" ]; then
+              PATH="${bin_pipx}:${PATH}"
+              export PATH
+            fi
+          fi
+
+          bash scripts/install.sh --desinstaller
+
+          # bash retient l'emplacement des commandes deja lancees ; sans cet
+          # oubli, `command -v` pourrait repondre sur une entree perimee.
+          hash -r
+          survivants=""
+          for commande in mmu-test mmu-tui-test; do
+            if command -v "${commande}" >/dev/null 2>&1; then
+              survivants="${survivants} ${commande}"
+            fi
+          done
+          if [ -n "${survivants}" ]; then
+            echo "::error::--desinstaller a rendu 0 en laissant :${survivants}"
+            echo "  Une desinstallation qui ne retire rien rend le meme code"
+            echo "  et la meme sortie qu'une desinstallation complete."
+            exit 1
+          fi
+          echo "ok  mmu-test et mmu-tui-test ont disparu du PATH."
+
+      # WINDOWS : install.ps1 est EXECUTE, plus seulement parse. Les deux
+      # moities de l'aller-retour tiennent dans une seule etape parce que
+      # `$env:Path` ne survit pas d'une etape a l'autre et qu'il faudrait
+      # sinon rederiver deux fois le repertoire de pipx.
+      #
+      # PowerShell et non bash : install.sh refuse Windows (l. 318-322), et une
+      # etape bash y buterait de plus sur les fins de ligne du checkout.
+      - name: Aller-retour REEL depuis TestPyPI (PowerShell)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          # `Continue` plutot que le `Stop` que GitHub pose : les codes de
+          # retour sont lus explicitement ici, et un `Stop` ferait echouer
+          # l'etape sur la moindre ligne ecrite en stderr par pipx -- donc sur
+          # autre chose que ce qu'on mesure.
+          $ErrorActionPreference = 'Continue'
+
+          function Get-CheminAvecPipx {
+              # Le repertoire binaire se DEMANDE a pipx, comme le fait
+              # install.ps1 lui-meme (Get-RepertoireBinPipx, l. 293-303) : le
+              # coder en dur reproduirait le defaut que la story 8.11 corrige
+              # du cote bash. `pipx ensurepath` ecrit dans le PATH UTILISATEUR,
+              # que le processus courant ne voit pas : on le relit.
+              $utilisateur = [Environment]::GetEnvironmentVariable("Path", "User")
+              $binDir = ""
+              if (Get-Command pipx -ErrorAction SilentlyContinue) {
+                  try { $binDir = "$(& pipx environment --value PIPX_BIN_DIR 2>$null)".Trim() }
+                  catch { $binDir = "" }
+              }
+              if (-not $binDir) { $binDir = (Join-Path $HOME ".local\bin") }
+              $morceaux = @($binDir, $utilisateur, $env:Path) | Where-Object { $_ }
+              return ($morceaux -join ';')
+          }
+
+          & pwsh -NoProfile -File ./scripts/install.ps1 -NonInteractif -TestPyPI -SansRaccourci
+          $codeInstallation = $LASTEXITCODE
+          $env:Path = Get-CheminAvecPipx
+          if ($codeInstallation -ne 0) {
+              Write-Host "::error::install.ps1 a rendu $codeInstallation a l'installation."
+              exit 1
+          }
+
+          # Le verdict se lit sur l'etat de la machine : install.ps1 rend son
+          # verdict de verification en `Write-Alerte`, pas en code de sortie.
+          if (-not (Get-Command mmu-test -ErrorAction SilentlyContinue)) {
+              Write-Host "::error::mmu-test absent du PATH apres une installation qui a rendu 0."
+              Write-Host "  PATH cherche : $env:Path"
+              exit 1
+          }
+          $version = "$(& mmu-test --version)".Trim()
+          if ($LASTEXITCODE -ne 0) {
+              Write-Host "::error::mmu-test --version a rendu $LASTEXITCODE."
+              exit 1
+          }
+          if ($version -notlike '*0.1.0*') {
+              Write-Host "::error::mmu-test --version attendait 0.1.0, rendu : $version"
+              exit 1
+          }
+          Write-Host "ok  mmu-test --version -> $version"
+          if (-not (Get-Command mmu-tui-test -ErrorAction SilentlyContinue)) {
+              Write-Host "::error::mmu-tui-test absent du PATH apres l'installation."
+              exit 1
+          }
+          Write-Host "ok  mmu-tui-test est sur le PATH."
+
+          # Le retour. Meme motif que du cote bash : -Desinstaller rend 0 qu'il
+          # ait tout retire ou rien, donc c'est l'ABSENCE qui fait le verdict,
+          # mesuree sur le MEME PATH que la presence.
+          & pwsh -NoProfile -File ./scripts/install.ps1 -Desinstaller
+          $codeRetrait = $LASTEXITCODE
+          $env:Path = Get-CheminAvecPipx
+          if ($codeRetrait -ne 0) {
+              Write-Host "::error::install.ps1 -Desinstaller a rendu $codeRetrait."
+              exit 1
+          }
+          $survivants = @("mmu-test", "mmu-tui-test") | Where-Object {
+              Get-Command $_ -ErrorAction SilentlyContinue
+          }
+          if ($survivants) {
+              Write-Host "::error::-Desinstaller a rendu 0 en laissant : $($survivants -join ', ')"
+              exit 1
+          }
+          Write-Host "ok  mmu-test et mmu-tui-test ont disparu du PATH."
+          exit 0
+
+      # UNE SEULE FOIS : cette garde est independante du systeme, et elle est
+      # de toute facon INERTE sur le depot de travail -- elle teste
+      # `github.event.repository.private`, pas le nom du depot. La jouer sur
+      # quatre runners couterait des minutes macOS pour un `exit 0`.
+      #
+      # Coeur de la garde : le slug du depot public. Inerte sur le depot prive,
+      # bloquante sur le depot public. `github.event.repository.private` est
+      # fourni par GitHub, il ne se falsifie pas depuis le depot.
+      - name: Coherence du slug du depot public
+        if: matrix.os == 'ubuntu-latest'
+        shell: bash
+        env:
+          DEPOT_PRIVE: ${{ github.event.repository.private }}
+          DEPOT_COURANT: ${{ github.repository }}
+        run: |
+          set -eu
+          # shellcheck disable=SC1091
+          . ./scripts/public-repo.env
+
+          if [ "${DEPOT_PRIVE}" = "true" ]; then
+            if [ "${MMU_PUBLIC_REPO_SLUG}" = "TBD" ]; then
+              echo "::notice::Depot prive : le slug public vaut encore TBD."
+              echo "  C'est admis ici. La meme garde ROUGIRA sur le depot public"
+              echo "  tant que scripts/public-repo.env n'aura pas ete renseigne."
+            else
+              echo "Depot prive, slug public annonce : ${MMU_PUBLIC_REPO_SLUG}"
+            fi
+            exit 0
+          fi
+
+          # A partir d'ici : depot PUBLIC. La garde mord.
+          if [ "${MMU_PUBLIC_REPO_SLUG}" = "TBD" ]; then
+            echo "::error::Depot PUBLIC (${DEPOT_COURANT}) avec MMU_PUBLIC_REPO_SLUG=TBD."
+            echo "Renseigner scripts/public-repo.env avec : ${DEPOT_COURANT}"
+            echo "puis reprendre les URLs d'installation dans docs/installation/."
+            exit 1
+          fi
+
+          if [ "${MMU_PUBLIC_REPO_SLUG}" != "${DEPOT_COURANT}" ]; then
+            echo "::error::Slug incoherent : public-repo.env annonce"
+            echo "  ${MMU_PUBLIC_REPO_SLUG}"
+            echo "mais la CI tourne sur"
+            echo "  ${DEPOT_COURANT}"
+            echo "Les URLs d'installation de la documentation pointeraient a cote."
+            exit 1
+          fi
+
+          echo "Slug coherent : ${DEPOT_COURANT}"
+
+      # UNE SEULE FOIS, meme motif que la garde precedente : independante du
+      # systeme, et inerte sur le depot de travail. Le `if` porte les DEUX
+      # conditions -- l'OS et le caractere public --, la seconde etant celle
+      # qui existait deja.
+      #
+      # Sur le depot public, toute URL d'installation ecrite dans la doc doit
+      # pointer vers CE depot. Attrape le copier-coller d'un ancien slug, qui
+      # rendrait la ligne d'installation silencieusement morte (404 sur
+      # raw.githubusercontent, donc un `curl | bash` qui n'installe rien).
+      - name: URLs d'installation de la documentation
+        if: ${{ matrix.os == 'ubuntu-latest' && github.event.repository.private == false }}
+        shell: bash
+        env:
+          DEPOT_COURANT: ${{ github.repository }}
+        run: |
+          set -eu
+          fautives="$(grep -rn 'raw\.githubusercontent\.com' docs/ README.md 2>/dev/null \
+                      | grep -v "raw.githubusercontent.com/${DEPOT_COURANT}/" || true)"
+          if [ -n "${fautives}" ]; then
+            echo "::error::URL(s) d'installation pointant hors de ${DEPOT_COURANT} :"
+            echo "${fautives}"
+            exit 1
+          fi
+          echo "Toutes les URLs d'installation pointent vers ${DEPOT_COURANT}."

@@ -1,0 +1,184 @@
+{
+  "artifacts": {
+    "frames_dir": "frames",
+    "outputs_dir": "outputs"
+  },
+  "color": {
+    "color_calibration_status": "failed",
+    "target_colorspace": "bt709"
+  },
+  "created": "2026-08-13T10:35:39Z",
+  "lots": [
+    {
+      "confirmation": {
+        "confirmed_at": "2026-08-13T10:35:38Z",
+        "mode": "non_interactif",
+        "unknown_color_accepted": false
+      },
+      "expected_frame_count": 20,
+      "first_frame_timecode": "01:01:42:05",
+      "fps_target": 25.0,
+      "fps_target_exact": "25/1",
+      "frame_timecodes_digest": "sha256-v1:2491dd7fc618e3bea6bf10eb4195eea266e74c5bec73ec2c62b517397eabc519",
+      "frames_dir": "frames/rush-bitch-4_25-7f152a04",
+      "gamut_map_id": "gamut-map-none-1",
+      "last_frame_timecode": "01:01:42:24",
+      "lot_id": "rush-bitch-4_25-7f152a04",
+      "output_bit_depth": 16,
+      "patch_preset_id": "patches-14-v3",
+      "rounding_policy": "floor-index-ceil-count-v1",
+      "rush_id": "rush-bitch-4",
+      "selection_warnings": [],
+      "source_frame_count": 106,
+      "source_frame_count_is_exact": true,
+      "source_in_timecode": "01:01:42:05",
+      "source_out_timecode": "01:01:42:24",
+      "source_tail_frames": 18,
+      "state": "pdf",
+      "template_id": "tpl-a4-portrait-8f-v2",
+      "timecode_base": "source",
+      "timecode_base_fps": "25/1"
+    },
+    {
+      "color_calibration_status": "failed",
+      "confirmation": {
+        "confirmed_at": "2026-08-13T10:36:04Z",
+        "mode": "non_interactif",
+        "unknown_color_accepted": false
+      },
+      "encoded_masters": [
+        {
+          "frame_count": 10,
+          "incomplete": false,
+          "path": "outputs/rush-bitch-4_12p5-7f152a04_mmu_prores_422.mov",
+          "profile_id": "prores_422"
+        }
+      ],
+      "expected_frame_count": 10,
+      "first_frame_timecode": "01:01:42:05",
+      "fps_target": 12.5,
+      "fps_target_exact": "25/2",
+      "frame_timecodes_digest": "sha256-v1:f2009c9496c8b69538879684aa8a54cafc4381bcaec6ea67546f567199b5a1c6",
+      "frames_dir": "frames/rush-bitch-4_12p5-7f152a04",
+      "gamut_map_id": "gamut-map-none-1",
+      "last_frame_timecode": "01:01:42:23",
+      "lot_id": "rush-bitch-4_12p5-7f152a04",
+      "output_bit_depth": 16,
+      "output_frames_dir": "output-frames/rush-bitch-4_12p5-7f152a04",
+      "patch_preset_id": "patches-14-v3",
+      "reconstructed_frame_count": 10,
+      "rush_id": "rush-bitch-4",
+      "selection_warnings": [
+        "NON_INTEGER_TARGET_RATE"
+      ],
+      "source_frame_count": 106,
+      "source_frame_count_is_exact": true,
+      "source_in_timecode": "01:01:42:05",
+      "source_out_timecode": "01:01:42:24",
+      "source_tail_frames": 19,
+      "state": "encode",
+      "synthetic_frame_count": 0,
+      "synthetic_frames": [],
+      "template_id": "tpl-a4-portrait-8f-v2",
+      "timecode_base": "source",
+      "timecode_base_fps": "25/1"
+    }
+  ],
+  "project_id": "chendj-mat",
+  "reconstruction": {
+    "gamut_map_id": "gamut-map-none-1",
+    "lot_id": "rush-bitch-4_12p5-7f152a04",
+    "origin": "scan",
+    "page_calibration_results": [
+      {
+        "correction_form_id": "color-correction-affine-matrix-1",
+        "correction_source": "own_sheet_patches",
+        "correction_source_page_id": "rush-bitch-4_12p5-7f152a04-p0",
+        "failure_reason": "acceptance_metric_failed",
+        "page_index": 0,
+        "status": "failed"
+      },
+      {
+        "page_index": 1,
+        "status": "not_applied"
+      },
+      {
+        "page_index": 2,
+        "status": "not_applied"
+      }
+    ],
+    "page_count": 3,
+    "page_roles": [
+      {
+        "page_index": 0,
+        "page_role": "c"
+      },
+      {
+        "page_index": 1,
+        "page_role": "i"
+      },
+      {
+        "page_index": 2,
+        "page_role": "i"
+      }
+    ],
+    "patch_preset_id": "patches-14-v3",
+    "scan": {
+      "ingest_slug": "scan-WIN",
+      "pages": [
+        {
+          "homography_status": "resolved",
+          "page_index": 0,
+          "qr_status": "decoded",
+          "read_rank": 0,
+          "status": "ok"
+        },
+        {
+          "homography_status": "resolved",
+          "page_index": 1,
+          "qr_status": "decoded",
+          "read_rank": 1,
+          "status": "ok"
+        },
+        {
+          "homography_status": "resolved",
+          "page_index": 2,
+          "qr_status": "decoded",
+          "read_rank": 2,
+          "status": "ok"
+        }
+      ],
+      "scan_dpi": 600
+    },
+    "slots": [],
+    "status": "complete",
+    "template_id": "tpl-a4-portrait-8f-v2"
+  },
+  "rushes": [
+    {
+      "fps_source": 25.0,
+      "fps_source_exact": "25/1",
+      "resolution_source": {
+        "height": 2160,
+        "width": 3840
+      },
+      "rush_id": "rush-bitch-4",
+      "source_bit_depth": 8,
+      "source_codec": "h264",
+      "source_color_primaries": "bt709",
+      "source_color_range": "tv",
+      "source_color_trc": "bt709",
+      "source_colorspace": "bt709",
+      "source_metadata_absent_fields": [],
+      "source_name": "rush bitch 4.mp4",
+      "source_parent": "CHENDJ_A_TERRE",
+      "source_pix_fmt": "yuv420p",
+      "source_sample_aspect_ratio": "1:1",
+      "source_start_timecode": "01:01:39:12"
+    }
+  ],
+  "schema_version": "2.1",
+  "video": {
+    "codec_target": "prores_422"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "_comment": "ffprobe 6.1.1 sur un fichier dont le flux video est reconnu mais dont la resolution n'est pas exploitable (width absent, height a 0). Cas bloquant de la story 3.3: la resolution n'est pas une annotation colorimetrique mais la propriete structurelle sans laquelle la sortie n'est pas definie.",
+  "streams": [
+    {
+      "index": 0,
+      "codec_name": "h264",
+      "codec_type": "video",
+      "height": 0,
+      "pix_fmt": "yuv420p",
+      "r_frame_rate": "25/1",
+      "avg_frame_rate": "25/1"
+    }
+  ],
+  "format": {
+    "filename": "rush_corrompu.mp4",
+    "nb_streams": 1,
+    "format_name": "mov,mp4,m4a,3gp,3g2,mj2"
+  }
+}

@@ -1,0 +1,90 @@
+site_name: Mixed Media Utility
+site_description: Terminal UI and CLI for scan/extract/calibrate workflows with ArUco/QR-coded media
+site_url: https://gantiz.github.io/mixed_media_utility/
+repo_url: https://github.com/GanTiz/mixed_media_utility
+repo_name: GanTiz/mixed_media_utility
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; 2026 Egan
+
+theme:
+  name: material
+  language: fr
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Basculer en mode sombre
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Basculer en mode clair
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+
+plugins:
+  - search:
+      lang: fr
+  - git-revision-date-localized:
+      enabled: true
+      type: date
+      locale: fr
+  - git-authors:
+      enabled: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - attr_list
+  - md_in_html
+
+nav:
+  - Accueil: index.md
+  - Installation:
+      - Windows: installation/windows.md
+      - macOS: installation/macos.md
+      - Linux: installation/linux.md
+      - Depuis les sources: installation/from-source.md
+  - Guide utilisateur:
+      - Concepts de base: guide-utilisateur/concepts.md
+      - Interface en terminal (TUI): guide-utilisateur/tui.md
+      - Ligne de commande (CLI): guide-utilisateur/cli.md
+      - Workflow complet: guide-utilisateur/workflow.md
+  - Guide développeur:
+      - Architecture: guide-developpeur/architecture.md
+      - Architecture détaillée: guide-developpeur/ARCHITECTURE_DETAILED.md
+      - Spécification d'interface: guide-developpeur/DESIGN.md
+      - Contribuer: guide-developpeur/contribuer.md
+      - Tests et mutation testing: guide-developpeur/tests.md
+      - Conventions de code: guide-developpeur/conventions.md
+  - Référence:
+      - Commandes: reference/commandes.md
+      - Configuration: reference/configuration.md
+      - Schémas JSON: reference/schemas.md
+  - Historique des versions: changelog.md

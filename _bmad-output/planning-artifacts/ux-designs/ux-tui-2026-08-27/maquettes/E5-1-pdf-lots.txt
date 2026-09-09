@@ -1,0 +1,47 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf                                                      │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Quels lots mettre en planches ?                                            │
+│                                                                              │
+│    ▸ [x] plan-04_25                                      ● complet           │
+│      [ ] plan-04_12p5                                    ● complet           │
+│      [x] plan-04_8                                       ● complet           │
+│      [ ] hiver_24                                        ● complet           │
+│      [ ] sequence-12-atelier-fonderie-prise-3_12p5       ● complet           │
+│                                                                              │
+│   ── Le lot survolé ──────────────────────────────────────────────────────   │
+│                                                                              │
+│      Frames               124              extraites le 26/08                │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 2 lots cochés · 164 frames                                                   │
+│ Espace cocher  ⏎ continuer  ↑↓ naviguer  Échap menu Pdf  F1 aide             │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE (2026-09-01, n°3) : `lot_hiver` ne peut pas exister en l'état du code je crois.
+Cette remarque est toujours vraie. As-tu retouché quoi que ce soit ?
+
+  -> Non, rien n'avait été retouché : tes notes ne sont jamais arrivées (zéro fil de
+     commentaires sur la planche, aucun fichier de retours au dépôt). Les quatre lots
+     sont maintenant construits par `naming.build_lot_id` : `plan-04_25`,
+     `plan-04_12p5`, `plan-04_8` et `hiver_24` -- la passe d'hiver garde son nom, elle
+     le porte comme RUSH, avec sa cadence à côté.
+
+NOTE (2026-09-01, n°4) : Laisse juste la mention du bas. « Les deux en » le code sait
+faire ça ? Pareil cette remarque n'a pas été prise en compte, toujours en double.
+
+  -> Ligne du haut (« 2 lots cochés sur 4 · 164 frames ») retirée ; seule la mention
+     sous le filet reste.
+     « Les deux en » : OUI, mais par une indirection qu'il faut nommer. La géométrie
+     n'est PAS un champ du lot -- `extraction_manifest.EXTRACTION_LOT_FIELDS` (:286)
+     n'en porte aucun. Elle vit sur le RUSH : `rushes[].resolution_source`
+     = {width, height} (:273, écrit :848). Un lot porte `rush_id` (:288), donc la
+     géométrie d'un lot se lit en remontant à son rush. Et elle est exacte :
+     `extract` n'a ni `--height` ni aucune option d'échelle (cli.py:4181), donc les
+     frames sortent à la résolution de la source. « Les deux en 1920×1080 » est donc
+     le cardinal des géométries distinctes parmi les lots cochés, et il vaut 1.

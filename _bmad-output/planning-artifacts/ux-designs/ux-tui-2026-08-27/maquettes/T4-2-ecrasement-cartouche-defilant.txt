@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                rush_01 · 3 cadences · conflit │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ Ce lot existe déjà ──────────────────────────────────────────────────┐   │
+│   │ ▲ Écraser supprime le lot déjà sur le disque, puis réécrit.          │   │
+│   │   Les planches et masters déjà produits ne sont PAS regénérés.       │   │
+│   │   Créer la v2 n'efface rien : ces ~ 2,1 Go s'ajoutent au disque.     │   │
+│   │                                                                      │   │
+│   │ Déjà sur le disque                          rush_01_12p5 · 1 fichier │   │
+│   │ Lots créés                                                    3 lots │   │
+│   │ Frames écrites                            124 + 42 + 17 = 183 frames │   │
+│   │ Espace disque                                    ~ 2,1 Go (majorant) │   │
+│   │ ↓ 8 sur 14 lues — la suite : bornes, destination, 3 noms appariés    │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      Écraser et réextraire                                                   │
+│      Créer la v2                                                             │
+│    ▸ Modifier les réglages                                                   │
+│      Annuler, ne rien écrire                                                 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ▲  8 lignes sur 14 lues · 4 issues, 2 écrivent · rien n'est écrit            │
+│ ⏎ valider  ↑↓ choisir  Ctrl+↓ lire la suite  Échap retour  F1 aide           │
+└──────────────────────────────────────────────────────────────────────────────┘

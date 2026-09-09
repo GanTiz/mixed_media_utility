@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Exports                               plan-04_25 · 124 f │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ À écrire ────────────────────────────────────────────────────────────┐   │
+│   │ Master                 plan-04_25_mmu_prores_hq.mov                  │   │
+│   │ Lot                    plan-04_25 · état reconstruction              │   │
+│   │ Reconstruction         v2 · 8 planches scannées le 02/09             │   │
+│   │ Profil                 prores_hq → .mov · bt709                      │   │
+│   │ Résolution             1920 × 1080          source 1920 × 1080       │   │
+│   │ Cadence du rushe       25 im/s     124 échantillons · 124 frames     │   │
+│   │ Frames · mires         124 conformes sur 124 · 0 mire   ● complet    │   │
+│   │ Timecode de départ     00:00:04:12                                   │   │
+│   │ Poids attendu          ~ 1,4 Go                    (majorant)        │   │
+│   │ Destination            projet_demo/outputs/                          │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│       Encoder                                                                │
+│     ▸ Modifier les réglages                                                  │
+│       Annuler                                                                │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 124 frames · ~ 1,4 Go — rien n'a encore été écrit                            │
+│ ⏎ valider  ↑↓ choisir  Échap retour  F1 aide                                 │
+└──────────────────────────────────────────────────────────────────────────────┘

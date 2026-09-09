@@ -1,0 +1,1140 @@
+name: Publish to PyPI
+
+# Publication de DEUX distributions par un seul tag, dans l'ordre, via Trusted
+# Publishing (OIDC, aucun jeton dans les secrets).
+#
+# CE QUE CE FICHIER PUBLIE, ET POURQUOI DEUX
+# ------------------------------------------
+#   mmu-cli   le coeur + la ligne de commande, commande console `mmu`
+#   mmu-tui   l'interface terminal, commande console `mmu-tui`,
+#             qui depend de `mmu-cli==<meme version>`
+#
+# L'ORDRE N'EST PAS UN CONFORT. `mmu-tui` epingle `mmu-cli==X`. Publier la TUI
+# la premiere produit, pendant tout l'intervalle, une release que `pip install
+# mmu-tui` REFUSE d'installer : la dependance n'existe pas encore sur l'index.
+# D'ou la sequence, et l'attente MESUREE entre les deux -- une lecture bornee de
+# l'index simple, celui-la meme que pip interroge, jamais un `sleep` a l'aveugle.
+#
+# UNE RELEASE EST UNE SEQUENCE, PAS UN SAUT (correction d'Egan, 2026-09-07,
+# verbatim : « le depot public est aussi necessaire ici. Le workflow de release
+# passe par un test, une approbation et la release pypi »). Sur un tag `v*`,
+# depuis le depot PUBLIC :
+#
+#   1. construction des QUATRE roues et des DEUX sdists (production + test)
+#   2. publication sur TestPyPI      -- job `publish`, environnement `testpypi`
+#   3. APPROBATION HUMAINE           -- environnement `pypi`, relecteurs exiges
+#   4. publication sur PyPI          -- job `release`,  environnement `pypi`
+#
+# TestPyPI n'est donc plus une cible ALTERNATIVE a PyPI : c'est l'etape qui la
+# precede. Le declenchement manuel (`workflow_dispatch`) reste, lui, borne au
+# bac a sable : c'est la repetition, jouable depuis le depot de travail `-dev`
+# sans poser de tag.
+#
+# Sur TestPyPI les DEUX distributions sont renommees (`mmu-cli-test`,
+# `mmu-tui-test`), commandes console comprises (`mmu-test`, `mmu-tui-test`), ET
+# l'epinglage interne avec : `mmu-tui-test` depend de `mmu-cli-test`, jamais du
+# paquet reel.
+#
+# CE QUE CE WORKFLOW NE PEUT PAS CREER, ET QUI APPARTIENT A EGAN : six
+# publicateurs de confiance et trois environnements GitHub. La liste exacte est
+# en fin de fichier. Le workflow ne se contente pas d'echouer si l'un manque :
+# chaque publication porte un diagnostic `if: failure()` qui NOMME la ligne a
+# creer, et l'environnement de production est verifie avant d'etre employe --
+# un environnement GitHub absent est AUTO-CREE SANS PROTECTION, donc son
+# absence ne leve rien d'elle-meme.
+#
+# Ce workflow est MESURE par `tests/unit/test_chaine_de_publication.py` : les
+# quatre scripts qui portent la garantie (renommage, garde de version, attente,
+# verification de l'environnement protege) y sont extraits de ce fichier et
+# REELLEMENT EXECUTES.
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      target:
+        # UNE seule option, et c'est voulu. Un declenchement manuel est une
+        # REPETITION : il ne peut pas atteindre la production, qui n'est
+        # joignable que par un tag et par l'approbation qui va avec. L'entree
+        # est conservee -- plutot que supprimee -- pour que
+        # `gh workflow run publish.yml -f target=testpypi` continue de marcher.
+        description: "Cible d'un declenchement manuel (bac a sable uniquement)"
+        required: true
+        default: "testpypi"
+        type: choice
+        options:
+          - testpypi
+
+permissions:
+  contents: read
+
+# ORDRE : rien ne se publie sans avoir ete valide, et rien ne part sur le VRAI
+# PyPI sans qu'Egan ait vu la version de test FONCTIONNER.
+#
+# Defaut trouve le 2026-09-02 : `ci.yml` et `publish.yml` partaient tous deux
+# sur le tag `v*`, donc EN PARALLELE. La publication n'attendait pas les tests,
+# et sur le vrai PyPI une version publiee est irreversible. La protection
+# existait sous forme de CONSIGNE dans le skill `publish-public` -- et ce depot
+# sait ce que valent les consignes qui ne se mesurent pas.
+#
+# Le tag joue desormais quatre etapes, dans cet ordre force par `needs:` :
+#
+#   valider  ->  build  ->  publish (TestPyPI)  ->  [ATTENTE D'EGAN]  ->  release (PyPI)
+#
+# L'attente est un **environnement GitHub protege**. Elle ne s'ecrit pas ici :
+# elle se pose dans Settings > Environments > `pypi` > Required reviewers.
+# Tant que personne n'approuve, le job `publier-pypi` reste en attente et
+# AUCUN runner ne tourne -- l'attente ne coute donc pas une minute d'Actions.
+# GitHub annule la course au bout de 30 jours sans reponse.
+#
+# CE QUE COUTE UN REFUS : les etapes deja jouees (tests, build, TestPyPI), et
+# le NUMERO DE VERSION consomme sur TestPyPI -- un index PyPI n'accepte jamais
+# deux fois le meme fichier, meme apres suppression. Un candidat rejete se
+# reprend donc sous une version differente (`0.1.0rc2`), jamais sous la meme.
+# Le vrai PyPI, lui, n'a rien recu : c'est tout l'objet de la porte.
+#
+# Second defaut ferme par le job `valider` : le `garde-installation` de
+# `ci.yml` -- celui qui refuse un slug `TBD` ou une URL d'installation morte --
+# ne partait plus sur les pushes depuis 883bd5e. Il est desormais joue avant
+# chaque publication, c'est-a-dire la ou son absence couterait vraiment.
+jobs:
+  # LA PORTE. Elle appelle `ci.yml` en entier -- tests et garde d'installation.
+  # Tout ce qui suit en depend par `needs:`, donc rien ne se construit ni ne se
+  # publie sur un arbre rouge. Retirer ce job rouvre le defaut du 2026-09-02.
+  valider:
+    name: Tests et garde d'installation
+    uses: ./.github/workflows/ci.yml
+
+  build:
+    name: Construire les six artefacts
+    needs: valider
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.garde.outputs.version }}
+      # La version du BAC A SABLE est une sortie A PART depuis le 2026-09-09 :
+      # elle porte le rang de tentative, donc elle DIFFERE de la production.
+      # L'attente sur l'index de TestPyPI cherche un nom de fichier, et ce nom
+      # se construit sur celle-ci -- avec la version de production, elle
+      # guetterait un fichier qui ne sera jamais televerse et sortirait au
+      # bout de ses soixante lectures.
+      version_bac_a_sable: ${{ steps.garde.outputs.version_bac_a_sable }}
+      depot_de_distribution: ${{ steps.lieu.outputs.depot_de_distribution }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Jamais `lfs: true` : il tire TOUT le LFS de la branche (718 Mo
+          # mesures) pour un fichier dont la publication n'a aucun besoin.
+          lfs: false
+
+      # Ou tourne-t-on ? Une release de PRODUCTION n'a de sens que depuis le
+      # depot de distribution. Le slug est lu dans `scripts/public-repo.env`,
+      # source unique de verite, plutot qu'ecrit ici une deuxieme fois.
+      - name: Reconnaitre le depot qui execute ce run
+        id: lieu
+        env:
+          DEPOT_COURANT: ${{ github.repository }}
+        run: |
+          set -eu
+          # shellcheck disable=SC1091
+          . ./scripts/public-repo.env
+          if [ "${MMU_PUBLIC_REPO_SLUG}" = "TBD" ]; then
+            echo "::error::scripts/public-repo.env vaut encore TBD."
+            echo "  Sans slug, ce workflow ne peut pas savoir si le depot qui"
+            echo "  l'execute est celui d'ou une release de production part."
+            exit 1
+          fi
+          if [ "${DEPOT_COURANT}" = "${MMU_PUBLIC_REPO_SLUG}" ]; then
+            echo "depot_de_distribution=oui" >> "${GITHUB_OUTPUT}"
+            echo "Depot de distribution : une release de production est possible d'ici."
+          else
+            echo "depot_de_distribution=non" >> "${GITHUB_OUTPUT}"
+            echo "::notice::${DEPOT_COURANT} n'est pas le depot de distribution"
+            echo "  (${MMU_PUBLIC_REPO_SLUG}). La sequence s'arretera apres"
+            echo "  TestPyPI : aucune publication sur le vrai PyPI d'ici, meme"
+            echo "  sur un tag. C'est le regime de REPETITION."
+          fi
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer l'outil de construction
+        run: python -m pip install --upgrade build
+
+      # SIX artefacts : une roue par distribution, un sdist pour les deux
+      # distributions du coeur seulement, et DEUX jeux -- production et bac a
+      # sable. Ce n'est PAS « une roue et un sdist par distribution » : depuis
+      # `EPIC8-ARB-18`, `mmu-tui` et `mmu-tui-test` partent en ROUE SEULE, et
+      # la garde REFUSE un sdist trouve dans leur dossier. La redaction
+      # precedente enoncait ici la regle que la garde abroge plus bas, et
+      # suggerait exactement le geste qu'elle interdit. Les deux jeux se construisent dans le meme
+      # run parce que la release les enchaine : construire le jeu de test au
+      # moment de publier sur PyPI reviendrait a publier autre chose que ce qui
+      # a ete valide.
+      #
+      # Les dossiers restent SEPARES jusqu'a la publication : `gh-action-pypi-
+      # publish` televerse un DOSSIER, un `dist/` unique publierait plusieurs
+      # paquets d'un coup et reintroduirait exactement le desordre que cette
+      # chaine ferme.
+      #
+      # LE JEU DE PRODUCTION SE CONSTRUIT EN PREMIER, parce que le renommage
+      # modifie les deux `pyproject.toml` en place et qu'on ne revient pas en
+      # arriere.
+      #
+      # `--wheel` SUR `mmu-tui` SEULEMENT (EPIC8-ARB-18, 2026-09-07). Sans lui,
+      # `build` construit le sdist PUIS la roue DEPUIS ce sdist -- et le sdist
+      # de mmu-tui ne contient que `packaging/mmu-tui/`, six fichiers, aucune
+      # ligne de code : le `force-include` qui vise `../../src/` n'a plus rien
+      # a inclure et la ROUE N'EST PAS PRODUITE. Le message d'echec ci-dessous
+      # raconte les deux pannes mesurees ce jour-la ; il reste la parce que
+      # l'une d'elles reviendra si quelqu'un recree les liens symboliques.
+      #
+      # `mmu-cli` se construit par `python -m build` NU : il garde sa roue ET
+      # son sdist. La dispense est nommee par distribution, jamais globale.
+      - name: Construire les deux distributions de PRODUCTION
+        run: |
+          set -eu
+          if [ ! -f packaging/mmu-tui/pyproject.toml ]; then
+            echo "::error::packaging/mmu-tui/pyproject.toml est absent."
+            echo "  La distribution mmu-tui n'a pas de declaration : rien a construire."
+            exit 1
+          fi
+          python -m build --outdir dist/cli . || {
+            echo "::error::La construction de mmu-cli a echoue."
+            exit 1
+          }
+          python -m build --wheel --outdir dist/tui packaging/mmu-tui || {
+            echo "::error::La construction de mmu-tui a echoue."
+            echo "  LA PANNE ATTEIGNABLE ICI est celle du FORCE-INCLUDE, et"
+            echo "  son message est :"
+            echo "    Forced include not found: <...>/src/mixed_media_utility/tui"
+            echo "  Cette construction passe par --wheel : elle lit l ARBRE DE TRAVAIL,"
+            echo "  pas un sdist. Le force-include de"
+            echo "  packaging/mmu-tui/pyproject.toml vise"
+            echo "  ../../src/mixed_media_utility/tui, qui doit exister ICI."
+            echo "  Il echoue si ce chemin a ete deplace, renomme, ou si le"
+            echo "  checkout est partiel (sparse checkout, sous-module absent)."
+            echo "  Deux issues : retablir le chemin, ou corriger la"
+            echo "  declaration force-include qui le vise."
+            echo ""
+            echo "  DEUX PANNES HISTORIQUES, mesurees le 2026-09-07, ne sont"
+            echo "  PLUS atteignables par cette commande, et c est voulu :"
+            echo "  LinkOutsideDestinationError (les liens symboliques de"
+            echo "  packaging/mmu-tui/ refuses par le filtre data de tarfile)"
+            echo "  et la roue construite depuis un sdist creux. Les deux"
+            echo "  passaient par la construction du SDIST, que --wheel ne fait"
+            echo "  plus (EPIC8-ARB-18). Si l une d elles reapparait, c est que"
+            echo "  --wheel a ete retire de la ligne ci-dessus."
+            exit 1
+          }
+          ls -l dist/cli dist/tui
+
+      # Renommage TestPyPI : DEUX distributions, DEUX commandes console, et
+      # l'EPINGLAGE INTERNE. Ce dernier est le point que l'ancienne redaction de
+      # ce fichier ne pouvait pas avoir : avec un seul paquet, il n'existait
+      # pas. Sans lui, `mmu-tui-test` dependrait de `mmu-cli` -- le paquet REEL
+      # --, et une installation de test tirerait de la production.
+      #
+      # Chaque substitution est SUIVIE D'UN TEMOIN. Un `sed` qui ne remplace
+      # rien ne rend aucune erreur : il sort a zero, la roue se construit sous
+      # son nom de production, et rien ne le signale avant l'upload. C'est le
+      # controle qui nomme la panne, pas `sed`.
+      - name: Renommer les deux distributions pour TestPyPI
+        run: |
+          set -eu
+
+          substituer() {
+            fichier="$1"
+            expression="$2"
+            temoin="$3"
+            if [ ! -f "${fichier}" ]; then
+              echo "::error::${fichier} est absent."
+              echo "  La scission en deux distributions (story 8.5) n'est pas en place :"
+              echo "  la racine doit declarer mmu-cli, packaging/mmu-tui/ doit declarer mmu-tui."
+              exit 1
+            fi
+            sed -i "${expression}" "${fichier}"
+            if ! grep -qF "${temoin}" "${fichier}"; then
+              echo "::error::Renommage TestPyPI sans effet dans ${fichier}."
+              echo "  Attendu apres substitution : « ${temoin} »"
+              echo "  Expression appliquee       : « ${expression} »"
+              echo "  Un sed qui ne remplace rien sort a zero : c'est ce temoin qui le dit."
+              exit 1
+            fi
+          }
+
+          # 1 et 2 -- la distribution du coeur et sa commande console.
+          substituer pyproject.toml \
+            's/^name = "mmu-cli"$/name = "mmu-cli-test"/' \
+            'name = "mmu-cli-test"'
+          substituer pyproject.toml \
+            's/^mmu = /mmu-test = /' \
+            'mmu-test = '
+
+          # 3 et 4 -- la distribution de l'interface et sa commande console.
+          substituer packaging/mmu-tui/pyproject.toml \
+            's/^name = "mmu-tui"$/name = "mmu-tui-test"/' \
+            'name = "mmu-tui-test"'
+          substituer packaging/mmu-tui/pyproject.toml \
+            's/^mmu-tui = /mmu-tui-test = /' \
+            'mmu-tui-test = '
+
+          # 5 -- l'EPINGLAGE INTERNE. Sans cette ligne, le paquet de test
+          # dependrait du paquet de production.
+          #
+          # CE QUE CETTE SUBSTITUTION NE COUVRE PAS, dit plutot que tu : elle
+          # attend la forme SERREE `"mmu-cli==X"`. Mesure du 2026-09-07 sur une
+          # copie de la declaration reelle -- reecrite en `"mmu-cli == X"`,
+          # forme PEP 508 parfaitement legale --, le motif ne mord plus. Elle
+          # echoue alors BRUYAMMENT, par son temoin, avant toute construction ;
+          # et si elle passait, la garde de version ci-dessous la rattraperait
+          # depuis les metadonnees de la roue. Deux filets, aucun silence.
+          substituer packaging/mmu-tui/pyproject.toml \
+            's/"mmu-cli==/"mmu-cli-test==/' \
+            '"mmu-cli-test=='
+
+
+          # 6 et 7 -- LA VERSION DU BAC A SABLE, ET C'EST CE QUI REND UNE
+          # REPUBLICATION POSSIBLE.
+          #
+          # Mesure du 2026-09-09, payee sur une release reelle : TestPyPI
+          # refuse un nom de fichier deja employe, ET IL LE REFUSE ENCORE
+          # APRES QUE LA RELEASE A ETE SUPPRIMEE -- « This filename was
+          # previously used by a file that has since been deleted » (400).
+          # Supprimer ne libere pas un nom, ca le BRULE. Republier
+          # `mmu_cli_test-0.1.0` etait donc devenu impossible a jamais, et la
+          # release entiere avec lui.
+          #
+          # Le jeu de bac a sable porte desormais un suffixe `.postN` propre a
+          # la TENTATIVE. Le nom de fichier est neuf a chaque fois : la
+          # collision cesse d'etre une chose qu'on rattrape pour devenir une
+          # chose qui n'arrive pas.
+          #
+          # `N` derive du COUPLE (numero de run, tentative), pas du seul
+          # numero : un rejeu garde le numero de run et n'incremente que la
+          # tentative, donc le seul numero rendrait deux fois le meme nom --
+          # c'est-a-dire exactement le defaut qu'on ferme. Et c'est une
+          # multiplication, pas une concatenation : « run 5, tentative 11 » et
+          # « run 51, tentative 1 » donneraient tous deux `511` en concatenant.
+          #
+          # `.postN` plutot que `.devN`, et c'est MESURE : pip installe un
+          # post-release sans `--pre`, alors qu'il ecarte un pre-release des
+          # qu'une version finale existe. La garde d'installation, qui
+          # n'epingle rien, continue donc de recevoir ce que l'index sert.
+          #
+          # Le jeu de PRODUCTION, lui, est deja construit a ce stade : cette
+          # reecriture ne peut pas l'atteindre.
+          SOURCE_DE_VERSION="src/mixed_media_utility/__init__.py"
+          # DEUX causes, DEUX messages -- et le test d'existence vient AVANT le
+          # `sed`, sinon `set -e` fait sortir sur « sed: can't read ... », qui
+          # ne dit ni ce qu'on cherchait ni pourquoi. Mesure : c'est ce que la
+          # premiere redaction de cette etape rendait.
+          if [ ! -f "${SOURCE_DE_VERSION}" ]; then
+            echo "::error::${SOURCE_DE_VERSION} est absent."
+            echo "  C'est la source UNIQUE de version des deux distributions"
+            echo "  (EPIC8-ARB-10), et celle d'ou le bac a sable tire son rang"
+            echo "  de tentative. Sans elle, aucun nom de fichier neuf."
+            exit 1
+          fi
+          VERSION_PRODUCTION="$(sed -n 's/^__version__ = "\(.*\)"$/\1/p' \
+              "${SOURCE_DE_VERSION}")"
+          if [ -z "${VERSION_PRODUCTION}" ]; then
+            echo "::error::Aucun __version__ dans ${SOURCE_DE_VERSION}."
+            echo "  Le fichier existe mais ne porte pas la ligne attendue,"
+            echo "  « __version__ = \"X.Y.Z\" » en colonne zero."
+            exit 1
+          fi
+          RANG=$(( ${GITHUB_RUN_NUMBER} * 100 + ${GITHUB_RUN_ATTEMPT} ))
+          VERSION_BAC_A_SABLE="${VERSION_PRODUCTION}.post${RANG}"
+
+          substituer "${SOURCE_DE_VERSION}" \
+            "s/^__version__ = \"${VERSION_PRODUCTION}\"$/__version__ = \"${VERSION_BAC_A_SABLE}\"/" \
+            "__version__ = \"${VERSION_BAC_A_SABLE}\""
+          substituer packaging/mmu-tui/pyproject.toml \
+            "s/\"mmu-cli-test==${VERSION_PRODUCTION}\"/\"mmu-cli-test==${VERSION_BAC_A_SABLE}\"/" \
+            "\"mmu-cli-test==${VERSION_BAC_A_SABLE}\""
+
+          echo "Bac a sable : ${VERSION_PRODUCTION} -> ${VERSION_BAC_A_SABLE}"
+          echo "Les deux distributions, les deux commandes et l'epinglage sont renommes."
+
+      - name: Construire les deux distributions du BAC A SABLE
+        run: |
+          set -eu
+          python -m build --outdir dist/cli-test . || {
+            echo "::error::La construction de mmu-cli-test a echoue."
+            exit 1
+          }
+          python -m build --wheel --outdir dist/tui-test packaging/mmu-tui || {
+            echo "::error::La construction de mmu-tui-test a echoue."
+            echo "  Meme piege de liens symboliques que ci-dessus si le message"
+            echo "  parle de LinkOutsideDestinationError."
+            exit 1
+          }
+          ls -l dist/cli-test dist/tui-test
+
+      # LA GARDE. Quatre valeurs doivent s'accorder et rien ne les compare
+      # autrement : la version de mmu-cli, celle de mmu-tui, la version
+      # epinglee par `mmu-cli==X` dans les metadonnees de mmu-tui, et le tag.
+      # Elle lit les ARTEFACTS CONSTRUITS, pas les fichiers sources : c'est ce
+      # qui part sur l'index qui doit s'accorder, pas ce qui est ecrit a cote.
+      # Et elle les lit pour les DEUX jeux -- production et bac a sable --,
+      # parce que le second est ce qui valide le premier.
+      - name: Garde de version -- les quatre valeurs s'accordent ou rien ne part
+        id: garde
+        env:
+          EVENEMENT: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          python3 - <<'PYTHON'
+          import email.parser
+          import os
+          import pathlib
+          import re
+          import sys
+          import tarfile
+          import zipfile
+
+          ecarts = []
+
+          #: Plafond PAR FICHIER de PyPI et de TestPyPI : 100 MiB. Au-dela,
+          #: l'index rend un 400 apres avoir televerse tout le fichier -- et,
+          #: sur une sequence a deux distributions, il l'aurait deja accepte
+          #: pour l'autre. Mieux vaut refuser ici, en nommant le poids.
+          LIMITE_PAR_FICHIER = 100 * 1024 * 1024
+
+          #: Les distributions publiees en ROUE SEULE -- `EPIC8-ARB-18`,
+          #: 2026-09-07, BORNEE a la version ci-dessous.
+          #:
+          #: Motif mesure : `python -m build packaging/mmu-tui` echoue
+          #: structurellement. `build` construit le sdist PUIS la roue DEPUIS
+          #: ce sdist ; le sdist de mmu-tui ne contient que
+          #: `packaging/mmu-tui/` -- six fichiers, aucune ligne de code --,
+          #: donc le `force-include` qui vise `../../src/mixed_media_utility/
+          #: tui` n'a plus rien a inclure. `--wheel` seul reussit : roue de
+          #: 921 704 octets, 52 modules, `Requires-Dist: mmu-cli==0.1.0`.
+          #:
+          #: LA DISPENSE SE NOMME PAR DISTRIBUTION, et c'est le point. Le
+          #: remede evident -- assouplir le comptage en `len(sources) <= 1` --
+          #: rendrait `mmu-cli` publiable SANS sdist, et la CI resterait verte.
+          #: Personne ne le verrait avant qu'un `pip install --no-binary` ne
+          #: le decouvre chez l'utilisateur.
+          #:
+          #: Elle se RETIRE : faire entrer `src/mixed_media_utility/tui` dans
+          #: le sdist de mmu-tui (ou restructurer `packaging/`) rend le sdist
+          #: exploitable, et le nom sort d'ici. La borne est ce qui empeche
+          #: cette liste de devenir un etat permanent.
+          ROUE_SEULE = {"mmu-tui", "mmu-tui-test"}
+          BORNE_DE_LA_DISPENSE = "0.1.0"
+
+          def normalise(nom):
+              """Nom de projet normalise, PEP 503."""
+              return re.sub(r"[-_.]+", "-", nom).strip().lower()
+
+          def artefacts(dossier, role, nom):
+              """La roue d'une distribution, et son sdist SI elle en a un.
+
+              Exactement UNE roue dans tous les cas. Pour le sdist, le cardinal
+              attendu depend de la distribution : UN, sauf pour celles que
+              `ROUE_SEULE` nomme, qui en attendent ZERO -- exigé, pas tolere.
+
+              Un sdist trouve la ou on n'en attend aucun n'est pas un bonus :
+              c'est la coquille de six fichiers que `--wheel` existe pour ne
+              pas produire, et elle se televerse tres bien.
+              """
+              chemin = pathlib.Path(dossier)
+              roues = sorted(chemin.glob("*.whl"))
+              sources = sorted(chemin.glob("*.tar.gz"))
+              dispensee = normalise(nom) in {normalise(n) for n in ROUE_SEULE}
+              attendus = 0 if dispensee else 1
+              if len(roues) != 1 or len(sources) != attendus:
+                  print(f"::error::{role} : attendu UNE roue et {attendus} "
+                        f"sdist dans {dossier}, trouve {len(roues)} roue(s) et "
+                        f"{len(sources)} sdist(s).")
+                  # LE MESSAGE SUIT LE CARDINAL FAUTIF, pas le statut de la
+                  # distribution. La premiere redaction branchait sur
+                  # `dispensee` : quand la ROUE manquait -- c'est-a-dire la
+                  # panne du `force-include` elle-meme, celle pour laquelle
+                  # `--wheel` existe --, elle imprimait « trouve 0 roue(s) et
+                  # 0 sdist(s) » suivi de trois lignes expliquant la
+                  # declaration du sdist. L'operateur partait sur la mauvaise
+                  # piste au pire moment. Mesure par la couche 2 de la revue
+                  # 8.9.
+                  if len(roues) != 1:
+                      print(f"  C'est la ROUE qui manque ou qui est en double, "
+                            f"pas l'archive source. Une roue absente sur {nom} "
+                            "est la signature d'une construction qui a echoue "
+                            "sans rendre un code d'erreur -- typiquement un "
+                            "`force-include` qui ne trouve rien. Deux roues, "
+                            "c'est deux versions dans le meme dossier, et "
+                            "`gh-action-pypi-publish` televerse le DOSSIER.")
+                  elif dispensee:
+                      print(f"  {nom} est publie en ROUE SEULE "
+                            f"(EPIC8-ARB-18, borne a la "
+                            f"{BORNE_DE_LA_DISPENSE}) : sa construction passe "
+                            "par `python -m build --wheel`, qui ne produit pas "
+                            "d'archive source. Un sdist trouve ici est la "
+                            "coquille sans une ligne de code que le "
+                            "`force-include` de mmu-tui rend inexploitable.")
+                  else:
+                      print(f"  {nom} n'est PAS dispensee de sdist : elle "
+                            "garde sa roue ET son archive source.")
+                  sys.exit(1)
+              return roues[0], (sources[0] if sources else None)
+
+          def poids_admissible(chemins):
+              for chemin in chemins:
+                  taille = chemin.stat().st_size
+                  if taille > LIMITE_PAR_FICHIER:
+                      ecarts.append(
+                          f"{chemin.name} pese {taille / 1048576:.1f} Mio, au-dela "
+                          f"du plafond de {LIMITE_PAR_FICHIER // 1048576} Mio par "
+                          "fichier de PyPI : l'index refusera le televersement")
+
+          def sdist_non_creux(source, role):
+              """Un sdist qui ne porte aucun module n'est pas une source.
+
+              Mesure du 2026-09-07 : le sdist de `mmu-tui` sortait a 20 Ko et
+              SIX fichiers -- pyproject, LICENSE, README, notices, .gitignore,
+              PKG-INFO --, sans une ligne de code. Il se televerse tres bien.
+              Il ne se construit pas : `pip install --no-binary` echoue chez
+              l'utilisateur, longtemps apres la release, sur un
+              « Forced include not found ».
+              """
+              try:
+                  with tarfile.open(source) as archive:
+                      modules = [n for n in archive.getnames()
+                                 if n.endswith(".py")]
+              except Exception as souci:
+                  ecarts.append(f"{source.name} est illisible comme archive "
+                                f"({souci.__class__.__name__}) : ce n'est pas "
+                                "un sdist exploitable")
+                  return
+              if not modules:
+                  ecarts.append(
+                      f"{source.name} ({role}) ne contient AUCUN fichier .py : "
+                      "c'est une coquille, pas une source. Un force-include qui "
+                      "vise hors du sdist ne trouve plus rien quand la roue se "
+                      "construit depuis lui")
+
+          def roue_non_creuse(roue, role):
+              """Une roue qui ne porte aucun module n'est pas une distribution.
+
+              LE SYMETRIQUE DE `sdist_non_creux`, ET IL MANQUAIT. Tant que
+              `mmu-tui` produisait un sdist, la coquille se voyait la ; depuis
+              qu'`EPIC8-ARB-18` la publie en ROUE SEULE, la roue est le SEUL
+              artefact de l'interface -- et plus rien n'en lisait le contenu.
+              La couche 1 de la revue 8.9 l'a mesure : les quatre roues du banc
+              ne portaient que `METADATA`, zero `.py`, et la garde rendait 0.
+
+              C'est la distribution dont le contenu est le plus fragile : il
+              vient d'un `force-include` qui vise HORS de la racine du paquet.
+              Quand il ne trouve rien, il n'echoue pas bruyamment -- il produit
+              une roue valide et vide, qui se televerse tres bien et qui
+              s'installe chez l'utilisateur sans poser une ligne de code.
+              """
+              try:
+                  with zipfile.ZipFile(roue) as archive:
+                      noms = archive.namelist()
+              except Exception as souci:
+                  ecarts.append(f"{roue.name} est illisible comme roue "
+                                f"({souci.__class__.__name__})")
+                  return
+              # Les `.py` de `.dist-info/` ne comptent pas : ce sont les
+              # metadonnees, presentes meme dans une coquille.
+              modules = [n for n in noms
+                         if n.endswith(".py") and ".dist-info/" not in n]
+              if not modules:
+                  ecarts.append(
+                      f"{roue.name} ({role}) ne contient AUCUN module .py : "
+                      "c'est une coquille, pas une distribution. Sur mmu-tui "
+                      "c'est la signature d'un `force-include` qui n'a rien "
+                      "trouve -- il ne crie pas, il produit une roue vide")
+
+          def metadonnees(roue):
+              with zipfile.ZipFile(roue) as archive:
+                  noms = [n for n in archive.namelist()
+                          if n.endswith(".dist-info/METADATA")]
+                  if len(noms) != 1:
+                      print(f"::error::{roue.name} porte {len(noms)} fichier(s) "
+                            "METADATA, attendu exactement 1.")
+                      sys.exit(1)
+                  brut = archive.read(noms[0]).decode("utf-8", "replace")
+              return email.parser.Parser().parsestr(brut)
+
+          def exigence(ligne):
+              """(nom normalise, borne sans espaces) d'un `Requires-Dist`."""
+              ligne = ligne.split(";", 1)[0].strip()
+              trouve = re.match(r"^([A-Za-z0-9._-]+)\s*(\[[^\]]*\])?\s*(.*)$", ligne)
+              if not trouve:
+                  return "", ""
+              return normalise(trouve.group(1)), trouve.group(3).replace(" ", "")
+
+          #: Les deux jeux, et ce que chacun attend. Le jeu de bac a sable porte
+          #: en plus une frontiere NEGATIVE : il ne depend jamais du reel.
+          JEUX = (
+              ("production", "mmu-cli", "mmu-tui",
+               os.environ.get("DOSSIER_CLI", "dist/cli"),
+               os.environ.get("DOSSIER_TUI", "dist/tui")),
+              ("bac a sable", "mmu-cli-test", "mmu-tui-test",
+               os.environ.get("DOSSIER_CLI_TEST", "dist/cli-test"),
+               os.environ.get("DOSSIER_TUI_TEST", "dist/tui-test")),
+          )
+
+          pieces = []
+          for role, nom_cli, nom_tui, dossier_cli, dossier_tui in JEUX:
+              roue_cli, source_cli = artefacts(dossier_cli,
+                                               f"{role} / mmu-cli", nom_cli)
+              roue_tui, source_tui = artefacts(dossier_tui,
+                                               f"{role} / mmu-tui", nom_tui)
+              pieces.append((role, nom_cli, nom_tui, roue_cli, source_cli,
+                             roue_tui, source_tui))
+
+          # Le poids se juge AVANT de lire quoi que ce soit : un fichier que
+          # l'index refusera ne devient pas publiable parce que ses
+          # metadonnees sont justes, et il ne sert a rien de les lire.
+          for role, nom_cli, nom_tui, roue_cli, source_cli, roue_tui, source_tui \
+                  in pieces:
+              poids_admissible([c for c in (roue_cli, source_cli, roue_tui,
+                                            source_tui) if c is not None])
+          if ecarts:
+              print("::error::Artefact(s) au-dela du plafond de l'index -- "
+                    "rien n'est publie.")
+              for ecart in ecarts:
+                  print(f"::error::  - {ecart}")
+              print("  Deux issues : reduire le contenu du sdist dans la "
+                    "declaration qui le produit, ou demander a PyPI un "
+                    "relevement de plafond pour ce projet.")
+              sys.exit(1)
+
+          # Une ROUE se lit toujours : c'est le seul artefact que TOUTES les
+          # distributions ont, et le seul que `mmu-tui` a encore.
+          for role, nom_cli, nom_tui, roue_cli, _, roue_tui, _ in pieces:
+              roue_non_creuse(roue_cli, f"{role} / {nom_cli}")
+              roue_non_creuse(roue_tui, f"{role} / {nom_tui}")
+          if ecarts:
+              print("::error::Roue(s) sans un seul module -- rien n'est publie.")
+              for ecart in ecarts:
+                  print(f"::error::  - {ecart}")
+              print("  Une roue creuse s'installe sans erreur et ne pose "
+                    "aucune commande : la panne se decouvre chez "
+                    "l'utilisateur, longtemps apres la release.")
+              sys.exit(1)
+
+          # Un sdist se LIT, une fois qu'on sait qu'il tient dans l'index.
+          for role, nom_cli, nom_tui, _, source_cli, _, source_tui in pieces:
+              # Une distribution en ROUE SEULE n'a pas d'archive a lire :
+              # `artefacts` a deja refuse le cas ou elle en aurait une.
+              if source_cli is not None:
+                  sdist_non_creux(source_cli, f"{role} / {nom_cli}")
+              if source_tui is not None:
+                  sdist_non_creux(source_tui, f"{role} / {nom_tui}")
+          if ecarts:
+              print("::error::Archive(s) source inexploitable(s) -- rien n'est "
+                    "publie.")
+              for ecart in ecarts:
+                  print(f"::error::  - {ecart}")
+              print("  Un sdist creux ne se voit qu'a l'installation, chez "
+                    "l'utilisateur, longtemps apres la release.")
+              sys.exit(1)
+
+          versions = {}
+          for role, nom_cli, nom_tui, roue_cli, _, roue_tui, _ in pieces:
+              meta_cli = metadonnees(roue_cli)
+              meta_tui = metadonnees(roue_tui)
+
+              # 1 -- chaque roue porte le nom que son jeu attend.
+              for meta, attendu, quoi in ((meta_cli, nom_cli, "coeur"),
+                                          (meta_tui, nom_tui, "interface")):
+                  obtenu = meta.get("Name", "")
+                  if normalise(obtenu) != normalise(attendu):
+                      ecarts.append(f"[{role}] la roue du {quoi} se nomme "
+                                    f"« {obtenu} » au lieu de « {attendu} »")
+
+              version_cli = (meta_cli.get("Version") or "").strip()
+              version_tui = (meta_tui.get("Version") or "").strip()
+              versions[role] = version_cli
+
+              # 2 -- les deux distributions d'un jeu portent la MEME version.
+              if version_cli != version_tui:
+                  ecarts.append(f"[{role}] {nom_cli} est en {version_cli!r} et "
+                                f"{nom_tui} en {version_tui!r} : deux versions "
+                                "desaccordees")
+
+              # 3 -- l'epinglage interne vise le bon paquet ET la bonne version.
+              exigences = [exigence(l)
+                           for l in (meta_tui.get_all("Requires-Dist") or [])]
+              epinglages = [borne for nom, borne in exigences
+                            if nom == normalise(nom_cli)]
+              if not epinglages:
+                  ecarts.append(f"[{role}] {nom_tui} n'exige pas « {nom_cli} » : "
+                                f"exigences vues = {[n for n, _ in exigences]}")
+              elif epinglages[0] != f"=={version_cli}":
+                  ecarts.append(f"[{role}] {nom_tui} epingle "
+                                f"« {nom_cli}{epinglages[0]} » alors que la roue "
+                                f"publiee est en {version_cli}")
+
+              # 4 -- frontiere NEGATIVE : le jeu de bac a sable ne depend
+              # JAMAIS d'un paquet de production.
+              if nom_cli.endswith("-test"):
+                  production = normalise(nom_cli[: -len("-test")])
+                  if any(nom == production for nom, _ in exigences):
+                      ecarts.append(f"[{role}] {nom_tui} depend de "
+                                    f"« {production} », le paquet de PRODUCTION")
+
+          # 5 -- les deux jeux portent la meme version A UN SUFFIXE `.postN`
+          # PRES, et ce suffixe est la seule derive tolerable.
+          #
+          # L'exigence d'origine etait l'EGALITE STRICTE, et son motif tient
+          # toujours : c'est ce qui fait du passage par TestPyPI une validation
+          # de la release, et non un essai a cote. Ce qui l'a fait ceder est
+          # mesure -- le 2026-09-09, TestPyPI a refuse `mmu_cli_test-0.1.0`
+          # parce que ce nom de fichier avait DEJA servi, et un nom brule ne se
+          # rend pas : republier une meme version y est impossible A JAMAIS.
+          # L'egalite stricte rendait donc toute republication impossible, ce
+          # qui est un prix plus lourd que ce qu'elle achetait.
+          #
+          # LA TOLERANCE EST NOMMEE, PAS OUVERTE. Le bac a sable doit valoir
+          # `<production>.post<chiffres>` -- rien d'autre. Un jeu en `0.2.0`
+          # quand la production est en `0.1.0`, un `.dev`, un `+local`, un
+          # suffixe vide : tout cela reste un ecart. C'est la difference entre
+          # « les deux jeux peuvent differer » et « ils different d'un rang de
+          # tentative », et c'est cette difference qui garde la validation
+          # honnete.
+          version = versions.get("production", "")
+          bac = versions.get("bac a sable", "")
+          if version and bac:
+              attendu = re.fullmatch(re.escape(version) + r"\.post\d+", bac)
+              if not attendu:
+                  ecarts.append(
+                      f"le jeu de bac a sable porte {bac!r} alors que la "
+                      f"production porte {version!r} : seule la forme "
+                      f"« {version}.post<chiffres> » est toleree, et elle "
+                      "l'est pour que TestPyPI accepte un nom de fichier neuf "
+                      "a chaque tentative")
+          elif len(set(versions.values())) > 1:
+              ecarts.append(f"les deux jeux ne portent pas la meme version : "
+                            f"{versions}")
+
+          # 6 -- le tag. Absent hors d'un `push` de tag : la garde compare alors
+          # les valeurs internes, et le dit.
+          if os.environ.get("EVENEMENT") == "push":
+              reference = os.environ.get("REF_NAME", "")
+              version_tag = reference[1:] if reference.startswith("v") else reference
+              if version_tag != version:
+                  ecarts.append(f"le tag annonce {version_tag!r} et les roues "
+                                f"portent {version!r}")
+          else:
+              print("Declenchement manuel : aucun tag a confronter, les valeurs "
+                    "internes sont comparees entre elles.")
+
+          # 7 -- LA DISPENSE EXPIRE A SA BORNE, et ce controle est ce qui
+          # rend la borne autre chose qu'un commentaire. `EPIC8-ARB-18` ne
+          # l'accorde pas seulement « nommee » : il l'accorde « bornee, ET
+          # elle se retire, elle ne se perennise pas ». La premiere redaction
+          # n'avait retenu que la moitie nommante : `BORNE_DE_LA_DISPENSE`
+          # n'etait citee que dans un message d'ECHEC, si bien qu'une 0.2.0
+          # serait partie en roue seule sans un mot.
+          #
+          # Les TROIS couches de la revue 8.9 l'ont trouve independamment --
+          # les deux premieres sans lire la story --, chacune par une sonde
+          # differente, et chacune a mesure `returncode 0` sur une version
+          # arbitraire (0.2.0 et 9.9.9). C'est le meme motif que la 5.0, celui
+          # qui justifie les trois couches dans CLAUDE.md.
+          def rang_de_version(brute):
+              """(0, 1, 0) pour « 0.1.0 ». S'arrete au premier segment non numerique.
+
+              « 0.1.0rc1 » rend donc (0, 1, 0) et reste sous la borne : une
+              pre-publication de la version dispensee l'est aussi.
+              """
+              rang = []
+              for segment in brute.split("."):
+                  chiffres = ""
+                  for caractere in segment:
+                      if not caractere.isdigit():
+                          break
+                      chiffres += caractere
+                  if not chiffres:
+                      break
+                  rang.append(int(chiffres))
+              return tuple(rang)
+
+          if version and ROUE_SEULE:
+              if rang_de_version(version) > rang_de_version(BORNE_DE_LA_DISPENSE):
+                  ecarts.append(
+                      f"la version publiee est {version}, au-dela de la borne "
+                      f"{BORNE_DE_LA_DISPENSE} de la dispense de sdist. "
+                      f"{sorted(ROUE_SEULE)} partirait encore en ROUE SEULE : "
+                      "c'est exactement la perennisation qu'EPIC8-ARB-18 "
+                      "interdit. Deux issues, jamais un blocage sec -- soit "
+                      "faire entrer le code dans le sdist de mmu-tui et RETIRER "
+                      "son nom de ROUE_SEULE, soit reporter deliberement la "
+                      "borne apres avoir retranche l'arbitrage")
+
+          if ecarts:
+              print("::error::Versions desaccordees -- rien n'est publie.")
+              for ecart in ecarts:
+                  print(f"::error::  - {ecart}")
+              print("  mmu-tui epingle mmu-cli a l'unite pres : publier sur un "
+                    "desaccord produit une release ininstallable.")
+              sys.exit(1)
+
+          print(f"Les quatre valeurs s'accordent sur {version}, dans les deux jeux.")
+          sortie = os.environ.get("GITHUB_OUTPUT")
+          if sortie:
+              with open(sortie, "a", encoding="utf-8") as flux:
+                  flux.write(f"version={version}\n")
+                  flux.write(f"version_bac_a_sable={bac}\n")
+          PYTHON
+
+      - name: Publier les artefacts du coeur
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-cli
+          path: dist/cli/*
+          if-no-files-found: error
+
+      - name: Publier les artefacts de l'interface
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-tui
+          path: dist/tui/*
+          if-no-files-found: error
+
+      - name: Publier les artefacts du coeur (bac a sable)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-cli-test
+          path: dist/cli-test/*
+          if-no-files-found: error
+
+      - name: Publier les artefacts de l'interface (bac a sable)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-tui-test
+          path: dist/tui-test/*
+          if-no-files-found: error
+
+  # ETAPE 2 DE LA SEQUENCE -- toujours jouee, sur les deux depots. C'est le
+  # test qui precede la release, et c'est aussi ce qu'un declenchement manuel
+  # depuis `-dev` fait a lui seul.
+  publish:
+    name: Publier sur TestPyPI (mmu-cli-test puis mmu-tui-test)
+    needs: build
+    runs-on: ubuntu-latest
+    environment: testpypi
+    permissions:
+      id-token: write
+    steps:
+      - name: Recuperer les artefacts du coeur (bac a sable)
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-cli-test
+          path: dist/cli-test
+
+      - name: Recuperer les artefacts de l'interface (bac a sable)
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-tui-test
+          path: dist/tui-test
+
+      - name: Publier mmu-cli-test sur TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/cli-test
+          repository-url: https://test.pypi.org/legacy/
+
+      - name: Diagnostic si TestPyPI a refuse mmu-cli-test
+        if: failure()
+        env:
+          DEPOT_COURANT: ${{ github.repository }}
+        run: |
+          echo "::error::TestPyPI a refuse mmu-cli-test."
+          echo "  Si le message parle d'OIDC ou de « trusted publisher », la"
+          echo "  ligne manquante est a creer -- et ce n'est PAS la meme page"
+          echo "  selon que le projet existe deja ou non :"
+          echo "    projet DEJA CREE  https://test.pypi.org/manage/project/mmu-cli-test/settings/publishing/"
+          echo "    projet INEXISTANT https://test.pypi.org/manage/account/publishing/"
+          echo "  Les cinq champs, dans l'ordre du formulaire :"
+          echo "    projet          mmu-cli-test"
+          echo "    proprietaire    GanTiz"
+          echo "    depot           ${DEPOT_COURANT#*/}"
+          echo "    workflow        publish.yml   (le NOM DE FICHIER, pas le name:)"
+          echo "    environment     testpypi"
+          echo "  Une ligne par DEPOT : le depot de travail et le depot public"
+          echo "  publient tous deux sur TestPyPI, et PyPI ne les confond pas."
+          echo "  LA PAGE DE COMPTE N ACCEPTE QU UN publicateur EN ATTENTE par"
+          echo "  (proprietaire, depot, workflow, environment) : mmu-cli-test et"
+          echo "  mmu-tui-test s y excluent l un l autre -- mesure le 2026-09-07,"
+          echo "  sur refus de TestPyPI. C est pourquoi les quatre projets"
+          echo "  s AMORCENT par jeton (EPIC8-ARB-20) : une fois crees, seule la"
+          echo "  page du PROJET sert, et elle n a pas cette contrainte."
+
+      - name: Attendre que mmu-cli-test soit resolvable sur l'index
+        env:
+          PAQUET: mmu-cli-test
+          VERSION: ${{ needs.build.outputs.version_bac_a_sable }}
+          INDEX_SIMPLE: https://test.pypi.org/simple
+        run: |
+          set -eu
+          : "${PAQUET:?nom de paquet manquant}"
+          : "${VERSION:?version manquante}"
+          : "${INDEX_SIMPLE:?index manquant}"
+          tentatives="${TENTATIVES:-60}"
+          delai="${DELAI:-10}"
+
+          # Le nom de FICHIER d'une distribution est le nom normalise avec des
+          # soulignements (PEP 625/427) : `mmu-cli-test` donne
+          # `mmu_cli_test-0.1.0.tar.gz`. On cherche le sdist, dont le nom est
+          # deterministe -- l'etiquette de plateforme d'une roue ne l'est pas.
+          motif="$(printf '%s' "${PAQUET}" | tr '.-' '__')-${VERSION}.tar.gz"
+
+          n=1
+          while [ "${n}" -le "${tentatives}" ]; do
+            page="$(curl -fsSL "${INDEX_SIMPLE}/${PAQUET}/" 2>/dev/null || true)"
+            if printf '%s' "${page}" | grep -qF "${motif}"; then
+              echo "${PAQUET} ${VERSION} est resolvable sur ${INDEX_SIMPLE} (lecture ${n}/${tentatives})."
+              exit 0
+            fi
+            echo "lecture ${n}/${tentatives} : ${PAQUET} ${VERSION} pas encore sur l'index"
+            n=$((n + 1))
+            if [ "${n}" -le "${tentatives}" ]; then
+              sleep "${delai}"
+            fi
+          done
+
+          echo "::error::${PAQUET}==${VERSION} reste introuvable sur ${INDEX_SIMPLE} apres ${tentatives} lectures."
+          echo "  mmu-tui epingle ${PAQUET}==${VERSION} : le publier maintenant"
+          echo "  produirait une release ININSTALLABLE. Rien n'a ete publie pour"
+          echo "  l'interface -- mais ${PAQUET} ${VERSION}, LUI, EST EN LIGNE."
+          echo "  RELANCER CE WORKFLOW TEL QUEL ECHOUERA : le televersement du"
+          echo "  coeur sera retente et l'index rendra « 400 File already"
+          echo "  exists ». Il n'y a pas de skip-existing dans cette chaine, et"
+          echo "  c'est voulu -- il masquerait aussi une VRAIE collision de"
+          echo "  version. (Redaction corrigee le 2026-09-07 : elle disait ici"
+          echo "  de relancer, en affirmant que le coeur ne serait pas"
+          echo "  republie. Le second membre etait vrai, le premier faux.)"
+          echo "  DEUX ISSUES, jamais un blocage sec :"
+          echo "    1. reprendre sous un NOUVEAU numero de version. Un nom de"
+          echo "       fichier deja televerse ne se reprend JAMAIS, meme apres"
+          echo "       suppression de la release : reprendre le meme numero"
+          echo "       est exclu, et la sequence rejoue alors en entier ;"
+          echo "    2. televerser mmu-tui SEUL, a la main, avec un jeton"
+          echo "       temporaire, une fois ${PAQUET} ${VERSION} visible sur"
+          echo "       l index. Le coeur est deja bon : il ne reste que"
+          echo "       l interface. Le geste est celui de l amorcage --"
+          echo "       docs/reference/amorcage-des-projets-pypi.md"
+          exit 1
+
+      - name: Publier mmu-tui-test sur TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/tui-test
+          repository-url: https://test.pypi.org/legacy/
+
+      - name: Diagnostic si TestPyPI a refuse mmu-tui-test
+        if: failure()
+        env:
+          DEPOT_COURANT: ${{ github.repository }}
+        run: |
+          echo "::error::TestPyPI a refuse mmu-tui-test."
+          echo "  Si le message parle d'OIDC ou de « trusted publisher », la"
+          echo "  ligne manquante est a creer -- et ce n'est PAS la meme page"
+          echo "  selon que le projet existe deja ou non :"
+          echo "    projet DEJA CREE  https://test.pypi.org/manage/project/mmu-tui-test/settings/publishing/"
+          echo "    projet INEXISTANT https://test.pypi.org/manage/account/publishing/"
+          echo "  Les cinq champs, dans l'ordre du formulaire :"
+          echo "    projet          mmu-tui-test"
+          echo "    proprietaire    GanTiz"
+          echo "    depot           ${DEPOT_COURANT#*/}"
+          echo "    workflow        publish.yml   (le NOM DE FICHIER, pas le name:)"
+          echo "    environment     testpypi"
+          echo "  Une ligne par DEPOT : le depot de travail et le depot public"
+          echo "  publient tous deux sur TestPyPI, et PyPI ne les confond pas."
+          echo "  LA PAGE DE COMPTE N ACCEPTE QU UN publicateur EN ATTENTE par"
+          echo "  (proprietaire, depot, workflow, environment) : mmu-tui-test et"
+          echo "  mmu-cli-test s y excluent l un l autre -- mesure le 2026-09-07,"
+          echo "  sur refus de TestPyPI. C est pourquoi les quatre projets"
+          echo "  s AMORCENT par jeton (EPIC8-ARB-20) : une fois crees, seule la"
+          echo "  page du PROJET sert, et elle n a pas cette contrainte."
+
+  # ETAPES 3 ET 4 DE LA SEQUENCE -- l'approbation puis la production. Le job ne
+  # part que sur un TAG et que depuis le DEPOT DE DISTRIBUTION : sur `-dev` il
+  # est saute, sans demander d'approbation a personne, et le job `build` a dit
+  # pourquoi. C'est aussi ce qui empeche un tag pose par erreur sur le depot de
+  # travail d'atteindre le vrai PyPI.
+  release:
+    name: Publier sur PyPI (mmu-cli puis mmu-tui)
+    needs: [build, publish]
+    if: ${{ github.event_name == 'push' && needs.build.outputs.depot_de_distribution == 'oui' }}
+    runs-on: ubuntu-latest
+    # C'est CET environnement qui porte l'approbation humaine. Le job attend
+    # ici, en clair, jusqu'a ce qu'un relecteur exige valide le deploiement.
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      # UN ENVIRONNEMENT GITHUB ABSENT EST AUTO-CREE, ET SANS AUCUNE
+      # PROTECTION. Son absence ne leve donc rien : le job passerait la porte
+      # sans que personne n'ait rien approuve, et la seule trace serait une
+      # release deja publiee. On le verifie plutot que de l'esperer.
+      - name: Verifier que l'environnement `pypi` est REELLEMENT protege
+        env:
+          ENVIRONNEMENT: pypi
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          adresse="${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/environments/${ENVIRONNEMENT}"
+          code="$(curl -sS -o reponse.json -w '%{http_code}' \
+                    -H "Accept: application/vnd.github+json" \
+                    -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+                    "${adresse}" || echo 000)"
+          if [ "${code}" != "200" ]; then
+            echo "::warning::Impossible de lire l'environnement ${ENVIRONNEMENT}"
+            echo "  (HTTP ${code}) : le jeton du run n'a pas le droit de lire les"
+            echo "  environnements, ce qui est le cas par defaut. La protection"
+            echo "  n'est donc PAS verifiee automatiquement -- a controler a la"
+            echo "  main dans Settings > Environments > ${ENVIRONNEMENT} :"
+            echo "  « Required reviewers » coche, et « Deployment branches and"
+            echo "  tags » restreint au motif v*."
+            exit 0
+          fi
+          if grep -q 'required_reviewers' reponse.json; then
+            echo "Environnement ${ENVIRONNEMENT} : relecteurs exiges, la porte tient."
+            exit 0
+          fi
+          echo "::error::L'environnement GitHub « ${ENVIRONNEMENT} » existe mais"
+          echo "  ne porte AUCUN relecteur exige. GitHub CREE tout seul un"
+          echo "  environnement reference par un workflow, sans protection : son"
+          echo "  absence ne se voit pas, elle se mesure. En l'etat, ce job"
+          echo "  publierait sur le vrai PyPI sans que personne approuve."
+          echo "  A poser dans Settings > Environments > ${ENVIRONNEMENT} :"
+          echo "    - Required reviewers : Egan"
+          echo "    - Deployment branches and tags : Selected -> motif de tag v*"
+          exit 1
+
+      - name: Recuperer les artefacts du coeur
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-cli
+          path: dist/cli
+
+      - name: Recuperer les artefacts de l'interface
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-tui
+          path: dist/tui
+
+      - name: Publier mmu-cli sur PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/cli
+
+      - name: Diagnostic si PyPI a refuse mmu-cli
+        if: failure()
+        env:
+          DEPOT_COURANT: ${{ github.repository }}
+        run: |
+          echo "::error::PyPI a refuse mmu-cli."
+          echo "  Si le message parle d'OIDC ou de « trusted publisher », la"
+          echo "  ligne manquante est a creer -- et ce n'est PAS la meme page"
+          echo "  selon que le projet existe deja ou non :"
+          echo "    projet DEJA CREE  https://pypi.org/manage/project/mmu-cli/settings/publishing/"
+          echo "    projet INEXISTANT https://pypi.org/manage/account/publishing/"
+          echo "  Les cinq champs, dans l'ordre du formulaire :"
+          echo "    projet          mmu-cli"
+          echo "    proprietaire    GanTiz"
+          echo "    depot           ${DEPOT_COURANT#*/}"
+          echo "    workflow        publish.yml   (le NOM DE FICHIER, pas le name:)"
+          echo "    environment     pypi"
+          echo "  LA PAGE DE COMPTE N ACCEPTE QU UN publicateur EN ATTENTE par"
+          echo "  (proprietaire, depot, workflow, environment) : mmu-cli et"
+          echo "  mmu-tui s y excluent l un l autre -- mesure le 2026-09-07,"
+          echo "  sur refus de TestPyPI. C est pourquoi les quatre projets"
+          echo "  s AMORCENT par jeton (EPIC8-ARB-20) : une fois crees, seule la"
+          echo "  page du PROJET sert, et elle n a pas cette contrainte."
+
+      - name: Attendre que mmu-cli soit resolvable sur l'index
+        env:
+          PAQUET: mmu-cli
+          VERSION: ${{ needs.build.outputs.version }}
+          INDEX_SIMPLE: https://pypi.org/simple
+        run: |
+          set -eu
+          : "${PAQUET:?nom de paquet manquant}"
+          : "${VERSION:?version manquante}"
+          : "${INDEX_SIMPLE:?index manquant}"
+          tentatives="${TENTATIVES:-60}"
+          delai="${DELAI:-10}"
+
+          motif="$(printf '%s' "${PAQUET}" | tr '.-' '__')-${VERSION}.tar.gz"
+
+          n=1
+          while [ "${n}" -le "${tentatives}" ]; do
+            page="$(curl -fsSL "${INDEX_SIMPLE}/${PAQUET}/" 2>/dev/null || true)"
+            if printf '%s' "${page}" | grep -qF "${motif}"; then
+              echo "${PAQUET} ${VERSION} est resolvable sur ${INDEX_SIMPLE} (lecture ${n}/${tentatives})."
+              exit 0
+            fi
+            echo "lecture ${n}/${tentatives} : ${PAQUET} ${VERSION} pas encore sur l'index"
+            n=$((n + 1))
+            if [ "${n}" -le "${tentatives}" ]; then
+              sleep "${delai}"
+            fi
+          done
+
+          echo "::error::${PAQUET}==${VERSION} reste introuvable sur ${INDEX_SIMPLE} apres ${tentatives} lectures."
+          echo "  mmu-tui epingle ${PAQUET}==${VERSION} : le publier maintenant"
+          echo "  produirait une release ININSTALLABLE. Rien n'a ete publie pour"
+          echo "  l'interface -- mais ${PAQUET} ${VERSION}, LUI, EST EN LIGNE."
+          echo "  RELANCER CE WORKFLOW TEL QUEL ECHOUERA : le televersement du"
+          echo "  coeur sera retente et l'index rendra « 400 File already"
+          echo "  exists ». Il n'y a pas de skip-existing dans cette chaine, et"
+          echo "  c'est voulu -- il masquerait aussi une VRAIE collision de"
+          echo "  version. (Redaction corrigee le 2026-09-07 : elle disait ici"
+          echo "  de relancer, en affirmant que le coeur ne serait pas"
+          echo "  republie. Le second membre etait vrai, le premier faux.)"
+          echo "  DEUX ISSUES, jamais un blocage sec :"
+          echo "    1. reprendre sous un NOUVEAU numero de version. Un nom de"
+          echo "       fichier deja televerse ne se reprend JAMAIS, meme apres"
+          echo "       suppression de la release : reprendre le meme numero"
+          echo "       est exclu, et la sequence rejoue alors en entier ;"
+          echo "    2. televerser mmu-tui SEUL, a la main, avec un jeton"
+          echo "       temporaire, une fois ${PAQUET} ${VERSION} visible sur"
+          echo "       l index. Le coeur est deja bon : il ne reste que"
+          echo "       l interface. Le geste est celui de l amorcage --"
+          echo "       docs/reference/amorcage-des-projets-pypi.md"
+          exit 1
+
+      - name: Publier mmu-tui sur PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/tui
+
+      - name: Diagnostic si PyPI a refuse mmu-tui
+        if: failure()
+        env:
+          DEPOT_COURANT: ${{ github.repository }}
+        run: |
+          echo "::error::PyPI a refuse mmu-tui."
+          echo "  Si le message parle d'OIDC ou de « trusted publisher », la"
+          echo "  ligne manquante est a creer -- et ce n'est PAS la meme page"
+          echo "  selon que le projet existe deja ou non :"
+          echo "    projet DEJA CREE  https://pypi.org/manage/project/mmu-tui/settings/publishing/"
+          echo "    projet INEXISTANT https://pypi.org/manage/account/publishing/"
+          echo "  Les cinq champs, dans l'ordre du formulaire :"
+          echo "    projet          mmu-tui"
+          echo "    proprietaire    GanTiz"
+          echo "    depot           ${DEPOT_COURANT#*/}"
+          echo "    workflow        publish.yml   (le NOM DE FICHIER, pas le name:)"
+          echo "    environment     pypi"
+          echo "  LA PAGE DE COMPTE N ACCEPTE QU UN publicateur EN ATTENTE par"
+          echo "  (proprietaire, depot, workflow, environment) : mmu-tui et"
+          echo "  mmu-cli s y excluent l un l autre -- mesure le 2026-09-07,"
+          echo "  sur refus de TestPyPI. C est pourquoi les quatre projets"
+          echo "  s AMORCENT par jeton (EPIC8-ARB-20) : une fois crees, seule la"
+          echo "  page du PROJET sert, et elle n a pas cette contrainte."
+
+# CE QUI N'EST PAS FAISABLE DEPUIS LE DEPOT, ET QUI APPARTIENT A EGAN
+# ============================================================

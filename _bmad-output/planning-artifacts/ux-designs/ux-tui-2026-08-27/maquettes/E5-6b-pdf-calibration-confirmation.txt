@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf · Calibration                 temps 2 sur 2 · écrire │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ À écrire ────────────────────────────────────────────────────────────┐   │
+│   │ Planche de calibration   1 PDF · 1 page                              │   │
+│   │ Chaîne                   hp-envy-4520-tiff-600-dpi-auto-corr-off     │   │
+│   │ Commentaire              passe du 27/08, papier mat                  │   │
+│   │ Pastilles                164          130 treillis + 34 témoins      │   │
+│   │ Jeu de patchs            patches-17-v4                               │   │
+│   │ Format · marge · DPI     A4 · 0 mm · 600                             │   │
+│   │ Destination              projet_demo/patches/                        │   │
+│   │                                                                      │   │
+│   │ Nom du fichier                                                       │   │
+│   │   projet_demo_hp-envy-4520-t…-73881cda_calibration.pdf               │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      Générer                                                                 │
+│    ▸ Modifier les réglages                                                   │
+│      Annuler                                                                 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 1 PDF · 1 page · 164 pastilles — rien n'a encore été écrit                   │
+│ ⏎ valider  ↑↓ choisir  Échap retour  F1 aide                                 │
+└──────────────────────────────────────────────────────────────────────────────┘

@@ -1,0 +1,44 @@
+{
+ "key-extraction-a": [
+  {
+   "when": "22/08 11:04",
+   "text": "13 retours ponctuels faits. Tu les vois ?"
+  }
+ ],
+ "key-extraction-b": [
+  {
+   "when": "22/08 11:05",
+   "text": "Probleme d’affichage ici. C’est superposé et illisible."
+  },
+  {
+   "when": "22/08 11:06",
+   "text": "montrer le mode agrandi aussi si possible."
+  },
+  {
+   "when": "22/08 11:06",
+   "text": "Remplacer « vignettes » par une icone de loupe."
+  },
+  {
+   "when": "22/08 11:28",
+   "text": "Precision : ce n’est pas l’utilisateurbqui ecarte des frames mais la selection en fonction de la cadence. On peut filtrer la vue pour voir les frames ecartees par l’algorithme mais pas l’outrepasser"
+  }
+ ],
+ "key-extraction-c": [
+  {
+   "when": "22/08 11:29",
+   "text": "Je parlais de la vue « vignette unique » quand on clique sur une vignette et qu’on peut la voir et zoomer dedans. Sinon c’edt bien ici pour quand on zoome sur des vignettes"
+  }
+ ],
+ "key-cadence-a": [
+  {
+   "when": "22/08 11:30",
+   "text": "ne pas oublier le lecteur en mode « fit » pour occuper tout l’ecran. D’ailleurs plus haut le bouton est « largeur » au lieu de « fit » ou « ajuster »"
+  }
+ ],
+ "key-cadence-c": [
+  {
+   "when": "22/08 11:07",
+   "text": "Alerte a 5 secondes"
+  }
+ ]
+}

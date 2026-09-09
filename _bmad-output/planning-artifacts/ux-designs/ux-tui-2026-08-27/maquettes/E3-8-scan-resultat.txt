@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan                                 2 lots · 186 frames │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ Écrit ───────────────────────────────────────────────────────────────┐   │
+│   │ ● projet_demo_lot_25fps_ingest01    124 frames · 16 bits · 3,6 Go    │   │
+│   │ ● projet_demo_lot_12p5_ingest01      62 frames · 16 bits · 1,8 Go    │   │
+│   │                                                                      │   │
+│   │ Calibration appliquée               hp-envy-4520-tiff-600            │   │
+│   │ Manifest mis à jour                 projet_demo/manifest.json        │   │
+│   │ Durée                               6 min 12                         │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│    ▸ Ouvrir le dossier des lots                                              │
+│      Encoder un master depuis ces lots           (atelier Exports)           │
+│      Détecter d'autres scans                                                 │
+│      Retour aux ateliers                                                     │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ●  186 frames écrites sur 186 attendues, aucun refus                         │
+│ ⏎ choisir  ↑↓ naviguer  Tab journal  Échap ateliers  F1 aide                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : parfait.
+
+  -> approbation, rien change.

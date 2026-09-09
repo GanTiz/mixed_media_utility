@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · — aucun projet —                                                  v0.1 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Ouvrir un projet                                                           │
+│                                                                              │
+│    ←  …\mmu\                                                                 │
+│      Dossier              D:\HOKO\Documents\mmu\rushes_2026                  │
+│   ────────────────────────────────────────────────────────────────────────   │
+│    ▸ 01_reperages/                                         4 sous-dossiers   │
+│      02_tournage_avril/                                   17 sous-dossiers   │
+│      03_tournage_mai/                                     12 sous-dossiers   │
+│      04_tournage_juin/                                     9 sous-dossiers   │
+│      05_plateau_studio/                                    2 sous-dossiers   │
+│      06_drone/                                              0 sous-dossier   │
+│      07_interviews/                                       23 sous-dossiers   │
+│      08_ambiances/                                         5 sous-dossiers   │
+│      …                                                          1-8 sur 27   │
+│   ────────────────────────────────────────────────────────────────────────   │
+│    ⏎  Valider   01_reperages/                                                │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 27 sous-dossiers                                                             │
+│ ⏎ valider  → entrer  ← parent  ↑↓ liste  Tab chemin  Échap sortir            │
+└──────────────────────────────────────────────────────────────────────────────┘

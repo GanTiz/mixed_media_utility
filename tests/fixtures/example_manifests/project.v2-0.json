@@ -1,0 +1,33 @@
+{
+  "schema_version": "2.0",
+  "project_id": "example-001",
+  "created": "2026-07-21T00:00:00Z",
+  "rushes": [
+    {
+      "rush_id": "rush-001",
+      "source_path": "inputs/rush-001.mp4"
+    }
+  ],
+  "lots": [
+    {
+      "lot_id": "lot-001",
+      "rush_id": "rush-001",
+      "state": "extraction"
+    }
+  ],
+  "artifacts": {
+    "frames_dir": "frames/",
+    "outputs_dir": "outputs/"
+  },
+  "color": {
+    "target_colorspace": "rec709"
+  },
+  "video": {
+    "fps_source": 24.0,
+    "fps_target": 24.0
+  },
+  "reconstruction": {
+    "template_id": "template-a4-16x9",
+    "patch_preset_id": "patch-preset-mvp"
+  }
+}

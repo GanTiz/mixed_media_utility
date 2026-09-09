@@ -1,0 +1,28 @@
+/* Complements propres a cette note, ajoutes APRES le style du gabarit.
+   Deux corrections mesurees au banc, et un bloc neuf. */
+
+/* 1. Une piste `1fr` a `min-width:auto` : une pastille en `white-space:nowrap`
+      la pousse au-dela de l'ecran. Mesure du 2026-08-23 : 494 px de contenu
+      dans un ecran de 390, et le document defilait lateralement. */
+.ligne { grid-template-columns: 2.2rem minmax(0, 1fr); }
+.ligne-corps { min-width: 0; }
+.ligne-tags { max-width: 100%; }
+.pill { max-width: 100%; overflow-wrap: anywhere; }
+
+/* 2. Rien de long ne rentre dans une pastille : une pastille dit un STATUT,
+      en deux ou trois mots. Une recommandation est une phrase, et elle a son
+      propre bloc -- c'est aussi ce qui la distingue du constat qui precede. */
+.reco {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 .5rem;
+  align-items: baseline; margin: .55rem 0 0; padding-top: .5rem;
+  border-top: 1px dashed var(--rule);
+  font-size: .88rem; color: var(--ink-soft);
+}
+.reco .lbl {
+  font-family: var(--f-mono); font-size: .62rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent); white-space: nowrap;
+}
+.reco strong { color: var(--ink); }
+@media (max-width: 26rem) {
+  .reco { grid-template-columns: minmax(0, 1fr); gap: .15rem; }
+}

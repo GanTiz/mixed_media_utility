@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan                              temps 2 sur 2 · écrire │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Quelle calibration appliquer aux frames ?                                  │
+│                                                                              │
+│    ▸ hp-envy-4520-tiff-600            profil par défaut du projet            │
+│      epson-v600-tiff-600-2026-08-14   posé le 14/08                          │
+│      autre fichier…                   un fichier .json, dans l'explorateur   │
+│      aucune                           livrer le lot brut, non corrigé        │
+│                                                                              │
+│   ── Le profil retenu ────────────────────────────────────────────────────   │
+│                                                                              │
+│      Chaîne         hp-envy-4520-tiff-600 · passe du 12/08, vitre nettoyée   │
+│      Posé le        12/08 · 24 patchs · 2,1 ΔE                               │
+│      S'applique à   les 2 lots de cette détection                            │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 2 profils désignés dans ce projet · le retenu s'applique aux 2 lots          │
+│ ⏎ continuer  ↑↓ choisir  Échap retour  F1 aide                               │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : Très bien, c'est la question suivante donc ?
+
+  -> oui : c'est l'ecran suivant, entre le rapport et l'ecriture. Bandeau « temps 2 sur 2 ».

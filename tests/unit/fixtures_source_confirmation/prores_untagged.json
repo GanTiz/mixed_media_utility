@@ -1,0 +1,36 @@
+{
+  "_comment": "ffprobe 6.1.1 sur un ProRes 422 (prores_ks) 1920x1080 encode SANS aucun flag couleur. Fait mesure et central pour la story 3.3: ffprobe 6.1.1 OMET entierement les champs couleur inconnus de son JSON plutot que de les rapporter a 'unknown' -- il n'y a donc ni color_primaries, ni color_transfer, ni color_space, ni color_range dans ce flux. bits_per_raw_sample est absent lui aussi: la profondeur ne peut venir que du suffixe de pix_fmt (yuv422p10le -> 10). Ne jamais supposer 8.",
+  "streams": [
+    {
+      "index": 0,
+      "codec_name": "prores",
+      "codec_long_name": "Apple ProRes (iCodec Pro)",
+      "profile": "Standard",
+      "codec_type": "video",
+      "width": 1920,
+      "height": 1080,
+      "sample_aspect_ratio": "1:1",
+      "display_aspect_ratio": "16:9",
+      "pix_fmt": "yuv422p10le",
+      "r_frame_rate": "24/1",
+      "avg_frame_rate": "24/1",
+      "time_base": "1/12288",
+      "duration": "10.000000",
+      "nb_frames": "240",
+      "tags": {
+        "language": "und",
+        "handler_name": "VideoHandler"
+      }
+    }
+  ],
+  "format": {
+    "filename": "rush_prores_untagged.mov",
+    "nb_streams": 1,
+    "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+    "duration": "10.000000",
+    "tags": {
+      "major_brand": "qt  ",
+      "encoder": "Lavf60.16.100"
+    }
+  }
+}

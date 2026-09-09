@@ -1,0 +1,55 @@
+ffmpeg-python
+# EPIC11-ARB-250 (2026-09-06) : la borne s'aligne sur `pyproject.toml`.
+# Elle epinglait `>=4.10,<4.11`, c'est-a-dire la ligne dont l'ENCODEUR rend un
+# symbole malforme au-dela de la version 7 -- et un `pip install -r` neuf
+# resolvait donc vers le seul regime ou chaque planche imprimee est perdue.
+# L'encodage passe a `segno` ci-dessous ; OpenCV n'est plus que detecteur et
+# decodeur, role ou 4.10 est SAIN (verdicts identiques a 5.0 sur les quatre
+# captures reelles de `tests/fixtures/qr_300dpi/`). La borne peut donc s'ouvrir
+# sans exclure personne, macOS 12 x86_64 compris. C'est aussi ce que
+# `<4.11` coutait : la declaration d'environnement du depot excluait
+# `5.0.0.93`, la version sous laquelle la suite est verte (EPIC8-ARB-4).
+# EPIC11-ARB-253 (2026-09-06), porte ici le 2026-09-07 avec la scission 8.5.
+# La roue non-headless lie son binaire a DOUZE bibliotheques systeme graphiques
+# qu'un conteneur nu, un serveur ou un WSL sans X n'ont pas : `import cv2` y
+# echoue sur libGL AVANT la premiere ligne du produit. `contrib` tombe dans le
+# meme mouvement -- les 51 symboles `cv2.*` employes par `src/` existent tous
+# dans la roue non-contrib, `aruco.ArucoDetector` compris (l'ArUco a quitte
+# contrib pour objdetect en 4.7).
+opencv-python-headless>=4.10,<6
+# Borne ALIGNEE sur pyproject.toml le 2026-09-07. Elle valait `>=1.24,<2` ici
+# contre `>=2.0` la-bas : AUCUNE version ne satisfaisait les deux, donc un
+# environnement monte depuis ce fichier violait `pip install -e .`, et
+# reciproquement. Ce n'etait pas une divergence de politique, c'etait une
+# declaration sans solution.
+numpy>=2.0
+Pillow
+reportlab
+pypdfium2
+jsonschema
+# EPIC11-ARB-250 : l'encodeur QR. Roue `py3-none-any`, aucune dependance a
+# l'execution -- il n'a donc pas d'etiquette de plateforme a opposer a macOS 12.
+segno>=1.6,<2
+pytest
+# AJOUTE PAR LA STORY 8.10, et referme une divergence plutot que de l'inscrire
+# au registre. `pyyaml` entre dans l'extra [test] de pyproject.toml parce que
+# `tests/unit/test_politique_lfs.py` lit les workflows sur le YAML ANALYSE et
+# que sa lecture ne doit plus pouvoir SAUTER -- elle gardait, derriere un
+# `importorskip`, la politique dont l'oubli a sature le quota LFS de 10 Go en
+# deux jours, et elle etait donc MUETTE en CI.
+#
+# Pourquoi ici AUSSI, plutot qu'une entree « pyproject seul » de
+# `test_declarations_de_dependances.py` a cote de pytest-xdist et
+# pytest-timeout : depuis la story 8.10, PyYAML absent fait ROUGIR ce banc au
+# lieu de le faire sauter. Un environnement monte depuis CE fichier -- qui
+# porte deja pytest et pytest-qt, donc qui se veut jouable -- rendrait quatre
+# rouges au lieu de quatre sauts. La borne est la MEME que dans pyproject.toml,
+# sans quoi la divergence changerait seulement de forme (« bornes »).
+pyyaml>=6.0
+# EPIC11-ARB-254 (2026-09-06), porte ici le 2026-09-07. `PySide6` est un
+# METAPAQUET : il tire aussi `PySide6-Addons`, 401 Mo dont 186 Mo de Chromium
+# pour QtWebEngine, dont AUCUN module n'est importe dans `src/` ni `tests/`.
+# Essentials porte QtWidgets, QtCore, QtGui et QtSvg -- les quatre employes.
+PySide6-Essentials>=6.8,<6.9
+pytest-qt>=4.4
+textual>=8.2,<9

@@ -1,0 +1,75 @@
+#!/bin/bash
+# Le SEUIL de taille que git ne sait pas exprimer, applique au moment ou il
+# compte -- avant que le blob n'entre dans l'historique.
+#
+# **Pourquoi ce hook existe.** `.gitattributes` n'apparie que des CHEMINS :
+# « au-dela de N megaoctets, passer en LFS » ne s'y ecrit pas. Le depot tient
+# donc la regle a deux endroits :
+#
+#   * `tests/unit/test_politique_lfs.py` la MESURE -- mais apres coup, quand
+#     quelqu'un lance la suite ou que la CI passe ;
+#   * ce hook la REFUSE -- au seul moment ou c'est encore gratuit, git ne
+#     sachant pas oublier un blob une fois qu'il est entre.
+#
+# **Il ne bloque jamais sec** (`EPIC11-ARB-89`) : il nomme les trois issues.
+#
+# **Ce dossier porte AUSSI les quatre hooks de git-lfs**, et ce n'est pas un
+# residu : `core.hooksPath` REMPLACE `.git/hooks` au lieu de s'y ajouter. Sans
+# `pre-push` ici, un `git push` n'enverrait plus les objets LFS -- il pousserait
+# des pointeurs dont le contenu n'a jamais quitte la machine, et rien ne le
+# dirait. `post-checkout`, `post-merge` et `post-commit` materialisent ; ils
+# sont dans le meme cas. Ne pas les retirer.
+#
+# Installation, une fois par clone :
+#     git config core.hooksPath .githooks
+# Le hook de session le fait pour les conteneurs ; sur une machine, c'est a
+# poser une fois.
+set -u
+
+SEUIL_MO=5
+SEUIL=$((SEUIL_MO * 1024 * 1024))
+fautifs=()
+
+while IFS= read -r chemin; do
+    [ -f "$chemin" ] || continue
+    # Un fichier deja route vers LFS n'est pas concerne : c'est le cas nominal.
+    if git check-attr filter -- "$chemin" | grep -q ': filter: lfs$'; then
+        continue
+    fi
+    taille=$(stat -c%s "$chemin" 2>/dev/null || stat -f%z "$chemin" 2>/dev/null || echo 0)
+    if [ "$taille" -ge "$SEUIL" ]; then
+        fautifs+=("$chemin ($((taille / 1048576)) Mo)")
+    fi
+done < <(git diff --cached --name-only --diff-filter=ACMR)
+
+[ ${#fautifs[@]} -eq 0 ] && exit 0
+
+cat >&2 <<AVERTISSEMENT
+
+  COMMIT REFUSE : fichier(s) de $SEUIL_MO Mo ou plus hors Git LFS.
+
+AVERTISSEMENT
+for f in "${fautifs[@]}"; do printf '    %s\n' "$f" >&2; done
+cat >&2 <<'ISSUES'
+
+  Git ne sait pas oublier un blob : une fois commite, il pese sur tous les
+  clones, pour toujours. Trois issues, dans l'ordre :
+
+  1. le DEPLACER sous un arbre deja route vers LFS
+         tests/fixtures/scans/     PDF de scans reels
+         tests/fixtures/rasters/   frames temoins (descend a chaque clone)
+         tests/fixtures/lots/      lots complets (NE descend pas tout seul)
+
+  2. le laisser LOCAL s'il n'a pas a etre partage -- `projects/` est ignore,
+     c'est fait pour ca ;
+
+  3. si c'est deliberé et que rien de tout cela ne convient, le dire
+     explicitement :
+         git commit --no-verify
+
+  Le detail est dans `.gitattributes` et `.lfsconfig` ; la mesure qui a fonde
+  ce seuil est dans
+  `_bmad-output/implementation-artifacts/mesure-2026-09-03-bande-passante-lfs.md`.
+
+ISSUES
+exit 1

@@ -1,0 +1,136 @@
+/* =========================================================================
+   VAGUE 4 — les trois surfaces jamais maquettees : les cartes de taches, la
+   gestion de projet, les modales. Meme invariant partout : neutres R=G=B, et
+   aucune couleur d'accent adjacente a une image jugee.
+   ========================================================================= */
+
+/* --- carte de tache (EPIC7-ARB-23) --------------------------------------
+   « une carte de tache comme toutes les autres : export, progression temps
+   ecoule et temps restant. » L'ordre des elements vient de la spine et ne se
+   reamenage pas : fonction, objet, barre, faits/total, temps. */
+.taches{width:320px; flex:0 0 320px; background:var(--surface-panel);
+  border-left:1px solid var(--border); display:flex; flex-direction:column; min-height:0}
+.tq-head{height:var(--header-height); flex:0 0 auto; display:flex; align-items:center; gap:var(--sp4);
+  padding:0 var(--sp5); border-bottom:1px solid var(--border)}
+.tq-head h3{margin:0; font-size:13px; font-weight:600; flex:1 1 auto}
+.tq-head .x{border:1px solid var(--border-strong); border-radius:var(--r-sm); padding:1px var(--sp4);
+  font-family:var(--f-data); font-size:11px; color:var(--text-secondary)}
+.tq-corps{flex:1 1 auto; overflow-y:auto; padding:var(--sp5); display:flex; flex-direction:column; gap:var(--sp5)}
+.tq-sec{font-size:10.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-disabled); padding-bottom:2px; border-bottom:1px solid var(--border)}
+
+.tk{display:flex; flex-direction:column; gap:var(--sp3);
+  background:var(--surface-raised); border:1px solid var(--border);
+  border-radius:var(--r-md); padding:var(--sp5)}
+.tk-h{display:flex; align-items:baseline; gap:var(--sp4); min-width:0}
+.tk-f{flex:0 0 auto; font-size:12.5px; font-weight:600; color:var(--text-primary)}
+.tk-o{flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  font-family:var(--f-data); font-size:11px; color:var(--text-secondary); text-align:right}
+.jauge2{height:3px; background:var(--surface-sunken); border-radius:2px; overflow:hidden}
+.jauge2 i{display:block; height:100%; background:var(--accent)}
+.jauge2.ok i{background:var(--state-complete)}
+.jauge2.ko i{background:var(--state-absent)}
+.tk-nb{display:flex; align-items:baseline; justify-content:space-between; gap:var(--sp4);
+  font-family:var(--f-data); font-size:10.5px; color:var(--text-disabled); font-variant-numeric:tabular-nums}
+.tk-nb .tk-t{color:var(--text-secondary)}
+.tk-btn{display:flex; gap:var(--sp4); margin-top:2px}
+.tb2{border:1px solid var(--border-strong); border-radius:var(--r-sm); padding:2px var(--sp5);
+  font-size:11.5px; color:var(--text-secondary); white-space:nowrap}
+.tk-motif{margin-top:2px; padding:var(--sp3) var(--sp4); background:var(--surface-sunken);
+  border-radius:var(--r-sm); overflow-wrap:anywhere}
+.tk-motif code{font-size:10.5px; color:var(--state-absent)}
+/* la carte finie ne se peint pas en vert : seule sa jauge le dit, et le
+   bouton qui apparait. Un panneau entierement colore n'apprend rien. */
+.tk.fini{border-color:var(--border-strong)}
+
+/* la bascule d'en-tete qui ouvre la file, avec le compte des taches en cours */
+.tq-bascule{display:inline-flex; align-items:center; gap:var(--sp3);
+  border:1px solid var(--border-strong); border-radius:var(--r-sm); padding:1px var(--sp4);
+  font-family:var(--f-data); font-size:11px; color:var(--text-secondary)}
+.tq-bascule.on{border-color:var(--accent); color:var(--accent)}
+.tq-bascule .n{background:var(--accent); color:var(--accent-on); border-radius:var(--r-full);
+  min-width:15px; text-align:center; padding:0 3px; font-size:10px}
+
+/* --- ecran de gestion de projet ------------------------------------------
+   « Toujours affiche, meme quand un seul projet existe. Aucun saut direct
+   dans un atelier. » L'ecran est donc un seuil, pas un raccourci. */
+.seuil{min-height:560px; display:flex; align-items:stretch; background:var(--surface-canvas)}
+.seuil-g{flex:1 1 auto; min-width:0; padding:var(--sp8) var(--sp7); display:flex;
+  flex-direction:column; gap:var(--sp6)}
+.seuil-d{width:300px; flex:0 0 300px; background:var(--surface-panel);
+  border-left:1px solid var(--border); padding:var(--sp7) var(--sp6);
+  display:flex; flex-direction:column; gap:var(--sp5)}
+.seuil h2{margin:0; font-size:20px; font-weight:600}
+.seuil .liste{display:flex; flex-direction:column; gap:var(--sp4)}
+.pj{display:flex; align-items:center; gap:var(--sp5); min-width:0;
+  border:1px solid var(--border); border-radius:var(--r-md); padding:var(--sp5);
+  background:var(--surface-raised)}
+/* NB : ne pas nommer cette classe `tete` -- v2-css.css l'utilise deja pour la
+   tete de lecture de la chronologie (position:absolute, width:2px). La coquille
+   partagee est un espace de noms plat. */
+.pj.premier{border-color:var(--accent)}
+.pj .pj-n{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:1px}
+.pj .pj-t{font-size:13.5px; color:var(--text-primary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.pj .pj-c{font-family:var(--f-data); font-size:10.5px; color:var(--text-disabled);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.pj .pj-d{flex:0 0 auto; font-family:var(--f-data); font-size:10.5px; color:var(--text-disabled)}
+/* un projet dont les rushes manquent s'ouvre QUAND MEME : le signe informe,
+   il n'interdit pas. Le rouge est un contour, pas un aplat -- il ne doit pas
+   ressembler a un bouton desactive. */
+.pj .pj-r{flex:0 0 auto; display:inline-flex; align-items:center; gap:var(--sp3);
+  border:1px solid var(--state-absent); border-radius:var(--r-full); padding:0 var(--sp4);
+  font-family:var(--f-data); font-size:10px; color:var(--state-absent)}
+
+/* --- modales -------------------------------------------------------------
+   « 1 niveau. » Une modale n'en ouvre jamais une autre. */
+.scrim{position:relative; min-height:520px; background:var(--surface-canvas);
+  display:flex; align-items:center; justify-content:center; padding:var(--sp7);
+  background-image:repeating-linear-gradient(135deg,#141414 0 8px,#181818 8px 16px)}
+.mod{width:460px; max-width:100%; background:var(--surface-panel);
+  border:1px solid var(--border-strong); border-radius:var(--r-lg);
+  display:flex; flex-direction:column; overflow:hidden}
+.mod-h{padding:var(--sp5) var(--sp6); border-bottom:1px solid var(--border)}
+.mod-h h3{margin:0; font-size:14px; font-weight:600}
+.mod-c{padding:var(--sp6); display:flex; flex-direction:column; gap:var(--sp5)}
+.mod-p{padding:var(--sp5) var(--sp6); border-top:1px solid var(--border);
+  display:flex; align-items:center; gap:var(--sp4)}
+.mod-p .btn{width:auto; flex:0 0 auto}
+.mod-p .esp{flex:1 1 auto; font-family:var(--f-data); font-size:10.5px; color:var(--text-disabled)}
+.coche{display:flex; align-items:center; gap:var(--sp4); font-size:12.5px}
+.coche .meta{margin-left:auto}
+.zone{border:1px solid var(--border); border-radius:var(--r-sm); background:var(--surface-sunken);
+  padding:var(--sp4); min-height:52px; font-family:var(--f-data); font-size:11px;
+  color:var(--text-secondary); line-height:1.6}
+/* ce qui est detruit se nomme, ligne par ligne : « dit ce qui est detruit,
+   jamais force ». Une phrase generale ne permet pas de decider. */
+.detruit{border:1px solid var(--state-absent); border-radius:var(--r-sm);
+  padding:var(--sp4) var(--sp5); display:flex; flex-direction:column; gap:2px;
+  font-family:var(--f-data); font-size:11px; color:var(--text-secondary)}
+.detruit b{color:var(--state-absent); font-weight:600; font-family:var(--f-ui); font-size:11.5px}
+
+/* un bouton destructeur ne prend jamais l'accent plein : il est en creux et
+   cerne. L'emphase visuelle va au chemin qui ne detruit rien. */
+.btn.ghost.rouge{border-color:var(--state-absent); color:var(--state-absent)}
+
+/* --- bascule ancre / superpose (EPIC7-ARB-26) ---------------------------- */
+.tq-mode{display:flex; flex:0 0 auto; border:1px solid var(--border); border-radius:var(--r-md); overflow:hidden}
+.tq-mode span{font-family:var(--f-data); font-size:10px; padding:1px var(--sp4); color:var(--text-disabled); white-space:nowrap}
+.tq-mode span.on{background:var(--surface-raised); color:var(--text-secondary)}
+
+/* --- tri et recherche de la liste de projets (EPIC7-ARB-27) -------------- */
+.seuil-barre{display:flex; align-items:center; gap:var(--sp5); flex-wrap:wrap}
+.chercher{flex:1 1 200px; min-width:0; display:flex; align-items:center; gap:var(--sp4);
+  border:1px solid var(--border-strong); border-radius:var(--r-sm); background:var(--surface-sunken);
+  padding:var(--sp3) var(--sp5); color:var(--text-disabled); font-size:12px}
+.tri{display:inline-flex; align-items:center; gap:var(--sp3); border:1px solid var(--border-strong);
+  border-radius:var(--r-sm); padding:1px var(--sp4); font-family:var(--f-data); font-size:11px;
+  color:var(--text-secondary); white-space:nowrap}
+.tri .car{font-size:8px; color:var(--text-disabled)}
+/* les deux dates sont tabulaires et alignees : c'est ce qui rend une colonne
+   de dates comparable d'un coup d'oeil. */
+.pj .pj-dd{flex:0 0 auto; display:flex; flex-direction:column; align-items:flex-end; gap:1px;
+  font-family:var(--f-data); font-size:10px; color:var(--text-disabled); font-variant-numeric:tabular-nums}
+.pj .pj-dd .cree{color:var(--text-disabled); opacity:.7}
+
+/* --- zone de texte avec exemple en substitution -------------------------- */
+.zone.vide{color:var(--text-disabled); font-style:italic}

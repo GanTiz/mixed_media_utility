@@ -1,0 +1,177 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf                     1 conflit sur 5 · tirage présent │
+├──────────────────────────────────────────────────────────────────────────────┤
+│   ┌ Ce tirage existe déjà ───────────────────────────────────────────────┐   │
+│   │ ▲ projet_demo_plan-04_25_6f-pay_v3.pdf                               │   │
+│   │ Lot                plan-04_25       3e tirage, le plus récent        │   │
+│   │ Écrit le           26/08 à 16:22                                     │   │
+│   │ Contient           21 pages · 124 frames · 352 Mo                    │   │
+│   │ Mise en page       6 f/page · paysage      la même qu'aujourd'hui    │   │
+│   │ Scanné             · non            aucun scan ne cite ce tirage     │   │
+│   │                                                                      │   │
+│   │ ▲ Si cette page a déjà été imprimée, n'écrasez pas cette             │   │
+│   │   planche sous peine de générer des conflits de version              │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│      Créer la v4                                                             │
+│    ▸ Remplacer ce tirage                                                     │
+│        ▲ efface les 352 Mo écrits                                            │
+│      Appliquer ce choix aux 4 conflits restants                              │
+│        ▲ 3 lots · 1 056 Mo effacés — 1 sauté, il est scanné                  │
+│      Annuler                                                                 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ▲  21 pages · 352 Mo écrits le 26/08 · ce tirage n'est pas scanné            │
+│ ⏎ valider  ↑↓ choisir  Échap retour  F1 aide                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE (2026-09-01, n°8) : Enlever le curseur n'efface rien. Enlever « sur page et dans
+le qr » et laisser juste « créer la v2 ».
+
+  -> Les deux retraits sont faits. L'issue lit `Créer la v2`, sans à-côté ; la ligne
+     d'état porte `8 pages · 134 Mo écrits le 26/08 · le prochain rang est 2`, une
+     mesure et plus une phrase rassurante -- ce qu'EPIC11-ARB-56 demandait de toute
+     façon. Où le rang est gravé (planche + QR) reste dit par le journal de `E5-4`, au
+     moment où ça arrive : rien n'est perdu.
+     Le lot montré change avec la note 6 : ce ne peut plus être `plan-04_25`, que
+     `E5-3` établit à trois tirages, et `resolve_sheets_version_rank` lit AUSSI le
+     disque -- un fichier présent aurait déjà poussé le rang. L'écran illustre donc un
+     lot hors de la passe de `E5-3`.
+
+NOTE (2026-09-01, relecture v5, n°6) : Sorti à l'imprimante : on retire ! Rien n'en parle
+nulle part.
+
+  -> Retiré, et j'ai vérifié moi-même que « rien n'en parle nulle part » est exact au
+     sens fort : une entrée de l'inventaire des tirages ne porte que DEUX champs.
+     `_merge_sheets_inventory` (`io/pdf_manifest.py:260`) écrit `SHEETS_INVENTORY_KEY`
+     (le chemin) et, au-delà du rang 1, `version_rank`. Il n'y a ni date, ni taille, ni
+     état d'impression, et un `grep` de `printed` / `imprime` / `sorti` sur `src/` ne
+     rend que de la prose de commentaire -- aucun champ, aucun schéma, aucun chemin
+     d'écriture. Un tirage n'a donc AUCUN état « imprimé » dans le dépôt.
+     Le retrait ne s'arrête pas à la ligne : le paragraphe qui la suivait (« Une feuille
+     déjà sortie garde le même numéro que la neuve — plus rien ne les distingue »)
+     raisonnait entièrement sur cette notion. Il part avec elle. Ce qui le remplace ne
+     dit que ce que l'outil SAIT : N mégaoctets écrits à telle date, et ce que chaque
+     issue en fait.
+     La date et la taille, elles, restent : elles ne viennent pas du manifeste mais du
+     FICHIER (`stat`), que l'écran a sous la main. Elles ne sont pas tapées non plus --
+     les 352 Mo sont la densité des ~470 Mo d'`E5-3` (28 pages) appliquée aux 21 pages
+     de ce lot, pour qu'il n'y ait qu'un seul ordre de grandeur dans ces deux écrans.
+     Ce que ce retrait laisse ouvert, dit plutôt que tu : `E5-6d` (la mire) porte la même
+     ligne, « Imprimée ? l'outil ne peut pas le savoir ». Elle est hors de mon périmètre
+     et n'a pas été touchée ; elle tombe sous la même décision.
+
+NOTE (2026-09-01, relecture v5, n°5) : conséquence de l'inversion des écrans.
+
+  -> Cet écran passe désormais AVANT `E5-3` (motif complet dans la note de `E5-3`). Deux
+     conséquences sur ce dessin.
+     Il ne peut plus illustrer un lot « hors de la passe », comme l'édition précédente
+     s'y résolvait : il est maintenant DANS le flot. Il montre donc le lot de la passe
+     qui a déjà des tirages -- `plan-04_25`, celui dont `E5-3` annonce « tirage 4 » --
+     et son plus récent tirage est le troisième. Les deux écrans sont enfin cohérents :
+     ce qu'on choisit ici est ce que la confirmation affiche ensuite.
+     Le bandeau droit porte la portée du conflit (`1 lot sur 2`) et non le lot seul,
+     parce que le rang est un fait DU LOT et que l'écran est donc par lot.
+     L'issue lit `Créer la v4` et non `Créer la v2` : ta note n°8 ci-dessus demandait la
+     forme courte « créer la vN », pas la valeur 2. Le rang suit le lot montré, qui a
+     désormais trois tirages.
+     Et le fragment de mise en page (note 7) se voit ici mieux qu'ailleurs : le nom
+     portant `paysage-6f`, ce conflit est celui d'un même lot dans la MÊME mise en page.
+     Une autre mise en page écrirait un autre fichier et cet écran ne se monterait pas.
+     Le motif cesse d'être opaque -- c'était le défaut que la note 7 désignait.
+
+NOTE (2026-09-02, n°3) : « La déduction tient et ça me va. S'il est scanné on ne peut de
+fait pas l'écraser. Si la planche n'est pas encore scannée un message avertit
+l'utilisateur.ice au moment du choix de l'écrasement. On y ajoute la mention "Si cette
+page a déjà été imprimée, n'écrasez pas cette planche sous peine de générer des conflits
+de version". On fait confiance à l'opérateur.ice. »
+
+  -> Ça ferme `EPIC11-ARB-174`, qui laissait ouverte la question « état déclaré ou
+     conséquence déduite ». Tu tranches la déduction, et tu en tires une règle PLUS FORTE
+     que ce qui était proposé : un interdit, pas un avertissement. L'écran se dédouble
+     donc -- celui-ci pour le tirage non scanné, `E5-3c` pour le tirage scanné --, même
+     lot, même tirage, même date des deux côtés : seule la ligne `Scanné` change, et avec
+     elle la liste des issues.
+     Ici, `Remplacer ce tirage` est offert, et ta mention est portée MOT POUR MOT dans le
+     cartouche, coupée seulement par la largeur : « Si cette page a déjà été imprimée,
+     n'écrasez pas cette planche sous peine de générer des conflits de version ». Le
+     curseur est dessiné SUR `Remplacer ce tirage` parce que tu demandes l'avertissement
+     « au moment du choix de l'écrasement » : c'est cet instant-là que la maquette montre.
+     Au montage, `panneau.ChoixExclusif.__post_init__` place le curseur sur une issue qui
+     n'écrit pas -- le déplacer ensuite est le fonctionnement normal.
+     `Scanné · non` porte le glyphe NEUTRE et non `✕` : un tirage non scanné n'est ni un
+     manque ni un refus, c'est le cas courant, et une ligne rouge sonnerait l'alarme sur
+     le seul état qui autorise l'écrasement.
+     CE QUE LA DÉDUCTION SAIT AUJOURD'HUI, ET OÙ ELLE S'ARRÊTE. Le manifeste porte l'état
+     de scan DU LOT -- `scan_manifest.SCAN_LOT_STATE = "scan"`, `lots[].output_frames_dir`
+     -- et c'est ce que ces deux écrans lisent. Il ne porte PAS le rang du tirage scanné :
+     `scan_manifest.SCAN_LOT_FIELDS` ne le liste pas, et le payload décodé -- qui le
+     porte, lui (`io/payload.payload_version_rank`) -- vit sur l'objet en mémoire et
+     n'entre pas dans `as_document()` (`scan_detection.DetectedPage.payload`, commentaire
+     du champ). Donc « ce lot a été scanné » est déductible aujourd'hui, « ce tirage-LÀ a
+     été scanné » ne l'est pas. Tant que le rang lu n'est pas persisté, l'interdit portera
+     sur tous les tirages d'un lot scanné, y compris sur un tirage plus récent que la
+     feuille passée au scanner. C'est une décision de développement, pas de dessin, et
+     elle coûte un champ de plus à la section de scan du lot.
+     PÉRIMÉ LE 2026-09-02 -- ce paragraphe raconte ce qu'on savait le matin, et la
+     décision est tombée le soir. `EPIC11-ARB-176` : la déduction se fait AU RANG, jamais
+     au lot. Le chaînon est LIVRÉ (commits `8fb443e5`, `e051b2a0`) -- `lots[].scanned_
+     version_ranks` existe, le scan lit le rang décodé par `io/payload.payload_version_
+     rank()` (qui n'avait alors AUCUN site d'appel) et l'écrit en union, jamais en
+     écrasement. Le paragraphe ci-dessus reste vrai comme RÉCIT ; il est faux comme
+     description du produit, et un lecteur qui s'arrête à la première note y lirait
+     l'inverse de ce qui est écrit. Le champ « de plus » qu'il annonçait coûteux : il
+     coûtait un appel, la valeur traversant déjà l'impression, le papier et le décodage.
+     `EPIC11-ARB-104` n'est pas contredit -- « tout doit être versionnable OU écrasé » :
+     sur un tirage scanné l'objet reste versionnable (`Créer la v4` est offert), c'est
+     l'écrasement seul qui tombe. `EPIC11-ARB-89` non plus : deux issues restent offertes,
+     il n'y a pas de blocage sec.
+
+NOTE (2026-09-02, question ouverte) : « il y a un écran de conflit par rushe ? Ou un
+système de sélection ligne par ligne pour chaque conflit ? »
+
+  -> Je ne tranche pas, je mesure. CE QUE LE CŒUR IMPOSE AUJOURD'HUI : le conflit est
+     PAR LOT, pas par rush. `pdf_composition.resolve_sheets_version_rank` (`:2108`) prend
+     un `lot_id` et rend le rang de ce lot ; un rush en porte plusieurs (`plan-04` porte
+     `plan-04_25`, `plan-04_12p5`, `plan-04_8`). Un écran « par rush » devrait donc porter
+     plusieurs rangs à la fois, c'est-à-dire être déjà une sélection ligne par ligne.
+     Une passe à trois lots en conflit monte donc cet écran trois fois.
+     CE QUE CHAQUE FORME COÛTE :
+       * un écran par lot (ce qui est dessiné) -- zéro ligne de code en plus, et chaque
+         conflit est jugé avec tout son contexte sous les yeux : le nom, la date, les
+         mégaoctets effacés, l'état de scan. Le coût est pour l'opérateur : N écrans pour
+         N conflits, sans vue d'ensemble et sans « la même réponse pour tous » ;
+       * une sélection ligne par ligne -- un écran quel que soit N, mais il demande un
+         SIXIÈME motif de composant : une liste dont chaque ligne porte son propre choix
+         exclusif. Aucun des cinq motifs du `DESIGN.md` §7 ne le fait -- la liste cochable
+         §7.2 ne porte qu'un booléen, et `panneau.ChoixExclusif` est un objet d'écran, pas
+         de ligne. Et le §7 dit lui-même qu'« un écran qui a besoin d'un sixième motif est
+         un écran mal découpé ». Coût de grille par-dessus : à 80 colonnes, une ligne qui
+         porte le nom (jusqu'à 53 colonnes), l'état et le choix ne peut plus porter la
+         date, la taille ni l'état de scan -- l'opérateur trancherait sans voir ce qu'il
+         efface, ce qu'`EPIC11-ARB-89` demande précisément de montrer ;
+       * une troisième forme, que tu n'as pas nommée mais qui ne coûte rien de neuf :
+         l'écran par lot PLUS une issue « appliquer ce choix aux N conflits restants ».
+         C'est une issue de plus dans une liste qui existe déjà, donc aucun motif neuf, et
+         ça ferme le vrai reproche (répéter cent fois la même réponse) sans perdre le
+         contexte du premier écran. Elle a son propre risque : un choix destructif appliqué
+         en masse.
+     À toi.
+
+NOTE (2026-09-02, EPIC11-ARB-177 et -176) : l'issue de masse, et le glose au rang.
+
+  -> `EPIC11-ARB-177` (Egan : « Excellente proposition : le choix 3 ») : l'ecran
+     reste PAR LOT et gagne « Appliquer ce choix aux N conflits restants ». Les
+     trois contraintes qu'`EPIC11-ARB-89` lui impose se voient dans le dessin --
+     elle n'est jamais la premiere issue atteinte ; elle nomme ce qu'elle emporte
+     en CARDINAL et en POIDS (`3 lots · 1 056 Mo`) ; elle reste une issue parmi
+     d'autres. Et elle SAUTE le tirage scanne en le disant : refuser en bloc
+     ferait perdre les N-1 autres pour un seul.
+     LA PASSE DESSINEE PORTE CINQ CONFLITS, pas deux -- meme geste qu'`E5-5b`, qui
+     montre sept lots quand la demonstration en a deux. Une issue de masse ne se
+     voit pas sur un seul conflit restant, et le saut ne se voit pas du tout.
+     `EPIC11-ARB-176` : le glose de la ligne `Scanne` dit « aucun scan ne cite ce
+     TIRAGE », plus « ce lot ». Le manifeste porte desormais
+     `lots[].scanned_version_ranks`, par union et jamais par ecrasement : un lot
+     dont le `v1` a ete scanne ne rend plus son `v3` inecrasable.
+     RESTE OUVERT, et c'est le dessin qui le fait apparaitre : l'ORDRE dans lequel
+     les N conflits se presentent (par lot ? par date ? par poids ?) n'est tranche
+     par aucun arbitrage.

@@ -1,0 +1,450 @@
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a class="chip" href="#methode">Ce que j'ai fait</a>
+    <a class="chip" href="#tenu">Ce qui tient</a>
+    <a class="chip" href="#defaut">Le défaut</a>
+    <a class="chip" href="#moteur">Le moteur</a>
+    <a class="chip" href="#date">La date</a>
+    <a class="chip" href="#v1">Ce qu'on livre</a>
+    <a class="chip" href="#abandons">Les abandons</a>
+    <a class="chip" href="#questions">Onze questions</a>
+    <a class="chip" href="#versions">Le budget rendu</a>
+    <a class="chip" href="#inconnues">Ce que j'ignore</a>
+    <a class="chip" href="#besoin">Ce qu'il me faut</a>
+  </div>
+</nav>
+
+<div class="wrap" id="contenu">
+
+  <header class="masthead">
+    <p class="eyebrow">Epic 7 · revue en trois couches · version 1</p>
+    <h1>Trois lectures de l'interface</h1>
+    <p class="standfirst">Trois relecteurs ont ouvert le dossier de conception séparément, chacun aveugle à ce que voyaient les deux autres. Ils ont trouvé trois familles de défauts différentes, et une seule cause commune. Cette note te demande onze décisions et une réponse sur la date.</p>
+    <div class="meta"><span>23 août 2026</span><span>conception seule, aucune interface écrite</span><span>première version</span></div>
+  </header>
+
+  <div class="encart e-neuf" data-c="quoi-de-neuf">
+    <span class="lbl">Ce qui a changé depuis la version précédente</span>
+    <p>La page ne clignote plus et ne plante plus&nbsp;: le défaut était dans le mécanisme de sauvegarde, pas dans la note. Ta note du passage «&nbsp;Le cas d'école&nbsp;» est <strong>toujours là</strong>, et j'y réponds juste en dessous — passage marqué <span class="pill p-new">nouveau</span>.</p>
+    <p>Le fond de la revue n'a pas bougé d'une ligne.</p>
+  </div>
+
+  <div class="encart e-acquis" data-c="en-deux-phrases">
+    <span class="lbl">Si tu ne lis qu'un encadré</span>
+    <p><strong>Le travail de conception est bon</strong> : les 39 arbitrages que tu as rendus sont tenus, sans une seule perte sèche. Ce qui s'est perdu, c'est ce qui n'avait pas reçu de numéro.</p>
+    <p><strong>Un outil qui fait quelque chose de bout en bout le 30 août : oui</strong>, à condition d'accepter dix renoncements maintenant. <strong>L'outil complet pour le 4 septembre : non</strong>, et pas de peu — il manque un facteur dix.</p>
+  </div>
+
+  <section id="methode" data-sec="Ce que j'ai fait">
+    <h2 data-c="titre-methode">Ce que j'ai fait</h2>
+
+    <p data-c="chiffre-ouverture">Le merge de dimanche a versé <strong>130 fichiers et 31 644 lignes</strong> de conception dans la branche principale&nbsp;: deux documents de référence, dix-huit maquettes, les parcours utilisateurs, les notes de technologie, cinq vagues de tes retours. <strong>Et pas une ligne d'interface.</strong> C'est ce corpus que j'ai fait relire.</p>
+
+    <p data-c="pourquoi-trois">La revue en trois couches est faite pour du code. Sans code, ce qui distingue les trois relecteurs n'est plus <em>ce qu'ils cherchent</em> mais <strong>ce qu'ils ont le droit de lire</strong>. C'est ce découpage qui a produit les trois familles de défauts.</p>
+
+    <div class="ligne" data-c="couche-1">
+      <div class="ligne-n">01</div>
+      <div class="ligne-corps">
+        <p><strong>Le lecteur aveugle.</strong> Il n'a lu que les documents de conception et les maquettes. Ni l'outil existant, ni tes arbitrages, ni les revues antérieures. Il juge le dossier comme le fera le développeur qui l'ouvrira lundi matin&nbsp;: si une chose n'est pas écrite là, elle n'existe pas pour lui.</p>
+        <div class="ligne-tags"><span class="pill p-info">25 défauts trouvés</span><span class="pill p-crit">3 graves</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="couche-2">
+      <div class="ligne-n">02</div>
+      <div class="ligne-corps">
+        <p><strong>Le chasseur de trous.</strong> Il a lu la conception <em>et</em> le moteur — les quarante-neuf modules déjà écrits. Sa question&nbsp;: chaque promesse d'écran, le moteur sait-il la tenir&nbsp;? Il a répondu promesse par promesse, quatre-vingt-dix fois.</p>
+        <div class="ligne-tags"><span class="pill p-info">90 promesses confrontées</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="couche-3">
+      <div class="ligne-n">03</div>
+      <div class="ligne-corps">
+        <p><strong>L'auditeur.</strong> Seul à avoir lu tes décisions. Sa question&nbsp;: ce que tu as tranché est-il arrivé dans les documents&nbsp;? Il a confronté un par un tes 39 arbitrages, tes onze corrections et vingt-trois de tes retours.</p>
+        <div class="ligne-tags"><span class="pill p-info">73 éléments confrontés</span></div>
+      </div>
+    </div>
+
+    <p data-c="recoupement">Les trois ne se recoupent que sur <strong>quatre</strong> points. Ce n'est pas un raté&nbsp;: un relecteur qui connaît la décision ne peut pas voir qu'un document se contredit lui-même, et un relecteur aveugle ne peut pas voir qu'une décision a disparu. <strong>Le faible recoupement est la preuve que le découpage a servi</strong>, pas qu'une couche a mal travaillé.</p>
+
+    <div class="encart e-alerte" data-c="ce-que-jai-corrige">
+      <span class="lbl">Ce que j'ai corrigé moi-même</span>
+      <p>Un des trois relecteurs a affirmé que la calibration couleur n'était pas livrée et que le profil de scanner vivait hors du projet. <strong>C'est faux</strong> — je l'ai vérifié dans le code&nbsp;: c'est livré depuis le 19 août, et le profil voyage <em>avec</em> le projet depuis ton arbitrage du 16. Il reprenait une revue plus ancienne sans la re-mesurer. La calibration n'est donc pas un obstacle, et elle sort de la liste des renoncements.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="tenu" data-sec="Ce qui tient">
+    <h2 data-c="titre-tenu">Ce qui tient, et c'est mesuré</h2>
+
+    <p data-c="arbitrages-tenus">Sur les <strong>39 arbitrages numérotés</strong> que tu as rendus, <strong>trente sont incarnés dans les documents, cinq à moitié, trois contredits, un devenu caduc. Aucun n'a purement disparu.</strong> Pour une conception menée en cinq vagues sur quatre jours, sous des retours nocturnes envoyés depuis un téléphone, c'est un résultat qu'il faut dire avant les mauvaises nouvelles.</p>
+
+    <p data-c="dispositif-marche">Le dispositif de traçabilité fonctionne aussi&nbsp;: <strong>dix exigences</strong> renvoyées hors du périmètre ont été correctement rangées, avec leur motif et leur condition de réouverture — le tutoriel, la lecture automatique des informations imprimées, le cache disque, le marqueur de durée. Là où il a été appliqué, il tient.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section id="defaut" data-sec="Le défaut">
+    <h2 data-c="titre-defaut">Le défaut, et il n'y en a qu'un</h2>
+
+    <p data-c="defaut-central"><strong>Le dossier perd ce qui n'a pas de numéro.</strong> Les trois relecteurs ont trouvé trois choses différentes, et ce sont trois formes du même mécanisme.</p>
+
+    <div class="ligne" data-c="forme-1">
+      <div class="ligne-n">01</div>
+      <div class="ligne-corps">
+        <p><strong>Les corrections adoptées « sans arbitrage ».</strong> Onze de tes retours ont été classés «&nbsp;corrections que je prends telles quelles, listées pour la trace, pas pour décision&nbsp;». <strong>C'est exactement ce qui leur est arrivé&nbsp;: elles sont restées une trace.</strong> Cinq ne sont jamais arrivées dans les documents, deux sont contredites.</p>
+        <div class="ligne-tags"><span class="pill p-crit">7 sur 11 perdues ou contredites</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="forme-2">
+      <div class="ligne-n">02</div>
+      <div class="ligne-corps">
+        <p><strong>Les maquettes qui ne sont plus des illustrations.</strong> Une règle du dossier dit&nbsp;: «&nbsp;en cas de contradiction entre une maquette et le document de référence, c'est le document qui gagne&nbsp;». Elle marchait tant que les maquettes illustraient. <strong>Six d'entre elles ne l'illustrent plus&nbsp;: elles argumentent contre, motif écrit à l'appui.</strong> La règle a transformé chaque désaccord de fond en écart toléré — et personne n'a rejoué l'arbitrage.</p>
+        <div class="ligne-tags"><span class="pill p-crit">3 surfaces en double</span><span class="pill p-warn">chutier · préférences · composition</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="forme-3">
+      <div class="ligne-n">03</div>
+      <div class="ligne-corps">
+        <p><strong>Un fichier de décisions qui n'a jamais été écrit.</strong> Le compte rendu de ta première vague de retours annonce que leur traitement est consigné dans un fichier daté du 21 août. <strong>Ce fichier n'existe pas.</strong> Quatorze retours, dont trois qui défont une décision de conception, n'ont donc aucune décision écrite — seulement des lignes de journal. C'est la cause mécanique de la moitié des pertes.</p>
+        <div class="ligne-tags"><span class="pill p-crit">14 retours sans décision</span></div>
+      </div>
+    </div>
+
+    <div class="encart e-blocage" data-c="planche-inversee">
+      <span class="lbl">Le cas d'école</span>
+      <p>Tu as écrit, avec ton motif&nbsp;: «&nbsp;comme le pdf est la fin d'une étape de travail, il ne fait rien produire de plus que la planche&nbsp;; <em>c'est pourquoi on n'arrive pas sur la page “scan” mais sur la page pdf</em> en cliquant sur une planche&nbsp;». C'est l'arbitrage 11.</p>
+      <p>Le document de référence écrit aujourd'hui «&nbsp;planche → <strong>Scan</strong>&nbsp;» — <strong>en citant l'arbitrage 11 juste à côté</strong>. La référence rend le contresens invisible à la relecture&nbsp;: on lit le numéro, on fait confiance, on passe.</p>
+    </div>
+
+    <div class="encart e-neuf" data-c="reponse-a-ta-note">
+      <span class="lbl">Réponse à ta note&nbsp;: «&nbsp;tu as pu réharmoniser et corriger&nbsp;? Ou c'est à faire&nbsp;?&nbsp;»</span>
+      <p><span class="pill p-new">nouveau</span> <strong>C'est à faire, et rien ne l'empêche.</strong> Oui, la décision est retrouvée mot pour mot et vérifiée à sa source&nbsp;: ta table donne «&nbsp;planche → page Pdf&nbsp;», noir sur blanc.</p>
+      <p>Si je n'ai rien corrigé, c'est un choix de périmètre&nbsp;: <strong>une revue ne réécrit pas ce qu'elle relit.</strong> Les trois relecteurs travaillaient en lecture seule, et corriger une spine pendant qu'on la juge fait disparaître la preuve de ce qu'on lui reproche.</p>
+      <p>Les <strong>huit</strong> contresens de cette famille sont identifiés, chacun avec sa source. <strong>Une heure de travail</strong>, aucun arbitrage à rendre. Dis-moi «&nbsp;corrige&nbsp;» et je les passe — c'est d'ailleurs le premier point de ce dont j'ai besoin de toi, en bas de page.</p>
+    </div>
+
+    <p data-c="huit-transcriptions">Huit erreurs de ce type sont recensées. <strong>Elles se corrigent en une heure</strong>, et c'est un préalable, pas un détail&nbsp;: quand on écrira la première fiche de développement, l'outil lira le document de référence — pas cette note. Si la phrase fautive est encore là ce jour-là, la fiche portera l'erreur, et la revue qui suivra conclura que tout est conforme.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section id="moteur" data-sec="Le moteur">
+    <h2 data-c="titre-moteur">Où le moteur n'est pas prêt</h2>
+
+    <p data-c="tableau-moteur">Quatre-vingt-dix promesses d'écran confrontées à ce que l'outil sait faire aujourd'hui&nbsp;:</p>
+
+    <div class="ligne" data-c="etat-existe">
+      <div class="ligne-n">30</div>
+      <div class="ligne-corps">
+        <p><strong>Le moteur sait déjà faire.</strong> Un tiers. Lire un film source et ses caractéristiques, poser des bornes, extraire, composer une planche, l'imprimer, encoder un master, refuser proprement un lot incomplet&nbsp;: tout cela existe et est testé.</p>
+        <div class="ligne-tags"><span class="pill p-ok">livré</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="etat-partiel">
+      <div class="ligne-n">27</div>
+      <div class="ligne-corps">
+        <p><strong>À moitié.</strong> La donnée existe, l'exposition manque. L'aperçu vivant de la planche en est le meilleur exemple&nbsp;: tout le plan de page est déjà calculé — zones, codes, patchs, textes — <strong>il ne manque que le dessin</strong>. C'est le poste au meilleur rapport valeur sur coût de tout le projet.</p>
+        <div class="ligne-tags"><span class="pill p-warn">à compléter</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="etat-absent">
+      <div class="ligne-n">29</div>
+      <div class="ligne-corps">
+        <p><strong>Rien du tout.</strong> Aucune brique. Le mode lecteur, le balayage entre le film et le lot reconstruit, les vignettes avant extraction, la barre de progression, le son, les préréglages d'export, la zone tampon.</p>
+        <div class="ligne-tags"><span class="pill p-crit">à écrire</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="etat-contredit">
+      <div class="ligne-n">10</div>
+      <div class="ligne-corps">
+        <p><strong>Le moteur fait délibérément autre chose.</strong> Ce sont les seuls qui ne sont pas du travail à faire, mais <strong>des décisions à rouvrir</strong>. Ils comptent double dans le calendrier, parce qu'ils demandent ton avis avant de demander du temps.</p>
+        <div class="ligne-tags"><span class="pill p-crit">à trancher</span></div>
+      </div>
+    </div>
+
+    <h3 data-c="titre-murs">Les cinq murs</h3>
+    <p data-c="intro-murs">Cinq de ces contradictions changent la forme du produit, pas seulement son planning. Je les donne en clair.</p>
+
+    <article class="carte">
+      <p class="carte-id">Mur 1</p>
+      <h2 data-c="mur1-titre">Le scan ne s'arrête pas au milieu</h2>
+      <p class="situation" data-c="mur1"><strong>La conception promet deux temps.</strong> On détecte, on regarde ce qui a été trouvé, <em>rien n'est encore écrit</em>, puis seulement on extrait les images. C'est le point de jugement central du produit — le moment où l'on décide si l'on fabrique cinquante fichiers ou non.</p>
+      <p data-c="mur1-suite"><strong>Le moteur fait les quatre étapes d'un seul bloc.</strong> Il n'y a aucun endroit où l'on peut s'arrêter, et le résultat de la détection n'est écrit nulle part&nbsp;: il vit en mémoire et meurt à la fermeture. Ironie mesurée&nbsp;: l'outil <em>modélise</em> déjà un état «&nbsp;détecté, rien d'écrit&nbsp;» qu'aucun chemin ne peut atteindre.</p>
+      <div class="recap" data-c="mur1-recap">
+        <span class="lbl">Ce que ça bloque</span>
+        Tout l'atelier Scan · la complétude annoncée avant écriture · la reprise le lendemain · la correction des coins à la main
+      </div>
+    </article>
+
+    <article class="carte">
+      <p class="carte-id">Mur 2</p>
+      <h2 data-c="mur2-titre">L'outil ne retient pas où est le film</h2>
+      <p class="situation" data-c="mur2"><strong>Le fichier de projet ne garde pas le chemin d'un rush</strong> — il n'en garde que le nom, et il <em>refuse</em> tout chemin complet. Ce n'est pas un oubli&nbsp;: c'est une règle voulue, pour qu'un projet reste transportable d'une machine à l'autre.</p>
+      <p data-c="mur2-suite">La conséquence n'avait été vue par personne dans sa force réelle&nbsp;: <strong>à la réouverture d'un projet, tous les films sources sont marqués absents.</strong> Le rouge que la conception réserve au cas exceptionnel est en fait <em>le régime normal</em>. Le son, le balayage et la relance ne peuvent jamais être proposés automatiquement.</p>
+      <div class="recap" data-c="mur2-recap">
+        <span class="lbl">Ce que ça bloque</span>
+        L'atelier Exports en entier · le balayage · le son · et — je l'ajoute — la persistance du premier livrable lui-même
+      </div>
+    </article>
+
+    <article class="carte">
+      <p class="carte-id">Mur 3</p>
+      <h2 data-c="mur3-titre">Scanner un second lot efface le détail du premier</h2>
+      <p class="situation" data-c="mur3"><strong>Le détail page par page n'est gardé que pour le dernier lot scanné.</strong> Le fichier de projet le dit lui-même, noir sur blanc. Ce qui survit d'un lot ancien, ce sont ses compteurs.</p>
+      <p data-c="mur3-suite">Donc&nbsp;: l'arborescence peut encore peindre un lot ancien «&nbsp;incomplet&nbsp;», mais l'outil ne sait plus répondre à «&nbsp;<strong>quelles</strong> pages manquent&nbsp;», ni ouvrir sa galerie sur ses trous, ni te renvoyer sur la page fautive. C'est le cas nominal dès qu'un film a deux lots — c'est-à-dire toujours.</p>
+      <div class="recap" data-c="mur3-recap">
+        <span class="lbl">Ce que ça bloque</span>
+        L'arborescence à six niveaux · la galerie d'un lot ancien · le renvoi sur la page fautive
+      </div>
+    </article>
+
+    <article class="carte">
+      <p class="carte-id">Mur 4</p>
+      <h2 data-c="mur4-titre">Six images par page n'existe pas en portrait</h2>
+      <p class="situation" data-c="mur4"><strong>Mesuré en interrogeant l'outil</strong>&nbsp;: en portrait, les cardinaux possibles sont 1, 2, 3, 4 et 8. Six n'existe qu'en paysage. Le défaut de l'outil est portrait, et le défaut de composition est <em>deux</em> images par page.</p>
+      <p data-c="mur4-suite">Or le parcours de référence — celui qui sert de socle à toute la conception — demande <strong>six images par page en laissant l'outil décider de l'orientation</strong>. Et l'orientation automatique n'existe pas non plus. <strong>Le réglage nominal du parcours nominal est refusé par le moteur.</strong></p>
+    </article>
+
+    <article class="carte">
+      <p class="carte-id">Mur 5</p>
+      <h2 data-c="mur5-titre">L'interface ne pilotera pas l'outil : elle l'hébergera</h2>
+      <p class="situation" data-c="mur5"><strong>Le principe de cadrage dit&nbsp;: «&nbsp;l'interface expose, elle ne recalcule pas&nbsp;».</strong> Elle devait lire des documents produits par le moteur et les afficher.</p>
+      <p data-c="mur5-suite">Deux faits, chacun jugé mineur séparément, l'invalident ensemble&nbsp;: <strong>aucune commande ne produit ces documents aujourd'hui</strong>, et la bascule de calibration à la volée oblige l'interface à <strong>rejouer le calcul couleur elle-même</strong> pour montrer ce que le fichier portera. L'interface embarquera donc le moteur dans son propre processus, au lieu de lancer des commandes à côté.</p>
+      <div class="encart e-blocage" data-c="mur5-consequence">
+        <span class="lbl">Ce que ça change</span>
+        <p>La fabrication de l'application livrable (l'installateur, le paquet macOS et Windows) est concernée, et l'isolement des pannes aussi&nbsp;: une tâche longue qui plante ne plantera plus un processus voisin, mais l'application. <strong>C'est à décider avant d'écrire la coquille, pas après.</strong></p>
+      </div>
+    </article>
+  </section>
+
+  <hr class="rule">
+
+  <section id="date" data-sec="La date">
+    <h2 data-c="titre-date">La date</h2>
+
+    <div class="encart e-acquis" data-c="verdict-30">
+      <span class="lbl">30 août — tenable</span>
+      <p>Un outil qui fait vraiment quelque chose de bout en bout&nbsp;: <strong>six à neuf jours de travail contre sept jours de calendrier.</strong> Serré, sans marge, et tenable pour une seule raison&nbsp;: le parcours retenu <strong>ne dépend d'aucun développement de moteur préalable</strong>.</p>
+    </div>
+
+    <div class="encart e-blocage" data-c="verdict-4">
+      <span class="lbl">4 septembre — non tenable</span>
+      <p>Après ce premier livrable, il reste de l'ordre de <strong>quarante-cinq à soixante-cinq jours de travail</strong> contre <strong>cinq jours de calendrier</strong>. C'est un facteur <strong>neuf à treize</strong>.</p>
+      <p>Même avec trois développements menés de front — le plafond que tu as fixé — et une répartition parfaite, qui n'existera pas puisque les travaux de moteur sont <em>devant</em> les écrans qu'ils débloquent, la cible complète se situe <strong>début à mi-octobre</strong>.</p>
+    </div>
+
+    <p data-c="fiabilite-chiffre"><strong>Ce chiffre, il faut savoir comment le lire.</strong> Le dépôt n'a aucune mesure de vitesse sur du travail d'interface&nbsp;: les cinquante-sept fiches livrées jusqu'ici sont toutes du moteur, sans fenêtre ni rendu. Mes journées sont donc des ordres de grandeur, pas une mesure. <strong>Ce qui est solide, c'est le rapport, pas les valeurs&nbsp;:</strong> même en me trompant d'un facteur deux sur chaque estimation, le 4 septembre reste hors d'atteinte.</p>
+
+    <p data-c="recommandation-date"><strong>Ce que je te propose&nbsp;:</strong> tenir le 30 août sur un livrable honnête et étroit, et <strong>remplacer la cible du 4 septembre par un palier daté sur le premier temps du scan</strong> — déposer, détecter, voir ce qui manque avant qu'une seule image soit écrite. C'est le prochain palier qui a une vraie valeur d'usage. Le travail de moteur qu'il demande doit partir <strong>aujourd'hui</strong>, en parallèle du reste.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section id="v1" data-sec="Ce qu'on livre">
+    <h2 data-c="titre-v1">Ce que je propose de livrer le 30 août</h2>
+
+    <p data-c="intro-v1"><strong>Le film entre, la planche imprimable sort.</strong> C'est le plus petit ensemble qui fasse quelque chose de complet — pas une coquille cliquable. Deux ateliers sur quatre&nbsp;: Extraction et Pdf.</p>
+
+    <article class="carte">
+      <p class="carte-id">Le parcours, en entier</p>
+      <h2 data-c="v1-titre-parcours">Ce que Camille pourra faire</h2>
+      <ol class="steps">
+        <li data-c="v1-e1">Elle lance l'application&nbsp;: l'écran de gestion de projet s'ouvre.</li>
+        <li data-c="v1-e2">Elle crée un projet en désignant un dossier de travail.</li>
+        <li data-c="v1-e3">Elle dépose un film dans l'atelier Extraction. L'en-tête affiche sa source, sa résolution, sa cadence et sa durée — lues du fichier, jamais saisies.</li>
+        <li data-c="v1-e4">Elle le lit dans le lecteur, à sa cadence réelle. <em>Cette brique existe déjà et fonctionne.</em></li>
+        <li data-c="v1-e5">Elle pose ses bornes au transport, les affine au timecode, saisit sa cadence.</li>
+        <li data-c="v1-e6">Elle lance l'extraction. Une fenêtre de confirmation annonce les cadences cochées et l'espace disque requis. Le lot se pose sous son film dans l'arborescence.</li>
+        <li data-c="v1-e7">Elle double-clique sur le lot&nbsp;: elle arrive dans l'atelier Pdf.</li>
+        <li class="climax" data-c="v1-climax"><span class="climax-tag">Le moment qui compte</span>Elle règle la composition et <strong>la planche se redessine sous ses yeux à chaque changement, sans bouton</strong>. C'est le premier point de jugement, et il est intégralement tenu&nbsp;: le plan de page est déjà calculé par le moteur, il ne manquait que le dessin.</li>
+        <li data-c="v1-e9">Elle génère. <strong>Elle imprime.</strong></li>
+      </ol>
+      <div class="encart e-alerte" data-c="v1-trou">
+        <span class="lbl">Le trou que j'ajoute, et qu'aucun relecteur n'avait vu</span>
+        <p>Ce parcours se joue <strong>en une seule session</strong>. À cause du mur 2, si Camille ferme l'application et rouvre son projet le lendemain, <strong>son film est marqué absent</strong> et la galerie perd sa source.</p>
+        <p>Deux issues, et c'est la question 2 ci-dessous&nbsp;: soit on ajoute un moyen de retenir l'emplacement du film hors du fichier de projet — le geste le moins cher, une demi-journée à une journée, dans le premier livrable —, soit <strong>on assume que ce premier livrable est mono-session et l'écran le dit</strong>. Il n'y a pas de troisième voie.</p>
+      </div>
+    </article>
+  </section>
+
+  <hr class="rule">
+
+  <section id="abandons" data-sec="Les abandons">
+    <h2 data-c="titre-abandons">Les dix renoncements, à accepter avant de commencer</h2>
+
+    <p data-c="intro-abandons">Chaque ligne fait gagner du temps réel. Je les liste courtes et vraies plutôt que longues et confortables. <strong>Le risque n'est pas de renoncer&nbsp;: c'est de le découvrir le 29 au soir.</strong></p>
+
+    <div class="ligne" data-c="ab-1"><div class="ligne-n">01</div><div class="ligne-corps"><p><strong>L'atelier Scan en entier</strong>, et donc trois parcours sur cinq. C'est le cœur émotionnel du produit, et c'est ce qui coûte le plus.</p></div></div>
+    <div class="ligne" data-c="ab-2"><div class="ligne-n">02</div><div class="ligne-corps"><p><strong>L'atelier Exports en entier</strong>, balayage compris — donc le climax du premier parcours.</p></div></div>
+    <div class="ligne" data-c="ab-3"><div class="ligne-n">03</div><div class="ligne-corps"><p><strong>La galerie <em>avant</em> extraction</strong> et le filtre retenues/écartées&nbsp;: remplacés par une galerie <em>après</em> extraction, en lecture seule. Le moteur n'a aucune source de vignettes.</p></div></div>
+    <div class="ligne" data-c="ab-4"><div class="ligne-n">04</div><div class="ligne-corps"><p><strong>La barre de progression, le compteur d'images et le temps restant.</strong> Aucune commande n'émet de progression&nbsp;: une commande est un bloc silencieux. La carte de tâche aura deux états — en cours, terminée — <strong>et le dira</strong> plutôt que de faire semblant.</p></div></div>
+    <div class="ligne" data-c="ab-5"><div class="ligne-n">05</div><div class="ligne-corps"><p><strong>Le chutier à deux panneaux</strong>, son mode plein écran et sa poignée de largeur. Le premier livrable pose l'arbre simple à une colonne, en assumant que c'est une dette et non la cible. <em>Voir la question 1 — c'est le modèle que tu as validé.</em></p></div></div>
+    <div class="ligne" data-c="ab-6"><div class="ligne-n">06</div><div class="ligne-corps"><p><strong>La rétractation du panneau mémorisée par vue</strong>&nbsp;: un seul bouton global.</p></div></div>
+    <div class="ligne" data-c="ab-7"><div class="ligne-n">07</div><div class="ligne-corps"><p><strong>Les préférences, la barre de menus et le clic droit.</strong> La seule entrée requise est «&nbsp;Quitter&nbsp;», plus «&nbsp;Préférences&nbsp;» vide si le système l'exige.</p></div></div>
+    <div class="ligne" data-c="ab-8"><div class="ligne-n">08</div><div class="ligne-corps"><p><strong>L'anglais.</strong> Le corpus est intégralement en français, et l'anglais est pourtant la langue par défaut déclarée&nbsp;: <strong>pas une chaîne anglaise n'existe.</strong> Le premier livrable est en français, les textes sont extraits dans un catalogue, la bascule vient plus tard.</p></div></div>
+    <div class="ligne" data-c="ab-9"><div class="ligne-n">09</div><div class="ligne-corps"><p><strong>Le thème clair</strong> — déjà hors périmètre par ta décision. Il faut alors <em>retirer</em> le réglage de thème des préférences, sinon on offre un réglage sans valeur, ce que ta propre règle d'admission interdit.</p></div></div>
+    <div class="ligne" data-c="ab-10"><div class="ligne-n">10</div><div class="ligne-corps"><p><strong>Toute lecture d'un ancien format de projet.</strong> C'est le renoncement qui rapporte&nbsp;: voir plus bas.</p></div></div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="questions" data-sec="Onze questions">
+    <h2 data-c="titre-questions">Onze questions que je ne peux pas trancher</h2>
+
+    <p data-c="intro-questions">Pour chacune, je donne ma recommandation. Réponse par numéro, comme d'habitude — ou par une note posée sur la ligne.</p>
+
+    <div class="ligne" data-c="q1">
+      <div class="ligne-n">01</div>
+      <div class="ligne-corps">
+        <p><strong>Le chutier&nbsp;: une colonne fixe, ou deux panneaux réglables&nbsp;?</strong> Tu as validé les deux panneaux, avec le mode plein écran et la gestion de largeur&nbsp;; les documents de référence décrivent toujours la colonne fixe. La règle «&nbsp;le document gagne&nbsp;» fait donc gagner <em>le modèle que tu as remplacé</em>. Pire&nbsp;: la maquette du successeur <strong>a perdu le bouton Détecter</strong>, seul déclencheur de toute la seconde moitié de la chaîne.</p>
+        <div class="reco"><span class="lbl">ma recommandation</span><span><strong>Deux panneaux</strong>, et on le porte dans les documents de référence.</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="q2">
+      <div class="ligne-n">02</div>
+      <div class="ligne-corps">
+        <p><strong>Où vit l'emplacement d'un film source&nbsp;?</strong> Sans réponse, tout projet rouvert affiche des films absents. Soit un fichier voisin, non transportable, propre à la machine&nbsp;; soit une exception nommée à la règle de portabilité.</p>
+        <div class="ligne-tags"><span class="pill p-crit">bloque le 30 août</span><div class="reco"><span class="lbl">ma recommandation</span><span><strong>Le fichier voisin</strong>, écrit dans le premier livrable.</span></div></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="q3">
+      <div class="ligne-n">03</div>
+      <div class="ligne-corps">
+        <p><strong>Préférence de l'utilisateur, ou réglage du projet&nbsp;?</strong> Pour les cadences raccourcies, le préréglage d'export, le profil de scanner et le dossier de recherche. Les deux documents soutiennent l'inverse l'un de l'autre, chacun avec son motif — et c'est <em>le seul acquis</em> que cette section revendique. Concrètement&nbsp;: si Inès ouvre le projet de Camille, écrase-t-il ses propres réglages, ou doit-elle les refaire&nbsp;?</p>
+        <div class="reco"><span class="lbl">ma recommandation</span><span><strong>Dans le projet</strong>, comme le dit la maquette&nbsp;: ouvrir un film ne doit pas modifier les réglages d'un autre.</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="q4">
+      <div class="ligne-n">04</div>
+      <div class="ligne-corps">
+        <p><strong>Sur machine lente, qui dégrade l'image&nbsp;?</strong> Le mécanisme est conçu <strong>trois fois de façons exclusives</strong>&nbsp;: l'outil dégrade tout seul et tu peux refuser&nbsp;; l'outil te demande de dégrader&nbsp;; c'est un interrupteur dans les préférences. Et comme le repli automatique n'existe qu'en mode «&nbsp;auto&nbsp;» alors que la qualité par défaut est «&nbsp;pleine&nbsp;», <strong>la configuration livrée est celle que le document interdit</strong> — sur l'iMac Intel désigné comme cas de référence, le point de jugement rendrait un verdict faux.</p>
+        <div class="ligne-tags"><span class="pill p-crit">le moteur n'en implémente aucune des trois</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="q5">
+      <div class="ligne-n">05</div>
+      <div class="ligne-corps">
+        <p><strong>Un dpi de scan par défaut dans les préférences, oui ou non&nbsp;?</strong> Le moteur l'exige sans défaut <em>délibérément</em>&nbsp;: un dpi faux fausse toute la géométrie sans erreur visible. Une préférence le rouvre en le rendant invisible — c'est exactement l'argument que tu opposes toi-même au préremplissage du formulaire de code&nbsp;: «&nbsp;un champ vide appelle la vérification, un champ faux ne l'appelle pas&nbsp;».</p>
+        <div class="reco"><span class="lbl">ma recommandation</span><span><strong>Non</strong> — laisser le champ vide, pour qu'il appelle la vérification.</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="q6">
+      <div class="ligne-n">06</div>
+      <div class="ligne-corps">
+        <p><strong>La cadence reste-t-elle dans le panneau d'export&nbsp;?</strong> Une décision livrée, mesurée sur deux masters ouverts dans Resolve, l'a <em>retirée</em>&nbsp;: le master sort toujours à la cadence du film source. L'écran promet l'inverse. Soit on rouvre cette décision, soit on retire la ligne de l'écran.</p>
+        <div class="reco"><span class="lbl">ma recommandation</span><span><strong>Retirer la ligne de l'écran</strong>, et garder la décision déjà mesurée.</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="q7">
+      <div class="ligne-n">07</div>
+      <div class="ligne-corps">
+        <p><strong>L'interface héberge-t-elle le moteur, ou lance-t-elle des commandes&nbsp;?</strong> Voir le mur 5. Cela change la façon de fabriquer l'application livrable et l'isolement des pannes.</p>
+        <div class="ligne-tags"><span class="pill p-crit">avant la coquille</span></div><div class="reco"><span class="lbl">ma recommandation</span><span><strong>Héberger le moteur</strong> dans le processus de l'interface.</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="q8">
+      <div class="ligne-n">08</div>
+      <div class="ligne-corps">
+        <p><strong>Un lot composé garde-t-il son identité&nbsp;?</strong> Le document dit «&nbsp;une variante datée du même lot&nbsp;», la maquette crée un lot composite portant un nom, le moteur numérote les passes. Trois positions. La fonction est hors du premier livrable — <strong>mais l'arborescence doit déjà savoir si elle prévoit une branche parallèle.</strong></p>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="q9">
+      <div class="ligne-n">09</div>
+      <div class="ligne-corps">
+        <p><strong>«&nbsp;Garder les deux&nbsp;» à l'écrasement produit quoi&nbsp;?</strong> La maquette en fait le chemin recommandé, et rien nulle part ne dit quel nom porte le second lot ni ce qu'il advient des planches déjà générées à partir du premier. C'est le seul écran où une donnée est détruite.</p>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="q10">
+      <div class="ligne-n">10</div>
+      <div class="ligne-corps">
+        <p><strong>Que joue le mode lecteur à la place d'une image manquante&nbsp;?</strong> Un noir fausse le jugement, un saut fausse la cadence, et la mire de remplacement n'est pas encore écrite — on est <em>avant</em> l'extraction. C'est le climax du parcours de réparation, et le moteur a tranché le cas symétrique&nbsp;: «&nbsp;aucun trou n'est jamais comblé par répétition de l'image précédente&nbsp;».</p>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="q11">
+      <div class="ligne-n">11</div>
+      <div class="ligne-corps">
+        <p><strong>Acceptes-tu les dix renoncements ci-dessus&nbsp;?</strong> C'est la question qui commande la date. Un «&nbsp;oui&nbsp;» sec suffit&nbsp;; un «&nbsp;oui sauf le 3&nbsp;» aussi, à condition qu'il arrive maintenant.</p>
+        <div class="ligne-tags"><span class="pill p-crit">bloque le 30 août</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="versions" data-sec="Le budget rendu">
+    <h2 data-c="titre-versions">Ne plus empiler les versions : ce que ça rend</h2>
+
+    <p data-c="intro-versions">Tu m'as dit qu'il n'y a aucune archive à maintenir en état, puisque l'outil n'a jamais été en production. <strong>Ça rend trois à cinq jours</strong>, et surtout ça réduit ce qu'il faut tester à chaque fois.</p>
+
+    <div class="ligne" data-c="v-1"><div class="ligne-n">01</div><div class="ligne-corps"><p><strong>Deux formats de fichier de projet sur trois.</strong> L'outil maintient aujourd'hui trois générations avec une table d'aiguillage et des règles de jugement différentes selon la génération lue. N'en garder qu'une <strong>retire une dimension entière de l'espace de test de presque toutes les fiches à venir</strong>. C'est le plus gros poste.</p></div></div>
+    <div class="ligne" data-c="v-2"><div class="ligne-n">02</div><div class="ligne-corps"><p><strong>La migration que ton arbitrage 28 exigeait.</strong> Renommer le fichier de projet d'après le film et les dossiers de travail en clair devient un <em>renommage sec</em>&nbsp;: pas de convertisseur, pas de double lecture, pas de risque. Ça supprime la moitié du travail et la totalité de son danger.</p></div></div>
+    <div class="ligne" data-c="v-3"><div class="ligne-n">03</div><div class="ligne-corps"><p><strong>Le prototype d'interface</strong> et son document de réconciliation. <em>Une chose à sauver avant de le supprimer&nbsp;:</em> il contient <strong>le seul jeu de textes anglais du dépôt</strong>, une soixantaine de libellés. À extraire, puis jeter le reste.</p></div></div>
+    <div class="ligne" data-c="v-4"><div class="ligne-n">04</div><div class="ligne-corps"><p><strong>Deux commandes fantômes</strong> qui impriment une phrase et ne font rien, une <strong>seconde définition de ce qu'est un projet</strong> héritée du prototype d'origine, un drapeau que le code déclare lui-même inerte, trois formes de correction couleur dont une seule est active, et deux versions de géométrie de page dont l'une porte une combinaison structurellement impossible. Une journée cumulée de suppressions pures.</p></div></div>
+
+    <div class="encart e-alerte" data-c="versions-reserve">
+      <span class="lbl">Une réserve, à lire ici et pas ailleurs</span>
+      <p>Retirer la plus ancienne génération de format supprime aussi la <strong>référence de non-régression du tout premier prototype</strong>, que le plan désigne comme comportement de référence. Ce n'est pas un obstacle — cette référence peut être figée autrement — mais c'est une décision à prendre exprès. Sans elle, une seule des deux générations part.</p>
+    </div>
+
+    <div class="encart e-blocage" data-c="versions-limite">
+      <span class="lbl">Ce que ce budget n'achète pas</span>
+      <p>Aucun des cinq murs. Le scan reste d'un bloc, l'emplacement du film reste non retenu, le détail par page reste écrasé, l'identité d'un lot composé reste contradictoire. <strong>Ce sont des décisions de conception présentes, pas des dettes du passé.</strong> Le budget rend le chemin plus court&nbsp;; pas assez court pour le 4 septembre.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="inconnues" data-sec="Ce que j'ignore">
+    <h2 data-c="titre-inconnues">Ce que je ne sais pas</h2>
+
+    <p data-c="inc-1"><strong>Combien de temps coûte vraiment une journée d'interface ici.</strong> Aucune des cinquante-sept fiches livrées n'en contient. Mes estimations sont des ordres de grandeur tirés du nombre de surfaces et de dépendances — c'est le <em>rapport</em> entre le reste à faire et le calendrier qui est solide, pas les journées.</p>
+
+    <p data-c="inc-2"><strong>Ce que valent réellement les dix-huit maquettes.</strong> Le lecteur aveugle les a toutes lues&nbsp;; les deux autres, non — chacun le dit dans son rapport. Une promesse qui n'existerait que dans une maquette a donc pu m'échapper.</p>
+
+    <p data-c="inc-3"><strong>Si les couleurs tiennent à l'écran.</strong> Calculé, pas mesuré&nbsp;: le badge d'état <strong>rouge</strong> — celui qui dit «&nbsp;il n'y a rien ici&nbsp;» et qui bloque l'action — rend un contraste d'environ 3,3 pour 1 sur son fond, là où 4,5 est le seuil de lisibilité en petit texte. Les deux autres passent. <strong>Aucun des deux documents ne fixe de plancher de contraste</strong>, alors que la section accessibilité invoque les vidéastes «&nbsp;dont on ne connaît pas la vision&nbsp;». Réparable en changeant deux valeurs&nbsp;: je ne l'ai pas mis dans le chemin critique.</p>
+
+    <p data-c="inc-4"><strong>Ce qui se passe quand ça se passe mal.</strong> Vingt-deux situations n'ont aucune conception&nbsp;: premier lancement sans projet, fermer pendant une tâche, disque plein <em>pendant</em>, projet illisible, deux fenêtres sur le même dossier, dépôt sur la mauvaise cible, annulation. Aucune ne bloque le premier livrable&nbsp;; toutes se paieront à la première panne de terrain.</p>
+
+    <p data-c="inc-5"><strong>Un défaut de code, lui, est certain</strong>, et c'est le seul des trois rapports&nbsp;: la commande de scan est la seule commande écrivante <em>sans</em> garde d'interruption ni de disque plein. Aujourd'hui, un Ctrl-C ou un disque saturé pendant l'écriture des images rend une trace technique brute et laisse un lot à moitié écrit <strong>dont rien ne dit qu'il est partiel</strong>. Une demi-journée, sur le modèle exact des quatre autres commandes.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section id="besoin" data-sec="Ce qu'il me faut">
+    <h2 data-c="titre-besoin">Ce dont j'ai besoin de toi</h2>
+
+    <p data-c="besoin-intro">Trois choses, par ordre d'urgence.</p>
+
+    <ol class="steps">
+      <li data-c="besoin-1"><strong>Les onze réponses</strong>, ou au moins les quatre qui bloquent&nbsp;: la question 2 (où vit l'emplacement du film), la 7 (héberger ou piloter), la 11 (les renoncements), et la 1 (le chutier), qui décide de la géométrie de tous les écrans.</li>
+      <li data-c="besoin-2"><strong>Ton accord sur le remplacement de la cible du 4 septembre</strong> par un palier daté sur le premier temps du scan. Si tu tiens au 4 septembre, dis-le&nbsp;: je referai le découpage, mais je ne saurai pas le rendre honnête.</li>
+      <li class="climax" data-c="besoin-3"><span class="climax-tag">Ce qui part dès ton feu vert</span>Une heure de corrections dans les documents de référence — les huit contresens — <strong>avant</strong> qu'une seule fiche de développement soit écrite. Puis, dans le même mouvement, l'inscription de l'interface au suivi d'avancement&nbsp;: aujourd'hui, <strong>toute la conception est hors du suivi</strong>. Le chapitre «&nbsp;interface&nbsp;» du plan porte treize lignes, aucun critère de validation — le seul chapitre du dépôt dans ce cas — et ses quatre fiches décrivent <em>un autre produit</em> que celui que tu as conçu&nbsp;: un lanceur de commandes, pas quatre ateliers.</li>
+    </ol>
+
+    <div class="encart e-acquis" data-c="apres">
+      <span class="lbl">Ce qui est déjà prêt à être posé</span>
+      <p>Le découpage en <strong>quinze fiches d'interface</strong> par tranche livrable, les <strong>six travaux de moteur</strong> à écrire ailleurs, et une quarantaine de critères de validation avec, pour chacun, <strong>le moyen concret de le vérifier</strong> — test automatique, comparaison du fichier produit avec celui qu'aurait fait la ligne de commande, mesure sur les couleurs, capture comparée, parcours manuel joué à la main. Rien de tout cela ne mesure une durée&nbsp;: ta règle est tenue.</p>
+    </div>
+
+    <p data-c="ou-est-le-detail">Le détail complet — les trois rapports, le triage, les preuves ligne par ligne — est dans le dépôt, sur la branche de revue. <strong>Ces fichiers font foi&nbsp;; cette page n'en est qu'un rendu</strong>, écrit pour être lu et annoté au doigt.</p>
+  </section>
+
+</div>

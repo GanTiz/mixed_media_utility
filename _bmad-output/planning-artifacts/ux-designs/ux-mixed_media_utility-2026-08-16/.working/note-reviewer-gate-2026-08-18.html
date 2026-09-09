@@ -1,0 +1,1183 @@
+<title>Cinq murs</title>
+
+<style>
+  /* ================= PALETTE =================
+     Un neutre legerement biaise vers l'accent, jamais un gris pur.
+     Un seul accent fort ; les couleurs semantiques (ok / alerte /
+     blocage) sont separees de l'accent et ne comptent pas comme tel.
+     La couleur --mark est celle de l'annotation : elle appartient a la
+     couche de commentaires, ne la reutilise pas pour le contenu. */
+  :root {
+    --paper:#F5F5F1; --surface:#FFFFFF; --surface-2:#EFEFE9;
+    --ink:#161B21; --ink-soft:#5C6771; --ink-faint:#8A939B;
+    --rule:#DCDCD5; --rule-soft:#E8E8E2;
+    --accent:#0D6E6B; --accent-bg:#E2F0EF;
+    --mark:#B8860B; --mark-bg:#FBF3DF;
+    --ok:#2E7A57; --ok-bg:#E4F0E9;
+    --warn:#9E6B0A; --warn-bg:#F5EBD8;
+    --crit:#A83A2C; --crit-bg:#F6E4E1;
+    --scrim:rgba(22,27,33,.42);
+    --shadow:0 1px 2px rgba(22,27,33,.05),0 6px 18px -12px rgba(22,27,33,.22);
+    --shadow-lg:0 -8px 40px -12px rgba(22,27,33,.3);
+    --f-display:"Iowan Old Style","Palatino Linotype",Palatino,"Source Serif 4",Georgia,ui-serif,serif;
+    --f-body:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --f-mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    --measure:68ch; --pad:clamp(1rem,4vw,2rem);
+  }
+  /* Trois etats de theme, pas deux : le reglage « systeme » ne pose
+     aucun attribut, seul prefers-color-scheme le distingue. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:#12161A; --surface:#191E24; --surface-2:#1F252C;
+      --ink:#E7E8E3; --ink-soft:#9BA5AE; --ink-faint:#77828B;
+      --rule:#2B323A; --rule-soft:#232A31;
+      --accent:#48ADA7; --accent-bg:#14312F;
+      --mark:#D9A93F; --mark-bg:#2E2712;
+      --ok:#5CB489; --ok-bg:#16301F;
+      --warn:#D2A044; --warn-bg:#33280F;
+      --crit:#E07B6B; --crit-bg:#351C18;
+      --scrim:rgba(0,0,0,.62);
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px -14px rgba(0,0,0,.7);
+      --shadow-lg:0 -8px 40px -10px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:#12161A; --surface:#191E24; --surface-2:#1F252C;
+    --ink:#E7E8E3; --ink-soft:#9BA5AE; --ink-faint:#77828B;
+    --rule:#2B323A; --rule-soft:#232A31;
+    --accent:#48ADA7; --accent-bg:#14312F;
+    --mark:#D9A93F; --mark-bg:#2E2712;
+    --ok:#5CB489; --ok-bg:#16301F;
+    --warn:#D2A044; --warn-bg:#33280F;
+    --crit:#E07B6B; --crit-bg:#351C18;
+    --scrim:rgba(0,0,0,.62);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px -14px rgba(0,0,0,.7);
+    --shadow-lg:0 -8px 40px -10px rgba(0,0,0,.8);
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--f-body); font-size:16px; line-height:1.62;
+    -webkit-text-size-adjust:100%; overflow-x:hidden;
+  }
+  /* La marge basse laisse la place a la barre de la couche. */
+  .wrap { max-width:var(--measure); margin:0 auto; padding:0 var(--pad) 7rem; }
+
+  /* ---- Navigation : indispensable des que la note depasse trois ecrans ---- */
+  .topbar {
+    position:sticky; top:0; z-index:20;
+    background:color-mix(in srgb,var(--paper) 92%,transparent);
+    backdrop-filter:saturate(1.4) blur(10px); -webkit-backdrop-filter:saturate(1.4) blur(10px);
+    border-bottom:1px solid var(--rule);
+  }
+  .topbar-inner {
+    max-width:var(--measure); margin:0 auto; padding:.5rem var(--pad);
+    display:flex; gap:.35rem; overflow-x:auto; scrollbar-width:none;
+  }
+  .topbar-inner::-webkit-scrollbar { display:none; }
+  .chip {
+    flex:0 0 auto; font-family:var(--f-mono); font-size:.7rem; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--ink-soft); text-decoration:none;
+    padding:.35rem .6rem; border:1px solid var(--rule); border-radius:2px;
+    background:var(--surface); white-space:nowrap;
+  }
+  .chip:hover, .chip:focus-visible { color:var(--accent); border-color:var(--accent); }
+
+  /* ---- Titraille ---- */
+  header.masthead { padding:2.6rem 0 1.6rem; }
+  .eyebrow {
+    font-family:var(--f-mono); font-size:.7rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); margin:0 0 .9rem;
+  }
+  h1 {
+    font-family:var(--f-display); font-weight:600; font-size:clamp(2rem,8vw,2.9rem);
+    line-height:1.1; letter-spacing:-.015em; text-wrap:balance; margin:0 0 .7rem;
+  }
+  .standfirst { font-size:1.06rem; color:var(--ink-soft); margin:0 0 1.4rem; text-wrap:pretty; }
+  .meta {
+    font-family:var(--f-mono); font-size:.72rem; color:var(--ink-faint);
+    display:flex; flex-wrap:wrap; gap:.3rem .9rem;
+    padding-top:1rem; border-top:1px solid var(--rule);
+  }
+  h2 {
+    font-family:var(--f-display); font-weight:600; font-size:clamp(1.35rem,5vw,1.75rem);
+    line-height:1.2; letter-spacing:-.01em; text-wrap:balance; margin:0 0 .5rem;
+  }
+  h3 { font-family:var(--f-body); font-weight:650; font-size:.95rem; margin:1.8rem 0 .5rem; }
+  p { margin:0 0 1rem; text-wrap:pretty; }
+  a { color:var(--accent); }
+  strong { font-weight:650; }
+  section { margin-top:3rem; }
+  .rule { border:0; border-top:1px solid var(--rule); margin:2.5rem 0 0; }
+
+  /* ---- Carte : un bloc qui se lit comme une unite ---- */
+  .carte {
+    position:relative; background:var(--surface); border:1px solid var(--rule);
+    border-radius:3px; padding:1.5rem 1.2rem 1.3rem; box-shadow:var(--shadow); margin-top:1rem;
+  }
+  .carte-id {
+    font-family:var(--f-mono); font-size:.72rem; letter-spacing:.12em;
+    color:var(--accent); margin:0 0 .3rem;
+  }
+  .situation {
+    font-size:.95rem; color:var(--ink-soft); border-left:2px solid var(--rule);
+    padding-left:.9rem; margin:0 0 1.2rem;
+  }
+  .situation strong { color:var(--ink); }
+
+  /* ---- Etapes numerotees : n'utiliser QUE si l'ordre porte du sens ---- */
+  ol.steps { list-style:none; counter-reset:s; margin:0 0 1.2rem; padding:0; }
+  ol.steps > li { counter-increment:s; position:relative; padding:.3rem 0 .3rem 2.5rem; font-size:.95rem; }
+  ol.steps > li::before {
+    content:counter(s,decimal-leading-zero); position:absolute; left:0; top:.45rem;
+    font-family:var(--f-mono); font-size:.72rem; font-variant-numeric:tabular-nums; color:var(--ink-faint);
+  }
+  /* Le point culminant d'un recit : un seul par carte, jamais deux. */
+  ol.steps > li.climax {
+    background:var(--accent-bg); border-left:2px solid var(--accent);
+    padding-left:2.4rem; margin:.5rem 0; border-radius:0 3px 3px 0;
+  }
+  ol.steps > li.climax::before { left:.55rem; color:var(--accent); }
+  .climax-tag {
+    display:block; font-family:var(--f-mono); font-size:.65rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:.15rem;
+  }
+  ol.steps > li.pause { font-family:var(--f-display); font-size:1.02rem; color:var(--ink); }
+  .subhead {
+    font-family:var(--f-mono); font-size:.68rem; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ink-faint); margin:1.6rem 0 .5rem;
+  }
+  /* Une liste qui reprend une numerotation : style="counter-reset:s 7;" */
+
+  /* ---- Encarts : la couleur dit le statut, pas l'importance ---- */
+  .encart {
+    border:1px solid var(--rule); border-left-width:3px; border-radius:0 3px 3px 0;
+    padding:.85rem 1rem; margin:1rem 0; font-size:.9rem; background:var(--surface-2);
+  }
+  .encart .lbl {
+    display:block; font-family:var(--f-mono); font-size:.65rem; letter-spacing:.12em;
+    text-transform:uppercase; margin-bottom:.3rem;
+  }
+  .encart p { margin:0 0 .6rem; }
+  .encart p:last-child { margin-bottom:0; }
+  .e-acquis { border-left-color:var(--accent); }               .e-acquis .lbl { color:var(--accent); }
+  .e-alerte { border-left-color:var(--warn); background:var(--warn-bg); } .e-alerte .lbl { color:var(--warn); }
+  .e-blocage{ border-left-color:var(--crit); background:var(--crit-bg); } .e-blocage .lbl { color:var(--crit); }
+  .e-neuf   { border-left-color:var(--mark); background:var(--mark-bg); } .e-neuf .lbl { color:var(--mark); }
+
+  /* ---- Pastilles d'etat ---- */
+  .pill {
+    display:inline-block; font-family:var(--f-mono); font-size:.63rem; letter-spacing:.1em;
+    text-transform:uppercase; padding:.16rem .45rem; border-radius:2px; white-space:nowrap;
+  }
+  .p-ok{background:var(--ok-bg);color:var(--ok);}
+  .p-warn{background:var(--warn-bg);color:var(--warn);}
+  .p-crit{background:var(--crit-bg);color:var(--crit);}
+  .p-info{background:var(--accent-bg);color:var(--accent);}
+  .p-new{background:var(--mark-bg);color:var(--mark);}
+
+  /* ---- Lignes empilees : un tableau ne tient pas sur un telephone ---- */
+  .ligne {
+    display:grid; grid-template-columns:2.2rem 1fr; gap:0 .7rem;
+    padding:.95rem 0; border-bottom:1px solid var(--rule-soft);
+  }
+  .ligne:last-of-type { border-bottom:0; }
+  .ligne-n {
+    font-family:var(--f-mono); font-size:.78rem; font-variant-numeric:tabular-nums;
+    color:var(--ink-faint); padding-top:.12rem;
+  }
+  .ligne-corps p { margin:0 0 .45rem; font-size:.93rem; }
+  .ligne-tags { display:flex; flex-wrap:wrap; gap:.35rem; align-items:center; }
+
+  /* ---- Récapitulatif technique en fin de carte ---- */
+  .recap {
+    font-family:var(--f-mono); font-size:.75rem; line-height:1.65; color:var(--ink-soft);
+    border-top:1px solid var(--rule-soft); padding-top:.8rem; margin-top:1.2rem;
+  }
+  .recap .lbl {
+    display:block; font-size:.65rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-faint); margin-bottom:.3rem;
+  }
+
+  @media (prefers-reduced-motion:reduce) {
+    * { animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+  }
+  html { scroll-behavior:smooth; scroll-padding-top:3.6rem; }
+</style>
+
+<style>
+/* =================================================================
+   Couche de commentaires — annotation ancree, sauvegarde verifiee,
+   export a quatre voies, reprise par fichier ou par collage.
+   ================================================================= */
+
+  /* ---- Ce qui est commentable ---- */
+  [data-c], .ann {
+    position: relative;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  [data-c]::after, .ann::after {
+    content: "";
+    position: absolute;
+    inset: -.15rem -.4rem;
+    border-radius: 3px;
+    background: transparent;
+    pointer-events: none;
+    transition: background .12s ease;
+  }
+  @media (hover: hover) {
+    [data-c]:hover::after, .ann:hover::after {
+      background: color-mix(in srgb, var(--accent, #0D6E6B) 7%, transparent);
+    }
+  }
+  [data-c].tapped::after, .ann.tapped::after {
+    background: color-mix(in srgb, var(--accent, #0D6E6B) 16%, transparent);
+  }
+  [data-c]:focus-visible, .ann:focus-visible {
+    outline: 2px solid var(--accent, #0D6E6B);
+    outline-offset: 3px;
+  }
+
+  /* ---- Ce qui porte deja une note ---- */
+  [data-c].noted, .ann.noted {
+    box-shadow: inset 3px 0 0 var(--mark, #B8860B);
+    background: color-mix(in srgb, var(--mark, #B8860B) 8%, transparent);
+    border-radius: 0 3px 3px 0;
+  }
+  .c-pin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.15rem;
+    height: 1.15rem;
+    margin-left: .35rem;
+    padding: 0 .25rem;
+    border-radius: 2px;
+    background: var(--mark, #B8860B);
+    color: var(--paper, #F5F5F1);
+    font-family: var(--f-mono, ui-monospace, Menlo, monospace);
+    font-size: .62rem;
+    font-variant-numeric: tabular-nums;
+    vertical-align: .05rem;
+  }
+
+  /* ---- Alarme de stockage : permanente, non masquable ---- */
+  .c-alarm {
+    display: none;
+    gap: .6rem;
+    align-items: flex-start;
+    background: var(--crit-bg, #F6E4E1);
+    border: 1px solid var(--crit, #A83A2C);
+    border-left-width: 4px;
+    border-radius: 3px;
+    padding: .9rem 1rem;
+    margin: 1.4rem 0;
+    font-size: .9rem;
+    color: var(--ink, #161B21);
+  }
+  .c-alarm.on { display: flex; }
+  .c-alarm .lbl {
+    display: block;
+    font-family: var(--f-mono, ui-monospace, Menlo, monospace);
+    font-size: .65rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--crit, #A83A2C);
+    margin-bottom: .25rem;
+  }
+  .c-alarm p { margin: 0; }
+
+  /* ---- Rappel d'export ---- */
+  .c-nudge {
+    position: fixed;
+    left: var(--pad, 1rem);
+    right: var(--pad, 1rem);
+    bottom: 4.6rem;
+    z-index: 25;
+    max-width: var(--measure, 68ch);
+    margin: 0 auto;
+    background: var(--mark-bg, #FBF3DF);
+    border: 1px solid var(--mark, #B8860B);
+    border-radius: 3px;
+    padding: .6rem .8rem;
+    font-size: .85rem;
+    color: var(--ink, #161B21);
+    display: none;
+    gap: .6rem;
+    align-items: center;
+    box-shadow: var(--shadow, 0 6px 18px -12px rgba(22,27,33,.22));
+  }
+  .c-nudge.on { display: flex; }
+  .c-nudge button { flex: 0 0 auto; margin-left: auto; }
+
+  /* ---- Feuilles du bas ---- */
+  .c-scrim {
+    position: fixed; inset: 0;
+    background: var(--scrim, rgba(22,27,33,.42));
+    z-index: 40; opacity: 0; pointer-events: none;
+    transition: opacity .16s ease;
+  }
+  .c-scrim.open { opacity: 1; pointer-events: auto; }
+  .c-sheet {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+    background: var(--surface, #FFFFFF);
+    border-top: 1px solid var(--rule, #DCDCD5);
+    border-radius: 10px 10px 0 0;
+    box-shadow: var(--shadow-lg, 0 -8px 40px -12px rgba(22,27,33,.3));
+    padding: .9rem var(--pad, 1rem) calc(1rem + env(safe-area-inset-bottom, 0px));
+    max-height: 86vh; overflow-y: auto;
+    transform: translateY(102%);
+    transition: transform .2s cubic-bezier(.32,.72,0,1);
+    color: var(--ink, #161B21);
+  }
+  .c-sheet.open { transform: translateY(0); }
+  .c-sheet-inner { max-width: var(--measure, 68ch); margin: 0 auto; }
+  .c-grab {
+    width: 34px; height: 4px; border-radius: 2px;
+    background: var(--rule, #DCDCD5); margin: 0 auto .8rem;
+  }
+  .c-title {
+    font-family: var(--f-mono, ui-monospace, Menlo, monospace);
+    font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent, #0D6E6B); margin: 0 0 .5rem;
+  }
+  .c-quote {
+    margin: 0 0 .8rem; padding: .6rem .8rem;
+    background: var(--surface-2, #EFEFE9);
+    border-left: 3px solid var(--mark, #B8860B);
+    border-radius: 0 3px 3px 0;
+    font-size: .87rem; line-height: 1.5;
+    color: var(--ink-soft, #5C6771);
+    max-height: 8.5rem; overflow-y: auto;
+  }
+  .c-row { display: flex; gap: .5rem; margin-top: .8rem; flex-wrap: wrap; }
+  .c-row .c-spacer { margin-left: auto; }
+
+  .c-sheet textarea, .c-nudge textarea {
+    display: block; width: 100%; min-height: 7rem; resize: vertical;
+    font-family: var(--f-body, -apple-system, sans-serif);
+    font-size: 1rem; line-height: 1.55;
+    color: var(--ink, #161B21); background: var(--paper, #F5F5F1);
+    border: 1px solid var(--accent, #0D6E6B); border-radius: 3px;
+    padding: .7rem .8rem;
+  }
+  .c-mono { font-family: var(--f-mono, ui-monospace, Menlo, monospace) !important;
+            font-size: .78rem !important; line-height: 1.5 !important; min-height: 11rem !important; }
+
+  .c-sheet button, .c-nudge button, .c-bar button {
+    font-family: var(--f-mono, ui-monospace, Menlo, monospace);
+    font-size: .7rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-soft, #5C6771); background: var(--paper, #F5F5F1);
+    border: 1px solid var(--rule, #DCDCD5); border-radius: 2px;
+    padding: .55rem .8rem; cursor: pointer; min-height: 2.4rem;
+  }
+  .c-sheet button:hover, .c-nudge button:hover, .c-bar button:hover,
+  .c-sheet button:focus-visible, .c-bar button:focus-visible {
+    color: var(--accent, #0D6E6B); border-color: var(--accent, #0D6E6B);
+  }
+  .c-sheet button.primary, .c-bar button.primary {
+    color: var(--paper, #F5F5F1); background: var(--accent, #0D6E6B);
+    border-color: var(--accent, #0D6E6B);
+  }
+  .c-sheet button.primary:hover { color: var(--paper, #F5F5F1); opacity: .88; }
+  .c-bar button.urgent {
+    color: var(--paper, #F5F5F1); background: var(--mark, #B8860B);
+    border-color: var(--mark, #B8860B);
+  }
+  .c-sheet button.danger { color: var(--crit, #A83A2C); border-color: var(--crit, #A83A2C); }
+
+  /* ---- Index des notes ---- */
+  .c-idx { padding: .8rem 0; border-bottom: 1px solid var(--rule-soft, #E8E8E2); cursor: pointer; }
+  .c-idx:last-child { border-bottom: 0; }
+  .c-idx-head {
+    display: flex; gap: .5rem; align-items: baseline;
+    font-family: var(--f-mono, ui-monospace, Menlo, monospace);
+    font-size: .66rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-faint, #8A939B); margin-bottom: .25rem;
+  }
+  .c-idx-quote {
+    font-size: .84rem; color: var(--ink-soft, #5C6771); margin: 0 0 .25rem;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .c-idx-note { font-size: .93rem; margin: 0; white-space: pre-wrap; }
+  .c-idx-empty { color: var(--ink-faint, #8A939B); font-size: .92rem; }
+  .c-orphan { color: var(--mark, #B8860B); }
+
+  .c-drop {
+    border: 1px dashed var(--rule, #DCDCD5); border-radius: 3px; padding: 1rem;
+    text-align: center; font-size: .88rem; color: var(--ink-soft, #5C6771);
+    margin-bottom: .8rem;
+  }
+  .c-msg { font-size: .85rem; margin: .6rem 0 0; min-height: 1.2rem; }
+  .c-msg.ok { color: var(--ok, #2E7A57); }
+  .c-msg.bad { color: var(--crit, #A83A2C); }
+  .c-msg.warn { color: var(--mark, #B8860B); }
+
+  /* ---- Barre du bas ---- */
+  .c-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    background: color-mix(in srgb, var(--paper, #F5F5F1) 94%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid var(--rule, #DCDCD5);
+    padding: .55rem var(--pad, 1rem) calc(.55rem + env(safe-area-inset-bottom, 0px));
+  }
+  .c-bar-inner {
+    max-width: var(--measure, 68ch); margin: 0 auto;
+    display: flex; gap: .45rem; align-items: center;
+  }
+  .c-state {
+    font-family: var(--f-mono, ui-monospace, Menlo, monospace);
+    font-size: .68rem; margin-left: auto; text-align: right;
+    line-height: 1.35; font-variant-numeric: tabular-nums;
+  }
+  .c-state .n { color: var(--ink-faint, #8A939B); display: block; }
+  .c-state .s { display: block; }
+  .c-state .s.ok { color: var(--ok, #2E7A57); }
+  .c-state .s.warn { color: var(--mark, #B8860B); }
+  .c-state .s.bad { color: var(--crit, #A83A2C); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .c-sheet, .c-scrim, [data-c]::after, .ann::after { transition: none !important; }
+  }
+</style>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a class="chip" href="#constat">Où on en est</a>
+    <a class="chip" href="#murs">Les cinq murs</a>
+    <a class="chip" href="#bien">Ce qui tient</a>
+    <a class="chip" href="#propose">Ce que je propose</a>
+    <a class="chip" href="#ignore">Ce qu'on ignore</a>
+    <a class="chip" href="#toi">Ce dont j'ai besoin</a>
+  </div>
+</nav>
+
+<div class="wrap" id="contenu">
+
+  <header class="masthead">
+    <p class="eyebrow">Epic 7 · UX · Reviewer Gate</p>
+    <h1>Cinq murs entre l'interface voulue et l'outil réel</h1>
+    <p class="standfirst">Trois relecteurs indépendants ont passé les spécifications au crible. L'UX tient debout. Mais elle demande à l'outil des choses qu'il ne sait pas faire — et pas des détails.</p>
+    <div class="meta">
+      <span>18 août 2026</span>
+      <span>branche oc/epic-7-ux</span>
+      <span>3 angles · 74 remarques · 10 critiques</span>
+    </div>
+  </header>
+
+  <div class="encart e-acquis" data-c="comment-lire">
+    <span class="lbl">Comment lire cette note</span>
+    <p>Elle ne remplace rien : les rapports complets sont dans le dépôt, et c'est eux qui font foi. Celle-ci existe pour que tu puisses <strong>trancher</strong> sans lire 900 lignes.</p>
+    <p>Touche n'importe quel paragraphe pour l'annoter. En bas : l'index de tes notes, l'export et la reprise.</p>
+  </div>
+
+  <section id="constat" data-sec="Où on en est">
+    <h2>Où on en est</h2>
+
+    <p data-c="ce-qui-a-ete-fait">Les deux documents de référence de l'interface sont écrits. L'un décrit <strong>à quoi ça ressemble</strong>, l'autre <strong>comment ça se comporte</strong>. Ils sont distillés depuis tes 139 décisions, les cinq parcours et les documents amont.</p>
+
+    <p data-c="trois-angles">Je les ai fait relire par <strong>trois angles indépendants</strong>, qui ne se parlaient pas : l'un vérifie qu'un développeur peut travailler à partir de ces documents sans revenir poser de questions ; l'autre que rien n'a été inventé au passage ; le troisième que l'outil sait faire ce qu'on lui demande.</p>
+
+    <div class="encart e-alerte" data-c="convergence">
+      <span class="lbl">Le signal le plus fort</span>
+      <p>Deux angles sur trois, qui cherchaient des choses différentes, ont trouvé <strong>les deux mêmes défauts</strong> : rien ne dit qu'un aperçu est <em>périmé</em>, et la vingtaine d'avertissements que l'outil sait produire n'a <strong>aucun endroit où s'afficher</strong>.</p>
+      <p>Quand deux lentilles orthogonales tombent sur la même chose, ce n'est plus une opinion.</p>
+    </div>
+
+    <p data-c="apercu-perime">Le premier défaut mérite qu'on s'y arrête, parce qu'il vise le cœur de ce que tu as demandé. Toute la conception repose sur <strong>« on ne fabrique rien qu'on n'ait d'abord regardé »</strong>. Mais si l'aperçu affiché est en retard d'un réglage, alors on regarde une chose et on en fabrique une autre — et personne ne le sait. Le principe se retourne contre lui-même.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section id="murs" data-sec="Les cinq murs">
+    <h2>Les cinq murs</h2>
+    <p class="standfirst" style="font-size:.98rem;">Ce ne sont pas des fonctions à ajouter. Ce sont des endroits où l'interface qu'on a dessinée <strong>contredit une décision déjà prise et écrite</strong> dans l'outil.</p>
+
+    <article class="carte">
+      <p class="carte-id">Mur 1</p>
+      <h2>Le scan ne se coupe pas en deux</h2>
+      <p class="situation" data-c="mur1-situation"><strong>Ce que tu as demandé.</strong> Que le scan se déroule en deux temps : d'abord la détection, on regarde, <em>puis</em> on écrit les images. C'est ton ajout le plus structurant, celui qui a fait naître le mode lecteur.</p>
+      <p data-c="mur1-realite"><strong>Ce que l'outil fait.</strong> La commande de scan est <strong>d'un seul tenant</strong> : elle ingère, détecte, recadre, écrit les images et met à jour le projet, sans aucun point d'arrêt. Et la détection <strong>ne garde rien sur le disque</strong> — ce qu'elle trouve vit en mémoire le temps de la commande, puis disparaît.</p>
+      <div class="encart e-blocage" data-c="mur1-consequence">
+        <span class="lbl">Ce que ça emporte</span>
+        <p>Sans détection qui persiste : pas de deux temps, pas de complétude annoncée avant écriture, pas d'édition des coins entre les deux, et pas de reprise après avoir fermé l'application. <strong>Ce n'est pas une story qui expose une fonction existante, c'est une refonte de la commande de scan.</strong></p>
+      </div>
+    </article>
+
+    <article class="carte">
+      <p class="carte-id">Mur 2</p>
+      <h2>Le projet ne garde qu'un seul scan à la fois</h2>
+      <p class="situation" data-c="mur2-situation"><strong>Ce qu'on a dessiné.</strong> Un chutier où, sous chaque scan, on voit les lots qu'il contient — et plusieurs scans qui coexistent. C'est la base de P2 et de tout P4.</p>
+      <p data-c="mur2-realite"><strong>Ce que l'outil fait.</strong> Le fichier projet ne contient <strong>qu'une seule fiche de reconstruction</strong>, réécrite en entier à chaque scan. C'est tellement assumé qu'un message d'erreur de l'outil le dit noir sur blanc : scanner un second lot <em>écrase le détail du premier</em>.</p>
+      <div class="encart e-blocage" data-c="mur2-consequence">
+        <span class="lbl">Ce que ça emporte</span>
+        <p>Dès le deuxième scan, le chutier <strong>affiche un arbre faux</strong>. Pas vide : faux. C'est exactement la famille du mode lecteur sans images — une surface qui suppose une donnée que le modèle ne conserve pas.</p>
+      </div>
+    </article>
+
+    <article class="carte">
+      <p class="carte-id">Mur 3</p>
+      <h2>Le fichier projet n'accepte rien de neuf</h2>
+      <p class="situation" data-c="mur3-situation"><strong>Ce qu'on a dessiné.</strong> Une zone tampon pour les fichiers pas encore décodés, tes dossiers d'organisation dans le chutier, la composition d'un lot, les presets d'export.</p>
+      <p data-c="mur3-realite"><strong>Ce que l'outil fait.</strong> Le fichier projet a une <strong>liste fermée</strong> de ce qu'il accepte, à tous les niveaux. Rien d'autre ne peut y entrer. Aucune de ces quatre choses n'a donc où vivre — alors que la spécification promet que rien de ce qui s'affiche ne dépend d'un état passager.</p>
+    </article>
+
+    <article class="carte">
+      <p class="carte-id">Mur 4</p>
+      <h2>L'outil ne sait pas où sont tes rushes</h2>
+      <p class="situation" data-c="mur4-situation"><strong>Ce que tu as écrit</strong>, dans ta note 3 : « on se contente de collecter leur chemin d'accès, on pourra les relinker plus tard ».</p>
+      <p data-c="mur4-realite"><strong>Ce que l'outil fait.</strong> Il garde le <em>nom</em> du rush et le <em>nom</em> de son dossier — <strong>jamais le chemin</strong>. Et c'est délibéré, décidé le 5 août : un chemin nommerait ta machine et ton compte, donc casserait la portabilité du projet quand il passe à Inès.</p>
+      <div class="encart e-blocage" data-c="mur4-consequence">
+        <span class="lbl">Ce que ça emporte</span>
+        <p>Tout rush est <strong>structurellement délinké</strong>, même sur la machine qui vient de l'extraire. Le relink n'a nulle part où écrire. Et surtout : <strong>le son et le balayage du climax de P1 ne peuvent jamais arriver</strong>, puisqu'ils supposent que l'outil retrouve le rush original.</p>
+      </div>
+      <div class="encart e-acquis" data-c="mur4-solution">
+        <span class="lbl">Celui-là a une issue simple</span>
+        <p>Le chemin des rushes n'a pas à vivre <em>dans le projet</em>. Il a sa place dans le <strong>registre local</strong> — la liste de tes projets stockée sur ta machine, que tu as déjà décidée le 16 août. Hors du projet, donc sans toucher à la portabilité. La contradiction disparaît.</p>
+      </div>
+    </article>
+
+    <article class="carte">
+      <p class="carte-id">Mur 5</p>
+      <h2>Le profil de calibration ne voyage pas</h2>
+      <p class="situation" data-c="mur5-situation"><strong>Ce qu'on a dessiné.</strong> Une section Calibration dans le chutier, et un P2 où Inès retrouve de quoi travailler.</p>
+      <p data-c="mur5-realite"><strong>Ce que tu as décidé le 16 août.</strong> Le profil de calibration vit dans une <strong>bibliothèque par machine</strong>, hors du projet — avec la conséquence, assumée à l'époque, qu'un tiers ne le retrouve pas. Les deux spécifications reposent sur l'inverse, et aucune ne le signale.</p>
+    </article>
+  </section>
+
+  <hr class="rule">
+
+  <section id="bien" data-sec="Ce qui tient">
+    <h2>Ce qui tient</h2>
+    <p data-c="bien-fond">Je ne veux pas te laisser sur une liste de murs. <strong>Rien de ce qui a été inventé ne l'a été sur le fond.</strong> L'angle qui cherchait les inventions le dit : aucune décision produit fabriquée, tes dix arbitrages présents dans leur dernière version, et les cinq parcours retrouvés mot pour mot dans la spécification.</p>
+    <p data-c="bien-certitude">Ce qui a été inventé, c'est <strong>de la certitude, pas du contenu</strong> : des points que je savais ouverts ont été écrits comme s'ils étaient tranchés. C'est réparable en une passe.</p>
+    <p data-c="bien-mecanique">Côté mécanique, c'est propre : les cinquante renvois internes se résolvent tous, chaque couleur porte sa valeur, et les cinq parcours ont chacun leur récit complet.</p>
+    <div class="encart e-acquis" data-c="bien-neuf-faux">
+      <span class="lbl">Et neuf fausses alertes</span>
+      <p>L'angle faisabilité a aussi listé <strong>neuf choses qui ont l'air manquantes mais existent déjà</strong>. C'est autant de chantiers qu'on n'ouvrira pas pour rien.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="propose" data-sec="Ce que je propose">
+    <h2>Ce que je propose</h2>
+
+    <p data-c="propose-constat">Le constat de planning est net, et il vaut mieux le regarder en face maintenant qu'au milieu du développement : <strong>l'interface qu'on a dessinée demande un chantier substantiel dans le cœur avant d'exister</strong>. On parlait de quatre stories en amont ; on en est loin.</p>
+
+    <p data-c="propose-methode">Ma recommandation : <strong>on fige l'UX comme cible</strong> — elle est bonne, tu l'as relue deux fois, elle a survécu à trois relecteurs — <strong>et on ouvre un chantier dédié dans le cœur</strong>, en passant par la procédure de changement de cap du dépôt, qui existe exactement pour ça.</p>
+
+    <div class="encart e-alerte" data-c="propose-pourquoi">
+      <span class="lbl">Pourquoi ne pas réduire l'UX à ce que l'outil sait faire</span>
+      <p>Parce que ce serait renoncer à ce qui fait la valeur des parcours. Les deux temps du scan, le mode lecteur, la composition d'un lot : ce sont tes trois meilleures idées, et ce sont précisément les trois qui butent. Une interface taillée sur les capacités actuelles serait une interface sans jugement avant écriture — c'est-à-dire le contraire de ce qu'on a conçu.</p>
+    </div>
+
+    <p data-c="propose-consequence">Ce que ça change concrètement : <strong>l'ordre des travaux</strong>, pas leur nature. On ne peut plus écrire les stories de l'interface tant que le cœur n'a pas été mis à niveau. En revanche, le choix de la technologie — qui t'attend depuis le début — n'est bloqué par rien.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section id="ignore" data-sec="Ce qu'on ignore">
+    <h2>Ce qu'on ne sait pas encore</h2>
+
+    <div class="ligne" data-c="ignore-1">
+      <div class="ligne-n">01</div>
+      <div class="ligne-corps">
+        <p><strong>L'ampleur réelle du chantier.</strong> Je sais que la commande de scan doit se couper en deux et que le fichier projet doit s'ouvrir. Je ne sais pas encore si c'est trois stories ou dix, ni si certaines se font en parallèle.</p>
+        <div class="ligne-tags"><span class="pill p-warn">à chiffrer</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="ignore-2">
+      <div class="ligne-n">02</div>
+      <div class="ligne-corps">
+        <p><strong>Si le fichier projet doit tout porter.</strong> La zone tampon et tes dossiers d'organisation sont peut-être des choses qui n'ont pas à survivre au projet — auquel cas le registre local suffit, comme pour les chemins de rushes. La composition d'un lot, elle, doit voyager.</p>
+        <div class="ligne-tags"><span class="pill p-warn">question ouverte</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="ignore-3">
+      <div class="ligne-n">03</div>
+      <div class="ligne-corps">
+        <p><strong>Ce qu'on fait des avertissements.</strong> Une vingtaine de messages que l'outil sait produire, qu'on n'a pas le droit de fondre entre eux, et pas de place décidée pour les montrer. Le panneau latéral ? La carte de tâche ? Un endroit à part ?</p>
+        <div class="ligne-tags"><span class="pill p-crit">à concevoir</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="ignore-4">
+      <div class="ligne-n">04</div>
+      <div class="ligne-corps">
+        <p><strong>Comment on dit qu'un aperçu est périmé.</strong> Il faut une façon de savoir que ce qu'on regarde correspond bien aux réglages courants. Sans ça, « regarder avant d'écrire » ne veut rien dire.</p>
+        <div class="ligne-tags"><span class="pill p-crit">à concevoir</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="toi" data-sec="Ce dont j'ai besoin">
+    <h2>Ce dont j'ai besoin de toi</h2>
+
+    <p data-c="toi-question">Une seule décision, et elle porte sur la méthode plutôt que sur le produit.</p>
+
+    <div class="ligne" data-c="toi-option-a">
+      <div class="ligne-n">A</div>
+      <div class="ligne-corps">
+        <p><strong>On fige l'UX et on ouvre le chantier du cœur.</strong> Je termine les spécifications en signalant chaque dépendance sur place, puis on passe par la procédure de changement de cap pour écrire les stories du cœur. <em>C'est ce que je recommande.</em></p>
+        <div class="ligne-tags"><span class="pill p-info">recommandé</span></div>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="toi-option-b">
+      <div class="ligne-n">B</div>
+      <div class="ligne-corps">
+        <p><strong>On réduit l'UX à ce que l'outil sait faire aujourd'hui</strong>, et on remet le reste à une version 2. Plus rapide à livrer, mais on perd le jugement avant écriture.</p>
+      </div>
+    </div>
+
+    <div class="ligne" data-c="toi-option-c">
+      <div class="ligne-n">C</div>
+      <div class="ligne-corps">
+        <p><strong>On tranche mur par mur</strong>, en décidant pour chacun s'il vaut son chantier. Plus long à décider, mais tu gardes la main sur chaque arbitrage.</p>
+      </div>
+    </div>
+
+    <div class="encart e-alerte" data-c="toi-avant-tout">
+      <span class="lbl">Et une chose à faire dans tous les cas</span>
+      <p>Le <strong>mur 4</strong> — les chemins de rushes dans le registre local — se règle sans arbitrage : c'est une contradiction, pas un choix. Dis-moi juste si tu vois une objection, sinon je le corrige.</p>
+    </div>
+  </section>
+
+</div>
+
+
+<script>
+(function () {
+  "use strict";
+
+  // ------------------------------------------------------------------
+  // A PERSONNALISER : le titre qui coiffe le bloc exporte.
+  var TITRE = "Cinq murs — Reviewer Gate Epic 7";
+  // ------------------------------------------------------------------
+
+  var CLE = "mmu-notes-" + TITRE.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  var FICHIER = "notes-reviewer-gate-epic7.md";
+  var RAPPEL = 5;            // notes non exportees avant rappel, en regime normal
+
+  var notes = Object.create(null);   // ancre -> {text, quote, section}
+  var ancres = Object.create(null);  // ancre -> element
+  var courante = null;
+  var stockageOk = null;
+  var derniereEcriture = null;
+  var depuisExport = 0;
+
+  // ================= ANCRAGE =================
+  // data-c d'abord : une ancre nommee survit a la reecriture du passage.
+  // A defaut, un condensat du texte : pratique, mais il casse si le texte
+  // change — la note devient alors « orpheline », jamais perdue.
+  function condensat(s) {
+    var h = 5381, i;
+    for (i = 0; i < s.length; i++) { h = ((h << 5) + h + s.charCodeAt(i)) | 0; }
+    return (h >>> 0).toString(36);
+  }
+  function texteDe(el) {
+    var c = el.cloneNode(true);
+    Array.prototype.forEach.call(c.querySelectorAll(".c-pin"), function (p) { p.remove(); });
+    return (c.textContent || "").replace(/\s+/g, " ").trim();
+  }
+  function tronquer(s, n) { return s.length > n ? s.slice(0, n).replace(/\s+\S*$/, "") + "…" : s; }
+  function sectionDe(el) {
+    var s = el.closest("[data-sec]");
+    if (s) return s.getAttribute("data-sec");
+    s = el.closest("section, header, article");
+    if (!s) return "Document";
+    var h = s.querySelector("h1, h2, h3");
+    return h ? texteDe(h) : "Document";
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-c], .ann"), function (el) {
+    var txt = texteDe(el);
+    if (!txt) return;
+    var id = el.getAttribute("data-c");
+    if (!id) {
+      var base = condensat(txt.slice(0, 90)), n = 1;
+      id = base;
+      while (ancres[id]) { id = base + "-" + (++n); }
+      el.setAttribute("data-c", id);
+    }
+    if (ancres[id]) return;      // ancre nommee en double : la premiere gagne
+    ancres[id] = el;
+    el.setAttribute("tabindex", "0");
+    el.setAttribute("role", "button");
+    el.setAttribute("aria-label", "Commenter : " + tronquer(txt, 60));
+  });
+
+  function ordonnees() {
+    var out = [];
+    Array.prototype.forEach.call(document.querySelectorAll("[data-c]"), function (el) {
+      var id = el.getAttribute("data-c");
+      if (ancres[id] === el && notes[id] && notes[id].text) out.push(id);
+    });
+    return out;
+  }
+  function orphelines() {
+    var out = [], k;
+    for (k in notes) { if (notes[k] && notes[k].text && !ancres[k]) out.push(k); }
+    return out;
+  }
+
+  // ================= STOCKAGE VERIFIE =================
+  // Une sauvegarde qui ne se relit pas n'a pas eu lieu. Le navigateur
+  // integre de l'application n'a parfois aucune memoire : on le teste, on
+  // le dit, et la verite reste le bloc exporte.
+  function magasin() {
+    try { if (window.localStorage) return window.localStorage; } catch (e) {}
+    try { if (window.sessionStorage) return window.sessionStorage; } catch (e) {}
+    return null;
+  }
+  function sonder() {
+    var b = magasin(); if (!b) return false;
+    try {
+      b.setItem("__sonde__", "1");
+      var r = b.getItem("__sonde__");
+      b.removeItem("__sonde__");
+      return r === "1";
+    } catch (e) { return false; }
+  }
+  function ecrire() {
+    var charge = JSON.stringify({ notes: notes });
+    var b = magasin();
+    if (!b) { stockageOk = false; return false; }
+    try {
+      b.setItem(CLE, charge);
+      if (b.getItem(CLE) !== charge) throw new Error("relecture divergente");
+      stockageOk = true;
+      derniereEcriture = new Date();
+    } catch (e) { stockageOk = false; }
+    return stockageOk;
+  }
+  function relire() {
+    var b = magasin(); if (!b) return;
+    try {
+      var brut = b.getItem(CLE); if (!brut) return;
+      var d = JSON.parse(brut);
+      if (d && d.notes) notes = d.notes;
+    } catch (e) {}
+  }
+
+  // ================= BALISAGE, CREE ICI =================
+  function el(tag, cls, html) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (html != null) n.innerHTML = html;
+    return n;
+  }
+  function feuille(id, titre, corps) {
+    var s = el("div", "c-sheet");
+    s.id = id;
+    s.setAttribute("role", "dialog");
+    s.setAttribute("aria-modal", "true");
+    s.innerHTML = '<div class="c-sheet-inner"><div class="c-grab"></div>'
+      + '<p class="c-title">' + titre + "</p>" + corps + "</div>";
+    document.body.appendChild(s);
+    return s;
+  }
+
+  var hote = document.querySelector("#contenu, main, .wrap") || document.body;
+  var alarme = el("div", "c-alarm",
+    '<span><span class="lbl">Ce navigateur ne conserve rien</span>'
+    + "<p>Tes notes ne survivront pas à la fermeture de cette page. "
+    + "<strong>Exporte régulièrement</strong> — le bouton en bas te donne le texte, "
+    + "à copier ou à enregistrer.</p></span>");
+  hote.insertBefore(alarme, hote.firstChild);
+
+  var nudge = el("div", "c-nudge",
+    '<span id="c-nudge-txt"></span><button type="button" id="c-nudge-go">Exporter</button>');
+  document.body.appendChild(nudge);
+
+  var barre = el("div", "c-bar",
+    '<div class="c-bar-inner">'
+    + '<button type="button" id="c-btn-index">Mes notes</button>'
+    + '<button type="button" id="c-btn-export">Exporter</button>'
+    + '<button type="button" id="c-btn-import">Reprendre</button>'
+    + '<span class="c-state"><span class="n" id="c-n">0</span><span class="s" id="c-s">—</span></span>'
+    + "</div>");
+  document.body.appendChild(barre);
+
+  var scrim = el("div", "c-scrim");
+  scrim.id = "c-scrim";
+  document.body.appendChild(scrim);
+
+  var fNote = feuille("c-sheet-note", "Note",
+    '<blockquote class="c-quote" id="c-quote"></blockquote>'
+    + '<textarea id="c-text" placeholder="Ta remarque sur ce passage…"></textarea>'
+    + '<div class="c-row"><button type="button" class="primary" id="c-save">Enregistrer</button>'
+    + '<button type="button" id="c-cancel">Annuler</button>'
+    + '<button type="button" class="danger c-spacer" id="c-del">Supprimer</button></div>');
+
+  var fIndex = feuille("c-sheet-index", "Mes notes",
+    '<div id="c-list"></div>'
+    + '<div class="c-row"><button type="button" id="c-idx-close">Fermer</button></div>');
+
+  var fExport = feuille("c-sheet-export", "Exporter",
+    '<p style="font-size:.9rem;color:var(--ink-soft,#5C6771);margin:0 0 .6rem;">'
+    + "Ce texte contient tes notes <em>et</em> le bloc qui permet de les recharger. "
+    + "Enregistre-le, copie-le, ou sélectionne-le à la main&nbsp;— les trois donnent le même résultat.</p>"
+    + '<div class="c-row" style="margin:0 0 .6rem;">'
+    + '<button type="button" class="primary" id="c-ex-save">Enregistrer le fichier</button>'
+    + '<button type="button" id="c-ex-copy">Copier</button>'
+    + '<button type="button" id="c-ex-share" hidden>Partager</button>'
+    + '<button type="button" id="c-ex-select">Tout sélectionner</button></div>'
+    + '<textarea id="c-ex-text" class="c-mono" readonly spellcheck="false"></textarea>'
+    + '<p class="c-msg" id="c-ex-msg"></p>'
+    + '<div class="c-row"><button type="button" id="c-ex-close">Fermer</button></div>');
+
+  var fImport = feuille("c-sheet-import", "Reprendre une relecture",
+    '<p style="font-size:.9rem;color:var(--ink-soft,#5C6771);">Choisis le fichier exporté '
+    + "précédemment, ou colle son contenu. Tes notes actuelles seront remplacées.</p>"
+    + '<div class="c-drop"><input type="file" id="c-im-file" '
+    + 'accept=".md,.markdown,.json,.txt,text/markdown,text/plain,application/json"></div>'
+    + '<textarea id="c-im-paste" placeholder="…ou colle ici le contenu du fichier exporté"></textarea>'
+    + '<p class="c-msg" id="c-im-msg"></p>'
+    + '<div class="c-row"><button type="button" class="primary" id="c-im-load">Charger le collage</button>'
+    + '<button type="button" class="danger" id="c-im-clear">Tout effacer</button>'
+    + '<button type="button" id="c-im-close">Fermer</button></div>');
+
+  // ================= RENDU =================
+  function deuxChiffres(n) { return (n < 10 ? "0" : "") + n; }
+
+  function peindre() {
+    var ids = ordonnees(), orph = orphelines();
+    Array.prototype.forEach.call(document.querySelectorAll("[data-c]"), function (e) {
+      e.classList.remove("noted");
+      Array.prototype.forEach.call(e.querySelectorAll(".c-pin"), function (p) { p.remove(); });
+    });
+    ids.forEach(function (id, i) {
+      var e = ancres[id];
+      e.classList.add("noted");
+      var pin = el("span", "c-pin");
+      pin.textContent = String(i + 1);
+      hoteDePastille(e).appendChild(pin);
+    });
+
+    var n = ids.length + orph.length;
+    document.getElementById("c-n").textContent =
+      n === 0 ? "aucune note" : n + (n > 1 ? " notes" : " note");
+
+    var s = document.getElementById("c-s");
+    s.className = "s";
+    if (stockageOk === false) { s.classList.add("bad"); s.textContent = "non conservé"; }
+    else if (stockageOk === true && derniereEcriture) {
+      s.classList.add("ok");
+      s.textContent = "sauvé " + deuxChiffres(derniereEcriture.getHours())
+        + ":" + deuxChiffres(derniereEcriture.getMinutes());
+    } else { s.classList.add("warn"); s.textContent = "—"; }
+
+    alarme.classList.toggle("on", stockageOk === false);
+
+    var seuil = stockageOk === false ? 1 : RAPPEL;
+    if (depuisExport >= seuil) {
+      document.getElementById("c-nudge-txt").textContent = stockageOk === false
+        ? depuisExport + (depuisExport > 1 ? " notes non sauvegardées." : " note non sauvegardée.")
+        : depuisExport + (depuisExport > 1 ? " notes depuis ton dernier export." : " note depuis ton dernier export.");
+      nudge.classList.add("on");
+    } else { nudge.classList.remove("on"); }
+    document.getElementById("c-btn-export").classList.toggle("urgent", stockageOk === false && n > 0);
+  }
+
+  // La pastille ne peut pas atterrir n'importe ou : sur une grille elle
+  // creerait une cellule, sur une fiche elle casserait la mise en page.
+  function hoteDePastille(e) {
+    var cs = window.getComputedStyle(e).display;
+    if (cs === "grid" || cs === "flex") {
+      var enfants = e.querySelectorAll("p, div, span");
+      if (enfants.length) return enfants[enfants.length - 1];
+    }
+    return e;
+  }
+
+  function enregistrerEtat() { ecrire(); peindre(); }
+
+  // ================= FEUILLES =================
+  var toutes = [fNote, fIndex, fExport, fImport];
+  function fermer() {
+    toutes.forEach(function (f) { f.classList.remove("open"); });
+    scrim.classList.remove("open");
+    courante = null;
+  }
+  function ouvrir(f) {
+    toutes.forEach(function (x) { x.classList.toggle("open", x === f); });
+    scrim.classList.add("open");
+  }
+  scrim.addEventListener("click", fermer);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") fermer(); });
+
+  var qEl = document.getElementById("c-quote");
+  var tEl = document.getElementById("c-text");
+
+  function ouvrirNote(e) {
+    var id = e.getAttribute("data-c");
+    courante = id;
+    var dej = notes[id], sel = "";
+    try {
+      var s = window.getSelection();
+      if (s && !s.isCollapsed && e.contains(s.anchorNode)) sel = s.toString().trim();
+    } catch (x) {}
+    qEl.textContent = tronquer(sel || texteDe(e), 320);
+    tEl.value = dej ? dej.text : "";
+    document.getElementById("c-del").style.visibility = dej ? "visible" : "hidden";
+    fNote.querySelector(".c-title").textContent = sectionDe(e);
+    ouvrir(fNote);
+    setTimeout(function () { tEl.focus(); }, 220);
+  }
+
+  hote.addEventListener("click", function (e) {
+    if (e.target.closest("a, button, input, label, textarea, select")) return;
+    var t = e.target.closest("[data-c]");
+    if (!t || !ancres[t.getAttribute("data-c")]) return;
+    t.classList.add("tapped");
+    setTimeout(function () { t.classList.remove("tapped"); }, 200);
+    ouvrirNote(t);
+  });
+  hote.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    var t = e.target.closest("[data-c]");
+    if (!t || e.target.closest("a, button, input, label, textarea")) return;
+    e.preventDefault();
+    ouvrirNote(t);
+  });
+
+  document.getElementById("c-save").addEventListener("click", function () {
+    if (!courante) return fermer();
+    var v = tEl.value.trim(), existait = !!notes[courante];
+    if (v) {
+      notes[courante] = {
+        text: v,
+        quote: tronquer(texteDe(ancres[courante] || document.body), 220),
+        section: ancres[courante] ? sectionDe(ancres[courante]) : "?"
+      };
+      if (!existait) depuisExport++;
+    } else { delete notes[courante]; }
+    enregistrerEtat();
+    fermer();
+  });
+  document.getElementById("c-cancel").addEventListener("click", fermer);
+  document.getElementById("c-del").addEventListener("click", function () {
+    if (courante) delete notes[courante];
+    enregistrerEtat(); fermer();
+  });
+
+  // ================= INDEX =================
+  document.getElementById("c-btn-index").addEventListener("click", function () {
+    var liste = document.getElementById("c-list");
+    liste.innerHTML = "";
+    var ids = ordonnees(), orph = orphelines();
+    if (!ids.length && !orph.length) {
+      liste.appendChild(el("p", "c-idx-empty",
+        "Aucune note pour l'instant. Touche un paragraphe pour en poser une."));
+    }
+    function ligne(id, num, orpheline) {
+      var n = notes[id];
+      var it = el("div", "c-idx");
+      var h = el("div", "c-idx-head" + (orpheline ? " c-orphan" : ""));
+      h.innerHTML = orpheline
+        ? "passage introuvable · " + (n.section || "?")
+        : '<span class="c-pin">' + num + "</span><span>" + (n.section || "") + "</span>";
+      var q = el("p", "c-idx-quote"); q.textContent = "« " + (n.quote || "") + " »";
+      var t = el("p", "c-idx-note"); t.textContent = n.text;
+      it.appendChild(h); it.appendChild(q); it.appendChild(t);
+      if (!orpheline) it.addEventListener("click", function () {
+        fermer();
+        if (ancres[id]) ancres[id].scrollIntoView({ block: "center" });
+      });
+      liste.appendChild(it);
+    }
+    ids.forEach(function (id, i) { ligne(id, i + 1, false); });
+    orph.forEach(function (id) { ligne(id, 0, true); });
+    ouvrir(fIndex);
+  });
+  document.getElementById("c-idx-close").addEventListener("click", fermer);
+
+  // ================= EXPORT =================
+  // Quatre voies vers le meme texte, et le texte est TOUJOURS affiche :
+  // meme si l'enregistrement, la copie et le partage echouent tous, il
+  // reste selectionnable a la main. Aucun echec n'est muet.
+  var exText = document.getElementById("c-ex-text");
+  var exMsg = document.getElementById("c-ex-msg");
+  function dire(cls, txt) { exMsg.className = "c-msg " + cls; exMsg.textContent = txt; }
+
+  function construire() {
+    var out = ["# " + TITRE + " — notes de relecture", ""];
+    var ids = ordonnees(), orph = orphelines();
+    if (ids.length || orph.length) {
+      out.push("## Notes", "");
+      var derniere = null;
+      ids.forEach(function (id, i) {
+        var n = notes[id];
+        if (n.section !== derniere) { out.push("### " + n.section, ""); derniere = n.section; }
+        out.push("**" + (i + 1) + ".** Sur : « " + n.quote + " »", "");
+        out.push("> " + n.text.split("\n").join("\n> "), "");
+      });
+      if (orph.length) {
+        out.push("### Passages introuvables (le texte a change depuis)", "");
+        orph.forEach(function (id) {
+          var n = notes[id];
+          out.push("**·** Sur : « " + (n.quote || "") + " »", "");
+          out.push("> " + n.text.split("\n").join("\n> "), "");
+        });
+      }
+    } else { out.push("_Aucune note saisie._", ""); }
+    out.push("---", "", "## Donnees de reprise", "");
+    out.push("Ne pas modifier ce bloc : il permet de recharger cette relecture.", "");
+    out.push("```json");
+    out.push(JSON.stringify({ notes: notes }, null, 1));
+    out.push("```", "");
+    return out.join("\n");
+  }
+
+  function exporte() { depuisExport = 0; peindre(); }
+
+  document.getElementById("c-btn-export").addEventListener("click", function () {
+    exText.value = construire();
+    dire("", "");
+    document.getElementById("c-ex-share").hidden = !(navigator.share);
+    ouvrir(fExport);
+  });
+  document.getElementById("c-nudge-go").addEventListener("click", function () {
+    document.getElementById("c-btn-export").click();
+  });
+  document.getElementById("c-ex-close").addEventListener("click", fermer);
+
+  document.getElementById("c-ex-select").addEventListener("click", function () {
+    exText.removeAttribute("readonly");
+    exText.focus();
+    exText.setSelectionRange(0, exText.value.length);
+    try { exText.select(); } catch (e) {}
+    exText.setAttribute("readonly", "");
+    dire("ok", "Tout est sélectionné : appuie longuement puis « Copier ».");
+    exporte();
+  });
+
+  document.getElementById("c-ex-copy").addEventListener("click", function () {
+    var md = exText.value;
+    function repli() {
+      exText.removeAttribute("readonly");
+      exText.focus();
+      exText.setSelectionRange(0, md.length);
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      exText.setAttribute("readonly", "");
+      if (ok) { dire("ok", "Copié dans le presse-papiers."); exporte(); }
+      else dire("bad", "Copie refusée ici. Le texte est sélectionné : appuie longuement puis « Copier ».");
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(md).then(
+        function () { dire("ok", "Copié dans le presse-papiers."); exporte(); }, repli);
+    } else { repli(); }
+  });
+
+  document.getElementById("c-ex-share").addEventListener("click", function () {
+    if (!navigator.share) return;
+    navigator.share({ title: TITRE, text: exText.value })
+      .then(function () { dire("ok", "Partagé."); exporte(); })
+      .catch(function (e) {
+        dire("bad", "Partage indisponible ici (" + ((e && e.name) || "refus") + "). Utilise Copier.");
+      });
+  });
+
+  document.getElementById("c-ex-save").addEventListener("click", function () {
+    var md = exText.value;
+    dire("", "Enregistrement…");
+    (async function () {
+      var d = null;
+      try { d = await window.claude.use("downloads"); } catch (e) { d = null; }
+      if (!d) {
+        dire("bad", "L'enregistrement de fichier n'est pas disponible dans cette vue. Utilise Copier, ou Tout sélectionner.");
+        return;
+      }
+      try {
+        await d.save({ filename: FICHIER, data: md });
+        dire("ok", "Fichier enregistré : " + FICHIER);
+        exporte();
+      } catch (err) {
+        var code = (err && err.code) || "inconnu";
+        if (code === "declined") dire("bad", "Enregistrement refusé ou expiré. Réessaie, ou utilise Copier.");
+        else dire("bad", "Échec (" + code + "). Utilise Copier, ou Tout sélectionner.");
+      }
+    })();
+  });
+
+  // ================= REPRISE =================
+  function charger(brut) {
+    var msg = document.getElementById("c-im-msg");
+    // Trois tentatives : bloc court, bloc long (une note peut contenir des
+    // triples accents graves qui coupent le premier), puis JSON nu.
+    var cands = [], m;
+    m = brut.match(/```json\s*([\s\S]*?)```/); if (m) cands.push(m[1]);
+    m = brut.match(/```json\s*([\s\S]*)```/);  if (m) cands.push(m[1]);
+    cands.push(brut);
+    var d = null, i;
+    for (i = 0; i < cands.length && !d; i++) {
+      try { d = JSON.parse(cands[i]); } catch (e) { d = null; }
+    }
+    if (!d || typeof d !== "object" || !d.notes) {
+      msg.className = "c-msg bad";
+      msg.textContent = "Fichier illisible : aucun bloc de reprise trouvé.";
+      return;
+    }
+    notes = d.notes;
+    enregistrerEtat();
+    var n = ordonnees().length + orphelines().length;
+    msg.className = "c-msg " + (stockageOk === false ? "warn" : "ok");
+    msg.textContent = n + (n > 1 ? " notes rechargées." : " note rechargée.")
+      + (stockageOk === false ? " Attention : ce navigateur ne les conservera pas." : "");
+    setTimeout(fermer, 1400);
+  }
+
+  document.getElementById("c-btn-import").addEventListener("click", function () {
+    document.getElementById("c-im-msg").textContent = "";
+    document.getElementById("c-im-paste").value = "";
+    ouvrir(fImport);
+  });
+  document.getElementById("c-im-close").addEventListener("click", fermer);
+  document.getElementById("c-im-load").addEventListener("click", function () {
+    var v = document.getElementById("c-im-paste").value.trim();
+    var msg = document.getElementById("c-im-msg");
+    if (!v) { msg.className = "c-msg bad"; msg.textContent = "Rien à charger : colle le contenu du fichier."; return; }
+    charger(v);
+  });
+  document.getElementById("c-im-clear").addEventListener("click", function () {
+    notes = Object.create(null);
+    enregistrerEtat();
+    var msg = document.getElementById("c-im-msg");
+    msg.className = "c-msg bad";
+    msg.textContent = "Tout effacé.";
+  });
+  document.getElementById("c-im-file").addEventListener("change", function (e) {
+    var f = e.target.files && e.target.files[0];
+    if (!f) return;
+    var r = new FileReader();
+    r.onload = function () { charger(String(r.result || "")); };
+    r.onerror = function () {
+      var msg = document.getElementById("c-im-msg");
+      msg.className = "c-msg bad";
+      msg.textContent = "Lecture du fichier impossible — utilise le collage.";
+    };
+    r.readAsText(f);
+  });
+
+  // Dernier filet : prevenir avant de perdre des notes non exportees.
+  window.addEventListener("beforeunload", function (e) {
+    if (depuisExport === 0) return;
+    e.preventDefault();
+    e.returnValue = "";
+  });
+
+  // ================= DEMARRAGE =================
+  stockageOk = sonder();
+  if (stockageOk) relire();
+  peindre();
+})();
+</script>

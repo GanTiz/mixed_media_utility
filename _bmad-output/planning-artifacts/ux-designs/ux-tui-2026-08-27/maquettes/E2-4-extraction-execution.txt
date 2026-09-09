@@ -1,0 +1,30 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                       rush_01 · 25 fps · 4:12 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Extraction en cours — lot 2 sur 2                                          │
+│                                                                              │
+│      projet_demo_rush_01_25fps                             écrit             │
+│      projet_demo_rush_01_25s3                              en cours          │
+│                                                                              │
+│   ── Journal ─────────────────────────────────────────────────────────────   │
+│                                                                              │
+│      14:31:02  Source qualifiée : 25 im/s, 6 300 frames, TC 00:00:00:00      │
+│      14:31:47  124 frame(s) TIFF 16 bits écrite(s) dans …_25fps/             │
+│      14:31:47  Manifest mis à jour : lot projet_demo_rush_01_25fps           │
+│      14:31:48  Source qualifiée : 25/3 im/s, 6 300 frames, TC 00:00:00:00    │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░  67 %  28/42 frames  reste ~ 20 s       │
+│ Tab journal  Échap interrompre  F1 aide                                      │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : très chouette.
+
+  -> approbation. Le JOURNAL a change depuis (2026-08-29) : `frame 000084 ecrite`
+     n'avait aucune source -- pendant l'ecriture le coeur n'emet que des entiers
+     (ffmpeg_utils.py:358-368). L'ecran ne montre plus que ses jalons reels.

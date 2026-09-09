@@ -1,0 +1,100 @@
+{
+ "key-chutier-v2-a": [
+  {
+   "when": "21/08 07:50",
+   "text": "le cartouche + le trait bleu + l’arbre + la fleche c’est chargé. On enlève le cartouche et le trait bleu à gauche juste le nom de fichier. On laisse l’arbre, discret. On retire la fleche puisqu’on verra bien que ca s’ouvre et se ferme. À gauche du nom on laisse une puce pour cocher des selections. Avec un système de puce cochée pleine quand on sélectionne tous les enfants et de petit point quand on fait une sélection ponctuelle de quelques éléments seulement."
+  },
+  {
+   "when": "21/08 07:53",
+   "text": "Super de mettre les metadonnees (nombre de frames, nombre de pages etc) mais attention à ce qu’elles soient correctes. Un lot reconstruit n’a pas un nombre de pages mais un nombre de frames."
+  },
+  {
+   "when": "21/08 10:01",
+   "text": "Si on enleve la fleche il faut quand meme qu’on comprenne qu’il reste des objets enfants. Je ne sais pas comment differencier un parent d’un enfant « final »"
+  },
+  {
+   "when": "21/08 16:32",
+   "text": "Vraiment mieux !\nQuestion : si le panneau latéral se retracte seul en dessous d’une certaine largeur peut-on quand meme le rappeler ? A ce moment on a soit le chutier soit l’arborescence"
+  }
+ ],
+ "key-chutier-v2-b": [
+  {
+   "when": "21/08 10:21",
+   "text": "Meme remarque sur la structure de l’arbe"
+  },
+  {
+   "when": "21/08 10:23",
+   "text": "Certains cas sont melangés. Parfois on lit le nom du fichier ou du lot. C’est bien. Mais « page 8 et 9 a scanner » n’est pas un nom d’objet et ce n’est d’ailleurs pas un objet. Ce n’est pas un enfant du scan. C’est une remarque sur le scan. Elle doit s’afficher en info-bulle quand on passe la souris ou qu’on clique sur l’avertissement affiché (icone). D’ailleurs l’icone d’avertissement est trop petite et difficilement lisible."
+  },
+  {
+   "when": "21/08 19:43",
+   "text": "Probleme  d’affichage avec des textes qui sortent de la zone. Un peu trop bavard on n’a pas besoin de justifier juste de poser la question. Sinon tb"
+  },
+  {
+   "when": "22/08 08:39",
+   "text": "Enlever rattacher à\nCela àourdit l’interface. C’est fait automatiquement au moment du scan. Si on souhaite le faire manuellement c’est avec clic-droit. Il faudra qu’on voie tout ce que le clic deoit dans le chutier permet."
+  },
+  {
+   "when": "22/08 08:40",
+   "text": "il faudra prevoir un mode vignette sur le chutier. Ce n’est pas prioritaire."
+  }
+ ],
+ "key-lot-hybride-a": [
+  {
+   "when": "21/08 10:33",
+   "text": "Le parcours utilisateur : sous un lot donné l’utilisateur a selectionné plusieurs scans. Le bouton d’action devient alors : creer une extraction composite. Une fenetre apparait pour nommer ce lot, et pour choisir un lot prioritaire par defaut sur les doublons. Mais ensuite pour chaque frame ou un doublon (voire plus) existe dans la galerie on a une pastille avec le nombre de candidats. On peut cliquer dessus et arriver dans cette vue en wipe ou en cote a cote. Pas de A/B je ne vois pas ce que ca fait. Si plus de 2 candidats on doit choisir les deux affichés dans le wipe. En cote a cote on doit tous les voir (3/4/5 etc). Pas de mode « auto » pour la selecction c’est toujours un choix utilisateur (avec un defaut eventuel mais pas de critere technique)"
+  }
+ ],
+ "key-lot-hybride-b": [
+  {
+   "when": "21/08 10:35",
+   "text": "j’aime bien l’idee de devoir verrouiller et ouvrir la selection des candidats manuellement. A voir la forme que ca prend initiallement ?"
+  },
+  {
+   "when": "22/08 08:41",
+   "text": "Tres bien. Attention au ratio. Zoom +/- pour la taille des vignettes"
+  },
+  {
+   "when": "22/08 08:43",
+   "text": "Trop bavard. Se conteter des faits - x vignettes à verrouiller. Avoir un choix pour tout verrouiller."
+  },
+  {
+   "when": "22/08 08:44",
+   "text": "je ne comprends pas les 4 onglets du haut ? Scan / pdf ne sont pas identiques sur cette page ? On peut : voir les zones, voir les images, voir le mouvement …"
+  },
+  {
+   "when": "22/08 08:49",
+   "text": "Le verrou ne se voit pas. Il est gris ici. Mettre un cadenas. Mais cette opération doit rester rapide : d’abord en masse, puis du cas par cas ponctuel."
+  }
+ ],
+ "key-lot-hybride-c": [
+  {
+   "when": "21/08 19:46",
+   "text": "Respecter les ratios, idem sur la galerie."
+  },
+  {
+   "when": "22/08 08:46",
+   "text": "Manque les controles de zoom etc (partagés)"
+  }
+ ],
+ "key-scan-v2-a": [
+  {
+   "when": "21/08 10:47",
+   "text": "OK maisbca ne colle pas a une vraie planche de production. Il faudra reajuster avec le vrai template plus tard."
+  }
+ ],
+ "key-scan-v2-b": [
+  {
+   "when": "21/08 10:46",
+   "text": "Ok. Attention avec le detail des pages il faut que la navigation reste fluide donc possibilité de naviguer rapidement d’une page à l’autre. Et bien harmoniser entre du pdf et des images. Il faut bien qu’un scan en images rerange les pages dans l’ordre comme si c’etait un fichier pdf. Il faut pouvoir corriger une info de page erronée en cas de mauvais ordre. Le bouton d’action n’est pas pour extraire les 6 tiffs maisnpour extraire tout le lot par defaut. Sauf si on selectionne manuellement des pages « enfantes » mais si on selectionne la planche parente (planche = ensemble de pages) on exporte tout"
+  },
+  {
+   "when": "22/08 08:50",
+   "text": "Bien la bande de pages, on voit le vrai aperçu de la page sur les vignettes. Pas les zones."
+  },
+  {
+   "when": "22/08 08:51",
+   "text": "Ici encore : pourquoi 4 onglets ?"
+  }
+ ]
+}

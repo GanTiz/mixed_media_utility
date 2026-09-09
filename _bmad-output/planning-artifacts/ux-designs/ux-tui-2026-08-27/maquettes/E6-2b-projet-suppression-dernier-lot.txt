@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Projet                            suppression · hiver_24 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ À supprimer — tout le lot hiver_24 ──────────────────────────────────┐   │
+│   │ Élément                 lot hiver_24                                 │   │
+│   │ Fichiers                99                                           │   │
+│   │ Poids libéré            1,3 Go                                       │   │
+│   │                                                                      │   │
+│   │ Emportés avec le lot    2 groupes d'objets                           │   │
+│   │   extract-frames/hiver_24/                  96 fichiers · 1,2 Go     │   │
+│   │   patches/ · 3 planches                     3 fichiers · 92 Mo       │   │
+│   │   ✕ hiver_24_mmu_prores_hq.mov              déclaré, absent          │   │
+│   │                                                                      │   │
+│   │ Dernier lot du rush hiver : le rush restera déclaré sans lot.        │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      Supprimer le lot                      ▲ 99 fichiers, 1,3 Go             │
+│      Supprimer le lot et le rush hiver     ▲ + l'entrée du rush              │
+│    ▸ Annuler                               rien n'est touché                 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ dernier lot du rush hiver · 99 fichiers · 1,3 Go — rien n'a été écrit        │
+│ ⏎ valider  ↑↓ choisir  Échap retour  F1 aide                                 │
+└──────────────────────────────────────────────────────────────────────────────┘

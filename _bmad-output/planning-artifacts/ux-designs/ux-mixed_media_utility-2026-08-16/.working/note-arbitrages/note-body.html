@@ -1,0 +1,194 @@
+<div id="page">
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a class="chip" href="#bloquants">2 bloquants</a>
+    <a class="chip" href="#autres">6 autres</a>
+    <a class="chip" href="#adopte">10 adoptés</a>
+    <a class="chip" href="#suite">La suite</a>
+  </div>
+</nav>
+
+<div class="wrap" id="contenu">
+
+  <header class="masthead">
+    <p class="eyebrow">mixed_media_utility · Epic 7 · 20 août 2026</p>
+    <h1>Arbitrages de l'Epic 7</h1>
+    <p class="standfirst">Tes 18 retours sur les maquettes, instruits. Dix corrections que je prends telles quelles, huit points où j'ai besoin de ta réponse. <strong>Touche une option pour répondre</strong> ; touche un paragraphe pour dire pourquoi.</p>
+    <div class="meta"><span>20 août 2026</span><span>oc/epic-7-ux</span><span>8 réponses attendues</span></div>
+    <p id="memoire-etat">Vérification de l'enregistrement…</p>
+  </header>
+
+  <div class="encart e-blocage" data-c="ce-qui-bloque">
+    <span class="lbl">Ce qui bloque, et ce qui ne bloque pas</span>
+    <p>Les points <strong>1 et 2</strong> décident de ce que le chutier affiche : une maquette dessinée avant ta réponse serait à refaire. Les six autres n'empêchent rien — je les applique selon ma recommandation si tu ne les tranches pas.</p>
+  </div>
+
+  <p data-c="mon-erreur"><strong>Une erreur d'abord, la mienne.</strong> « L'arborescence remonte » désignait la reconstruction de la branche depuis un scan seul — pas un affichage retourné. J'en avais fait un renversement d'affichage, ce qui était en effet un renversement logique dur à suivre, et pour rien. L'ordre reste rush &gt; lot &gt; planche &gt; scan. Ce qu'on montre, c'est que les ancêtres ont été <em>déduits</em> plutôt que trouvés sur le disque — et comme c'est un état, ça prend un signe.</p>
+
+  <hr class="rule">
+
+  <section id="bloquants" data-sec="Les deux points bloquants">
+    <h2>Les deux points bloquants</h2>
+
+    <article class="carte">
+      <p class="carte-id">Point 1</p>
+      <h2>Jusqu'où descend l'arbre</h2>
+      <p class="situation" data-c="p1-situation"><strong>Ta question.</strong> Faut-il aller jusqu'aux rushes reconstruits, ou s'arrêter aux frames extraites d'une planche ? Tu la poses comme un enjeu de lisibilité, et elle en est un : <strong>un lot de 9 planches à 12 frames fait 108 feuilles sous une seule branche</strong>. Trois lots ouverts, et l'arbre ne remplit plus la fonction pour laquelle il existe.</p>
+      <div class="choix" data-point="1" data-c="p1-choix">
+        <p class="choix-lbl">Ta réponse</p>
+        <button type="button" class="opt" data-val="a"><b>a</b><span>L'arbre porte ce qui a un <strong>état</strong>, la galerie porte ce qui a une <strong>image</strong>. L'arbre s'arrête à la planche et au scan ; le rush reconstruit y figure en feuille, sans enfants.<i class="reco">ma recommandation</i></span></button>
+        <button type="button" class="opt" data-val="b"><b>b</b><span>Tout est dans l'arbre, frames comprises, avec repli automatique.</span></button>
+        <button type="button" class="opt" data-val="c"><b>c</b><span>L'arbre s'arrête à la planche ; le rush reconstruit n'apparaît que dans Exports.</span></button>
+        <p class="choix-etat" role="status">Pas encore répondu</p>
+      </div>
+      <p data-c="p1-motif"><strong>Pourquoi a.</strong> Elle donne une règle qui se retient, et qui tranche tous les cas suivants sans qu'on y revienne. <em>b</em> sacrifie la lisibilité exactement là où tu la signales. <em>c</em> cache un livrable dans un seul écran alors que son état t'intéresse partout.</p>
+    </article>
+
+    <article class="carte">
+      <p class="carte-id">Point 2</p>
+      <h2>Ce que fait un clic entre deux pages</h2>
+      <p class="situation" data-c="p2-situation"><strong>Ta question.</strong> Si tu cliques sur un niveau inférieur alors que tu es sur la page Extraction, bascules-tu sur la page Pdf ?</p>
+      <div class="choix" data-point="2" data-c="p2-choix">
+        <p class="choix-lbl">Ta réponse</p>
+        <button type="button" class="opt" data-val="a"><b>a</b><span><strong>Un clic désigne, un double-clic ouvre.</strong> Le clic simple sélectionne sans changer de page ; l'atelier courant met l'objet en évidence s'il sait le montrer. Le double-clic bascule vers l'atelier propriétaire.<i class="reco">ma recommandation</i></span></button>
+        <button type="button" class="opt" data-val="b"><b>b</b><span>Un clic bascule toujours vers l'atelier propriétaire.</span></button>
+        <button type="button" class="opt" data-val="c"><b>c</b><span>Un clic ne bascule jamais ; on change de page par la barre.</span></button>
+        <p class="choix-etat" role="status">Pas encore répondu</p>
+      </div>
+      <p data-c="p2-motif"><strong>Pourquoi a.</strong> L'argument n'est pas théorique : <strong>c'est le geste du chutier de Resolve</strong>, que tu as déjà dans les doigts — sélectionner n'est pas charger. <em>b</em> fait changer la page sous tes yeux au moindre effleurement, ce qui t'interdit de te servir de l'arbre pour te repérer sans te déplacer. <em>c</em> t'oblige à un aller-retour par la barre pour chaque objet.</p>
+      <div class="recap" data-c="p2-depliage">
+        <span class="lbl">Dans les trois cas</span>
+        L'arbre déplie le seul chemin de la sélection · le reste garde l'état où tu l'as laissé · il ne défile que si la ligne est hors champ
+      </div>
+    </article>
+  </section>
+
+  <hr class="rule">
+
+  <section id="autres" data-sec="Les six autres points">
+    <h2>Les six autres points</h2>
+    <p data-c="autres-intro">Aucun ne bloque : sans réponse, j'applique la recommandation et je le note comme tel.</p>
+
+    <div class="ligne">
+      <div class="ligne-n">3</div>
+      <div class="ligne-corps">
+        <p data-c="p3-corps"><strong>Lignes de hiérarchie, ou déroulables ?</strong> Tu demandes de vraies branches, tout en gardant l'autre option ouverte. À quatre ou cinq niveaux, le triangle seul oblige à compter l'indentation ; la ligne donne la profondeur d'un coup d'œil.</p>
+        <div class="choix" data-point="3" data-c="p3-choix">
+          <p class="choix-lbl">Ta réponse</p>
+          <button type="button" class="opt" data-val="a"><b>a</b><span>Lignes de guidage par défaut, dans un neutre discret, plus un réglage pour les masquer.<i class="reco">ma recommandation</i></span></button>
+          <button type="button" class="opt" data-val="b"><b>b</b><span>Déroulables seuls, comme aujourd'hui.</span></button>
+          <p class="choix-etat" role="status">Pas encore répondu</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ligne">
+      <div class="ligne-n">4</div>
+      <div class="ligne-corps">
+        <p data-c="p4-corps"><strong>Des dossiers par type ?</strong> Ton doute est le bon. Deux hiérarchies pour les mêmes objets, c'est exactement ce qui rend un chutier illisible : on ne sait plus laquelle fait foi, ni où retrouver ce qu'on a posé.</p>
+        <div class="choix" data-point="4" data-c="p4-choix">
+          <p class="choix-lbl">Ta réponse</p>
+          <button type="button" class="opt" data-val="a"><b>a</b><span>Non comme seconde hiérarchie, oui comme <strong>filtre</strong> : l'arbre reste par filiation, une barre de filtres donne l'accès par type.<i class="reco">ma recommandation</i></span></button>
+          <button type="button" class="opt" data-val="b"><b>b</b><span>Oui, des dossiers par type dans l'arbre.</span></button>
+          <p class="choix-etat" role="status">Pas encore répondu</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ligne">
+      <div class="ligne-n">5</div>
+      <div class="ligne-corps">
+        <p data-c="p5-corps"><strong>Trois états, ou deux ?</strong> Tu proposes le point d'interrogation pour le délié et le panneau ⚠️ pour l'incomplet. À mon sens il y en a <strong>trois</strong>, parce qu'ils appellent trois gestes différents : <em>délié</em>, le fichier a disparu du disque — retrouver ; <em>non rattaché</em>, l'objet existe mais on ignore à quoi il appartient — identifier ; <em>incomplet</em>, le rattachement est connu mais il manque des pièces — compléter.</p>
+        <div class="choix" data-point="5" data-c="p5-choix">
+          <p class="choix-lbl">Ta réponse</p>
+          <button type="button" class="opt" data-val="a"><b>a</b><span>Trois signes : maillon brisé, point d'interrogation, ⚠️.<i class="reco">ma recommandation</i></span></button>
+          <button type="button" class="opt" data-val="b"><b>b</b><span>Deux seulement, en fondant délié et non rattaché.</span></button>
+          <p class="choix-etat" role="status">Pas encore répondu</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ligne">
+      <div class="ligne-n">6</div>
+      <div class="ligne-corps">
+        <p data-c="p6-corps"><strong>« Annuler quoi ? »</strong> Ta question défait le problème : il y a <strong>deux verbes, pas un</strong>. <em>Annuler</em> porte sur les éditions réversibles — zone déplacée, champ saisi, case cochée, lot renommé, rattachement modifié. <em>Interrompre</em> porte sur les traitements — extraction, encodage, écriture disque : ça ne se défait pas, ça s'arrête.</p>
+        <div class="choix" data-point="6" data-c="p6-choix">
+          <p class="choix-lbl">Ta réponse</p>
+          <button type="button" class="opt" data-val="a"><b>a</b><span>Deux verbes distincts, profondeur d'annulation à 20 éditions, remise à zéro au changement de lot.<i class="reco">ma recommandation</i></span></button>
+          <button type="button" class="opt" data-val="b"><b>b</b><span>Un seul verbe et une profondeur unique.</span></button>
+          <p class="choix-etat" role="status">Pas encore répondu</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ligne">
+      <div class="ligne-n">7</div>
+      <div class="ligne-corps">
+        <p data-c="p7-corps"><strong>Consulter un autre lot pendant un encodage.</strong> Tu penches pour le blocage, par contrainte de calcul. C'est le seul point où je ne te suis pas : parcourir une galerie de TIFF déjà extraits ne coûte presque rien — c'est la <strong>previz à 25 im/s</strong> qui entre en concurrence avec l'encodeur. Le badge de cadence que tu viens de concevoir dit déjà pourquoi ça rame et laisse choisir la qualité.</p>
+        <div class="choix" data-point="7" data-c="p7-choix">
+          <p class="choix-lbl">Ta réponse</p>
+          <button type="button" class="opt" data-val="a"><b>a</b><span>Ne pas bloquer la consultation, dégrader la lecture — le mécanisme existe déjà, ne le doublons pas d'un verrou.<i class="reco">ma recommandation</i></span></button>
+          <button type="button" class="opt" data-val="b"><b>b</b><span>Bloquer la consultation pendant l'encodage.</span></button>
+          <p class="choix-etat" role="status">Pas encore répondu</p>
+        </div>
+        <div class="encart e-blocage" data-c="p7-reserve">
+          <span class="lbl">Ma réserve</span>
+          <p>Si la mesure montre que lire des TIFF fait chuter l'encodage, on retranche — avec des chiffres, pas par principe.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ligne">
+      <div class="ligne-n">8</div>
+      <div class="ligne-corps">
+        <p data-c="p8-corps"><strong>Panneau de progression : double bascule.</strong> On/off, puis superposition contre ancrage avec rétrécissement de la scène. J'adopte tel quel. Une seule réserve, à vérifier sur maquette : sous une certaine largeur de fenêtre, l'ancrage rétrécit la scène au point de la rendre injugeable.</p>
+        <div class="choix" data-point="8" data-c="p8-choix">
+          <p class="choix-lbl">Ta réponse</p>
+          <button type="button" class="opt" data-val="a"><b>a</b><span>En dessous de ce seuil, le panneau repasse en superposition <strong>et le dit</strong>, plutôt que de laisser croire que l'image est à l'échelle.<i class="reco">ma recommandation</i></span></button>
+          <button type="button" class="opt" data-val="b"><b>b</b><span>L'ancrage reste l'ancrage, quelle que soit la largeur.</span></button>
+          <p class="choix-etat" role="status">Pas encore répondu</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="adopte" data-sec="Adopté sans arbitrage">
+    <h2>Ce que je prends tel quel</h2>
+    <p data-c="adopte-intro">Dix corrections, listées pour que tu puisses en contester une. Touche une ligne pour dire laquelle.</p>
+
+    <div class="ligne"><div class="ligne-n">A1</div><div class="ligne-corps"><p data-c="a1"><strong>L'arborescence n'est pas inversée.</strong> Mon contresens, corrigé à la source plutôt qu'en maquette.</p></div></div>
+    <div class="ligne"><div class="ligne-n">A2</div><div class="ligne-corps"><p data-c="a2"><strong>La zone tampon monte en haut</strong> et se nomme « En attente de lecture ». C'est une file, pas un dépotoir.</p></div></div>
+    <div class="ligne"><div class="ligne-n">A3</div><div class="ligne-corps"><p data-c="a3"><strong>Badge de cadence à la place du bandeau.</strong> Cadence effective au-dessus du lecteur, vert si tenue, rouge sinon. Qualité choisie par toi — full, half, quarter, auto. Le bandeau ne survit que comme avertissement unique après un rouge prolongé, refermable et désactivable pour la session. En auto seulement, la résolution s'ajuste seule.</p></div></div>
+    <div class="ligne"><div class="ligne-n">A4</div><div class="ligne-corps"><p data-c="a4"><strong>Le badge affiche aussi la qualité en cours.</strong> Sans elle, un badge rouge ne dit pas s'il faut agir ou si tu as choisi <em>full</em> en connaissance de cause.</p></div></div>
+    <div class="ligne"><div class="ligne-n">A5</div><div class="ligne-corps"><p data-c="a5"><strong>Toutes les surfaces sont maquettées.</strong> Mon pari « Extraction hérite de Pdf » est faux, et ton argument le dit mieux que moi : « Rien à voir. »</p></div></div>
+    <div class="ligne"><div class="ligne-n">A6</div><div class="ligne-corps"><p data-c="a6"><strong>L'orientation sort des réglages Pdf.</strong> Ce n'est pas un choix mais une conséquence du format et de la composition : elle s'affiche, elle ne se règle pas.</p></div></div>
+    <div class="ligne"><div class="ligne-n">A7</div><div class="ligne-corps"><p data-c="a7"><strong>Les ArUco deviennent visibles</strong> dans l'atelier Scan, avec leurs états : décodés, manquants, incomplets.</p></div></div>
+    <div class="ligne"><div class="ligne-n">A8</div><div class="ligne-corps"><p data-c="a8"><strong>Deux verrous indépendants, pas un.</strong> Le QR donne l'<em>identité</em> — quel lot, quelle page. Les ArUco donnent la <em>géométrie</em> — où. La proposition des zones exige les deux au vert, et chacun a son indicateur. C'est la formulation qui manquait à la maquette ; ta remarque me l'a fait trouver.</p></div></div>
+    <div class="ligne"><div class="ligne-n">A9</div><div class="ligne-corps"><p data-c="a9"><strong>Chaque zone affiche sa taille en pixels et son timecode</strong>, déduit du QR.</p></div></div>
+    <div class="ligne"><div class="ligne-n">A10</div><div class="ligne-corps"><p data-c="a10"><strong>Un jeu de contrôles de vue commun à toutes les surfaces d'image</strong> : zoom, pleine largeur, pleine hauteur, 100 %, préréglages. Tu l'as réclamé sur trois écrans — c'est donc un composant, pas trois réglages.</p></div></div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="suite" data-sec="La suite">
+    <h2>L'ordre des maquettes manquantes</h2>
+    <p data-c="suite-intro">Par vagues de trois au plus, du plus risqué au plus dérivé. La vague 1 attend tes réponses aux points 1 et 2.</p>
+    <ol class="steps">
+      <li class="climax" data-c="vague-1"><span class="climax-tag">Vague 1</span>Chutier v2 — <strong>réconciliation d'un lot hybride</strong> depuis plusieurs scans d'une même page — atelier Scan v2. Le lot hybride est le plus risqué et le moins spécifié : c'est pour ça qu'il passe en premier, pas en dernier.</li>
+      <li data-c="vague-2"><strong>Vague 2.</strong> Atelier Extraction — galerie et lecteur en gabarit commun à toutes les pages — badge de cadence.</li>
+      <li data-c="vague-3"><strong>Vague 3.</strong> Atelier Exports — wipe et comparaison — navigation entre cadences.</li>
+      <li data-c="vague-4"><strong>Vague 4.</strong> Écran de gestion de projet, plein écran, modales, préférences.</li>
+    </ol>
+    <div class="encart e-blocage" data-c="liste-controles">
+      <span class="lbl">Ce qu'il me manque de toi</span>
+      <p>Tu dis avoir fait la liste complète des contrôles de transport — frame par frame, boucle, in/out, marqueurs, volume. Je ne l'ai pas retrouvée dans le dépôt : renvoie-la, ou dis-moi où elle est, et je la reprends telle quelle pour la vague 2.</p>
+    </div>
+  </section>
+
+  <p class="meta" data-c="ou-ca-atterrit" style="margin-top:1.5rem"><span>Ce que tu réponds ici atterrit dans <code>arbitrages-epic-7-a-trancher.md</code>, qui fait foi — cette page n'en est que la version où l'on peut répondre.</span></p>
+
+</div>
+</div>

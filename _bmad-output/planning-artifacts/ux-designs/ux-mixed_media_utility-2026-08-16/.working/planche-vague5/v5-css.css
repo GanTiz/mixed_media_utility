@@ -1,0 +1,84 @@
+/* =========================================================================
+   VAGUE 5 — Preferences, menu contextuel, barre de menus systeme.
+   Trois surfaces qui n'ont aucune image dedans : l'invariant colorimetrique
+   n'y est pas en jeu, mais les neutres restent R=G=B par coherence, et
+   l'accent ne sert qu'a designer un choix.
+   ========================================================================= */
+
+/* --- menus : contextuel et barre de menus, un seul rendu ----------------- */
+.menu2{background:var(--surface-raised); border:1px solid var(--border-strong);
+  border-radius:var(--r-md); padding:var(--sp3) 0; box-shadow:0 8px 24px rgba(0,0,0,.55);
+  display:flex; flex-direction:column}
+.mtitre{padding:3px var(--sp5) var(--sp3); font-family:var(--f-data); font-size:9.5px;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--text-disabled);
+  border-bottom:1px solid var(--border); margin-bottom:var(--sp3)}
+.mi{display:flex; align-items:center; gap:var(--sp4); padding:3px var(--sp5); font-size:12.5px;
+  color:var(--text-primary); min-width:0}
+.mi.gris{color:var(--text-disabled)}
+.mi.sous{padding-left:var(--sp7)}
+.mi .ml{flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.mi .mrc{flex:0 0 auto; font-family:var(--f-data); font-size:10.5px; color:var(--text-disabled)}
+.mi .mfl{flex:0 0 auto; color:var(--text-disabled); font-size:13px}
+.mi .mck{flex:0 0 11px; width:11px; text-align:center; font-size:11px; color:var(--accent)}
+.msep{height:1px; background:var(--border); margin:var(--sp3) 0}
+
+/* la surface sur laquelle un menu contextuel s'ouvre, pour qu'on voie sur
+   QUOI on a clique -- un menu montre hors contexte n'apprend rien */
+.ctx{position:relative}
+.ctx .menu2{position:absolute; z-index:4}
+
+/* --- Preferences ---------------------------------------------------------
+   Meme ossature que les ateliers : un rail de sections a gauche, un panneau
+   de reglages a droite. On ne reapprend pas un ecran pour changer un reglage. */
+.prefs{display:flex; min-height:460px; background:var(--surface-canvas)}
+.pf-nav{width:210px; flex:0 0 210px; background:var(--surface-panel);
+  border-right:1px solid var(--border); padding:var(--sp5) 0; display:flex; flex-direction:column}
+.pf-s{padding:var(--sp4) var(--sp6); font-size:12.5px; color:var(--text-secondary);
+  border-left:2px solid transparent}
+.pf-s.on{color:var(--text-primary); background:var(--surface-hover); border-left-color:var(--accent)}
+.pf-corps{flex:1 1 auto; min-width:0; padding:var(--sp7); display:flex; flex-direction:column; gap:var(--sp6)}
+.pf-corps h2{margin:0; font-size:17px; font-weight:600}
+
+/* un interrupteur : la forme dit l'etat sans la couleur seule */
+.inter{flex:0 0 auto; width:30px; height:17px; border-radius:var(--r-full);
+  border:1px solid var(--border-strong); background:var(--surface-sunken); position:relative}
+.inter::after{content:""; position:absolute; top:2px; left:2px; width:11px; height:11px;
+  border-radius:var(--r-full); background:var(--text-disabled)}
+.inter.on{border-color:var(--accent); background:var(--accent)}
+.inter.on::after{left:15px; background:var(--accent-on)}
+.lg3{display:flex; align-items:center; gap:var(--sp5); min-height:26px}
+.lg3 .k{flex:1 1 auto; min-width:0; font-size:12.5px; color:var(--text-primary)}
+.lg3 .k small{display:block; font-size:11px; color:var(--text-disabled); line-height:1.4}
+/* un reglage verrouille : il se voit, il ne se touche pas, et il DIT pourquoi */
+.lg3.fige .k{color:var(--text-secondary)}
+.fige-m{font-family:var(--f-data); font-size:10px; color:var(--state-absent);
+  border:1px solid var(--state-absent); border-radius:var(--r-sm); padding:0 var(--sp4); white-space:nowrap}
+
+/* --- barre de menus systeme ---------------------------------------------- */
+.osbar{display:flex; align-items:center; gap:0; height:26px; padding:0 var(--sp5);
+  background:var(--surface-panel); border-bottom:1px solid var(--border)}
+/* le menu systeme appartient a macOS, pas a mmu : on marque sa place sans
+   pretendre le dessiner. Le caractere Apple ne rend qu'en police Apple. */
+.osbar .pomme{width:11px; height:11px; margin:0 var(--sp5); border:1px solid var(--text-disabled);
+  border-radius:2px; flex:0 0 11px}
+.osbar .om{padding:2px var(--sp5); font-size:12.5px; color:var(--text-secondary); border-radius:var(--r-sm)}
+.osbar .om.on{background:var(--surface-hover); color:var(--text-primary)}
+/* NB : ne pas nommer cette classe `app` -- c'est le cadre
+   applicatif des maquettes et le selecteur du banc de capture. */
+.osbar .om.appli{font-weight:600; color:var(--text-primary)}
+.osfen{position:relative; background:var(--surface-canvas); min-height:400px}
+.osfen .menu2{position:absolute; z-index:4}
+.deux-os{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:var(--sp6)}
+.osq{display:flex; flex-direction:column; gap:var(--sp4); min-width:0}
+.osq-t{font-family:var(--f-data); font-size:11px; color:var(--text-disabled)}
+
+/* Les valeurs des Preferences n'etaient pas cadrees : `.v` n'est stylee que
+   sous `.lg2` dans v3-css.css, et une ligne `.lg3` la laissait nue. On ne
+   retouche pas v3-css -- des maquettes publiees en dependent -- on decline. */
+.lg3 .v{flex:0 0 auto; max-width:52%; display:inline-flex; align-items:center; gap:var(--sp3);
+  border:1px solid var(--border); border-radius:var(--r-sm); background:var(--surface-raised);
+  padding:1px var(--sp4); font-family:var(--f-data); font-size:11px; color:var(--text-primary);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.lg3 .v .car{font-size:8px; color:var(--text-disabled)}
+.lg3 .v.libre{background:var(--surface-sunken)}
+.lg3.fige .v{color:var(--text-secondary)}

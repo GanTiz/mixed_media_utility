@@ -1,0 +1,170 @@
+{
+  "artifacts": {
+    "frames_dir": "frames"
+  },
+  "color": {
+    "color_calibration_status": "not_applied",
+    "target_colorspace": "rec709"
+  },
+  "created": "2026-08-06T08:43:29Z",
+  "lots": [
+    {
+      "confirmation": {
+        "confirmed_at": "2026-08-10T07:29:24Z",
+        "mode": "interactif",
+        "unknown_color_accepted": false
+      },
+      "expected_frame_count": 13,
+      "first_frame_timecode": "00:00:00:00",
+      "fps_target": 12.5,
+      "fps_target_exact": "25/2",
+      "frame_timecodes_digest": "sha256-v1:ec1a47c2188891c9f34da51744e86ecc84f13849c9def84b1ed8486dcb441f3c",
+      "frames_dir": "frames/TEST_FILE_12p5",
+      "gamut_map_id": "gamut-map-none-1",
+      "last_frame_timecode": "00:00:00:24",
+      "lot_id": "TEST_FILE_12p5",
+      "output_bit_depth": 16,
+      "output_frames_dir": "output-frames/TEST_FILE_12p5",
+      "patch_preset_id": "patches-12-v1",
+      "reconstructed_frame_count": 11,
+      "rounding_policy": "floor-index-ceil-count-v1",
+      "rush_id": "TEST_FILE",
+      "selection_warnings": [
+        "NON_INTEGER_TARGET_RATE"
+      ],
+      "source_frame_count": 26,
+      "source_frame_count_is_exact": true,
+      "source_tail_frames": 1,
+      "state": "scan",
+      "synthetic_frame_count": 2,
+      "synthetic_frames": [
+        "scan_TEST_FILE_12p5_00-00-00-00.tiff",
+        "scan_TEST_FILE_12p5_00-00-00-02.tiff"
+      ],
+      "template_id": "tpl-a4-portrait-2f-v1",
+      "timecode_base": "source",
+      "timecode_base_fps": "25/1"
+    }
+  ],
+  "project_id": "projet_demo",
+  "reconstruction": {
+    "gamut_map_id": "gamut-map-none-1",
+    "lot_id": "TEST_FILE_12p5",
+    "origin": "scan",
+    "page_calibration_results": [
+      {
+        "page_index": 0,
+        "status": "not_applied"
+      },
+      {
+        "page_index": 1,
+        "status": "not_applied"
+      },
+      {
+        "page_index": 2,
+        "status": "not_applied"
+      },
+      {
+        "page_index": 3,
+        "status": "not_applied"
+      },
+      {
+        "page_index": 4,
+        "status": "not_applied"
+      },
+      {
+        "page_index": 5,
+        "status": "not_applied"
+      },
+      {
+        "page_index": 6,
+        "status": "not_applied"
+      }
+    ],
+    "page_count": 7,
+    "patch_preset_id": "patches-12-v1",
+    "scan": {
+      "ingest_slug": "TEST_FILE_12p5",
+      "pages": [
+        {
+          "homography_status": "unresolved",
+          "page_index": 0,
+          "qr_status": "decoded",
+          "read_rank": 0,
+          "status": "refused"
+        },
+        {
+          "homography_status": "resolved",
+          "page_index": 1,
+          "qr_status": "decoded",
+          "read_rank": 1,
+          "status": "ok"
+        },
+        {
+          "homography_status": "resolved",
+          "page_index": 2,
+          "qr_status": "decoded",
+          "read_rank": 2,
+          "status": "ok"
+        },
+        {
+          "homography_status": "resolved",
+          "page_index": 3,
+          "qr_status": "decoded",
+          "read_rank": 3,
+          "status": "ok"
+        },
+        {
+          "homography_status": "resolved",
+          "page_index": 4,
+          "qr_status": "decoded",
+          "read_rank": 4,
+          "status": "ok"
+        },
+        {
+          "homography_status": "resolved",
+          "page_index": 5,
+          "qr_status": "decoded",
+          "read_rank": 5,
+          "status": "ok"
+        },
+        {
+          "homography_status": "resolved",
+          "page_index": 6,
+          "qr_status": "decoded",
+          "read_rank": 6,
+          "status": "ok"
+        }
+      ],
+      "scan_dpi": 600
+    },
+    "slots": [],
+    "status": "partial",
+    "template_id": "tpl-a4-portrait-2f-v1"
+  },
+  "rushes": [
+    {
+      "fps_source": 25.0,
+      "fps_source_exact": "25/1",
+      "resolution_source": {
+        "height": 1080,
+        "width": 1920
+      },
+      "rush_id": "TEST_FILE",
+      "source_bit_depth": 8,
+      "source_codec": "h264",
+      "source_color_primaries": "bt709",
+      "source_color_range": "tv",
+      "source_color_trc": "bt709",
+      "source_colorspace": "bt709",
+      "source_metadata_absent_fields": [],
+      "source_name": "TEST_FILE.mp4",
+      "source_parent": "tests",
+      "source_pix_fmt": "yuv420p",
+      "source_sample_aspect_ratio": "1:1",
+      "source_start_timecode": "00:00:00:00"
+    }
+  ],
+  "schema_version": "2.1",
+  "video": {}
+}

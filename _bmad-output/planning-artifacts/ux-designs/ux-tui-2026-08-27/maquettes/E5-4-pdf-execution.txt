@@ -1,0 +1,87 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf                                  2 lots · 164 frames │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Génération en cours — lot 2 sur 2                                          │
+│                                                                              │
+│      ● projet_demo_plan-04_25_6f-pay_v4.pdf               21 pages  écrit    │
+│        projet_demo_plan-04_8_6f-pay.pdf                    7 pages  en cours │
+│                                                                              │
+│   ── Journal ─────────────────────────────────────────────────────────────   │
+│                                                                              │
+│      16:22:41  plan-04_8 : tpl-a4-paysage-6f-v2, tirage 1                    │
+│      16:22:41  page 1/7 : 6 emplacements, QR version 16                      │
+│      16:22:44  page 2/7 : 6 emplacements, QR version 16                      │
+│      16:22:47  page 3/7 : 6 emplacements, QR version 16                      │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░  86 %  lot 2/2 · page 3/7  reste ~ 8 s  │
+│ Tab journal  Échap interrompre  F1 aide                                      │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : OK
+
+  -> approbation, rien change.
+
+NOTE (2026-09-01, relecture v5, n°7) : Il n'y a pas le nombre de frames dans les noms de
+planches ?
+
+  -> Non, et c'est un vrai défaut, pas une remarque de nommage. Mesuré ici, par la
+     fonction du produit :
+         4 f/page -> projet_demo_plan-04_25_planches.pdf
+         8 f/page -> projet_demo_plan-04_25_planches.pdf     IDENTIQUES
+     `build_sheets_pdf_filename(project_id, rush_id, lot_id, version_rank)` ne prend ni
+     cardinal ni orientation : deux mises en page du MÊME lot ne peuvent pas produire
+     deux noms.
+     Ce que ça fait aujourd'hui : régénérer dans une autre mise en page tombe sur le
+     conflit de tirage, donc EPIC11-ARB-89 joue et tu as tes issues -- il n'y a pas de
+     destruction silencieuse. Mais le motif est OPAQUE : l'écran dit « ce tirage existe
+     déjà » sans dire que c'est une autre mise en page, et les deux versions se
+     distinguent ensuite par un `_v2` qui ne dit rien de ce qui change.
+     La forme du fragment n'est pas inventée : elle est PRISE à
+     `page_templates.build_template_id`, qui compose déjà
+     `tpl-a4-<orientation>-<N>f[-m<marge>]-<version>`. D'où `paysage-6f`, dans cet
+     ordre -- orientation puis cardinal, et non `6f-paysage` : le dépôt compose ce
+     fragment une fois, une seconde recette serait une seconde vérité.
+     La version de géométrie est retirée du fragment, et c'est mesuré plutôt que
+     d'école : la garder donnerait `..._planches_paysage-6f-v2_v4.pdf`, DEUX fragments
+     `-vN` collés dont ni l'œil ni une analyse ne disent lequel est la géométrie et
+     lequel le rang. C'est mot pour mot le défaut que `build_sheets_pdf_filename` a déjà
+     payé pour le rang du lot, et la réponse est la même : un seul `_vN` dans un nom.
+     LA BORNE DES 48 CARACTÈRES NE S'APPLIQUE PAS À CE NOM, et je l'ai mesuré plutôt que
+     de le supposer. `CANONICAL_ID_MAX_LENGTH` vaut 48 dans `io/naming.py` (avec
+     `LEGACY_ID_MAX_LENGTH = 64` en lecture seule) et borne les IDENTIFIANTS, pas les
+     noms de fichiers : `validate_manifest_identifier` refuse un `lot_id` de 49, mais
+     `build_sheets_pdf_filename` accepte un `lot_id` de 200 et rend un nom de 228
+     caractères sans lever. Un nom déjà légal aujourd'hui fait 76 caractères avec un
+     `lot_id` à la borne. La raison de fond : le QR ne porte pas le nom du fichier. Ce
+     que `plan_page_payload` valide, ce sont `project_id`, `rush_id`, `lot_id`,
+     `template_id`, `patch_preset_id`, `gamut_map_id` -- et `template_id` porte DÉJÀ
+     `paysage-6f`. L'information est donc dans le QR depuis toujours ; elle manquait
+     seulement au nom sur le disque. Ajouter le fragment ne coûte donc rien à la falaise
+     QR : il n'entre dans aucun identifiant canonique.
+     Un écart de rebond que le développement devra traiter :
+     `pdf_composition._rangs_sur_le_disque` (`:2083`) énumère les tirages présents en
+     RECONSTRUISANT le nom attendu pour chaque rang. Si le nom porte la mise en page,
+     cette énumération la demande aussi -- et il faudra alors trancher si la ligne d'eau
+     (`sheets_version_watermark`) reste par LOT ou devient par (lot, mise en page).
+     Ce que ce dessin ne ferme pas : deux géométries différentes de la même orientation
+     et du même cardinal (`v2` contre un futur `v3`) rendent toujours le même nom.
+     Rien n'est implémenté : c'est un dessin. Fait qui rend le défaut plus net : le
+     JOURNAL de cet écran nommait déjà le gabarit `tpl-a4-paysage-6f-v2`. La mise en
+     page était dite au moment où elle s'écrivait, et perdue au moment où on la relisait
+     sur le disque.
+
+NOTE (2026-09-02, n°1) : les noms de la passe perdent le mot `planches`.
+
+  -> Les deux lignes de fichiers portent `6f-pay` là où elles portaient
+     `planches_paysage-6f`. Le JOURNAL, lui, garde `tpl-a4-paysage-6f-v2` et c'est voulu :
+     c'est le `template_id` du produit, pas un nom de fichier. Les deux conventions se
+     lisent donc à trois lignes d'écart sur cet écran -- `6f-pay` dans le nom, `paysage-6f`
+     dans le gabarit -- et c'est assumé : le fragment du nom est dérivé du gabarit, il ne
+     le remplace pas.
+     La colonne des noms est ici de 51 colonnes ; le plus long des deux noms en fait 36.

@@ -1,0 +1,29 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan · Calibrer                                          │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Calibrer une chaîne de scan                                                │
+│                                                                              │
+│      Scan de la page        D:\HOKO\scans\calib_hp_26aout.tiff               │
+│      Résolution de scan   > ·                          requis · dpi          │
+│      Reprendre la mesure    600 dpi       le fichier déclare 600 dpi         │
+│                                                                              │
+│      Nom de la chaîne       hp-envy-4520-tiff-600                            │
+│      Commentaire            passe du 26/08, vitre nettoyée                   │
+│                                                                              │
+│   ── Ce qui sera écrit ───────────────────────────────────────────────────   │
+│                                                                              │
+│      Profil                 versions/calibration/hp-envy-4520-tiff-600       │
+│      Remplace               la passe du 12/08 — même chaîne                  │
+│      Devient le défaut      ( ) oui    (•) non                               │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ✕  résolution de scan requise — la calibration ne peut pas partir            │
+│ ⏎ continuer  Tab champ  Échap menu Scan  F1 aide                             │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : je n'ai pas compris comment on entre dans ce panneau ? Enlever "parcours à part".
+Pour moi on doit y accéder depuis SCAN.
+
+  -> EPIC11-ARB-28 : menu d'atelier E3-0, et « parcours a part » retire de l'interface.

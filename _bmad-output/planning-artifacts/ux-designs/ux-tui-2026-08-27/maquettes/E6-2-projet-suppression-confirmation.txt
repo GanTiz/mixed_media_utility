@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Projet                        suppression · plan-04_12p5 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ À supprimer — tout le lot plan-04_12p5 ──────────────────────────────┐   │
+│   │ Élément                 lot plan-04_12p5                             │   │
+│   │ Fichiers                67                                           │   │
+│   │ Poids libéré            1,5 Go                                       │   │
+│   │                                                                      │   │
+│   │ Emportés avec le lot    4 groupes d'objets                           │   │
+│   │   extract-frames/plan-04_12p5/              62 fichiers · 770 Mo     │   │
+│   │   plan-04_12p5_mmu_prores_hq.mov            1 fichier · 206 Mo       │   │
+│   │   scans/plan-04_12p5/                       4 fichiers · 550 Mo      │   │
+│   │   ✕ projet_demo_plan-04_12p5_6f-pay.pdf     déclarée, absente        │   │
+│   │ Rangs portés            lot v2 · scans v1 · planches v1              │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      Supprimer                          ▲ 67 fichiers, définitif             │
+│      Supprimer et libérer les rangs     ▲ le prochain lot reprendrait le v2  │
+│    ▸ Annuler                            rien n'est touché                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 67 fichiers · 1,5 Go · 4 groupes — rien n'a encore été écrit                 │
+│ ⏎ valider  ↑↓ choisir  Échap retour  F1 aide                                 │
+└──────────────────────────────────────────────────────────────────────────────┘

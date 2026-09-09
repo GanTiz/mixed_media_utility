@@ -1,0 +1,5 @@
+# Dependances de developpement, non necessaires a l'execution du package.
+#
+# mutmut : mutation testing outille (remplace les campagnes ecrites a la main
+# par story sous scripts/mutation/, cf. scripts/mutation/README.md).
+mutmut>=3.0

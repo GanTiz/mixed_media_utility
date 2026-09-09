@@ -1,0 +1,109 @@
+# --- Politique Git LFS : par CHEMIN, et seulement sous `tests/` ---
+#
+# Revise le 2026-09-03 (deuxieme passe), sur arbitrage d'Egan :
+# « Je suis pour l'abandon du versionnage de projects, c'est un dossier qui a
+#   vocation a rester local ; tout fichier qui devra etre partage devra passer
+#   par tests/. »
+#
+# Compte rendu et chiffres :
+# `_bmad-output/implementation-artifacts/mesure-2026-09-03-bande-passante-lfs.md`
+#
+# ## Ce que la premiere passe avait deja etabli
+#
+# **Une extension ne dit rien de la taille.** La regle d'origine envoyait
+# `*.pdf` et `*.mp4` en LFS OU QU'ILS SOIENT : une fixture mp4 de **2,1 Ko** y
+# etait, a cote d'un rush de 67 Mo. Chaque clone payait les deux.
+#
+# ## Ce que cette passe change
+#
+# `projects/` n'est plus versionne du tout (voir `.gitignore`) : c'est le
+# dossier de travail d'Egan, il vit sur sa machine. Il portait **97 % du volume
+# LFS** (2 217 Mo) et **aucun test ne le lisait** -- les cinq occurrences de
+# `projects/` dans `tests/` sont toutes dans des commentaires.
+#
+# Ne restent donc en LFS que les medias LOURDS de `tests/`, et eux seuls :
+#
+#     tests/fixtures/scans/**     PDF de scans reels        5 a 12 Mo piece
+#     tests/TEST_FILE.mp4         le rush reel              2,75 Mo
+#     tests/fixtures/lots/**      un LOT COMPLET de terrain 178 Mo
+#     tests/fixtures/rushes/reels/**  un rush REEL 4K          64 Mo
+#
+# ## Le seuil ne vit pas ici, il vit dans `.lfsconfig`
+#
+# `.gitattributes` dit ce qui est STOCKE en LFS. Il ne sait pas exprimer une
+# taille -- git n'apparie que des chemins. Ce qui DESCEND automatiquement se
+# regle ailleurs, dans `.lfsconfig`, et c'est la que le seuil s'exprime :
+# `tests/fixtures/lots/**` (178 Mo) est stocke ici mais **exclu du telechargement
+# automatique**, donc il ne coute rien a un clone qui ne le demande pas.
+#
+# Total qui descend par defaut : **28 Mo** MESURES le 2026-09-09, contre 92 Mo
+# la veille et 2 291 Mo avant la revision du 2026-09-03. Quatre objets : les
+# trois PDF de `tests/fixtures/scans/` et le rush reel.
+#
+# `tests/fixtures/rasters/**` a ete RETIRE le meme jour (arbitrage d'Egan, par
+# invite). Ses deux TIFF portaient les MEMES OID que deux frames de
+# `tests/fixtures/lots/` -- donc zero octet de stockage en plus, mais 21,7 Mio
+# tires a chaque clone --, et AUCUN banc ne les lisait. Ils etaient documentes
+# comme « les temoins toujours disponibles » ; ce qu'ils temoignaient reste a
+# une commande, `git lfs pull --include="tests/fixtures/lots/**" --exclude=""`.
+# (Le chiffre de 63 Mo qui figurait ici etait faux : il oubliait les objets
+#  LFS HERITES -- entres en LFS avant la revision, et que plus aucun motif ne
+#  rattrape. Ils descendent, eux aussi, et c'est ce qui a fait passer 63 a 86
+#  puis a 92 a mesure qu'on les comptait. Depuis le 2026-09-09 il n'en reste
+#  AUCUN sous `tests/` : `synthetic_review_video.mp4` etait le dernier, aucun
+#  banc ne le lisait, et c'est lui qui faisait echouer le premier `git push`
+#  vers le depot public -- `Git LFS upload failed: (missing)`. Les douze
+#  autres, sous `_bmad-output/test-artifacts/**` et `docs/tuto_*.pdf`, restent
+#  dans l'HISTORIQUE mais ne descendent plus : `.lfsconfig` les exclut du
+#  fetch, ce qui neutralise au passage le piege du binaire BRUT -- un fichier
+#  jamais materialise reste un pointeur, et un `git add` dessus est un
+#  non-evenement.)
+#
+# **Ce qui est LEGER reste en git ordinaire**, et c'est delibere : les cinq
+# rushes de SYNTHESE (~200 Ko piece, a cote de leur cousin reel de 64 Mo), les
+# QR a 300 dpi et les captures ArUco n'ont rien a faire en LFS. Ils y
+# gagneraient une indirection et n'y economiseraient rien.
+#
+# **Et depuis `EPIC11-ARB-247` (2026-09-06) ils n'y sont plus DU TOUT.** Cette
+# phrase etait vraie de la REGLE et fausse des FICHIERS : les quatre rushes de
+# synthese restaient des objets LFS dans l'historique, simplement ORPHELINS de
+# leurs attributs -- `git check-attr filter` y rendait `unspecified` pendant
+# que `HEAD` n'en portait qu'un pointeur de 131 octets. Un orphelin echappe par
+# construction a toute mesure qui lit les attributs, et un `git add` y indexe le
+# binaire BRUT sans le dire. Ils sont normalises ; c'est le blob de `HEAD` qui
+# le mesure, dans `tests/unit/test_politique_lfs.py`.
+#
+# `tests/unit/test_politique_lfs.py` mesure les deux sens -- rien de trop large
+# en LFS, rien de trop lourd en dehors.
+
+tests/fixtures/scans/**   filter=lfs diff=lfs merge=lfs -text
+tests/fixtures/lots/**    filter=lfs diff=lfs merge=lfs -text
+tests/fixtures/rushes/reels/** filter=lfs diff=lfs merge=lfs -text
+
+# --- AUCUN texte en LFS, nulle part. Ces lignes viennent APRES, donc gagnent ---
+#
+# Un motif d'ARBRE (`tests/fixtures/lots/**`) rattrape tout ce qui s'y trouve, y
+# compris le README qui explique l'arbre et les manifestes JSON du lot. C'est
+# arrive DEUX FOIS le 2026-09-03, a une heure d'intervalle : une indirection
+# pour 3 Ko, et rien ne rougit -- un README en pointeur devient juste illisible
+# sur la page GitHub.
+#
+# La regle etroite qui listait chaque dossier a echoue a la premiere famille
+# suivante. Celle-ci est generale, et c'est ce qui la rend sure : le texte ne va
+# jamais en LFS, quel que soit l'arbre ou il vit.
+# ATTENTION AU SIGNE, il a mordu le jour meme. `-diff` UNSET l'attribut, ce qui
+# fait traiter le fichier comme BINAIRE : `git diff` rend « Binary files differ »
+# et `-merge` rend les conflits de fusion irresolubles autrement qu'en prenant
+# un cote entier. Sur un depot dont les stories, les decisions et CLAUDE.md sont
+# en markdown et edites par plusieurs agents en parallele, c'etait une
+# regression grave -- trouvee parce qu'un `git cherry-pick` de CLAUDE.md a
+# conflicte sans diff lisible.
+#
+# `!` rend l'attribut NON SPECIFIE, donc au defaut de git : sorti du LFS, et
+# diffe/fusionne comme du texte. C'est ce qu'il faut.
+**/*.md   !filter !diff !merge text
+**/*.json !filter !diff !merge text
+**/*.txt  !filter !diff !merge text
+**/*.yaml !filter !diff !merge text
+**/*.yml  !filter !diff !merge text
+tests/TEST_FILE.mp4       filter=lfs diff=lfs merge=lfs -text

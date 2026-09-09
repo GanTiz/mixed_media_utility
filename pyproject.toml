@@ -1,0 +1,388 @@
+[build-system]
+# >= 1.27 : c'est la version qui lit `license` comme EXPRESSION SPDX
+# (PEP 639). Sans le plancher, un environnement de construction plus ancien
+# echouerait sur `license-files` -- et `requires` etant resolu a la volee, rien
+# ne garantit autrement la version tiree.
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+# EPIC8-ARB-6 (Egan, 2026-09-07). Le nom `mmu` est PRIS sur PyPI depuis 2022
+# (ModelMetricUncertainty, Apache-2). La DISTRIBUTION s'appelle donc `mmu-cli`
+# -- rien n'oblige un nom de distribution a egaler le nom de sa commande, et
+# `[project.scripts]` ci-dessous garde bien `mmu`.
+name = "mmu-cli"
+# EPIC8-ARB-10 : UNE seule source de version pour les deux distributions,
+# `src/mixed_media_utility/__init__.py`. Trois litteraux qui doivent s'accorder
+# (ici, dans `packaging/mmu-tui/pyproject.toml`, et dans l'epinglage
+# `mmu-cli==X` que ce dernier porte) sans que rien ne les compare, c'est la
+# definition d'une derive : `tests/unit/test_deux_distributions.py` la mesure.
+dynamic = ["version"]
+description = "Mixed Media Utility — CLI and core for scan/extract/calibrate workflows"
+readme = "README.md"
+requires-python = ">=3.11"
+# GPL-3.0-or-later, tranche par Egan le 2026-09-07 et PORTE DEPUIS `main` par
+# la passe de documentation du meme jour : cette branche declarait encore le
+# `MIT` d'echafaudage pendant que la doc utilisateur annoncait la GPL, et un
+# paquet qui se declare MIT en embarquant le texte de la GPL est un defaut de
+# publication, pas une divergence de branche.
+#
+# Le choix est libre de toute contrainte de dependance : le coeur est
+# integralement permissif (MIT, BSD, Apache-2.0, MIT-CMU, PSF) et ffmpeg est
+# appele en SOUS-PROCESS, jamais lie. La seule dependance sous copyleft est Qt
+# via PySide6 (LGPL-3.0), extra optionnel `[gui]`, compatible GPLv3 -- ses trois
+# obligations de distribution sont dans THIRD-PARTY-NOTICES.md.
+#
+# Forme PEP 639 (`License-Expression`) plutot que la table `{text = ...}` : elle
+# est lisible par machine, et elle interdit le classifieur de licence, donc elle
+# supprime la possibilite meme d'une divergence entre les deux.
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE", "THIRD-PARTY-NOTICES.md"]
+# PEP 621 n'exige AUCUNE adresse : une entree `authors` peut ne porter qu'un
+# `name`, et la metadonnee resultante vaut alors `Author: Egan` sans
+# `Author-email`. Le gabarit `egan@example.com` qui vivait ici aurait ete
+# publie tel quel sur la page PyPI du paquet -- une adresse fausse mais
+# affichee. Le contact passe par le profil GitHub declare en `[project.urls]`
+# et par les issues du depot public, tous deux deja publics et revocables ;
+# une adresse mail publiee sur un index ne se retire plus des miroirs.
+authors = [
+  {name = "Egan"}
+]
+maintainers = [
+  {name = "Egan"}
+]
+keywords = ["cli", "terminal", "media", "scan", "calibration", "ffmpeg"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Multimedia :: Graphics",
+  "Topic :: System :: Shells",
+]
+# EPIC8-ARB-1/-2/-3 (2026-08-30) : cette liste couvre TOUT le chemin TUI, de
+# l'extraction a l'encodage. OpenCV, reportlab et pypdfium2 y sont entres depuis
+# l'extra [gui] ou ils etaient mal ranges -- ce ne sont pas des dependances
+# d'interface, c'est le moteur de detection et de rendu du coeur. Le seul
+# element reellement optionnel du livrable est la GUI Qt, extra [gui] ci-dessous.
+#
+# `tests/unit/test_contrat_de_dependances.py` mesure cette liste contre les
+# imports reels, DANS LES DEUX SENS : rien d'importe qui manque ici, rien ici
+# que personne n'importe.
+#
+# EPIC8-ARB-5 (Egan, 2026-09-07) : `textual` et `rich` ont QUITTE cette liste
+# pour `packaging/mmu-tui/pyproject.toml`. Ils ne sont importes que sous
+# `src/mixed_media_utility/tui/`, qui n'est plus dans cette roue -- les
+# declarer ici ferait payer ~28 Mo et deux paquets a qui n'installe que la
+# CLI. La regle de ZONE est mesuree dans les deux sens par
+# `tests/unit/test_contrat_de_dependances.py`, et leur absence d'ici est une
+# frontiere NEGATIVE de `tests/unit/test_deux_distributions.py`.
+dependencies = [
+  "numpy>=2.0",
+  "Pillow",
+  "jsonschema",
+  # EPIC8-ARB-4 (2026-08-31, revue couche 2). La borne `<4.11` vient du commit
+  # de packaging initial, ou elle ne vivait que dans l'extra [gui] -- donc
+  # liante sur AUCUN chemin de base. La porter dans `dependencies` l'a rendue
+  # liante partout, et elle EXCLUT `5.0.0.93`, la version sous laquelle la
+  # suite du depot est verte. Mesure de la revue :
+  #     opencv 5.0.0.93 : test_scan_output_frames.py -> 197 passed
+  #     opencv 4.10.0.84: test_scan_output_frames.py -> 4 failed
+  # (le rendu de texte d'OpenCV differe entre les deux majeurs ; l'assertion de
+  # `test_scan_output_frames.py:1116` compte des pixels peints).
+  # Le plafond passe donc au majeur suivant : pip retient 5.x, l'environnement
+  # valide, sans exclure les postes deja pinnes en 4.x.
+  #
+  # EPIC11-ARB-253 (2026-09-06), PORTE DEPUIS `main` par la story 8.5. Deux
+  # changements en un, et le MOTIF DOMINANT n'est pas le poids : c'est qu'une
+  # machine vierge ne sait pas importer l'autre. Mesure a l'`ldd` du
+  # `cv2.abi3.so` des deux roues -- la non-headless exige DOUZE bibliotheques
+  # systeme de plus :
+  #
+  #     libGL.so.1  libGLX.so.0  libGLdispatch.so.0  libX11.so.6  libXau.so.6
+  #     libXdmcp.so.6  libbsd.so.0  libglib-2.0.so.0  libgthread-2.0.so.0
+  #     libmd.so.0  libpcre2-8.so.0  libxcb.so.1
+  #
+  # Absentes d'un serveur nu, d'un conteneur minimal et d'un WSL sans X : y
+  # `import cv2` echoue sur `libGL.so.1` AVANT la premiere ligne du produit.
+  #
+  # `contrib` tombe dans le meme mouvement : les 51 symboles `cv2.*` employes
+  # par `src/` ont ete testes un a un contre la roue non-contrib, aucun ne
+  # manque (`aruco.ArucoDetector` compris -- l'ArUco a quitte contrib pour
+  # `objdetect` en 4.7).
+  #
+  # CE QUE CA COUTE, dit plutot que tu : la lecture previz de `cadence_previz`
+  # ouvre une fenetre par `cv2.imshow`, que la roue headless ne compile pas.
+  # Elle refuse desormais par `DISPLAY_UNAVAILABLE` en nommant l'issue, au lieu
+  # de mourir dans le natif. Voir `ensure_display_available`.
+  "opencv-python-headless>=4.10,<6",
+  # EPIC11-ARB-250 (2026-09-06). L'ENCODAGE QR quitte OpenCV pour segno ; la
+  # detection et le decodage y restent. Motif mesure : la ligne 4.10/4.11
+  # d'OpenCV encode un symbole malforme au-dela de la version 7 -- illisible
+  # par tout lecteur, y compris zxing-cpp et les versions ulterieures
+  # d'OpenCV --, et un plancher de version aurait sorti macOS 12 x86_64 de la
+  # compatibilite (4.10.0.84 est la DERNIERE roue `macosx_12_0_x86_64`).
+  # segno publie une roue `py3-none-any`, sans etiquette de plateforme et sans
+  # dependance a l'execution : le plancher n'a plus lieu d'etre, et la borne
+  # d'OpenCV ci-dessus n'exclut plus personne.
+  # Borne basse posee a la version MESUREE (1.6.6, celle du conteneur), et pas
+  # plus bas : aucune mesure ne dit qu'une version anterieure expose
+  # `segno.DataOverflowError` au niveau du paquet ni rend le meme cote de
+  # symbole. Une borne plus basse serait une supposition, pas une mesure.
+  "segno>=1.6,<2",
+  "pypdfium2",
+  "reportlab",
+]
+
+# `pytest-qt` NE FIGURE QUE LA OU UNE LIAISON Qt EST DECLAREE -- retire de
+# `dev` et de `test` le 2026-09-08, sur le PREMIER run de CI reel du projet.
+#
+# Le defaut n'est pas qu'un test Qt echouait : c'est que la SUITE ENTIERE ne
+# demarrait pas. `pytest-qt` refuse de se charger sans liaison, et il le fait
+# au chargement des greffons, donc AVANT toute collecte :
+#
+#     ERROR: pytest-qt requires either PySide6, PyQt5 or PyQt6 installed.
+#     Process completed with exit code 4.
+#
+# Mesure : les trois jobs `Tests (Python 3.11/3.12/3.13)` du run 34196288009
+# sont morts en MOINS D'UNE SECONDE, zero test collecte sur 18 747. Un extra
+# qui declare `pytest-qt` sans liaison n'affaiblit donc pas la mesure, il
+# l'annule.
+#
+# Pourquoi RETIRER plutot qu'ajouter PySide6 ici : la suite sait deja se passer
+# de Qt. `tests/conftest.py` associe le greffon absent a un SAUT nomme
+# (`"pytestqt": "mmu-tui[gui]"`), et la collecte sous `-p no:pytestqt` rend
+# 18 747 tests, zero erreur -- mesure du 2026-09-08. C'est `gui` et `full` qui
+# apparient les deux, et c'est leur role.
+#
+# `tests/unit/test_contrat_de_dependances.py` mesure l'appariement, pour que la
+# rechute rougisse ici plutot que sur un runner.
+[project.optional-dependencies]
+# L'extra [gui] ne porte QUE Qt (EPIC8-ARB-1). Y remettre une dependance
+# importee hors de src/mixed_media_utility/gui/ fait rougir
+# test_les_paquets_de_l_extra_gui_ne_sortent_pas_de_gui.
+gui = [
+  # EPIC11-ARB-254 (2026-09-06), PORTE DEPUIS `main` par la story 8.5.
+  # `PySide6` est un METAPAQUET : il tire `PySide6-Essentials` (269 Mo) ET
+  # `PySide6-Addons` (401 Mo). Mesure des `RECORD` installes, et de ce que
+  # porte Addons :
+  #
+  #     185,9 Mo  libQt6WebEngineCore.so   (un Chromium complet)
+  #      44,1 Mo  libavcodec.so            (ffmpeg, en trois copies)
+  #      10,7 Mo  icudtl.dat + resources ; puis Qt3D, Quick3D, QtPdf, Charts...
+  #
+  # Le produit importe QtWidgets, QtCore, QtGui et QtSvg -- les QUATRE sont
+  # dans Essentials, et AUCUN module d'Addons n'est importe nulle part dans
+  # `src/` ni `tests/`. Dependre d'Essentials retire donc 401 Mo sans retirer
+  # une ligne de fonctionnalite. `pytest-qt` se contente d'importer `PySide6`,
+  # que ce paquet installe.
+  "PySide6-Essentials>=6.8,<6.9",
+  "pytest-qt>=4.4",
+]
+dev = [
+  # Le backend de construction, deja declare en `[build-system].requires`.
+  # Il est REDECLARE ici parce qu'un poste de developpement doit pouvoir
+  # CONSTRUIRE les deux roues : sans lui, la moitie « roue » de
+  # `tests/unit/test_deux_distributions.py` -- celle qui mesure l'AC 3, « zero
+  # fichier livre par les deux » -- sauterait, et un banc qui saute partout est
+  # un banc mort qui s'annonce vert.
+  "hatchling>=1.27",
+  "mutmut>=3.0",
+  "pytest",
+  # Exige par scripts/mesure/mesure.py : le plafond est PAR TEST, jamais
+  # global. Sans ce greffon, pytest refuse `--timeout` et la course ne part pas.
+  "pytest-timeout>=2.3",
+  # Le parallelisme reste HORS DEFAUT (non mesure sans faux rouges sur ce
+  # depot), mais le greffon doit etre la pour que `--parallele` soit essayable.
+  "pytest-xdist>=3.5",
+  # PORTE ICI PAR LE TRIAGE DE LA REVUE 8.10, couche 1, finding C7.
+  # La story ne l'avait mis que dans [test]. Or [dev] declare `pytest` : c'est
+  # un environnement JOUABLE, et `_charge` de test_politique_lfs.py ne SAUTE
+  # plus mais ROUGIT depuis cette meme story. Un poste monte par `.[dev]`
+  # rendait donc QUATRE ROUGES la ou il rendait quatre sauts avant -- mesure
+  # par la couche 1, greffon en memoire bloquant `import yaml` : « 4 failed,
+  # 19 passed ». C'est mot pour mot l'argument que la story ecrit dans
+  # `requirements.txt` pour justifier d'y porter la ligne, applique aux deux
+  # extras qui ne l'avaient pas recue.
+  "pyyaml>=6.0",
+]
+test = [
+  "hatchling>=1.27",
+  "pytest",
+  "pytest-timeout>=2.3",
+  "pytest-xdist>=3.5",
+  # AJOUTE PAR LA STORY 8.10, et ce n'est pas un confort d'outillage.
+  # `tests/unit/test_politique_lfs.py` lit les workflows sur le YAML ANALYSE
+  # -- et non par indentation comme les trois autres bancs de workflow --,
+  # parce que sa question porte sur une VALEUR typee (`lfs` vaut-il le booleen
+  # vrai ?) et parce que le commentaire de `ci.yml` CITE `lfs: true` pour
+  # expliquer son retrait : un grep s'accuserait lui-meme.
+  #
+  # PyYAML n'etait declare NULLE PART. Mesure du 2026-09-08 : la fermeture
+  # transitive de `.[test]`, resolue par `pip install --dry-run
+  # --ignore-installed`, rendait 26 paquets sans lui. La CI installe `.[test]`
+  # puis `./packaging/mmu-tui` (rich, textual) : `import yaml` y echouait, donc
+  # les QUATRE frontieres de la section 1 de ce banc SAUTAIENT en CI -- dont
+  # celle qui interdit `lfs: true`, c'est-a-dire la garde du reglage qui a
+  # sature le quota de 10 Go en deux jours. Vertes en session, muettes la ou
+  # elles mordent.
+  #
+  # La declaration seule ne suffirait pas : elle se retire aussi facilement
+  # qu'elle s'ajoute. `_charge` fait desormais ROUGIR sur PyYAML absent au lieu
+  # de sauter, si bien que retirer cette ligne fait rougir la CI au lieu de la
+  # rendre muette. Les deux moities se tiennent, comme un module et son banc.
+  "pyyaml>=6.0",
+]
+# [full] dupliquait la liste de [gui] : corriger [gui] sans le corriger ici
+# aurait laisse le defaut vivant sur ce chemin. Il vaut desormais gui + dev.
+full = [
+  "PySide6-Essentials>=6.8,<6.9",
+  "pytest-qt>=4.4",
+  "hatchling>=1.27",
+  "mutmut>=3.0",
+  "pytest",
+  "pytest-timeout>=2.3",
+  "pytest-xdist>=3.5",
+  # Meme motif que dans [dev] : [full] vaut gui + dev, il joue donc les memes
+  # bancs et heriterait des memes quatre rouges sans cette ligne (revue 8.10,
+  # couche 1, finding C7). Le commentaire au-dessus de [full] dit deja pourquoi
+  # une correction faite dans un seul des extras ne suffit jamais ici.
+  "pyyaml>=6.0",
+]
+
+[project.scripts]
+# La COMMANDE reste `mmu` (EPIC8-ARB-6), meme si la distribution s'appelle
+# `mmu-cli`. `mmu-tui` est pose par l'AUTRE distribution : le declarer ici
+# ferait poser sur le PATH une commande dont le module n'est pas dans la roue.
+mmu = "mixed_media_utility.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/GanTiz/mixed_media_utility"
+Repository = "https://github.com/GanTiz/mixed_media_utility"
+Issues = "https://github.com/GanTiz/mixed_media_utility/issues"
+# Tient lieu de contact, a la place de l'adresse mail retiree ci-dessus.
+Auteur = "https://github.com/GanTiz"
+
+[tool.hatch.version]
+# La source UNIQUE de version des deux distributions (EPIC8-ARB-10).
+path = "src/mixed_media_utility/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mixed_media_utility"]
+# `tui/` est livre par `mmu-tui`, et par lui SEUL. Sans cette exclusion les
+# deux roues porteraient les 52 memes fichiers, ce qui est exactement la
+# redondance qu'Egan a refusee le 2026-09-07 : « il ne faut pas installer les
+# memes choses deux fois si des choses se recoupent ».
+exclude = ["src/mixed_media_utility/tui/**"]
+
+[tool.hatch.build.targets.sdist]
+# LISTE BLANCHE, et il faut dire pourquoi ce n'est pas une liste noire.
+#
+# Le defaut de hatchling est « tout ce que git ne cache pas ». MESURE le
+# 2026-09-07 par la story 8.7, en jouant `python -m build` pour de vrai :
+# `mmu_cli-0.1.0.tar.gz` pesait **135,9 Mo**, au-dela du plafond de 100 Mio PAR
+# FICHIER de PyPI. La release aurait ete refusee par l'index, apres coup et
+# apres publication de l'autre paquet.
+#
+# Le poids n'etait pas le pire. Ce que ce sdist emportait sur un index PUBLIC :
+#
+#   tests/           127,8 Mo   dont 68,8 Mo de fixtures (scans reels, rasters)
+#   _bmad-output/     51,7 Mo   les artefacts de PLANIFICATION internes
+#   docs/             30,5 Mo   dont un PDF de tuto de 26,6 Mo
+#
+# `_bmad-output/` porte les stories, les arbitrages produit et les comptes
+# rendus de mesure. Rien de tout cela n'a sa place dans une distribution, et
+# une liste noire aurait laisse passer le prochain repertoire du meme genre --
+# c'est exactement ce qui vient d'arriver, puisque personne n'avait pense a
+# exclure `_bmad-output/` le jour ou il est apparu.
+#
+# Une liste blanche se trompe dans l'autre sens : elle OUBLIE, et l'oubli se
+# voit -- la construction echoue ou le paquet ne s'installe pas. Un sdist trop
+# gros, lui, s'installe tres bien.
+#
+# LES MOTIFS SONT ANCRES PAR UN `/` DE TETE, et ce n'est pas cosmetique. Sans
+# lui, un motif de hatchling se lit n'importe ou dans l'arbre : la premiere
+# redaction de cette liste, sans les barres, a laisse passer VINGT-DEUX
+# fichiers -- `docs/README.md`, `scripts/mutation/README.md`, trois
+# `tests/fixtures/*/README.md`, et ONZE `README.md` sous `_bmad-output/`,
+# c'est-a-dire precisement ce que la liste existe pour tenir dehors.
+#
+# Le sdist etait pourtant tombe de 135,9 Mo a 2,2 Mo : le poids avait l'air de
+# dire que ca marchait. Il ne disait rien du contenu, et c'est le contenu qui
+# comptait.
+# EPIC11-ARB-255 (2026-09-06). La SDIST etait le POINT LOURD DU LIVRABLE, et
+# personne ne l'avait mesuree : hatchling, sans `include` explicite, embarque
+# tout ce que git ne masque pas. Mesure sur cet arbre, avant scoping :
+#
+#     mmu_tui-0.1.0.tar.gz          77,8 Mo   <-- la source
+#     mmu_tui-0.1.0-py3-none-any.whl 2,1 Mo   <-- la roue
+#
+# Repartition des 78 Mo : `tests/` 66 Mo (fixtures LFS -- scans PDF, rasters
+# TIFF, le rush reel), `_bmad-output/` 42 Mo (artefacts de test), `.agents/`
+# 17 Mo, `docs/` 3,7 Mo de captures. Rien de tout cela n'est necessaire pour
+# INSTALLER le produit.
+#
+# Ce que ca coute concretement, au-dela du poids : PyPI plafonne un fichier a
+# 100 Mo. A 78 Mo, une seule fixture de plus faisait echouer la publication --
+# et l'echec serait tombe au moment du `twine upload`, pas ici.
+#
+# Ce que ca coute, dit plutot que tu : un empaqueteur aval (distribution Linux,
+# conda-forge) ne peut plus jouer la suite depuis la sdist seule. C'est la
+# deuxieme issue et elle existe : le depot est public, `git clone` rend les
+# tests ET leurs fixtures LFS. On echange un chemin de recette rare contre un
+# livrable qui tient dans le plafond de l'index.
+#
+# LES MOTIFS SONT ANCRES PAR UN `/` DE TETE, ET CE N'EST PAS COSMETIQUE.
+# Hatchling lit ces motifs en semantique `.gitignore`, pas en prefixe de
+# chemin : un motif SANS `/` matche a n'importe quelle profondeur. Mesure du
+# 2026-09-06, sur l'archive construite -- `README.md` nu avait ramene DIX-NEUF
+# fichiers (`_bmad/tea/.../README.md`, `docs/README.md`,
+# `tests/fixtures/lots/README.md`...), c'est-a-dire une partie de ce que le
+# scoping venait d'exclure. Le defaut ne se voyait dans aucune relecture : il
+# a fallu ouvrir le tar.
+#
+# `tests/unit/test_livraison_pip.py` mesure ce scoping sur l'ARBRE REEL, dans
+# les deux sens : le cardinal selectionne reste sous la borne, il la franchit
+# des qu'on rouvre `tests/`, et tout motif desancre y rougit.
+#
+# LA LISTE CI-DESSOUS EST L'UNION DES DEUX SCOPINGS, fusionnes le 2026-09-07 :
+# celui de la story 8.7 (LICENSE et THIRD-PARTY-NOTICES, sans lesquels le
+# paquet publie ne porte pas le texte de sa propre licence) et celui
+# d'`EPIC11-ARB-255` (`requirements.txt`, que `tests/unit/test_livraison_pip.py`
+# lit). Les deux exposes ci-dessus sont conserves : ils mesurent deux
+# constructions differentes -- `mmu-cli` a 135,9 Mo et `mmu-tui` a 77,8 Mo --
+# et arrivent a la meme conclusion par deux chemins.
+include = [
+  "/src/mixed_media_utility",
+  "/pyproject.toml",
+  "/README.md",
+  "/LICENSE",
+  "/THIRD-PARTY-NOTICES.md",
+  "/requirements.txt",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.mutmut]
+# Configuration generique de mutmut (mutation testing outille, cf.
+# scripts/mutation/README.md pour le mode d'emploi complet).
+#
+# ATTENTION -- ce fichier est le SEUL point de configuration lu par mutmut
+# 3.x (pas d'override en ligne de commande). Les deux valeurs ci-dessous sont
+# des valeurs par defaut LARGES, jamais destinees a etre lancees telles
+# quelles pour une campagne reelle : une campagne se scope toujours au(x)
+# fichier(s) source et de test de la story en cours.
+#
+# Regle de travail imperative (CLAUDE.md, "Travail en parallele sur la meme
+# branche") : cette section est editee LOCALEMENT pour chaque campagne et
+# JAMAIS commitee dans un etat scope. On restaure la version generique
+# ci-dessous (`git checkout -- pyproject.toml`) avant tout commit qui touche
+# a ce fichier. Une version scopee commitee ferait de ce fichier un nouveau
+# point de contention entre agents en parallele -- exactement l'incident deja
+# survenu deux fois sur sprint-status.yaml.
+source_paths = ["src/mixed_media_utility"]
+pytest_add_cli_args_test_selection = ["tests/unit"]

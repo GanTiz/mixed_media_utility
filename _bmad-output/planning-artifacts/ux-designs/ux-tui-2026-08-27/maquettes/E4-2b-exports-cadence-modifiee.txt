@@ -1,0 +1,30 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Exports                              plan-04_12p5 · 63 f │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Réglages d'encodage                                                        │
+│                                                                              │
+│      Profil                     prores_hq          ▾  .mov                   │
+│      Résolution                 hd1080  hd1080 · uhd2160 · native · <l>x<h>  │
+│      Cadence du rushe source  > 25      le lot n'en déclare aucune           │
+│      Espace couleur             bt709   porté par le profil                  │
+│                                                                              │
+│      ▲ Ce lot vient d'une planche 2.0, qui n'imprimait pas la cadence        │
+│        du rushe. Sans cette déclaration, l'encodage n'a rien à muxer.        │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ plan-04_12p5 · 63 frames · maintiens de 2 · 125 échantillons · 5 s 00        │
+│ ⏎ retenir  Tab champ suivant  Échap retour  F1 aide                          │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : OK mais ton message est-il déjà livré par la CLI ? Sinon on se contente de dire que ça ne correspond pas et on donne la durée vs la durée initiale.
+Il faut rappeler quelque part aussi que si on génère un lot à 12p5 à partir d'un rushe 25p mais qu'on exporte à 25p comme le rushe natif on "bloque" bien les frames sur 2 images.
+En théorie ce que je décris est le comportement de la CLI non ? tu confirmes ? Et alors comment l'expliciter ici  (préciser la durée source et la durée cible qui sont identiques ?).
+
+  -> EPIC11-ARB-30 et 31 : message reduit aux faits calculables, et NON, `encode` n'a aucune cadence cible -- ecran passe en CIBLE.

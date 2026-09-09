@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                       rush_01 · 25 fps · 4:12 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ À écrire ────────────────────────────────────────────────────────────┐   │
+│   │ Lots créés               2                                           │   │
+│   │ Frames écrites           124  +  42        =  166                    │   │
+│   │ Bornes                   00:00:04:12 → 00:00:09:08                   │   │
+│   │ Espace disque            ~ 2,8 Go                     (majorant)     │   │
+│   │ Destination              projet_demo/frames/                         │   │
+│   │                                                                      │   │
+│   │   projet_demo_rush_01_25fps                                          │   │
+│   │   projet_demo_rush_01_25s3                                           │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      Extraire                                                                │
+│    ▸ Modifier les réglages                                                   │
+│      Annuler                                                                 │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 2 lots · 166 frames · ~ 2,8 Go — rien n'a encore été écrit                   │
+│ ⏎ valider  ↑↓ choisir  Échap retour  F1 aide                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : peut-on modifier les noms ? Comment ? Il y a des maximums à respecter en nombre de caractères non ?
+
+  -> EPIC11-ARB-25 : `e` edite, la limite est 48 caracteres, et le coeur REFUSE au-dela (il ne tronque pas). Ecrans E2-3b et E2-3c.

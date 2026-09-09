@@ -1,0 +1,32 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Ateliers                   3 rushes · 5 lots · 2 masters │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Que faire dans projet_demo ?                                               │
+│                                                                              │
+│    ▸ Extraction   Ouvrir un rush, borner, choisir les cadences, extraire     │
+│      Pdf          Composer et générer les planches d'un ou plusieurs lots    │
+│      Scan         Déposer des scans, détecter, puis écrire les TIFF          │
+│      Exports      Encoder un master depuis un lot reconstruit                │
+│                                                                              │
+│      Projet       Gestion des médias, Profil par défaut, Reconstruction      │
+│                                                                              │
+│   ────────────────────────────────────────────────────────────────────────   │
+│                                                                              │
+│      Dernière écriture   26/08 14:32 · lot_25fps · 124 frames     ● ok       │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│ ⏎ entrer  ↑↓ naviguer  Échap changer de projet  F1 aide  Q quitter           │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : a ce stade je ne vois pas à quoi sert de relinker un rushe dans la TUI. Je propose d'exclure cela de la TUI si cela te semble correct.
+
+  -> EPIC11-ARB-23 REECRIT par ta note d'E2-1 : le relink reste, mais sa porte est E2-1.
+
+NOTE (retour terrain d'Egan, 2026-09-06) : « remonter l'atelier [PDF] dans la liste
+AVANT scan (ordre logique) ». L'ecart delibere avec la GUI est ferme : l'ordre du
+menu est desormais Extraction, Pdf, Scan, Exports -- celui de `gui/coquille.py`.

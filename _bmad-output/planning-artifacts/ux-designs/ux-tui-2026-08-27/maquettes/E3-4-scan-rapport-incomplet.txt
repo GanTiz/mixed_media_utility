@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan                       détection · 24 pages · 2 lots │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Ce que la détection a trouvé — rien n'est encore écrit                     │
+│                                                                              │
+│   ┌ Lots reconnus ───────────────────────────────────────────────────────┐   │
+│   │ ● lot_25fps          8 pages / 8      124 frames / 124    complet    │   │
+│   │ ✕ lot_12p5           3 pages / 4       46 frames / 62     incomplet  │   │
+│   │   └─ page 4 manquante          frames 047 à 062 absentes             │   │
+│   │   └─ planche_03.tiff           QR_NON_DECODE                         │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      En attente de lecture   ✕  1 fichier non rattaché                       │
+│                                                                              │
+│      Écrire quand même     lot_12p5 sera écrit incomplet, 46 frames          │
+│    ▸ Compléter le QR        saisir ce que planche_03 n'a pas livré           │
+│      Annuler               ne rien écrire                                    │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ▲  1 lot sur 2 est incomplet · 3 pages sur 4 · 46 frames sur 62              │
+│ ⏎ valider  ↑↓ choisir  Tab journal  Échap ateliers  F1 aide                  │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : OK il faut donc ouvrir une page de correction permettant de spécifier ce que le QR n'a pas livré. Pas juste un nouveau scan car cela ne résoudra rien et pas toujours possible de rescanner.
+
+  -> EPIC11-ARB-29 : la 2e issue devient « Completer le QR » et ouvre E3-4b. Rescanner est retire.

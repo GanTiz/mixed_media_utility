@@ -1,0 +1,29 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                 temps 1 sur 2 · prévisualiser │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Quelles cadences regarder ?                                                │
+│                                                                              │
+│    ▸ [x] 25        source            124 frames        (toutes)              │
+│                                                                              │
+│   ┌ Ajouter une cadence ─────────────────────────────────────────────────┐   │
+│   │                                                                      │   │
+│   │ La liste propose la cadence source et ses divisions. Pour une        │   │
+│   │ cadence qui n'y est pas, `a` ouvre une saisie libre :                │   │
+│   │                                                                      │   │
+│   │    10           un nombre, en images par seconde                     │   │
+│   │    8,333        la virgule ou le point, les deux marchent            │   │
+│   │    24000/1001   une fraction, pour les cadences NTSC                 │   │
+│   │                                                                      │   │
+│   │ La ligne ajoutée porte la mention « ajoutée » et se retire par       │   │
+│   │ Suppr. Cocher n'extrait rien : on choisit ce qu'on regarde.          │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│ Échap fermer  F1 manuel complet  ↑↓ faire défiler                            │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : Comment distinguer 2 3 4 de 2 fps ? 3 fps ? Il faut taper S/2 S/3 S/4 ? Ce n'est pas clair.
+Une liste à laquelle on peut rajouter un choix à la volée serait pas mal non ?
+
+  -> EPIC11-ARB-24 : l'aide decrivait l'ancien champ texte. Refaite sur la liste cochable ; `a` ouvre la saisie libre.

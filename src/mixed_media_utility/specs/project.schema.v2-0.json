@@ -1,0 +1,323 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MMU Project Manifest v2.0 (fige, transitionnel)",
+  "description": "Contrat v2.0 fige tel qu'il etait au 2026-08-04, conserve pour que les manifests deja ecrits restent lisibles et validables apres la restructuration multi-cadences de la v2.1 (voir _bmad-output/implementation-artifacts/decisions-2026-08-04.md). Meme role que project.schema.legacy.json pour la v1: aucune ecriture nouvelle ne vise cette version, io/manifest.validate_manifest y bascule sur la seule foi de schema_version == '2.0'. Ne plus modifier ce fichier.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "rushes",
+    "lots",
+    "artifacts",
+    "color",
+    "video",
+    "reconstruction"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "rushes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "rush_id"
+        ],
+        "properties": {
+          "rush_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "source_path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_name": {
+            "description": "Nom de base du fichier rush (jamais un chemin, jamais un nom de machine). Ajout additif story 3.4.",
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\\\/]"
+            }
+          }
+        }
+      }
+    },
+    "lots": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "lot_id",
+          "rush_id"
+        ],
+        "properties": {
+          "lot_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "rush_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "extraction",
+              "pdf",
+              "scan",
+              "reconstruction",
+              "encode"
+            ]
+          },
+          "expected_frame_count": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "frames_dir": {
+            "description": "Dossier du lot, relatif au dossier projet, separateurs POSIX. Ajout additif story 3.4.",
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "\\\\"
+            }
+          },
+          "source_frame_count": {
+            "description": "Cardinal de frames du flux source, tel que declare a la selection (story 3.2).",
+            "type": "integer",
+            "minimum": 1
+          },
+          "source_frame_count_is_exact": {
+            "description": "false quand le cardinal source n'est qu'une estimation: le lot peut etre tronque sans que rien ne le signale.",
+            "type": "boolean"
+          },
+          "source_tail_frames": {
+            "description": "Frames source non retenues en fin de rush (donnee, pas defaut).",
+            "type": "integer",
+            "minimum": 0
+          },
+          "rounding_policy": {
+            "description": "Identifiant stable de la politique d'arrondi de la selection (frame_selection.ROUNDING_POLICY_ID).",
+            "type": "string",
+            "minLength": 1
+          },
+          "timecode_base": {
+            "description": "Base de temps des timecodes du lot. Jamais devinee depuis un nom de dossier ou de fichier.",
+            "type": "string",
+            "enum": [
+              "source",
+              "target"
+            ]
+          },
+          "timecode_base_fps": {
+            "description": "Cadence de la base de timecode, forme rationnelle exacte 'num/den' produite par codec_profiles.exact_frame_rate (denominateur toujours explicite).",
+            "type": "string",
+            "pattern": "^[0-9]+/[0-9]+$"
+          },
+          "first_frame_timecode": {
+            "type": "string",
+            "pattern": "^[0-9]{2}:[0-9]{2}:[0-9]{2}:[0-9]{2}$"
+          },
+          "last_frame_timecode": {
+            "type": "string",
+            "pattern": "^[0-9]{2}:[0-9]{2}:[0-9]{2}:[0-9]{2}$"
+          },
+          "frame_timecodes_digest": {
+            "description": "Empreinte de la selection: prefixe d'algorithme dans la valeur elle-meme.",
+            "type": "string",
+            "pattern": "^sha256-v1:[0-9a-f]{64}$"
+          },
+          "selection_warnings": {
+            "description": "Codes stables emis par la selection (story 3.2), sans prose, dans l'ordre canonique.",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9_]*$"
+            }
+          },
+          "output_bit_depth": {
+            "description": "Profondeur des TIFF ecrits par extract, normalisee a 16 bits quelle que soit la profondeur du rush (decisions-2026-08-03.md, decision 4). Distincte de video.source_bit_depth.",
+            "type": "integer",
+            "minimum": 1
+          },
+          "confirmation": {
+            "description": "Trace de confirmation avant extraction (story 3.3). Ne porte jamais de nom d'utilisateur, de machine ni de chemin.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "unknown_color_accepted",
+              "confirmed_at"
+            ],
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "interactif",
+                  "non_interactif"
+                ]
+              },
+              "unknown_color_accepted": {
+                "type": "boolean"
+              },
+              "confirmed_at": {
+                "description": "RFC3339 UTC. Un pattern explicite est pose ici parce que 'format: date-time' n'est verifie par aucune dependance installee de ce depot.",
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?(?:Z|\\+00:00)$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "frames_dir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outputs_dir": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "color": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "target_colorspace": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "video": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "fps_source": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "fps_target": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "resolution_source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "width",
+            "height"
+          ],
+          "properties": {
+            "width": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "height": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            }
+          }
+        },
+        "codec_target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fps_source_exact": {
+          "description": "Cadence source rationnelle exacte 'num/den' (codec_profiles.exact_frame_rate). Complete fps_source, typee number par le contrat v2 clos.",
+          "type": "string",
+          "pattern": "^[0-9]+/[0-9]+$"
+        },
+        "fps_target_exact": {
+          "description": "Cadence cible rationnelle exacte 'num/den' (codec_profiles.exact_frame_rate).",
+          "type": "string",
+          "pattern": "^[0-9]+/[0-9]+$"
+        },
+        "source_codec": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_pix_fmt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_bit_depth": {
+          "description": "Profondeur de bits declaree du RUSH (10 et 12 bits sont nominaux). A ne jamais confondre avec color.source_bit_depth, qui designe la profondeur d'un SCAN et dont le domaine est limite a 8 ou 16 par color_pipeline.mvp_color_manifest_fragment.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_color_primaries": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_color_trc": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_colorspace": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_color_range": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_sample_aspect_ratio": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_start_timecode": {
+          "type": "string",
+          "pattern": "^[0-9]{2}:[0-9]{2}:[0-9]{2}[:;][0-9]{2}$"
+        },
+        "source_metadata_absent_fields": {
+          "description": "Noms de cle video.* exacts des champs source omis parce que la source ne les declarait pas, tries. Distingue 'source non taguee' de 'version anterieure de l'outil'.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^source_[a-z0-9_]+$"
+          }
+        }
+      }
+    },
+    "reconstruction": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "template_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patch_preset_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

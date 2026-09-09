@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Manuel                                      page 1 sur 3 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Raccourcis — partout                                                       │
+│                                                                              │
+│      ↑ ↓          déplacer le curseur dans une liste                         │
+│      Entrée       valider la ligne ou le formulaire courant                  │
+│      Espace       cocher / décocher (listes à cases)                         │
+│      Tab          champ suivant · compléter un chemin · voir le journal      │
+│      Échap        remonter d'un palier, sans rien écrire                     │
+│      F1           aide du champ courant, ou ce manuel                        │
+│      q            quitter (demande confirmation si une tâche tourne)         │
+│                                                                              │
+│   Propres à un écran                                                         │
+│                                                                              │
+│      a            ajouter une cadence          (Extraction)                  │
+│      r            retrouver un rush absent     (Extraction)                  │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│ → page suivante  Échap fermer  Q quitter                                     │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : la précision sur les paliers est de trop non ?
+
+  -> EPIC11-ARB-37 : bloc des paliers retire, remplace par les raccourcis propres a un ecran.

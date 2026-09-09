@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Projet                       sélection · 3 objets cochés │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   projet_demo                                                                │
+│                                                                              │
+│      - [ ] plan-04                                   2 lots · 491 f.  8,1 Go │
+│    ▸   - [ ] plan-04_25                            5 objets · 259 f.  4,6 Go │
+│            [x] frames — 124 frames                            124 f.  1,5 Go │
+│          + [ ] planches — 2 planches                            2 f.   76 Mo │
+│          + [ ] masters — 1 master                               1 f.  412 Mo │
+│        - [x] plan-04_25_scan — 1 lot scanné                  4 pages  550 Mo │
+│            [x] lot scanné — 124 frames scannées               124 f.  1,5 Go │
+│        + [ ] ▲ plan-04_25_scan_v2 · non déclaré              4 pages  550 Mo │
+│        + [ ] plan-04_12p5                           5 objets · 67 f.  1,5 Go │
+│        + [ ] ▲ plan-04_12p5_v2 · non déclaré       3 objets · 124 f.  1,5 Go │
+│        + [ ] plan-04_8                              3 objets · 41 f.  521 Mo │
+│      + [ ] hiver                                       1 lot · 99 f.  1,3 Go │
+│      + [ ] sequence-12-atelier-fonderie-prise-3       1 lot · 211 f.  3,3 Go │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 3 objets cochés · 252 fichiers · 3,5 Go — rien n'est encore retiré           │
+│ Espace cocher  Suppr retirer  Ctrl+A ajouter  Ctrl+D déclarer  F1 aide       │
+└──────────────────────────────────────────────────────────────────────────────┘

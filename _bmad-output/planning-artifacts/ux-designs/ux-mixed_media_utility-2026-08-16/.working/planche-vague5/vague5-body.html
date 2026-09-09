@@ -1,0 +1,85 @@
+<div class="sheet">
+<header class="masthead">
+  <p class="eyebrow">mixed_media_utility &middot; Epic 7 &middot; vague 5 &middot; 23 ao&ucirc;t 2026</p>
+  <h1>Vague 5 &mdash; ce que tu m'as laiss&eacute; proposer</h1>
+  <p class="lede">Pr&eacute;f&eacute;rences, menu contextuel, barre de menus. Les deux premi&egrave;res &eacute;taient report&eacute;es depuis des semaines ; elles sortent de <code>deferred-work.md</code>. Chacune tient &agrave; <strong>une r&egrave;gle explicite</strong> que tu peux contester d'un mot &mdash; c'est le but.</p>
+  <p class="howto"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8FAEF8" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.4 10.4 14 14M7 5v4M5 7h4"/></svg><span>Touche une image pour l'agrandir. Sous chaque vignette, écris ton retour et enregistre : il reste dans la page, et je le lis d'ici.</span></p>
+  <p class="mode" id="mode">Vérification de l'enregistrement&hellip;</p>
+</header>
+
+<div class="frames">
+
+__FRAMES__
+
+</div>
+
+<hr>
+
+<section class="block">
+  <h3>Tes six retours sur la vague 4</h3>
+  <ul>
+    <li><b>La file des tâches fait les deux</b>, par bascule, et se superpose par défaut sous un seuil de largeur. Tu demandais si c'était possible : oui, sans difficulté — en Qt la file change de parent, le seuil est un événement de redimensionnement. Ça lève un <code>[À TRANCHER]</code> qui traînait dans la spine depuis le début.</li>
+    <li><b>Le badge « rushes absents » est parti.</b> Tu me l'as dit deux fois, et tu avais raison deux fois : la décision <code>EPIC7-ARB-14</code> dit déjà « aucun badge », et la spine dit « sans badge ni mention ». La liste porte le nom, le chemin et les deux dates, elle se trie et se cherche.</li>
+    <li><b>Importer un projet existant</b> manquait : c'est la troisième action de l'écran.</li>
+    <li><b>« Commentaire »</b>, avec un exemple en texte de substitution.</li>
+  </ul>
+</section>
+
+<section class="block">
+  <h3>Ce que je ne peux pas faire dans l'Epic 7</h3>
+  <p>Ta correction sur le dossier de travail contient trois demandes. La première est déjà vraie et la maquette la rend explicite : <b>l'outil ne crée aucun sous-dossier à ton nom de film</b>, le fichier de projet et les dossiers sont posés directement dans le dossier que tu désignes.</p>
+  <p>Les deux autres — nommer le fichier de projet d'après le film, et renommer les dossiers — <b>changent ce que le cœur écrit sur le disque</b>, pas l'interface. Je les ai consignées avec le relevé réel et le coût : <code>frames</code> apparaît dans 30 fichiers de <code>src/</code> et <code>tests/</code>, <code>output-frames</code> dans 8, <code>scans</code> et <code>patches</code> dans 7 chacun.</p>
+  <p><b>Ta demande est fondée</b> : le dossier qui s'appelle <code>patches</code> contient des fichiers nommés <code>..._planches.pdf</code>. C'est exactement le genre d'écart qui coûte une demi-heure à qui ouvre le dossier six mois plus tard. Deux réserves à porter dans l'instruction, pas des refus : <code>lots reconstruits</code> contient une <b>espace</b>, que tout chemin passé à un shell ou à ffmpeg devra citer — <code>lots-reconstruits</code> coûterait la même lisibilité sans le risque ; et <code>srcs</code> n'est pas dans ta liste, donc le dossier serait à moitié lisible.</p>
+  <div class="note-block" data-key="dossiers">
+    <div class="notes"></div>
+    <div class="compose">
+      <textarea class="note-input" rows="2" aria-label="Retour sur les noms de dossiers" placeholder="L'espace, et le nom de srcs&hellip;"></textarea>
+      <div class="compose-row"><span class="status" role="status"></span><button type="button" class="save">Enregistrer</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <h3>Ce qui reste</h3>
+  <p>Toutes les surfaces de l'architecture d'information sont maintenant rendues. Restent hors maquettes, par ta décision : le <b>mode vignette du chutier</b> et la <b>lecture d'un autre lot pendant un encodage</b>.</p>
+  <p>Et un signal que je garde pour une revue d'ensemble : tu trouves <em>les menus sous-optimaux</em>. Cette vague en ajoute beaucoup — c'est un bon moment pour juger la forme sur l'ensemble plutôt qu'écran par écran.</p>
+  <div class="note-block" data-key="suite">
+    <div class="notes"></div>
+    <div class="compose">
+      <textarea class="note-input" rows="2" aria-label="Retour sur la suite" placeholder="Sur les menus, ou sur ce qui vient ensuite&hellip;"></textarea>
+      <div class="compose-row"><span class="status" role="status"></span><button type="button" class="save">Enregistrer</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <h3>Emporter tes retours</h3>
+  <p>Tes retours sont enregistrés dans la page : je les relis d'ici. Ce bouton est là pour le cas où l'enregistrement échoue, ou si tu préfères me les envoyer en conversation.</p>
+  <div class="copy-row">
+    <button type="button" class="copy" id="copy-all">Copier tous mes retours</button>
+    <span class="status" id="copy-status" role="status"></span>
+  </div>
+</section>
+
+<hr>
+
+<p class="colophon">
+  Maquettes : <code>mockups/key-preferences.html</code>, <code>key-clic-droit.html</code>, <code>key-barre-menus.html</code><br>
+  Retours de la vague 4 : <code>retours-vague-4-2026-08-23.md</code><br>
+  Décisions appliquées : <code>decisions-2026-08-20-epic-7.md</code>, EPIC7-ARB-26 à 28 &mdash; branche <code>oc/epic-7-ux</code><br>
+  Vignettes capturées sur les fichiers du dépôt, sans retouche.
+</p>
+
+</div>
+
+<div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Image agrandie">
+  <div class="viewer-bar">
+    <span class="viewer-title" id="viewer-title"></span>
+    <button type="button" id="zoom-out" aria-label="Réduire">&minus;</button>
+    <button type="button" id="zoom-fit">Ajuster</button>
+    <button type="button" id="zoom-in" aria-label="Agrandir">+</button>
+    <button type="button" id="viewer-close" aria-label="Fermer"><span class="lbl-long">Fermer</span><span class="lbl-short" aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="viewer-scroll" id="viewer-scroll"><img id="viewer-img" alt=""></div>
+  <p class="viewer-hint">Fais glisser pour te d&eacute;placer &middot; double-touche pour zoomer d'un coup</p>
+</div>

@@ -1,0 +1,70 @@
+{
+ "key-chutier-v2-a": [
+  {
+   "when": "21/08 07:46",
+   "text": "Les filtres sont à developper, pas toujours visibles.\n\nRemplacer les lettres par des pictogrammes : dossier, fichier video, fichiers multiples (extract), fichier pdf, scan (fichier avec une barre de scan), fichiers multiples (lot reconstruit), fichier video (rushe)"
+  },
+  {
+   "when": "21/08 07:50",
+   "text": "le cartouche + le trait bleu + l’arbre + la fleche c’est chargé. On enlève le cartouche et le trait bleu à gauche juste le nom de fichier. On laisse l’arbre, discret. On retire la fleche puisqu’on verra bien que ca s’ouvre et se ferme. À gauche du nom on laisse une puce pour cocher des selections. Avec un système de puce cochée pleine quand on sélectionne tous les enfants et de petit point quand on fait une sélection ponctuelle de quelques éléments seulement."
+  },
+  {
+   "when": "21/08 07:53",
+   "text": "Super de mettre les metadonnees (nombre de frames, nombre de pages etc) mais attention à ce qu’elles soient correctes. Un lot reconstruit n’a pas un nombre de pages mais un nombre de frames."
+  },
+  {
+   "when": "21/08 10:01",
+   "text": "Si on enleve la fleche il faut quand meme qu’on comprenne qu’il reste des objets enfants. Je ne sais pas comment differencier un parent d’un enfant « final »"
+  },
+  {
+   "when": "21/08 10:19",
+   "text": "Par exemple : ajouter un signe + a la place de la fleche, plus fin et discret. Il devient un - pour reduire une fois developpé"
+  },
+  {
+   "when": "21/08 10:21",
+   "text": "il y a des traits en trop sur l’arbre. Les traits du niveau 1 se poursuivent parfois alors qu’il n’y a pas d’autre objet du niveau 1 en dessous. Normalement la branche devrait s’arreter quand il n’y a pas un autre objet du meme niveau plus bas"
+  }
+ ],
+ "key-chutier-v2-b": [
+  {
+   "when": "21/08 07:41",
+   "text": "Retours ponctuels faits. Tu les vois ?"
+  },
+  {
+   "when": "21/08 07:54",
+   "text": "L’invite peut etre une fenetre flottante plutot qu’un bandeau. A l’import."
+  },
+  {
+   "when": "21/08 10:21",
+   "text": "Meme remarque sur la structure de l’arbe"
+  },
+  {
+   "when": "21/08 10:23",
+   "text": "Certains cas sont melangés. Parfois on lit le nom du fichier ou du lot. C’est bien. Mais « page 8 et 9 a scanner » n’est pas un nom d’objet et ce n’est d’ailleurs pas un objet. Ce n’est pas un enfant du scan. C’est une remarque sur le scan. Elle doit s’afficher en info-bulle quand on passe la souris ou qu’on clique sur l’avertissement affiché (icone). D’ailleurs l’icone d’avertissement est trop petite et difficilement lisible."
+  }
+ ],
+ "key-lot-hybride-a": [
+  {
+   "when": "21/08 10:33",
+   "text": "Le parcours utilisateur : sous un lot donné l’utilisateur a selectionné plusieurs scans. Le bouton d’action devient alors : creer une extraction composite. Une fenetre apparait pour nommer ce lot, et pour choisir un lot prioritaire par defaut sur les doublons. Mais ensuite pour chaque frame ou un doublon (voire plus) existe dans la galerie on a une pastille avec le nombre de candidats. On peut cliquer dessus et arriver dans cette vue en wipe ou en cote a cote. Pas de A/B je ne vois pas ce que ca fait. Si plus de 2 candidats on doit choisir les deux affichés dans le wipe. En cote a cote on doit tous les voir (3/4/5 etc). Pas de mode « auto » pour la selecction c’est toujours un choix utilisateur (avec un defaut eventuel mais pas de critere technique)"
+  }
+ ],
+ "key-lot-hybride-b": [
+  {
+   "when": "21/08 10:35",
+   "text": "j’aime bien l’idee de devoir verrouiller et ouvrir la selection des candidats manuellement. A voir la forme que ca prend initiallement ?"
+  }
+ ],
+ "key-scan-v2-a": [
+  {
+   "when": "21/08 10:47",
+   "text": "OK maisbca ne colle pas a une vraie planche de production. Il faudra reajuster avec le vrai template plus tard."
+  }
+ ],
+ "key-scan-v2-b": [
+  {
+   "when": "21/08 10:46",
+   "text": "Ok. Attention avec le detail des pages il faut que la navigation reste fluide donc possibilité de naviguer rapidement d’une page à l’autre. Et bien harmoniser entre du pdf et des images. Il faut bien qu’un scan en images rerange les pages dans l’ordre comme si c’etait un fichier pdf. Il faut pouvoir corriger une info de page erronée en cas de mauvais ordre. Le bouton d’action n’est pas pour extraire les 6 tiffs maisnpour extraire tout le lot par defaut. Sauf si on selectionne manuellement des pages « enfantes » mais si on selectionne la planche parente (planche = ensemble de pages) on exporte tout"
+  }
+ ]
+}

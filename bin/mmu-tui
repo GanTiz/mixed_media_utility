@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Raccourci "mmu-tui" -> `python -m mixed_media_utility.tui`, sans installation.
+#
+# Jumeau de `bin/mmu` (story 11.0) : meme patron, meme motif. Le depot
+# n'installe rien, la TUI tourne via PYTHONPATH pointant sur `src/`, et ce
+# chemin se calcule depuis LA POSITION DE CE SCRIPT -- jamais depuis le
+# repertoire courant -- pour marcher qu'on l'appelle d'ou que ce soit une fois
+# `bin/` sur le PATH.
+set -euo pipefail
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Prepend, jamais ecrase: un PYTHONPATH deja pose par l'utilisateur (autre
+# projet, autre outillage) doit survivre a cet appel. Mesure de l'AC 6.1 :
+# `--diagnostic-chemin` rend ce que la TUI voit vraiment.
+export PYTHONPATH="${script_dir}/../src${PYTHONPATH:+:${PYTHONPATH}}"
+
+# `Echap` emet le meme octet que le PREFIXE de toute sequence d'echappement :
+# le parseur de `textual` ne peut les distinguer qu'en attendant ESCDELAY
+# millisecondes. Le defaut vaut 100, ce qui met 100 ms de latence sur chaque
+# `Echap` -- une touche de navigation, tapee sans arret. 25 ms suffisent quand
+# le terminal est local, les caracteres d'une sequence y arrivant dans la meme
+# lecture.
+#
+# `:-` et non `=` : un ESCDELAY pose par l'operateur SURVIT. Sur un terminal
+# distant ou lent, la valeur haute est la bonne, et c'est a lui de le savoir.
+export ESCDELAY="${ESCDELAY:-25}"
+
+# `python3` d'abord (convention Unix/macOS), repli sur `python` si absent.
+python_bin="python3"
+command -v "${python_bin}" >/dev/null 2>&1 || python_bin="python"
+
+exec "${python_bin}" -m mixed_media_utility.tui "$@"

@@ -1,0 +1,38 @@
+{
+ "key-taches-c": [
+  {
+   "when": "23/08 02:57",
+   "text": "On avait dit qu’on essayait d’avoir un toggle pour faire les deux : ancré vs superposé. En dessous d’une certaine largeur superposé par defaut. Possible ?"
+  }
+ ],
+ "key-projet-a": [
+  {
+   "when": "23/08 03:00",
+   "text": "Pas de badge sur les rushes absents. Ajouter date de modification / date de creation avec option de tri, et de recherche."
+  }
+ ],
+ "key-projet-b": [
+  {
+   "when": "23/08 08:36",
+   "text": "Dans le cas présent : le fichier de projet sera directement déposé dans /Volumes/HOKO/films/vent/mmu par exemple « /Volumes/HOKO/films/vent/mmu/le-vent-se-retourne.json » (on essaiera de changer l’extension des fichiers à terme). Les dossiers de l’arborescence sont créés directement dans ce dossier aussi : par exemple « /Volumes/HOKO/films/vent/mmu/frames » (d’ailleurs on devrait aussi changer les noms pour la lisibilité et mettre « lots », « planches », « scans », « lots reconstruits », « exports » comme noms de dossiers.\nCe que je veux dire c’est que l’outil ne crée pas lui-même un dossier a la racine du dossier choisi. Il ne fait PAS « /Volumes/HOKO/films/vent/mmu/le-vent-se-retourne/»"
+  }
+ ],
+ "key-projet-c": [
+  {
+   "when": "23/08 08:37",
+   "text": "Non pas de badge … c’est en puvrant le projet.\nEn revanche il manque l’option pour importer un projet existant sur cette surface."
+  }
+ ],
+ "key-modales-c": [
+  {
+   "when": "23/08 08:39",
+   "text": "Remplacer par « commentaire » et mettre en placeholder de la zone texte un exemple avec des reglages."
+  }
+ ],
+ "suite": [
+  {
+   "when": "23/08 08:40",
+   "text": "Maintenant qu’on a fait le tour de toutes les fonctions j’aimerais que l’on fixe ensemble l’ecran de préférences + le menu clic droit + les eventuels menus de la barre de menu windows/mac si pertinent.\nJe te laisse proposer"
+  }
+ ]
+}

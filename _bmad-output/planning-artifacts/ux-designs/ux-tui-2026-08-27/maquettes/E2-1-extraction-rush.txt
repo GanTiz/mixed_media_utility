@@ -1,0 +1,29 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                                               │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Quel rush extraire ?                                                       │
+│                                                                              │
+│      rush_01              25 fps · 1920×1080 · 4:12         ● lié            │
+│      rush_02              25 fps · 1920×1080 · 12:38        ● lié            │
+│    ▸ rush_hiver           24 fps · 4096×2160 · 2:05         ✕ absent         │
+│      Ajouter un rush       choisir un fichier vidéo dans l'explorateur       │
+│                                                                              │
+│   ── rush_hiver — déclaré au manifest, introuvable ───────────────────────   │
+│                                                                              │
+│      r   Retrouver le fichier      chercher dans un dossier, par nom,        │
+│                                    durée et timecode de départ               │
+│      d   Le désigner à la main     choisir le fichier, sans recherche        │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 3 rushes déclarés · 2 liés, 1 introuvable                                    │
+│ Rushes  Tab ajouter un rush  ⏎ choisir  ↑↓ naviguer  Échap ateliers          │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : OK cet écran répond à ma question sur l'intérêt du relink je crois. Dans ce cas il faut pouvoir relink directement depuis l'écran ou on voit que le rushe est manquant pas depuis le "projet".
+On peut avoir aussi une option pour relinker en masse en recherchant tous les rushes manquant dans un ensemble de sous-dossiers d'un dossier désigné (est-ce ce que la commande relink permet ?)
+
+  -> EPIC11-ARB-32 : relink depuis cet ecran (r / d). Le relink EN MASSE n'existe pas dans la CLI -- voir la decision.

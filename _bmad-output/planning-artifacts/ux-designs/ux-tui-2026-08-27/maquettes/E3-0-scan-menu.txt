@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan                      1 profil · 2 lots reconstruits │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Atelier Scan                                                               │
+│                                                                              │
+│    ▸ Détecter des planches      Déposer des scans, lire les QR, puis         │
+│                                 écrire les TIFF. Le parcours principal.      │
+│                                                                              │
+│      Calibrer une chaîne        Depuis le scan d'une page de calibration,    │
+│                                 produire le profil couleur du scanner.       │
+│                                                                              │
+│   ────────────────────────────────────────────────────────────────────────   │
+│                                                                              │
+│      Profil par défaut du projet   hp-envy-4520-tiff-600                     │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│ ⏎ entrer  ↑↓ naviguer  Échap ateliers  F1 aide  Q quitter                    │
+└──────────────────────────────────────────────────────────────────────────────┘

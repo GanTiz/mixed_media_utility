@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Journal                         lignes 812 à 826 sur 826 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│      15:10:02  frame 000031 écrite (16 bits)                                 │
+│      15:10:03  frame 000032 écrite (16 bits)                                 │
+│      15:10:04  page 5/8 : 8 frames recadrées sur marge encodée               │
+│      15:10:04    zone 3 : ▲ mire de remplacement, pas une frame              │
+│      15:10:05  frame 000033 écrite (16 bits)                                 │
+│      15:10:06  frame 000034 écrite (16 bits)                                 │
+│      15:10:07  frame 000035 écrite (16 bits)                                 │
+│      15:10:09  page 6/8 : 8 frames recadrées sur marge encodée               │
+│      15:10:10  frame 000036 écrite (16 bits)                                 │
+│      15:10:11  frame 000037 écrite (16 bits)                                 │
+│      15:10:12  frame 000038 écrite (16 bits)                                 │
+│      15:10:13  frame 000039 écrite (16 bits)                                 │
+│      15:10:14  frame 000040 écrite (16 bits)                                 │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░  22 %  40/186 frames  reste ~ 3 min 05  │
+│ ↑↓ défiler  g début  G fin  C copier  Tab revenir  Échap fermer              │
+└──────────────────────────────────────────────────────────────────────────────┘

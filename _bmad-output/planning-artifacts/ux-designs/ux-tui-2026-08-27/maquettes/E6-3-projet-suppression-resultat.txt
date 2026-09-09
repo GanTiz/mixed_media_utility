@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Projet                        suppression · plan-04_12p5 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ Suppression INCOMPLÈTE ──────────────────────────────────────────────┐   │
+│   │ ✕ 3 fichiers occupent toujours le disque                             │   │
+│   │                                                                      │   │
+│   │ Manifeste               à jour · l'entrée du lot est retirée         │   │
+│   │ Supprimés               64 fichiers · 1,3 Go                         │   │
+│   │ Restés                  3 fichiers · 231 Mo                          │   │
+│   │                                                                      │   │
+│   │   plan-04_12p5_mmu_prores_hq.mov                                     │   │
+│   │   extract-frames/plan-04_12p5/plan-04_12p5_00-00-04-12.tiff          │   │
+│   │   extract-frames/plan-04_12p5/plan-04_12p5_00-00-04-14.tiff          │   │
+│   │ Motif                   droits refusés ou fichier verrouillé         │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│    ▸ Réessayer                                                               │
+│      Ouvrir le dossier                                                       │
+│      Retour à l'inventaire                                                   │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ✕  3 fichiers n'ont pas pu être supprimés · manifeste à jour · 64 retirés    │
+│ ⏎ choisir  ↑↓ naviguer  Échap inventaire  F1 aide                            │
+└──────────────────────────────────────────────────────────────────────────────┘

@@ -1,0 +1,30 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Exports                               plan-04_25 · 124 f │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Réglages d'encodage                                                        │
+│                                                                              │
+│      Profil                     prores_hq          ▾  .mov                   │
+│                           ▸ (•) prores_hq        .mov · défaut               │
+│                             ( ) prores_422       .mov                        │
+│                             ( ) prores_lt        .mov                        │
+│                             ( ) dnxhr_hq         .mov                        │
+│                             ( ) dnxhr_hqx        .mov                        │
+│                             ( ) h264_delivery    .mp4                        │
+│                             ( ) hevc_delivery    .mp4                        │
+│                                                                              │
+│      Résolution                 hd1080  hd1080 · uhd2160 · native · <l>x<h>  │
+│      Cadence du rushe source    25 fps  déclarée par le lot                  │
+│      Espace couleur             bt709   porté par le profil                  │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ prores_hq · .mov · 1920×1080 à 25 fps — 124 échantillons, ~ 1,4 Go           │
+│ ⏎ retenir  Tab champ suivant  ↑↓ choisir  Échap retour  F1 aide              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : Possible de faire un menu "déroulant" sur les profils ?
+Possible d'enregistrer un profil perso ? Si pas compris dans la CLI on laisse tomber en v1 ...
+Comment renommer le master ?
+
+  -> EPIC11-ARB-33 : liste deroulee des 7 profils. Profil PERSO : absent de la CLI, donc hors v1 comme tu le proposais. Renommage : `e`.

@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · — aucun projet —                                                  v0.1 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Ouvrir un projet                                                           │
+│                                                                              │
+│    ←  …\mmu\                                                                 │
+│      Dossier              D:\HOKO\Documents\mmu\rushes_2026                  │
+│   ────────────────────────────────────────────────────────────────────────   │
+│      …                                                                       │
+│      11_nuit_ext/                                          6 sous-dossiers   │
+│      12_nuit_int/                                          3 sous-dossiers   │
+│      13_plans_de_coupe/                                   41 sous-dossiers   │
+│      14_raccords/                                           0 sous-dossier   │
+│      15_sons_seuls/                                        2 sous-dossiers   │
+│      16_timelapse/                                         7 sous-dossiers   │
+│    ▸ 17_essais_pellicule/                                   1 sous-dossier   │
+│      …                                                        11-17 sur 27   │
+│   ────────────────────────────────────────────────────────────────────────   │
+│    ⏎  Valider   17_essais_pellicule/                                         │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 27 sous-dossiers · 10 au-dessus, 10 en dessous                               │
+│ ⏎ valider  → entrer  ← parent  ↑↓ liste  Tab chemin  Échap sortir            │
+└──────────────────────────────────────────────────────────────────────────────┘

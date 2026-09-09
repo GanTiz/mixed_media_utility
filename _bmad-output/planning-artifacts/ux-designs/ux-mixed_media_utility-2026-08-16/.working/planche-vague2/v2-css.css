@@ -1,0 +1,134 @@
+
+/* --- coquille commune : deux panneaux, trois modes de regard ------------- */
+.nav{position:relative; width:44px; flex:0 0 44px; background:var(--surface-sunken); border-right:1px solid var(--border)}
+.nav .rail{display:flex; flex-direction:column; gap:var(--sp4); padding:var(--sp5) 0; align-items:center; color:var(--text-disabled)}
+.nav .rail .on{color:var(--text-primary)}
+.bin{position:relative; width:250px; flex:0 0 250px; background:var(--surface-panel); border-right:1px solid var(--border); display:flex; flex-direction:column}
+.bin-head{padding:var(--panel-pad); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between}
+.bin-scope{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}
+.portee{font-family:var(--f-data); font-size:10.5px; color:var(--text-disabled); padding:0 var(--panel-pad) var(--sp4)}
+.portee b{color:var(--text-secondary); font-weight:500}
+.meta{flex:0 0 auto; white-space:nowrap; font-family:var(--f-data); font-size:11px; color:var(--text-disabled); font-variant-numeric:tabular-nums}
+.mono{font-family:var(--f-data); font-size:12px; font-variant-numeric:tabular-nums}
+.tree{padding:var(--sp4) var(--sp4) var(--sp4) var(--sp3)}
+.node{position:relative}
+.kids{margin-left:8px; padding-left:12px}
+.kids > .node::before{content:"";position:absolute;left:-12px;top:0;bottom:0;width:1px;background:var(--border)}
+.kids > .node:last-child::before{height:14px;bottom:auto}
+.kids > .node > .row::before{content:"";position:absolute;left:-12px;top:14px;width:9px;height:1px;background:var(--border)}
+.row{position:relative;min-height:var(--row-height);display:flex;align-items:center;gap:var(--sp3);padding:0 var(--sp4) 0 0;border-radius:var(--r-md)}
+.row.sel{background:var(--surface-hover)}
+.exp{width:11px;flex:0 0 11px;text-align:center;font-family:var(--f-data);font-size:11px;color:var(--text-disabled);line-height:1}
+.exp.none{visibility:hidden}
+.pi{flex:0 0 15px;color:var(--text-secondary)}
+.nm{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.puce{position:relative;width:13px;height:13px;flex:0 0 13px;border:1px solid var(--border-strong);border-radius:var(--r-sm);background:var(--surface-raised)}
+.puce.all{background:var(--accent);border-color:var(--accent)}
+.puce.all::after{content:"";position:absolute;left:4px;top:1px;width:3px;height:7px;border:solid var(--accent-on);border-width:0 2px 2px 0;transform:rotate(42deg)}
+
+.work{flex:1 1 auto; display:flex; flex-direction:column; background:var(--surface-canvas); min-width:0; position:relative}
+.wh{display:flex; align-items:center; gap:var(--sp5); padding:0 var(--sp5); height:var(--header-height); border-bottom:1px solid var(--border); background:var(--surface-panel)}
+.seg{display:flex; flex:0 0 auto; border:1px solid var(--border-strong); border-radius:var(--r-md); overflow:hidden}
+.seg span{font-size:11.5px; padding:3px var(--sp5); color:var(--text-secondary); white-space:nowrap}
+.seg span.on{background:var(--surface-hover); color:var(--text-primary)}
+.seg span.off{color:var(--text-disabled); opacity:.45}
+.vue{display:flex; align-items:center; gap:var(--sp3); font-family:var(--f-data); font-size:11px; color:var(--text-disabled)}
+.vue .b{border:1px solid var(--border); border-radius:var(--r-sm); padding:1px var(--sp4); color:var(--text-secondary); white-space:nowrap}
+.wh .px{margin-left:auto; white-space:nowrap; font-family:var(--f-data); font-size:11px; color:var(--text-disabled)}
+
+/* --- badge de cadence : la cadence effective, et la qualite a cote ------- */
+.cad{display:flex; align-items:center; gap:var(--sp4)}
+.cadb{display:inline-flex; align-items:center; gap:var(--sp3); white-space:nowrap; border-radius:var(--r-full); padding:2px var(--sp5);
+  font-family:var(--f-data); font-size:11px; font-variant-numeric:tabular-nums; border:1px solid}
+.cadb.ok{color:var(--state-complete); border-color:var(--state-complete)}
+.cadb.ko{color:var(--state-absent); border-color:var(--state-absent)}
+.cadb .p{width:8px;height:8px;border-radius:var(--r-full)}
+.cadb.ok .p{background:var(--state-complete)}
+.cadb.ko .p{background:transparent;border:2px solid var(--state-absent)}
+.qual{display:inline-flex; align-items:center; gap:var(--sp3); border:1px solid var(--border-strong); border-radius:var(--r-sm);
+  padding:1px var(--sp4); font-family:var(--f-data); font-size:11px; color:var(--text-secondary)}
+.qual .car{font-size:8px; color:var(--text-disabled)}
+
+/* --- scene et transport -------------------------------------------------
+   Retours du 22 aout : tout sous l'image, UNE seule ligne, que des icones.
+   La barre de progression se reduit a un trait. L'entree encadre a gauche,
+   la sortie a droite -- les bornes tiennent litteralement le transport. */
+.mat{flex:1 1 auto; display:flex; align-items:center; justify-content:center; padding:20px; background:var(--image-mat)}
+.scene{position:relative; width:404px; aspect-ratio:16/9; background:linear-gradient(118deg,#2A2A2A 0%,#6E6E6E 46%,#3A3A3A 100%)}
+.scene .tc{position:absolute; left:8px; bottom:6px; font-family:var(--f-data); font-size:10px; color:#D8D8D8}
+.bandeau{display:flex; align-items:center; gap:var(--sp5); padding:var(--sp4) var(--sp6); background:var(--surface-panel);
+  border-top:1px solid var(--state-substitute); color:var(--text-primary); font-size:12.5px}
+.bandeau .ic2{color:var(--state-substitute); font-size:13px}
+.bandeau p{margin:0; flex:1 1 auto}
+.bandeau .x{border:1px solid var(--border-strong); border-radius:var(--r-sm); padding:1px var(--sp4); font-size:11px; color:var(--text-secondary); white-space:nowrap}
+
+/* un trait, pas une barre */
+.piste{position:relative; height:3px; margin:0 var(--sp6); background:var(--surface-sunken); border-radius:2px}
+.dedans{position:absolute; top:0; bottom:0; background:var(--accent); opacity:.55}
+.tete{position:absolute; top:-4px; bottom:-4px; width:2px; background:var(--text-primary)}
+.mk2{position:absolute; top:-7px; width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent; border-top:6px solid var(--state-substitute)}
+.regle{display:flex; justify-content:space-between; padding:5px var(--sp6) 0; font-family:var(--f-data); font-size:10px; color:var(--text-disabled)}
+
+.transport{display:flex; align-items:center; gap:var(--sp3); padding:var(--sp4) var(--sp6) var(--sp5); background:var(--surface-panel); border-top:1px solid var(--border)}
+.tb{display:inline-flex; align-items:center; justify-content:center; gap:2px; min-width:28px; height:26px; padding:0 var(--sp3);
+  border:1px solid var(--border); border-radius:var(--r-sm); background:var(--surface-raised); color:var(--text-secondary)}
+.tb.play{background:var(--accent); border-color:var(--accent); color:var(--accent-on)}
+.tb.on{color:var(--text-primary); border-color:var(--border-strong)}
+.tb.vit{color:var(--state-substitute); border-color:var(--state-substitute)}
+.tb .x{font-family:var(--f-data); font-size:9.5px}
+.tb.borne{color:var(--accent-soft); border-color:var(--accent)}
+.pousse{margin-left:auto}
+.sepv{width:1px; height:18px; background:var(--border); margin:0 var(--sp3)}
+/* le volume : une icone, un curseur vertical au clic */
+.son{position:relative}
+.curseur{position:absolute; bottom:30px; left:50%; margin-left:-13px; width:26px; padding:var(--sp4) 0;
+  background:var(--surface-raised); border:1px solid var(--border-strong); border-radius:var(--r-md);
+  display:flex; flex-direction:column; align-items:center; gap:var(--sp3)}
+.curseur .rail2{width:3px; height:52px; background:var(--border-strong); border-radius:2px; position:relative}
+.curseur .rail2::after{content:""; position:absolute; left:0; right:0; bottom:0; height:62%; background:var(--text-secondary); border-radius:2px}
+.curseur .rail2::before{content:""; position:absolute; left:-3px; width:9px; height:9px; bottom:58%; background:var(--text-primary); border-radius:var(--r-full)}
+.curseur .mute{font-family:var(--f-data); font-size:9px; color:var(--text-disabled)}
+
+/* --- galerie ------------------------------------------------------------- */
+.gal{flex:1 1 auto; min-width:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(118px,1fr)); gap:var(--sp5); padding:var(--sp6); background:var(--image-mat); align-content:start}
+.gal.grand{grid-template-columns:repeat(auto-fill,minmax(228px,1fr))}
+.gc{position:relative; min-width:0; background:var(--surface-canvas); border:1px solid var(--border); border-radius:var(--r-md); padding:7px}
+.gc .im{position:relative; aspect-ratio:16/9; border-radius:2px; background:linear-gradient(118deg,#2E2E2E,#6A6A6A)}
+.gc .no{position:absolute;left:4px;top:3px;font-family:var(--f-data);font-size:9px;color:#D2D2D2;text-shadow:0 1px 2px #000}
+.gc .fo{display:flex;align-items:center;justify-content:space-between;gap:var(--sp3);margin-top:5px;min-width:0;overflow:hidden;white-space:nowrap;font-family:var(--f-data);font-size:10px;color:var(--text-disabled)}
+.gc.hors{opacity:.4}
+.gc .puce{position:absolute; right:5px; top:5px}
+
+.panel{width:290px; flex:0 0 290px; background:var(--surface-panel); border-left:1px solid var(--border); padding:var(--sp6); display:flex; flex-direction:column; gap:var(--sp5)}
+.panel h3{margin:0; font-size:14px; font-weight:600}
+.panel p{margin:0; color:var(--text-secondary); font-size:12px}
+.opt{display:flex; align-items:center; gap:var(--sp4); border:1px solid var(--border); border-radius:var(--r-md); padding:var(--sp4) var(--sp5); background:var(--surface-raised); font-size:12.5px}
+.opt.on{border-color:var(--accent); box-shadow:inset 0 0 0 1px var(--accent)}
+.opt .tt{flex:1 1 auto}
+.radio{width:13px;height:13px;flex:0 0 13px;border-radius:var(--r-full);border:1px solid var(--border-strong);position:relative}
+.opt.on .radio{border-color:var(--accent)}
+.opt.on .radio::after{content:"";position:absolute;left:3px;top:3px;width:5px;height:5px;border-radius:var(--r-full);background:var(--accent)}
+.recap{border-top:1px solid var(--border); padding-top:var(--sp5); font-family:var(--f-data); font-size:11px; color:var(--text-secondary); line-height:1.85}
+.btn{width:100%; white-space:nowrap; background:var(--accent); color:var(--accent-on); border:0; border-radius:var(--r-md); padding:var(--sp4) var(--sp5); font-family:var(--f-ui); font-size:13px; font-weight:600}
+.btn.ghost{background:transparent; color:var(--text-secondary); border:1px solid var(--border-strong)}
+.hint{font-size:11.5px; color:var(--text-disabled); line-height:1.5}
+
+.notes{padding:var(--sp6) var(--sp7); background:var(--surface-canvas)}
+.notes.hors{background:transparent; padding:var(--sp6) 0 0}
+.note{display:flex; gap:var(--sp5); padding:var(--sp4) 0; border-bottom:1px solid var(--border)}
+.note:last-child{border-bottom:0}
+.num{flex:0 0 20px;height:20px;border-radius:var(--r-full);background:var(--surface-raised);border:1px solid var(--border-strong);color:var(--text-secondary);font-family:var(--f-data);font-size:11px;display:flex;align-items:center;justify-content:center}
+.note b{color:var(--text-primary);font-weight:600} .note p{margin:0;color:var(--text-secondary)}
+.sheet{max-width:1180px;margin:0 auto;padding:var(--sp8) var(--sp6) 64px}
+h1{font-size:28px;font-weight:600;line-height:1.2;margin:0 0 var(--sp3)}
+.sub{color:var(--text-secondary);margin:0 0 var(--sp8);max-width:74ch}
+h2{font-size:15px;font-weight:600;line-height:1.3;margin:var(--sp8) 0 var(--sp5)}
+.caption{color:var(--text-secondary);margin:var(--sp5) 0 0;font-size:12px;max-width:80ch}
+code{font-family:var(--f-data);font-size:11px;color:var(--text-secondary)}
+b.k{color:var(--text-primary);font-weight:600}
+
+.ic{flex:0 0 auto}
+/* selecteur de cadence : passer d'une extraction a l'autre en relecture */
+.cadsel{display:inline-flex; align-items:center; gap:var(--sp3); border:1px solid var(--border-strong); border-radius:var(--r-sm);
+  padding:1px var(--sp4); font-family:var(--f-data); font-size:11px; color:var(--text-primary)}
+.cadsel .car{font-size:8px; color:var(--text-disabled)}

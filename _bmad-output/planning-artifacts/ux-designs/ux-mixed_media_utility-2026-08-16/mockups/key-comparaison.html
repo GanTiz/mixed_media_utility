@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voir une frame de pres, et trancher — maquette d'ecran cle</title>
+<style>
+:root{
+  --surface-canvas:#141414; --surface-panel:#1C1C1C; --surface-raised:#242424;
+  --surface-hover:#2E2E2E; --surface-sunken:#0E0E0E;
+  --border:#383838; --border-strong:#4A4A4A;
+  --text-primary:#E8E8E8; --text-secondary:#9A9A9A; --text-disabled:#6A6A6A;
+  --image-mat:#2B2B2B;
+  --accent:#4C7EF3; --accent-pressed:#3A63C4; --accent-on:#FFFFFF;
+  --state-complete:#3FBF6F; --state-absent:#E5484D; --state-substitute:#F5A623;
+
+  --sp1:2px; --sp2:4px; --sp3:6px; --sp4:8px; --sp5:12px; --sp6:16px; --sp7:24px; --sp8:32px;
+  --panel-pad:10px; --row-height:28px; --hit-min:24px;
+  --header-height:44px; --tabbar-height:54px; --bin-width:250px;
+
+  --r-sm:4px; --r-md:6px; --r-lg:8px; --r-full:9999px;
+
+  --f-ui:-apple-system,"Segoe UI",system-ui,sans-serif;
+  --f-data:"SF Mono",Menlo,Consolas,"Cascadia Mono",monospace;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:#0A0A0A; color:var(--text-primary);
+  font-family:var(--f-ui); font-size:13px; line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+}
+.sheet{max-width:1180px;margin:0 auto;padding:var(--sp8) var(--sp6) 64px}
+h1{font-size:28px;font-weight:600;line-height:1.2;margin:0 0 var(--sp3)}
+.sub{color:var(--text-secondary);margin:0 0 var(--sp8);max-width:70ch}
+h2{font-size:15px;font-weight:600;line-height:1.3;margin:var(--sp8) 0 var(--sp5)}
+
+/* --- cadre applicatif ---------------------------------------------------- */
+.app{
+  background:var(--surface-canvas); border:1px solid var(--border);
+  border-radius:var(--r-lg); overflow:hidden;
+}
+.app-header{
+  height:var(--header-height); background:var(--surface-panel);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:var(--sp5); padding:0 var(--sp5);
+}
+.app-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}
+.app-body{display:flex; min-height:520px}
+/* --- coquille commune : deux panneaux, trois modes de regard ------------- */
+.nav{position:relative; width:44px; flex:0 0 44px; background:var(--surface-sunken); border-right:1px solid var(--border)}
+.nav .rail{display:flex; flex-direction:column; gap:var(--sp4); padding:var(--sp5) 0; align-items:center; color:var(--text-disabled)}
+.nav .rail .on{color:var(--text-primary)}
+.bin{position:relative; width:250px; flex:0 0 250px; background:var(--surface-panel); border-right:1px solid var(--border); display:flex; flex-direction:column}
+.bin-head{padding:var(--panel-pad); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between}
+.bin-scope{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}
+.portee{font-family:var(--f-data); font-size:10.5px; color:var(--text-disabled); padding:0 var(--panel-pad) var(--sp4)}
+.portee b{color:var(--text-secondary); font-weight:500}
+.meta{flex:0 0 auto; white-space:nowrap; font-family:var(--f-data); font-size:11px; color:var(--text-disabled); font-variant-numeric:tabular-nums}
+.mono{font-family:var(--f-data); font-size:12px; font-variant-numeric:tabular-nums}
+.tree{padding:var(--sp4) var(--sp4) var(--sp4) var(--sp3)}
+.node{position:relative}
+.kids{margin-left:8px; padding-left:12px}
+.kids > .node::before{content:"";position:absolute;left:-12px;top:0;bottom:0;width:1px;background:var(--border)}
+.kids > .node:last-child::before{height:14px;bottom:auto}
+.kids > .node > .row::before{content:"";position:absolute;left:-12px;top:14px;width:9px;height:1px;background:var(--border)}
+.row{position:relative;min-height:var(--row-height);display:flex;align-items:center;gap:var(--sp3);padding:0 var(--sp4) 0 0;border-radius:var(--r-md)}
+.row.sel{background:var(--surface-hover)}
+.exp{width:11px;flex:0 0 11px;text-align:center;font-family:var(--f-data);font-size:11px;color:var(--text-disabled);line-height:1}
+.exp.none{visibility:hidden}
+.pi{flex:0 0 15px;color:var(--text-secondary)}
+.nm{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.puce{position:relative;width:13px;height:13px;flex:0 0 13px;border:1px solid var(--border-strong);border-radius:var(--r-sm);background:var(--surface-raised)}
+.puce.all{background:var(--accent);border-color:var(--accent)}
+.puce.all::after{content:"";position:absolute;left:4px;top:1px;width:3px;height:7px;border:solid var(--accent-on);border-width:0 2px 2px 0;transform:rotate(42deg)}
+
+.work{flex:1 1 auto; display:flex; flex-direction:column; background:var(--surface-canvas); min-width:0; position:relative}
+.wh{display:flex; align-items:center; gap:var(--sp5); padding:0 var(--sp5); height:var(--header-height); border-bottom:1px solid var(--border); background:var(--surface-panel)}
+.seg{display:flex; flex:0 0 auto; border:1px solid var(--border-strong); border-radius:var(--r-md); overflow:hidden}
+.seg span{font-size:11.5px; padding:3px var(--sp5); color:var(--text-secondary); white-space:nowrap}
+.seg span.on{background:var(--surface-hover); color:var(--text-primary)}
+.seg span.off{color:var(--text-disabled); opacity:.45}
+.vue{display:flex; align-items:center; gap:var(--sp3); font-family:var(--f-data); font-size:11px; color:var(--text-disabled)}
+.vue .b{border:1px solid var(--border); border-radius:var(--r-sm); padding:1px var(--sp4); color:var(--text-secondary); white-space:nowrap}
+.wh .px{margin-left:auto; white-space:nowrap; font-family:var(--f-data); font-size:11px; color:var(--text-disabled)}
+
+/* --- badge de cadence : la cadence effective, et la qualite a cote ------- */
+.cad{display:flex; align-items:center; gap:var(--sp4)}
+.cadb{display:inline-flex; align-items:center; gap:var(--sp3); white-space:nowrap; border-radius:var(--r-full); padding:2px var(--sp5);
+  font-family:var(--f-data); font-size:11px; font-variant-numeric:tabular-nums; border:1px solid}
+.cadb.ok{color:var(--state-complete); border-color:var(--state-complete)}
+.cadb.ko{color:var(--state-absent); border-color:var(--state-absent)}
+.cadb .p{width:8px;height:8px;border-radius:var(--r-full)}
+.cadb.ok .p{background:var(--state-complete)}
+.cadb.ko .p{background:transparent;border:2px solid var(--state-absent)}
+.qual{display:inline-flex; align-items:center; gap:var(--sp3); border:1px solid var(--border-strong); border-radius:var(--r-sm);
+  padding:1px var(--sp4); font-family:var(--f-data); font-size:11px; color:var(--text-secondary)}
+.qual .car{font-size:8px; color:var(--text-disabled)}
+
+/* --- scene et transport -------------------------------------------------
+   Retours du 22 aout : tout sous l'image, UNE seule ligne, que des icones.
+   La barre de progression se reduit a un trait. L'entree encadre a gauche,
+   la sortie a droite -- les bornes tiennent litteralement le transport. */
+.mat{flex:1 1 auto; display:flex; align-items:center; justify-content:center; padding:20px; background:var(--image-mat)}
+.scene{position:relative; width:404px; aspect-ratio:16/9; background:linear-gradient(118deg,#2A2A2A 0%,#6E6E6E 46%,#3A3A3A 100%)}
+.scene .tc{position:absolute; left:8px; bottom:6px; font-family:var(--f-data); font-size:10px; color:#D8D8D8}
+.bandeau{display:flex; align-items:center; gap:var(--sp5); padding:var(--sp4) var(--sp6); background:var(--surface-panel);
+  border-top:1px solid var(--state-substitute); color:var(--text-primary); font-size:12.5px}
+.bandeau .ic2{color:var(--state-substitute); font-size:13px}
+.bandeau p{margin:0; flex:1 1 auto}
+.bandeau .x{border:1px solid var(--border-strong); border-radius:var(--r-sm); padding:1px var(--sp4); font-size:11px; color:var(--text-secondary); white-space:nowrap}
+
+/* un trait, pas une barre */
+.piste{position:relative; height:3px; margin:0 var(--sp6); background:var(--surface-sunken); border-radius:2px}
+.dedans{position:absolute; top:0; bottom:0; background:var(--accent); opacity:.55}
+.tete{position:absolute; top:-4px; bottom:-4px; width:2px; background:var(--text-primary)}
+.mk2{position:absolute; top:-7px; width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent; border-top:6px solid var(--state-substitute)}
+.regle{display:flex; justify-content:space-between; padding:5px var(--sp6) 0; font-family:var(--f-data); font-size:10px; color:var(--text-disabled)}
+
+.transport{display:flex; align-items:center; gap:var(--sp3); padding:var(--sp4) var(--sp6) var(--sp5); background:var(--surface-panel); border-top:1px solid var(--border)}
+.tb{display:inline-flex; align-items:center; justify-content:center; gap:2px; min-width:28px; height:26px; padding:0 var(--sp3);
+  border:1px solid var(--border); border-radius:var(--r-sm); background:var(--surface-raised); color:var(--text-secondary)}
+.tb.play{background:var(--accent); border-color:var(--accent); color:var(--accent-on)}
+.tb.on{color:var(--text-primary); border-color:var(--border-strong)}
+.tb.vit{color:var(--state-substitute); border-color:var(--state-substitute)}
+.tb .x{font-family:var(--f-data); font-size:9.5px}
+.tb.borne{color:var(--accent-soft); border-color:var(--accent)}
+.pousse{margin-left:auto}
+.sepv{width:1px; height:18px; background:var(--border); margin:0 var(--sp3)}
+/* le volume : une icone, un curseur vertical au clic */
+.son{position:relative}
+.curseur{position:absolute; bottom:30px; left:50%; margin-left:-13px; width:26px; padding:var(--sp4) 0;
+  background:var(--surface-raised); border:1px solid var(--border-strong); border-radius:var(--r-md);
+  display:flex; flex-direction:column; align-items:center; gap:var(--sp3)}
+.curseur .rail2{width:3px; height:52px; background:var(--border-strong); border-radius:2px; position:relative}
+.curseur .rail2::after{content:""; position:absolute; left:0; right:0; bottom:0; height:62%; background:var(--text-secondary); border-radius:2px}
+.curseur .rail2::before{content:""; position:absolute; left:-3px; width:9px; height:9px; bottom:58%; background:var(--text-primary); border-radius:var(--r-full)}
+.curseur .mute{font-family:var(--f-data); font-size:9px; color:var(--text-disabled)}
+
+/* --- galerie ------------------------------------------------------------- */
+.gal{flex:1 1 auto; min-width:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(118px,1fr)); gap:var(--sp5); padding:var(--sp6); background:var(--image-mat); align-content:start}
+.gal.grand{grid-template-columns:repeat(auto-fill,minmax(228px,1fr))}
+.gc{position:relative; min-width:0; background:var(--surface-canvas); border:1px solid var(--border); border-radius:var(--r-md); padding:7px}
+.gc .im{position:relative; aspect-ratio:16/9; border-radius:2px; background:linear-gradient(118deg,#2E2E2E,#6A6A6A)}
+.gc .no{position:absolute;left:4px;top:3px;font-family:var(--f-data);font-size:9px;color:#D2D2D2;text-shadow:0 1px 2px #000}
+.gc .fo{display:flex;align-items:center;justify-content:space-between;gap:var(--sp3);margin-top:5px;min-width:0;overflow:hidden;white-space:nowrap;font-family:var(--f-data);font-size:10px;color:var(--text-disabled)}
+.gc.hors{opacity:.4}
+.gc .puce{position:absolute; right:5px; top:5px}
+
+.panel{width:290px; flex:0 0 290px; background:var(--surface-panel); border-left:1px solid var(--border); padding:var(--sp6); display:flex; flex-direction:column; gap:var(--sp5)}
+.panel h3{margin:0; font-size:14px; font-weight:600}
+.panel p{margin:0; color:var(--text-secondary); font-size:12px}
+.opt{display:flex; align-items:center; gap:var(--sp4); border:1px solid var(--border); border-radius:var(--r-md); padding:var(--sp4) var(--sp5); background:var(--surface-raised); font-size:12.5px}
+.opt.on{border-color:var(--accent); box-shadow:inset 0 0 0 1px var(--accent)}
+.opt .tt{flex:1 1 auto}
+.radio{width:13px;height:13px;flex:0 0 13px;border-radius:var(--r-full);border:1px solid var(--border-strong);position:relative}
+.opt.on .radio{border-color:var(--accent)}
+.opt.on .radio::after{content:"";position:absolute;left:3px;top:3px;width:5px;height:5px;border-radius:var(--r-full);background:var(--accent)}
+.recap{border-top:1px solid var(--border); padding-top:var(--sp5); font-family:var(--f-data); font-size:11px; color:var(--text-secondary); line-height:1.85}
+.btn{width:100%; white-space:nowrap; background:var(--accent); color:var(--accent-on); border:0; border-radius:var(--r-md); padding:var(--sp4) var(--sp5); font-family:var(--f-ui); font-size:13px; font-weight:600}
+.btn.ghost{background:transparent; color:var(--text-secondary); border:1px solid var(--border-strong)}
+.hint{font-size:11.5px; color:var(--text-disabled); line-height:1.5}
+
+.notes{padding:var(--sp6) var(--sp7); background:var(--surface-canvas)}
+.notes.hors{background:transparent; padding:var(--sp6) 0 0}
+.note{display:flex; gap:var(--sp5); padding:var(--sp4) 0; border-bottom:1px solid var(--border)}
+.note:last-child{border-bottom:0}
+.num{flex:0 0 20px;height:20px;border-radius:var(--r-full);background:var(--surface-raised);border:1px solid var(--border-strong);color:var(--text-secondary);font-family:var(--f-data);font-size:11px;display:flex;align-items:center;justify-content:center}
+.note b{color:var(--text-primary);font-weight:600} .note p{margin:0;color:var(--text-secondary)}
+.sheet{max-width:1180px;margin:0 auto;padding:var(--sp8) var(--sp6) 64px}
+h1{font-size:28px;font-weight:600;line-height:1.2;margin:0 0 var(--sp3)}
+.sub{color:var(--text-secondary);margin:0 0 var(--sp8);max-width:74ch}
+h2{font-size:15px;font-weight:600;line-height:1.3;margin:var(--sp8) 0 var(--sp5)}
+.caption{color:var(--text-secondary);margin:var(--sp5) 0 0;font-size:12px;max-width:80ch}
+code{font-family:var(--f-data);font-size:11px;color:var(--text-secondary)}
+b.k{color:var(--text-primary);font-weight:600}
+
+.ic{flex:0 0 auto}
+/* selecteur de cadence : passer d'une extraction a l'autre en relecture */
+.cadsel{display:inline-flex; align-items:center; gap:var(--sp3); border:1px solid var(--border-strong); border-radius:var(--r-sm);
+  padding:1px var(--sp4); font-family:var(--f-data); font-size:11px; color:var(--text-primary)}
+.cadsel .car{font-size:8px; color:var(--text-disabled)}
+/* =========================================================================
+   VAGUE 3 — ce que la coquille de la vague 2 ne portait pas encore.
+   Rien ici ne redefinit une regle de v2-css.css : on ajoute, on n'ecrase pas.
+   Invariant tenu partout : tous les neutres sont R=G=B, et aucune couleur
+   d'accent ne touche une image jugee -- le passe-partout neutre l'en separe.
+   ========================================================================= */
+
+/* --- filtre de vue (EPIC7-ARB-16) ---------------------------------------
+   L'ecart d'une frame est CALCULE par la cadence, jamais choisi. Ce filtre
+   n'a donc qu'un effet d'affichage : il montre ou masque, il ne selectionne
+   pas. Il ressemble a un segmente et non a une case a cocher, exactement
+   pour cette raison. */
+.filtre{display:flex; flex:0 0 auto; border:1px solid var(--border); border-radius:var(--r-md); overflow:hidden}
+.filtre span{font-family:var(--f-data); font-size:10.5px; padding:2px var(--sp4); color:var(--text-disabled); white-space:nowrap}
+.filtre span.on{background:var(--surface-raised); color:var(--text-secondary)}
+
+/* une frame ecartee est constatee, pas actionnable : pas de puce, une barre
+   diagonale et l'opacite. Rien a cliquer dessus. */
+.gc.calc{opacity:.34}
+.gc.calc .im::after{
+  content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(45deg,transparent 0 5px,rgba(0,0,0,.45) 5px 6px);
+}
+.gc .ec{position:absolute; right:5px; top:5px; font-family:var(--f-data); font-size:9px;
+  color:var(--text-disabled); background:var(--surface-sunken); border-radius:var(--r-sm); padding:0 3px}
+
+/* --- vue vignette unique (EPIC7-ARB-18) ---------------------------------
+   Une frame seule, plein panneau, avec zoom dedans. Troisieme vue apres la
+   galerie et le lecteur, pas un agrandissement de la grille. */
+.solo{flex:1 1 auto; display:flex; flex-direction:column; background:var(--image-mat); min-height:0}
+.solo .cadre{flex:1 1 auto; display:flex; align-items:center; justify-content:center; padding:18px; overflow:hidden}
+.solo .im1{position:relative; width:520px; aspect-ratio:16/9;
+  background:linear-gradient(118deg,#2A2A2A 0%,#787878 44%,#3C3C3C 100%)}
+.solo .im1.zoom{width:760px}
+.solo .im1 .tc{position:absolute; left:8px; bottom:6px; font-family:var(--f-data); font-size:10px; color:#DCDCDC}
+.solo .im1 .lo{position:absolute; right:8px; top:8px; font-family:var(--f-data); font-size:10px; color:#DCDCDC}
+/* la bande de frames voisines : on change de frame sans repasser par la grille */
+.bande{flex:0 0 auto; display:flex; gap:var(--sp4); padding:var(--sp4) var(--sp5);
+  background:var(--surface-panel); border-top:1px solid var(--border); overflow:hidden}
+.bande .v{position:relative; flex:0 0 74px; aspect-ratio:16/9; border-radius:2px;
+  background:linear-gradient(118deg,#2E2E2E,#6A6A6A); border:1px solid transparent}
+.bande .v.on{border-color:var(--accent)}
+.bande .v.calc{opacity:.34}
+.bande .v span{position:absolute; left:3px; bottom:2px; font-family:var(--f-data); font-size:8.5px; color:#D2D2D2}
+
+/* --- comparaison de candidats -------------------------------------------
+   Deux scans du meme lot donnent deux candidats pour une meme frame. On les
+   met cote a cote, l'un est designe. Trancher ne supprime rien. */
+.duo{flex:1 1 auto; display:flex; gap:var(--sp5); padding:var(--sp6); background:var(--image-mat); min-height:0}
+.cand{flex:1 1 0; min-width:0; display:flex; flex-direction:column; gap:var(--sp4)}
+.cand .im2{position:relative; aspect-ratio:16/9; background:linear-gradient(118deg,#2C2C2C,#6E6E6E)}
+.cand.autre .im2{background:linear-gradient(118deg,#333333,#7A7A7A)}
+.cand .lg{display:flex; align-items:center; justify-content:space-between; gap:var(--sp4);
+  font-family:var(--f-data); font-size:10.5px; color:var(--text-disabled)}
+/* la designation est un liseré HORS de l'image : l'accent ne touche jamais
+   une image jugee. */
+.cand.pris{padding:5px; border:1px solid var(--accent); border-radius:var(--r-md)}
+.cand .rt{font-family:var(--f-ui); font-size:11px; color:var(--accent); font-weight:600}
+
+/* --- balayage (wipe) -----------------------------------------------------
+   Poignee NEUTRE : c'est une image jugee de part et d'autre, aucune couleur
+   n'a le droit de s'y poser. Marche/arret en un clic. */
+.wipe{position:relative; width:520px; aspect-ratio:16/9; overflow:hidden;
+  background:linear-gradient(118deg,#2A2A2A 0%,#7C7C7C 46%,#3A3A3A 100%)}
+.wipe .apres{position:absolute; inset:0;
+  background:repeating-linear-gradient(102deg,#4A4A4A 0 3px,#8C8C8C 3px 7px,#5E5E5E 7px 11px)}
+.wipe .poignee{position:absolute; top:0; bottom:0; width:1px; background:#C8C8C8}
+.wipe .poignee::after{content:""; position:absolute; top:50%; left:-6px; margin-top:-13px;
+  width:13px; height:26px; border-radius:2px; background:#C8C8C8}
+.wipe .cote{position:absolute; bottom:6px; font-family:var(--f-data); font-size:9.5px; color:#E4E4E4}
+.wipe .g{left:8px} .wipe .d{right:8px}
+.wipe .tc{position:absolute; left:8px; top:6px; font-family:var(--f-data); font-size:10px; color:#E4E4E4}
+
+/* --- reglages et file d'export ------------------------------------------ */
+.champ{display:flex; flex-direction:column; gap:3px}
+.champ label{font-size:11px; color:var(--text-disabled)}
+.champ .val{border:1px solid var(--border); border-radius:var(--r-sm); background:var(--surface-raised);
+  padding:var(--sp3) var(--sp4); font-family:var(--f-data); font-size:11px; color:var(--text-primary);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.presets{display:flex; align-items:center; gap:var(--sp4); font-size:11.5px; color:var(--text-secondary)}
+.presets .p2{border:1px solid var(--border-strong); border-radius:var(--r-full); padding:1px var(--sp4);
+  font-family:var(--f-data); font-size:10.5px; color:var(--text-secondary)}
+.presets .p2.on{border-color:var(--accent); color:var(--accent)}
+
+/* previz bloquee pendant l'encodage : l'ecran le DIT, il ne se contente pas
+   d'etre inerte. */
+.bloque{position:absolute; inset:0; background:rgba(10,10,10,.72);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--sp5)}
+.bloque .txt{font-size:12.5px; color:var(--text-primary)}
+.jauge{width:230px; height:3px; background:var(--surface-sunken); border-radius:2px; overflow:hidden}
+.jauge i{display:block; height:100%; width:38%; background:var(--accent)}
+.carte{border:1px solid var(--state-complete); border-radius:var(--r-md); padding:var(--sp5); display:flex; flex-direction:column; gap:var(--sp4)}
+.carte .t{font-size:12.5px; color:var(--text-primary); font-weight:600}
+.carte .deux{display:flex; gap:var(--sp4)}
+.carte .deux .btn{font-size:12px}
+
+/* une ligne de mise en garde : le motif, jamais un signe seul */
+.avis{display:flex; gap:var(--sp4); align-items:flex-start; border-top:1px solid var(--border);
+  padding-top:var(--sp5); font-size:11.5px; color:var(--text-secondary); line-height:1.5}
+.avis .pt{flex:0 0 9px; width:9px; height:9px; margin-top:4px; border-radius:var(--r-full);
+  background:transparent; border:2px solid var(--state-absent)}
+
+/* --- la barre d'atelier ne deborde plus sur le panneau -------------------
+   Defaut vu a l'ecran sur les trois maquettes de la vague 3 : le compteur de
+   droite passait SOUS le panneau et se superposait a son titre. C'est le meme
+   defaut qu'Egan a signale le 22 aout sur la galerie -- « superpose et
+   illisible » -- reapparu ailleurs parce qu'il avait ete corrige sur la
+   galerie seule. Il se corrige donc ici, dans la coquille, une fois. */
+.wh{min-width:0}
+/* PAS d'overflow:hidden sur .wh : le selecteur de cadence deploie son menu
+   sous la barre, et le clipper le decapitait -- c'est-a-dire supprimait
+   exactement ce que l'etat A sert a montrer. On rend le compteur reductible
+   plutot que de couper la barre. */
+.wh .px{min-width:0; overflow:hidden; text-overflow:ellipsis}
+.wh .seg, .wh .vue, .wh .filtre, .wh .cad{flex:0 0 auto}
+
+/* la vue vignette unique doit SE VOIR zoomee : au-dela de 100 %, l'image
+   deborde son cadre et s'y recadre, au lieu de rester entiere et plus
+   petite que le panneau. */
+.solo .im1.zoom{width:1180px}
+
+/* le lisere de designation epouse la vignette : etire sur toute la hauteur de
+   la colonne, il devenait un grand cadre bleu vide, et l'accent se retrouvait
+   a coter l'image sur trois cotes. */
+.duo{align-items:flex-start}
+/* deux candidats doivent SE DISTINGUER : deux rendus identiques ne montrent
+   pas ce que la vue sert a montrer. Meme regle que pour les fabriques de test
+   du depot -- un jeu de deux elements identiques ne prouve rien. */
+.cand.autre .im2{background:linear-gradient(118deg,#6E6E6E 0%,#343434 52%,#8A8A8A 100%)}
+/* un bouton dont le libelle est coupe ne dit plus ce qu'il fait */
+.btn{white-space:normal; line-height:1.35}
+
+/* --- carte d'export (EPIC7-ARB-19) --------------------------------------
+   Les reglages d'un outil de post-production ne tiennent pas dans un panneau
+   lateral d'atelier : resolution, cadence, codec et variante, debit, audio,
+   nom, destination. Ils s'ouvrent en carte sur le cote, refermable sans
+   perdre la saisie. Vocabulaire et groupement alignes sur DaVinci Resolve. */
+.carte-export{
+  width:340px; flex:0 0 340px; background:var(--surface-panel);
+  border-left:1px solid var(--border); display:flex; flex-direction:column; min-height:0;
+}
+.ce-head{
+  height:var(--header-height); flex:0 0 auto; display:flex; align-items:center; gap:var(--sp4);
+  padding:0 var(--sp5); border-bottom:1px solid var(--border);
+}
+.ce-head h3{margin:0; font-size:13px; font-weight:600; flex:1 1 auto}
+.ce-head .x{border:1px solid var(--border-strong); border-radius:var(--r-sm); padding:1px var(--sp4);
+  font-family:var(--f-data); font-size:11px; color:var(--text-secondary)}
+.ce-corps{flex:1 1 auto; overflow-y:auto; padding:var(--sp5); display:flex; flex-direction:column; gap:var(--sp5)}
+.ce-pied{flex:0 0 auto; padding:var(--sp5); border-top:1px solid var(--border); display:flex; flex-direction:column; gap:var(--sp4)}
+
+.grp{display:flex; flex-direction:column; gap:var(--sp3)}
+.grp > .tl{font-size:10.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-disabled); padding-bottom:2px; border-bottom:1px solid var(--border)}
+/* une ligne de reglage : libelle a gauche, valeur a droite, tabulaire */
+.lg2{display:flex; align-items:center; gap:var(--sp4); min-height:22px}
+.lg2 .k{flex:1 1 auto; font-size:11.5px; color:var(--text-secondary); min-width:0;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.lg2 .v{flex:0 0 auto; max-width:62%; display:inline-flex; align-items:center; gap:var(--sp3);
+  border:1px solid var(--border); border-radius:var(--r-sm); background:var(--surface-raised);
+  padding:1px var(--sp4); font-family:var(--f-data); font-size:11px; color:var(--text-primary);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.lg2 .v .car{font-size:8px; color:var(--text-disabled)}
+.lg2 .v.libre{background:var(--surface-sunken)}
+.lg2.off{opacity:.42}
+
+/* --- champ de saisie de cadence (EPIC7-ARB-20) --------------------------
+   La cadence est une valeur SAISIE. 12,5 / 25 / 50 ne sont que des raccourcis
+   du projet -- ce qui est offert n'est pas ce qui est possible. */
+.raccourcis{display:flex; flex-wrap:wrap; gap:var(--sp3)}
+.raccourcis .r{border:1px solid var(--border-strong); border-radius:var(--r-full);
+  padding:1px var(--sp5); font-family:var(--f-data); font-size:11px; color:var(--text-secondary)}
+.raccourcis .r.on{border-color:var(--accent); color:var(--accent)}
+.saisie{display:flex; align-items:center; gap:var(--sp4)}
+.saisie .champ2{flex:1 1 auto; min-width:0; display:flex; align-items:center; gap:var(--sp3);
+  border:1px solid var(--border-strong); border-radius:var(--r-sm); background:var(--surface-sunken);
+  padding:var(--sp3) var(--sp4); font-family:var(--f-data); font-size:12px; color:var(--text-primary)}
+.saisie .champ2 .curs{width:1px; height:13px; background:var(--text-primary)}
+.saisie .champ2 .u{margin-left:auto; color:var(--text-disabled); font-size:10.5px}
+.saisie .plus{flex:0 0 auto; border:1px solid var(--border-strong); border-radius:var(--r-sm);
+  padding:var(--sp3) var(--sp5); font-size:11.5px; color:var(--text-secondary); white-space:nowrap}
+
+/* la ligne du selecteur qui MENE a la creation, au lieu de la sous-entendre */
+.cadsel .li.creer{border-top:1px solid var(--border); margin-top:var(--sp3); padding-top:var(--sp3);
+  font-family:var(--f-ui); font-size:11px; color:var(--accent)}
+
+/* --- le panneau lateral se retracte (EPIC7-ARB-25) -----------------------
+   « Le menu a droite est inutile, ou alors il faut pouvoir le retirer. » Une
+   vue qui n'a rien a mettre dans le panneau s'ouvre deja retractee. */
+.panel{position:relative}
+.replier{position:absolute; left:-1px; top:var(--sp5); width:14px; height:26px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--surface-raised); border:1px solid var(--border); border-right:0;
+  border-radius:var(--r-sm) 0 0 var(--r-sm); color:var(--text-disabled); font-size:12px}
+/* la poignee reste quand le panneau est parti : sinon rien ne dit qu'il revient */
+.rappel{width:15px; flex:0 0 15px; background:var(--surface-panel); border-left:1px solid var(--border);
+  display:flex; align-items:flex-start; justify-content:center; padding-top:var(--sp5);
+  color:var(--text-disabled); font-size:12px}
+
+/* un controle grise : present, inerte, et il le montre (EPIC7-ARB-24) */
+.vue .b.gris{opacity:.38}
+.vue .b.on{border-color:var(--accent); color:var(--accent)}
+
+
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>Voir une frame de pres, et trancher</h1>
+  <p class="sub">Deux facons de regarder de pres : <b class="k">une frame seule avec zoom</b>, et <b class="k">deux candidats cote a cote</b> dont on coche celui qui l'emporte. Une troisieme attend ton arbitrage.</p>
+
+  <h2>Etat A &mdash; la vue vignette unique, avec zoom dedans</h2>
+  <div class="app">
+    <div class="app-header"><span class="app-title">Scan &middot; TEST_FILE_12p5 &middot; lot reconstruit</span></div>
+    <div class="app-body">
+      <div class="nav"><div class="rail"><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M2 4.5h4l1.2 1.5H14v7.5H2z"/></svg><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/><path d="M6.4 8.2v3.2l2.8-1.6z"/></svg><span class="on"><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/><path d="M5.8 8.6h4.4M5.8 10.6h3"/></svg></span><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/><path d="M6.4 8.2v3.2l2.8-1.6z"/></svg></div></div>
+      <div class="bin">
+        <div class="bin-head"><span class="bin-scope">Chutier</span><span class="meta">2 passes</span></div>
+        <div class="portee">Contenu de <b>scan_2026-08-19.pdf</b></div>
+        <div class="tree"><div class="node"><div class="row"><span class="exp">&minus;</span><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/><path d="M3 9.6h10" stroke-dasharray="1.6 1.2"/></svg><span class="nm">scan_2026-08-19.pdf</span><span class="meta">2 passes</span></div><div class="kids"><div class="node"><div class="row sel"><span class="exp none"></span><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M2.5 4.5h4.5l1.2 1.4H11v7.6H2.5z" stroke-dasharray="2 1.4"/><path d="M5.5 4.5V3h4l3 3v7.5" stroke-dasharray="2 1.4"/></svg><span class="nm">passe du 19/08</span><span class="meta">167 f.</span></div></div><div class="node"><div class="row"><span class="exp none"></span><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M2.5 4.5h4.5l1.2 1.4H11v7.6H2.5z" stroke-dasharray="2 1.4"/><path d="M5.5 4.5V3h4l3 3v7.5" stroke-dasharray="2 1.4"/></svg><span class="nm">passe du 21/08</span><span class="meta">167 f.</span></div></div></div></div></div>
+      </div>
+      <div class="work">
+        <div class="wh"><div class="seg"><span class="">Page</span><span class="">Galerie</span><span class="on">Frame</span><span class="">Lecteur</span></div><div class="vue"><span class="b"><svg class="ic " viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.2"/><path d="M10.2 10.2 13.6 13.6"/></svg></span><span class="b">&minus;</span><span class="b">+</span><span class="b">Ajuster</span></div><span class="px">frame 156 / 167</span></div>
+        <div class="solo">
+          <div class="cadre">
+            <div class="im1 zoom">
+              <span class="tc">00:00:12:14 &middot; frame 156</span>
+              <span class="lo">240 %</span>
+            </div>
+          </div>
+<div class="bande"><span class="v"><span>152</span></span><span class="v"><span>153</span></span><span class="v calc"><span>154</span></span><span class="v"><span>155</span></span><span class="v on"><span>156</span></span><span class="v"><span>157</span></span><span class="v"><span>158</span></span><span class="v calc"><span>159</span></span><span class="v"><span>160</span></span></div>
+        </div>
+
+      </div>
+      <div class="rappel">&lsaquo;</div>
+    </div>
+  </div>
+  <p class="caption">Le panneau est parti, comme tu l'as demande : on regarde une image, elle prend toute la largeur. La poignee de gauche le rappelle quand on en a besoin.</p>
+
+  <h2>Etat B &mdash; comparer deux candidats pour la meme frame</h2>
+  <div class="app">
+    <div class="app-header"><span class="app-title">Scan &middot; TEST_FILE_12p5 &middot; lot reconstruit</span></div>
+    <div class="app-body">
+      <div class="nav"><div class="rail"><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M2 4.5h4l1.2 1.5H14v7.5H2z"/></svg><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/><path d="M6.4 8.2v3.2l2.8-1.6z"/></svg><span class="on"><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/><path d="M5.8 8.6h4.4M5.8 10.6h3"/></svg></span><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/><path d="M6.4 8.2v3.2l2.8-1.6z"/></svg></div></div>
+      <div class="bin">
+        <div class="bin-head"><span class="bin-scope">Chutier</span><span class="meta">2 passes</span></div>
+        <div class="portee">Contenu de <b>scan_2026-08-19.pdf</b></div>
+        <div class="tree"><div class="node"><div class="row"><span class="exp">&minus;</span><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 2h5l3 3v9H4z"/><path d="M9 2v3h3"/><path d="M3 9.6h10" stroke-dasharray="1.6 1.2"/></svg><span class="nm">scan_2026-08-19.pdf</span><span class="meta">2 passes</span></div><div class="kids"><div class="node"><div class="row sel"><span class="exp none"></span><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M2.5 4.5h4.5l1.2 1.4H11v7.6H2.5z" stroke-dasharray="2 1.4"/><path d="M5.5 4.5V3h4l3 3v7.5" stroke-dasharray="2 1.4"/></svg><span class="nm">passe du 19/08</span><span class="meta">167 f.</span></div></div><div class="node"><div class="row"><span class="exp none"></span><svg class="pi " viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M2.5 4.5h4.5l1.2 1.4H11v7.6H2.5z" stroke-dasharray="2 1.4"/><path d="M5.5 4.5V3h4l3 3v7.5" stroke-dasharray="2 1.4"/></svg><span class="nm">passe du 21/08</span><span class="meta">167 f.</span></div></div></div></div></div>
+      </div>
+      <div class="work">
+        <div class="wh"><div class="seg"><span class="">Page</span><span class="">Galerie</span><span class="on">Frame</span><span class="">Lecteur</span></div><div class="vue"><span class="b"><svg class="ic " viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.2"/><path d="M10.2 10.2 13.6 13.6"/></svg></span><span class="b">&minus;</span><span class="b">+</span><span class="b">Ajuster</span></div><span class="px">2 candidats</span></div>
+        <div class="duo">
+          <div class="cand pris">
+            <div class="im2"></div>
+            <div class="lg"><span>scan du 19/08 &middot; p. 14</span><span class="rt">retenu</span></div>
+          </div>
+          <div class="cand autre">
+            <div class="im2"></div>
+            <div class="lg"><span>scan du 21/08 &middot; p. 14</span><span>designer</span></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="panel"><span class="replier" title="Retirer le panneau">&rsaquo;</span>        <h3>Candidats</h3>
+        <div class="opt on"><span class="radio"></span><span class="tt">scan du 19/08</span><span class="meta">p. 14</span></div>
+        <div class="opt"><span class="radio"></span><span class="tt">scan du 21/08</span><span class="meta">p. 14</span></div>
+        <div class="grp"><span class="tl">Sur tout le lot</span>
+          <div class="opt"><span class="radio"></span><span class="tt">scan du 19/08 prioritaire</span><span class="meta">9 f.</span></div>
+          <div class="opt"><span class="radio"></span><span class="tt">scan du 21/08 prioritaire</span><span class="meta">9 f.</span></div>
+        </div>
+        <div class="recap">lot complet &middot; 167 / 167</div>
+      </div>
+    </div>
+  </div>
+  <p class="caption">La designation est un lisere autour de la vignette, pose HORS de l'image : l'accent ne touche jamais une image que l'on juge. Le mot <i>retenu</i> le redit, pour que la couleur ne porte pas seule.</p>
+
+
+  <div class="notes hors">
+    <div class="note"><span class="num">1</span><p><b>Un onglet de plus, parce qu'il a un
+    objet.</b> Ici les onglets sont <i>page, galerie, frame, lecteur</i> : la vue vignette unique
+    est une vue a part entiere. Sur les ecrans ou elle n'a pas d'objet, elle n'apparait pas
+    &mdash; on ne grise pas, on n'ecrit pas.</p></div>
+    <div class="note"><span class="num">2</span><p><b>Trancher ne supprime rien.</b> Le candidat
+    non retenu reste disponible, et le choix se defait. La garde centrale reste la completude :
+    l'interface ne laisse pas construire un choix qui ferait disparaitre une frame.</p></div>
+    <div class="note"><span class="num">3</span><p><b>Un lot ne change pas d'identite en etant
+    compose.</b> Une composition est une variante datee du meme lot : le chutier garde son
+    arborescence, aucune branche parallele n'apparait a chaque essai.</p></div>
+    <div class="note"><span class="num">5</span><p><b>Un troisieme etat manque, et c'est
+    volontaire.</b> La bascule entre deux passes entieres au meme timecode est ecrite dans la
+    spine, mais tu dis qu'elle n'a pas d'objet sur un lot reconstruit. Tant que son terrain
+    n'est pas tranche, je ne la dessine pas : dessiner un ecran, c'est deja choisir.</p></div>
+    <div class="note"><span class="num">4</span><p><b>Les frames grisees de la bande sont des
+    ecartees de cadence</b>, pas des frames decochees. Elles se voient, elles ne se cliquent
+    pas.</p></div>
+  </div>
+
+</div>
+</body>
+</html>

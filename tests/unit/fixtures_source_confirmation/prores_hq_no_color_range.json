@@ -1,0 +1,51 @@
+{
+  "_comment": "ffprobe 6.1.1 sur un master ProRes 422 HQ (encodeur prores_ks) 1920x1080 10 bits, encode avec les trois flags couleur ensemble (seule facon d'obtenir un atome colr utilisable en MOV/ProRes, mesure story 6.3). color_range est absent: ProRes n'emet AUCUNE signalisation de plage, ecart connu et non corrige (deferred-work.md). Cas nominal du master mezzanine du projet.",
+  "streams": [
+    {
+      "index": 0,
+      "codec_name": "prores",
+      "codec_long_name": "Apple ProRes (iCodec Pro)",
+      "profile": "HQ",
+      "codec_type": "video",
+      "width": 1920,
+      "height": 1080,
+      "sample_aspect_ratio": "1:1",
+      "display_aspect_ratio": "16:9",
+      "pix_fmt": "yuv422p10le",
+      "color_space": "bt709",
+      "color_transfer": "bt709",
+      "color_primaries": "bt709",
+      "bits_per_raw_sample": "10",
+      "r_frame_rate": "24/1",
+      "avg_frame_rate": "24/1",
+      "time_base": "1/12288",
+      "duration": "10.000000",
+      "nb_frames": "240",
+      "tags": {
+        "language": "und",
+        "handler_name": "VideoHandler",
+        "timecode": "01:00:00:00"
+      }
+    },
+    {
+      "index": 1,
+      "codec_name": "none",
+      "codec_type": "data",
+      "codec_tag_string": "tmcd",
+      "r_frame_rate": "0/0",
+      "tags": {
+        "timecode": "01:00:00:00"
+      }
+    }
+  ],
+  "format": {
+    "filename": "rush_prores_hq.mov",
+    "nb_streams": 2,
+    "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+    "duration": "10.000000",
+    "tags": {
+      "major_brand": "qt  ",
+      "encoder": "Lavf60.16.100"
+    }
+  }
+}

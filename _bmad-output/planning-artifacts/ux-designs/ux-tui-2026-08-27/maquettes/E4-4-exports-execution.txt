@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Exports                               plan-04_25 · 124 f │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Encodage en cours                                                          │
+│                                                                              │
+│      ● Pré-vérification    124 frames sur 124            conforme            │
+│      ◐ Encodage            plan-04_25_mmu_prores_hq.mov  en cours            │
+│      · Vérification        ffprobe sur le fichier écrit  en attente          │
+│      · Bascule             vers projet_demo/outputs/     en attente          │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ Étape 2 sur 4 · encodage des 124 échantillons · env. 1,4 Go attendus         │
+│ Échap interrompre  F1 aide                                                   │
+└──────────────────────────────────────────────────────────────────────────────┘

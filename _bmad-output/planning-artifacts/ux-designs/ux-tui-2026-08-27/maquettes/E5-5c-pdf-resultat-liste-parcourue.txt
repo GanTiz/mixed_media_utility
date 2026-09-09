@@ -1,0 +1,41 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf                                  7 lots · 512 frames │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ── Écrit — 7 PDF, 512 frames ───────────────────────────────────────────   │
+│                                                                              │
+│      fichier                                                  pages   tirage │
+│      …                                                                       │
+│      ● projet_demo_plan-03_8_6f-pay_v5.pdf                        9        5 │
+│    ▸ ● projet_demo_sequence-12-atelier-fonde…12p5_6f-pay.pdf     13        1 │
+│      ● projet_demo_plan-05_25_6f-pay_v3.pdf                      11        3 │
+│      …                                                  3-5 sur 7 PDF écrits │
+│                                                                              │
+│      Gabarit                     tpl-a4-paysage-6f-v2                        │
+│      Emplacement                 projet_demo/patches/                        │
+│                                                                              │
+│      Ouvrir le dossier                                                       │
+│      Générer une planche de calibration          (à imprimer avec)           │
+│      Mettre d'autres lots en planches                                        │
+│      Retour aux ateliers                                                     │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ●  7 PDF écrits · 512 frames placées · aucun refus                           │
+│ ↑↓ naviguer  Tab champ  Échap ateliers  F1 aide                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE (2026-09-02, n°2) : « il faut basculer d'une zone à l'autre si possible. TAB ? »
+
+  -> ÉCRAN NEUF -- l'autre côté de la bascule. Même passe, même écran, `Tab` appuyé une
+     fois : le curseur est passé dans la liste, la fenêtre s'est recadrée sur lui (`3-5
+     sur 7`), et les issues sont toujours là, dessinées et inertes. C'est ce que
+     `EPIC11-ARB-50` exige et que le dessin doit montrer : UNE zone a le curseur, l'autre
+     reste lisible sans en avoir un second.
+     La fenêtre est posée au MILIEU de la liste, donc les deux `…` sont visibles à la
+     fois -- celui du haut nu, celui du bas porteur du compte, la forme de `X4`. Une
+     fenêtre calée en tête ou en queue n'en montrerait qu'un, et le dessin dirait moins que
+     le mécanisme. C'est aussi ce que CLAUDE.md exige de toute fabrique de collection : la
+     cible ni en première ni en dernière position.
+     LE PIED EST CONTEXTUEL, ET IL PERD `⏎`. Dans la liste, `Entrée` n'a rien à valider --
+     un fichier écrit n'est pas une issue --, et `DESIGN.md` §4 dit que la ligne « ne
+     montre que ce qui marche sur l'écran courant ». Annoncer une touche inerte est
+     exactement le défaut que la story 11.5 a payé quarante fois.

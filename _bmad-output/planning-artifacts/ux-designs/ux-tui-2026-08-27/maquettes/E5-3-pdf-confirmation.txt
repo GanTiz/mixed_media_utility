@@ -1,0 +1,133 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf                                  2 lots · 164 frames │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ À écrire ────────────────────────────────────────────────────────────┐   │
+│   │ Planches                 2 PDF · 28 pages                            │   │
+│   │ Mise en page             6 f/page · paysage · A4 · 600 dpi · marge 0 │   │
+│   │ Taille                   ~ 470 Mo                     (majorant)     │   │
+│   │ Destination              projet_demo/patches/                        │   │
+│   │                                                                      │   │
+│   │   projet_demo_plan-04_25_6f-pay_v4.pdf                               │   │
+│   │   projet_demo_plan-04_8_6f-pay.pdf                                   │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      Générer                                                                 │
+│    ▸ Modifier les réglages                                                   │
+│      Annuler                                                                 │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 2 PDF · 28 pages · ~ 470 Mo — rien n'a encore été écrit                      │
+│ ⏎ valider  ↑↓ choisir  Échap retour  F1 aide                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : OK
+
+  -> approbation, rien change.
+
+NOTE (2026-09-01, n°6) : Le lot A a déjà 3 tirages. Le lot B est à son premier. Je les
+sélectionne en même temps. Le lot A devrait passer au tirage 4, le lot B au tirage 1.
+Qu'est-ce qu'il se passe dans l'outil ? Comment on l'affiche ?
+
+  -> Dans l'outil : c'est déjà juste, et mesuré.
+     `pdf_composition.resolve_sheets_version_rank` (:2108) prend un `lot_id` et lit la
+     ligne d'eau de CE lot. Le rang est résolu PAR LOT, jamais par passe : lot A -> 4,
+     lot B -> 1, et le rang 1 est l'ORIGINE, qui n'écrit aucun suffixe (EPIC11-ARB-88).
+     À l'écran : c'est là qu'était le trou, et tu le signalais pour la troisième fois.
+     La ligne « Tirage 1 · aucun tirage antérieur », au SINGULIER, ne peut pas dire
+     deux rangs -- elle promettait une passe à rang unique, ce que le cœur ne fait pas.
+     Elle est retirée. Le rang descend sur la ligne du LOT, collé au nom de fichier qui
+     le porte déjà sous forme `_vN`. Deux raisons : le rang n'est pas une propriété de
+     la passe, donc il ne peut pas vivre dans le bloc qui décrit la passe ; et le nom
+     est le seul endroit où le rang se relit après coup, sur le disque. Les mettre côte
+     à côte rend visible ce qui surprend -- au rang 1, il n'y a rien à lire.
+
+NOTE (2026-09-01, n°7) : Oui à condition de ne pas perdre les réglages sur un retour
+arrière.
+
+  -> Mesuré, et aujourd'hui la condition tient -- mais elle tient par une propriété,
+     pas par une garde, donc elle est à mesurer au développement.
+     Ce que fait le code : l'issue « Modifier les réglages » appelle
+     `app.action_remonter()` (atelier_extraction_ecriture.py:640-645), qui fait un
+     `pop_screen()` (coque.py:843-858). Textual dépile l'écran du DESSUS ; l'écran de
+     réglages reste dans `screen_stack`, avec son instance et donc son état. Rien n'est
+     reconstruit.
+     Ce qui la ferait tomber, et qui est le vrai risque : `_oublier_les_passages()`
+     (coque.py:757) dépile les écrans TRANSITOIRE -- et un formulaire de réglages EST
+     transitoire (atelier_extraction.py:1258). Il n'est appelé que par
+     `descendre(None)` (:825) et `revenir_aux_ateliers()` (:879), aucun des deux n'étant
+     sur ce chemin. Autrement dit : l'atelier Pdf doit empiler sa confirmation par
+     `app.descendre(ecran)` avec l'écran fourni, et ne pas reconstruire le formulaire au
+     retour. C'est ce que fait l'Extraction (:672).
+     Ce que je n'ai PAS mesuré : aucun banc du dépôt ne mesure aujourd'hui qu'un retour
+     arrière conserve les réglages -- j'ai lu le mécanisme, je n'ai pas trouvé de test
+     qui le tienne. À écrire avec le lot F.
+
+NOTE (2026-09-01, relecture v5, n°5) : comment sait-on déjà que cela va être le lot 4 si
+on n'a pas tranché pour l'écrasement ou le versionnage ? Ce choix arrive avant non ?
+Écran supplémentaire ou meilleure idée ?
+
+  -> Tu as raison, et le code le dit mot pour mot. `cli.py:3521` porte le commentaire
+     « Le rang de version se résout AVANT la composition » (EPIC11-ARB-91) : le rang
+     entre dans le nom du fichier, dans l'étiquette imprimée et dans le payload QR, donc
+     il doit être connu quand le plan se construit. Cet écran annonçait « tirage 4 »
+     alors que `E5-3b` -- le seul endroit où le choix se fait -- était dessiné APRÈS lui.
+     C'était la conséquence d'un choix pas encore fait.
+     Réponse : AUCUN écran de plus. On en inverse deux.
+       E5-2 réglages -> E5-3b conflit (SI un tirage existe) -> E5-3 -> E5-4
+     Détecter le conflit ne demande pas la composition, seulement de savoir si un
+     tirage existe. Les deux mesures nécessaires se font sans composer, et je les ai
+     vérifiées : `naming.build_sheets_pdf_filename` ne prend que des identifiants
+     (aucun paramètre de mise en page, aucun plan), et
+     `pdf_composition.page_count_du_lot(manifest, lot_id, frames_per_page=...)`
+     (`pdf_composition.py:647`) rend le nombre de pages « SANS composer » -- la fiche
+     11.7 l'inventorie déjà à sa ligne 204, sous ce libellé exact.
+     Ce que l'inversion change ICI : le rang est un fait. La colonne de droite dit d'où
+     il vient -- « choisi à l'écran précédent » pour le lot qui avait des tirages,
+     « aucun tirage antérieur » pour l'autre, qui part au tirage 1 sans écran de conflit.
+     Ce que je n'ai PAS pu faire tenir sans resserrer : les noms portent maintenant leur
+     mise en page (note 7) et passent de 37 à 49 colonnes. Le nom descend donc d'une
+     ligne sous son lot, et `Frames par page` + `Marge de travail` fusionnent en une
+     ligne `Mise en page` -- le même resserrement qu'`E5-2` a déjà fait sur
+     `Format · DPI`. Rien n'est perdu ; l'écran est plein à la ligne près.
+     Un écart mesuré, à trancher au développement : l'écran de conflit est PAR LOT
+     (`resolve_sheets_version_rank` prend un `lot_id`). Une passe où trois lots ont déjà
+     des tirages montrera donc `E5-3b` trois fois. Le bandeau droit de `E5-3b` dit cette
+     portée (`1 lot sur 2`) plutôt que de la taire, mais grouper les conflits en un seul
+     écran reste une option ouverte -- elle demanderait une forme neuve, pas celle de
+     `T4-1`, et je ne l'ai pas dessinée.
+
+NOTE (2026-09-02, n°1) : « Je ne suis pas sûr que le nom de la planche figure au QR code.
+Je préfère retirer le mot planches et mettre 4f-por ou 4f-pay à la place si besoin et
+garder la même longueur. Il faut aussi savoir si le code sait le nommer ? Dans le QR il y
+a bien la mise en page choisie »
+
+  -> Tes deux intuitions sont vérifiées, et elles sont justes toutes les deux. Le nom de
+     fichier n'est PAS dans le QR : la charge utile porte quatorze champs
+     (`io/payload.py:543-558`) -- `schema_version`, `project_id`, `rush_id`, `lot_id`,
+     `page_index`, `page_count`, `page_role`, `fps_target`, `timecode_base_fps`,
+     `template_id`, `patch_preset_id`, `target_colorspace`, `gamut_map_id`, `slots` --
+     et aucun n'est un nom de fichier. La mise en page, elle, y est bien : c'est
+     `template_id`, de la forme `tpl-a4-paysage-6f-v2` (`page_templates.py:1858`).
+     Et le code sait le nommer : `io/naming.build_sheets_pdf_filename` (`:697-759`) ne
+     porte AUCUNE garde de longueur -- ni `len(`, ni `MAX_LENGTH` dans son corps -- donc
+     rien ne s'oppose à la forme que tu demandes. Ce qu'il ne sait pas encore faire, c'est
+     composer le fragment : sa signature ne prend ni cardinal ni orientation. Le fragment
+     est composé dans le générateur des maquettes, pour le dessin, et dérivé du
+     `template_id` plutôt qu'écrit à la main.
+     LES LONGUEURS, sur l'exemple de cet écran (`plan-04_25`, tirage 4) :
+       38 caractères   projet_demo_plan-04_25_planches_v4.pdf          (avant la note 7)
+       49 caractères   projet_demo_plan-04_25_planches_paysage-6f_v4.pdf   (forme v6)
+       36 caractères   projet_demo_plan-04_25_6f-pay_v4.pdf               (ta forme)
+     « Garder la même longueur » est donc tenu avec deux caractères de marge sur
+     l'origine, et treize de moins que la forme qu'elle remplace. Aucun tableau ne
+     déborde : les colonnes de noms d'`E5-4`, `E5-5` et `E5-5b` gagnent toutes de la
+     place, et le nom long de `E5-5b` montre neuf caractères de slug de plus qu'avant --
+     la queue incompressible passe de 20 à 15 caractères (`_6f-pay_vNN.pdf` au lieu de
+     `_planches_vNN.pdf`, dérivée de la position du fragment et jamais comptée à la
+     main) et la colonne de 49 à 53, la liste ayant quitté le cartouche.
+     Deux écrans du palier Projet portent encore le mot dans un nom de fichier --
+     `E6-1b` et `E6-2` -- et ils sont hors du périmètre de cette passe. Ils tombent sous
+     la même décision.

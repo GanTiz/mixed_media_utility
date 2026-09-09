@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                       rush_01 · 25 fps · 4:12 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ À écrire — édition des noms ─────────────────────────────────────────┐   │
+│   │ Lots créés               2                                           │   │
+│   │ Frames écrites           124  +  42        =  166                    │   │
+│   │ Espace disque            ~ 2,8 Go                    (majorant)      │   │
+│   │                                                                      │   │
+│   │ Noms produits          > projet_demo_rush_01_25fps_hiver█   31/48    │   │
+│   │                          projet_demo_rush_01_25s3           24/48    │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      Lettres, chiffres, tiret et souligné. Accents et espaces refusés.       │
+│      Au-delà de 48 caractères le nom est refusé, jamais tronqué.             │
+│                                                                              │
+│      ↑↓ passer d'un nom à l'autre    ←→ déplacer le curseur                  │
+│      Ctrl+R remet le nom proposé — aucune LETTRE n'est un raccourci ici.     │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 31 caractères sur 48 — le nom reste valide                                   │
+│ ⏎ valider  ↑↓ nom suivant  Tab les choix  Échap annuler l'édition            │
+└──────────────────────────────────────────────────────────────────────────────┘

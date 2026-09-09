@@ -1,0 +1,79 @@
+<div class="sheet">
+<header class="masthead">
+  <p class="eyebrow">mixed_media_utility &middot; Epic 7 &middot; vague 4 &middot; 22 ao&ucirc;t 2026</p>
+  <h1>Vague 4 &mdash; ce qu'on n'avait jamais vu</h1>
+  <p class="lede">Tu avais raison sur les cartes : la surface existait dans la spine depuis le début et n'avait <strong>jamais été montrée seule</strong>. La voici, avec les deux autres qui manquaient — l'écran de lancement et les modales. Après cette vague, toute l'architecture d'information est couverte, sauf les Préférences que tu as renvoyées à plus tard.</p>
+  <p class="howto"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8FAEF8" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.4 10.4 14 14M7 5v4M5 7h4"/></svg><span>Touche une image pour l'agrandir. Sous chaque vignette, écris ton retour et enregistre : il reste dans la page, et je le lis d'ici.</span></p>
+  <p class="mode" id="mode">Vérification de l'enregistrement&hellip;</p>
+</header>
+
+<div class="frames">
+
+__FRAMES__
+
+</div>
+
+<hr>
+
+<section class="block">
+  <h3>Tes sept retours sur la vague 3, appliqués</h3>
+  <ul>
+    <li><b>Les réglages d'export sont revenus dans le panneau ordinaire.</b> Tu avais raison, tout y tient — et j'avais pris « carte sur le côté » pour une forme à inventer alors que tu nommais un objet qui existe déjà.</li>
+    <li><b>Le balayage est monté dans la barre du haut</b> et a perdu son panneau. Il reste <em>grisé</em> sans le rush natif : j'avais généralisé à tort la règle des onglets. Un onglet sans objet est absent ; un contrôle qui redeviendra actionnable est grisé.</li>
+    <li><b>Tout panneau latéral se rétracte</b>, et une vue qui n'en a pas l'usage s'ouvre déjà rétractée — la vue vignette unique et le balayage.</li>
+    <li><b>Le bouton est un « + » nu.</b></li>
+    <li><b>La bascule entre passes est tranchée</b> sur ton option : gardée, restreinte à la sélection multiple et au lot composite, non prioritaire. La phrase de la spine est corrigée dans le même mouvement.</li>
+  </ul>
+</section>
+
+<section class="block">
+  <h3>Deux défauts que le banc n'a pas vus</h3>
+  <p>Je les note parce qu'ils disent quelque chose sur la méthode, pas seulement sur ces écrans.</p>
+  <p><b>La ligne du dernier projet était invisible.</b> Elle portait la classe <code>tete</code>, déjà prise par la tête de lecture de la chronologie — deux pixels de large, positionnée en absolu. La ligne se réduisait à un trait vertical. Aucun débordement, aucune erreur : c'est la capture qui l'a montrée. Le banc gagne un troisième contrôle, et le README la consigne.</p>
+  <p><b>Et j'avais inventé un code de refus.</b> La carte en échec citait un <code>SOURCE_FRAME_MISSING</code> qui n'existe nulle part. Le cœur en a de vrais : c'est <code>LOT_INCOMPLET</code>, dans <code>encode.ENCODE_REFUSAL_CODES</code>. Une maquette qui cite le cœur doit le citer juste, sinon elle enseigne un vocabulaire faux.</p>
+</section>
+
+<section class="block">
+  <h3>Ce qui reste</h3>
+  <p>Toutes les surfaces de l'architecture d'information sont maintenant rendues, à trois exceptions assumées : les <b>Préférences</b> (renvoyées à un second temps), l'<b>inventaire du clic droit</b> dans le chutier, et le <b>mode vignette du chutier</b>. Plus la <b>lecture d'un autre lot pendant un encodage</b>, que tu as classée « pas prio ».</p>
+  <p>Il reste aussi un signal que je garde pour une revue d'ensemble plutôt que de le traiter écran par écran : tu trouves <em>les menus sous-optimaux</em>. La forme menu-déroulant est employée partout — qualité, cadence, passe, chaque ligne des réglages d'export — sans qu'aucune alternative ait été essayée. Ça se juge sur l'ensemble, comme tu l'as dit.</p>
+  <div class="note-block" data-key="suite">
+    <div class="notes"></div>
+    <div class="compose">
+      <textarea class="note-input" rows="2" aria-label="Retour sur la suite" placeholder="Ce qui manque encore, ou ce qu'on reprend&hellip;"></textarea>
+      <div class="compose-row"><span class="status" role="status"></span><button type="button" class="save">Enregistrer</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <h3>Emporter tes retours</h3>
+  <p>Tes retours sont enregistrés dans la page : je les relis d'ici. Ce bouton est là pour le cas où l'enregistrement échoue, ou si tu préfères me les envoyer en conversation.</p>
+  <div class="copy-row">
+    <button type="button" class="copy" id="copy-all">Copier tous mes retours</button>
+    <span class="status" id="copy-status" role="status"></span>
+  </div>
+</section>
+
+<hr>
+
+<p class="colophon">
+  Maquettes : <code>mockups/key-taches.html</code>, <code>key-projet.html</code>, <code>key-modales.html</code><br>
+  Retours de la vague 3 : <code>retours-vague-3-2026-08-22.md</code><br>
+  Décisions appliquées : <code>decisions-2026-08-20-epic-7.md</code>, EPIC7-ARB-21 et 23 à 25 &mdash; branche <code>oc/epic-7-ux</code><br>
+  Vignettes capturées sur les fichiers du dépôt, sans retouche.
+</p>
+
+</div>
+
+<div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Image agrandie">
+  <div class="viewer-bar">
+    <span class="viewer-title" id="viewer-title"></span>
+    <button type="button" id="zoom-out" aria-label="Réduire">&minus;</button>
+    <button type="button" id="zoom-fit">Ajuster</button>
+    <button type="button" id="zoom-in" aria-label="Agrandir">+</button>
+    <button type="button" id="viewer-close" aria-label="Fermer"><span class="lbl-long">Fermer</span><span class="lbl-short" aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="viewer-scroll" id="viewer-scroll"><img id="viewer-img" alt=""></div>
+  <p class="viewer-hint">Fais glisser pour te d&eacute;placer &middot; double-touche pour zoomer d'un coup</p>
+</div>

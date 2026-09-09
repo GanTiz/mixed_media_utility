@@ -1,0 +1,311 @@
+<div class="topbar"><div class="topbar-inner">
+  <a class="chip" href="#constat">Le constat</a>
+  <a class="chip" href="#prefs">Préférences</a>
+  <a class="chip" href="#ctx">Clic droit</a>
+  <a class="chip" href="#barre">Barre de menus</a>
+  <a class="chip" href="#trancher">À trancher</a>
+</div></div>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">mixed_media_utility · Epic 7 · 23 août 2026</p>
+  <h1 data-c="titre">D'où vient chaque entrée de menu</h1>
+  <p class="standfirst" data-c="standfirst">Tu as demandé qu'on valide la logique avant les surfaces. Cette note ne contient aucune maquette : un découpage, une liste, et pour chaque entrée <strong>d'où elle vient</strong>. Ce qui ne vient de nulle part est marqué comme tel.</p>
+</header>
+
+<div class="encart e-neuf" data-c="quoi-de-neuf">
+  <p class="lbl">Ce qui change dans la méthode</p>
+  <p>Les trois maquettes d'hier ont été remplies par convention : j'ai pris ce qu'une application de bureau met d'habitude dans ces menus. Ta remarque est vérifiable, et je l'ai vérifiée.</p>
+  <p><strong>Le cœur de l'outil expose 35 réglages en ligne de commande. Aucun n'apparaissait dans ma maquette de Préférences.</strong> Deux y avaient pourtant leur place : celui du cache mémoire — exactement ce que tu réclames — et une politique de comportement en cas de retard, que ma maquette avait redessinée sous un nom que j'avais inventé.</p>
+</div>
+
+<section id="constat" data-sec="Le constat">
+  <h2 data-c="h-constat">D'où une entrée peut légitimement venir</h2>
+
+  <p data-c="quatre-sources">Une entrée de menu n'a que quatre origines possibles. Trois sont vérifiables, la quatrième ne l'est pas — et c'est celle qui a produit les écrans d'hier.</p>
+
+  <div class="ligne" data-c="src-coeur">
+    <div class="ligne-n">1</div>
+    <div class="ligne-corps">
+      <p class="ligne-tags"><span class="pill p-ok">vérifiable</span></p>
+      <p><strong>Un réglage que le cœur sait prendre.</strong> Il existe, il a un nom, une valeur par défaut, et un effet mesurable. On ne l'invente pas : on le lit.</p>
+    </div>
+  </div>
+
+  <div class="ligne" data-c="src-decision">
+    <div class="ligne-n">2</div>
+    <div class="ligne-corps">
+      <p class="ligne-tags"><span class="pill p-ok">vérifiable</span></p>
+      <p><strong>Une décision qu'on a déjà prise ensemble.</strong> Trente arbitrages depuis le 20 août. Plusieurs impliquent une commande ou un réglage sans qu'on ait dit où le mettre.</p>
+    </div>
+  </div>
+
+  <div class="ligne" data-c="src-surface">
+    <div class="ligne-n">3</div>
+    <div class="ligne-corps">
+      <p class="ligne-tags"><span class="pill p-ok">vérifiable</span></p>
+      <p><strong>Un objet de l'interface sur lequel on peut agir.</strong> Un rush, un lot, un marqueur, une tâche. Le clic droit se dérive de cette liste, pas d'une habitude.</p>
+    </div>
+  </div>
+
+  <div class="ligne" data-c="src-rien">
+    <div class="ligne-n">4</div>
+    <div class="ligne-corps">
+      <p class="ligne-tags"><span class="pill p-crit">non vérifiable</span></p>
+      <p><strong>La convention.</strong> « Une application a un menu Édition. » C'est ce qui a rempli les écrans d'hier. Dans cette note, tout ce qui n'a que cette origine porte la mention <em>proposition ouverte</em> et attend ta décision.</p>
+    </div>
+  </div>
+
+  <h3 data-c="h-tri">Le tri des 35 réglages du cœur</h3>
+  <p data-c="tri-intro">Je les ai classés par ce qu'ils sont, pas par ce à quoi ils ressemblent. Le résultat est le point le plus important de cette note.</p>
+
+  <div class="carte" data-c="tri-chemins">
+    <p class="carte-id">12 sur 35</p>
+    <h4>Des chemins de fichiers</h4>
+    <p>Quel rush, quel lot, quel dossier de sortie. Ce sont les questions que l'interface pose déjà en te faisant choisir dans le chutier. <strong>Rien à mettre en Préférences.</strong></p>
+  </div>
+
+  <div class="carte" data-c="tri-consentements">
+    <p class="carte-id">4 sur 35</p>
+    <h4>Des consentements</h4>
+    <p>Écraser un lot existant, accepter une colorimétrie inconnue, accepter un lot incomplet. <strong>Ceux-là ne doivent jamais devenir des préférences</strong> — en faire un réglage, c'est permettre de cocher une fois « oui toujours » et de désarmer la modale qu'on a passé deux vagues à concevoir.</p>
+  </div>
+
+  <div class="carte" data-c="tri-travail">
+    <p class="carte-id">14 sur 35</p>
+    <h4>Des paramètres de travail</h4>
+    <p>La cadence, le dpi du scan, le format de planche, la résolution d'export, les marges, le nombre de patchs. Ils changent d'un lot à l'autre : ils vivent dans <strong>la barre de réglages de l'atelier</strong> et dans le projet. Certains méritent une <em>valeur par défaut</em> globale — c'est une question ouverte, plus bas.</p>
+  </div>
+
+  <div class="carte" data-c="tri-machine">
+    <p class="carte-id">3 sur 35</p>
+    <h4>Des réglages de machine</h4>
+    <p><strong>Les seuls qui soient vraiment des préférences.</strong> Le budget mémoire du cache d'images décodées (128 Mo par défaut), la politique en cas de retard à la lecture, et un mode sans fenêtre réservé aux tests automatiques.</p>
+  </div>
+
+  <div class="encart e-blocage" data-c="constat-dur">
+    <p class="lbl">Ce que ça veut dire</p>
+    <p><strong>Les Préférences sont beaucoup plus maigres que ce que j'ai dessiné, et c'est correct.</strong> Un outil dont presque tous les réglages appartiennent au projet ou au lot n'a pas besoin d'un grand panneau global. Une page de Préférences bien remplie aurait été un signe que quelque chose est mal rangé.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section id="prefs" data-sec="Préférences">
+  <h2 data-c="h-prefs">Préférences — quatre sections</h2>
+
+  <p data-c="prefs-acquis">Deux choses sont acquises depuis ce matin : <strong>on ne met pas un réglage qu'on ne peut pas régler</strong>, et il faut <strong>un onglet Performances</strong>. Les deux sont intégrées.</p>
+
+  <h3 data-c="h-interface">Interface</h3>
+  <p data-c="interface-reponse">Tu demandes ce qu'on peut y régler d'autre. Réponse honnête : <strong>le cœur n'y contribue rien</strong>. Tout ce qui suit vient de l'interface elle-même et n'a donc aucune provenance vérifiable — ce sont des propositions ouvertes, et tu peux en retirer autant que tu veux.</p>
+
+  <div class="carte" data-c="int-liste">
+    <h4>Ce que je propose d'y mettre</h4>
+    <p><strong>Thème</strong> — clair, sombre, système. <span class="pill p-warn">proposition ouverte</span></p>
+    <p><strong>Langue</strong> — l'outil est prévu bilingue anglais / français, et la bascule doit exister quelque part. <span class="pill p-info">décision du 16 août</span></p>
+    <p><strong>Taille du texte de l'interface</strong> — sur un écran 4K, l'interface d'un outil Qt est minuscule par défaut. <span class="pill p-warn">proposition ouverte</span></p>
+    <p><strong>Mode de la file des tâches</strong> — ancrée ou superposée. <span class="pill p-crit">tu l'as dit inutile</span> et je suis d'accord : la bascule est déjà dans la file. Je le retire, sauf si tu veux qu'il définisse l'état au démarrage.</p>
+  </div>
+
+  <div class="encart e-neuf" data-c="seuil-largeur">
+    <p class="lbl">Ta deuxième question : où va le seuil de largeur ?</p>
+    <p>C'est la largeur de fenêtre sous laquelle la file des tâches se superpose au lieu de s'ancrer. <strong>Je propose qu'il n'aille nulle part.</strong></p>
+    <p>Un seuil en pixels est un nombre qu'on ne sait pas régler sans essayer : personne ne sait si 1100 est bien avant de l'avoir vécu. Et il se règle déjà tout seul, par le geste — si la file te gêne, tu bascules. Le mettre en Préférences, c'est demander à l'utilisateur de faire à l'avance et en aveugle ce qu'il fait très bien sur le moment.</p>
+    <p>Si on le garde quand même, sa place est <em>Interface</em>, avec les autres réglages d'apparence, comme tu l'as dit.</p>
+  </div>
+
+  <h3 data-c="h-fichiers">Fichiers</h3>
+  <div class="carte" data-c="fichiers-liste">
+    <p><strong>Dossier de projets par défaut</strong> — <span class="pill p-ok">tu l'as validé</span></p>
+    <p><strong>Chercher les rushes déplacés au chargement</strong> — le relink automatique dans les dossiers voisins. <span class="pill p-warn">proposition ouverte</span> — utile pour le parcours d'Inès, mais elle peut coûter du temps au démarrage sur un disque lent.</p>
+    <p><strong>Chemin de ffmpeg</strong> — l'outil s'en sert pour décoder et encoder. <span class="pill p-info">dépendance réelle</span> — à mettre seulement s'il peut être ailleurs que dans le système ; sinon c'est un piège à mauvaise configuration.</p>
+  </div>
+
+  <h3 data-c="h-perfs">Performances</h3>
+  <div class="carte" data-c="perfs-liste">
+    <p><strong>Budget mémoire du cache d'images décodées</strong> — 128 Mo par défaut. <span class="pill p-ok">existe déjà dans le cœur</span> C'est le réglage qui décide combien d'images restent en mémoire pendant que tu lis. L'augmenter rend la lecture plus fluide et consomme plus de RAM.</p>
+    <p><strong>Comportement en cas de retard</strong> — deux politiques existent : montrer toutes les images quitte à prendre du retard, ou sauter des images pour tenir la cadence. <span class="pill p-ok">existe déjà dans le cœur</span> C'est ce que ma maquette appelait « repli automatique », qui n'était pas son nom.</p>
+    <p><strong>Optimisation matérielle</strong> — <span class="pill p-crit">n'existe pas</span> Décodage par la carte graphique. Je propose de <strong>ne pas l'afficher tant qu'elle n'existe pas</strong> : un réglage inerte est exactement ce que tu viens de refuser. Elle est notée comme chantier ailleurs.</p>
+  </div>
+
+  <h3 data-c="h-cache">Gestion du cache</h3>
+  <div class="carte" data-c="cache-liste">
+    <p data-c="cache-distinction">Tu parles de « gestion du cache » et le cœur parle de « budget mémoire ». <strong>Ce ne sont pas la même chose</strong>, et la différence compte.</p>
+    <p><strong>Le cache mémoire</strong> vit le temps d'une lecture et disparaît. Il se règle par un nombre de Mo. <span class="pill p-ok">existe</span></p>
+    <p><strong>Un cache sur disque</strong> — des vignettes, des aperçus de planche, des images décodées gardées entre deux sessions — <span class="pill p-crit">n'existe pas aujourd'hui</span>. S'il doit exister, il lui faut trois choses : un emplacement, une taille maximale, et un bouton pour le vider. Et surtout une décision : dans le dossier du projet, ou dans le dossier système de l'utilisateur ?</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section id="ctx" data-sec="Clic droit">
+  <h2 data-c="h-ctx">Le clic droit — ce qu'il apporte vraiment</h2>
+
+  <p data-c="ctx-principe">Le clic droit n'a d'intérêt que dans un cas : quand une commande s'applique à <strong>un objet précis qu'on vient de désigner</strong>. C'est ce qui le distingue d'un bouton de barre, qui s'applique à ce qui est sélectionné, et d'un menu système, qui s'applique à l'écran entier.</p>
+
+  <p data-c="ctx-derivation">La liste ne se devine donc pas : elle se dérive des objets sur lesquels on peut cliquer. Il y en a six.</p>
+
+  <div class="carte" data-c="ctx-rush">
+    <h4>Sur un rush</h4>
+    <p><strong>Relinker</strong> <span class="pill p-info">parcours d'Inès</span> · <strong>Rattacher à</strong> <span class="pill p-ok">tu l'as mis là le 20 août</span> · <strong>Révéler dans le Finder</strong> · <strong>Retirer du projet</strong></p>
+    <p>C'est le seul menu qui contient une commande introuvable ailleurs — <em>rattacher à</em>. Tu l'as voulu ainsi ; je le signale parce que c'est l'exception à la règle que je propose juste après.</p>
+  </div>
+
+  <div class="carte" data-c="ctx-lot">
+    <h4>Sur un lot ou une extraction</h4>
+    <p><strong>Révéler le dossier</strong> · <strong>Supprimer le lot</strong> <span class="pill p-warn">à trancher</span> — l'outil n'efface aujourd'hui rien de ce qu'il a produit. Faut-il qu'il le puisse ?</p>
+  </div>
+
+  <div class="carte" data-c="ctx-marqueur">
+    <h4>Sur un marqueur</h4>
+    <p><strong>Éditer</strong> · <strong>Supprimer</strong> <span class="pill p-ok">décidé le 22 août</span> — « l'édition d'un marqueur se fait en double-cliquant dessus, ou au clic droit ». Rien de plus : définir une entrée ou une sortie depuis un marqueur était mon ajout, sans demande.</p>
+  </div>
+
+  <div class="carte" data-c="ctx-vignette">
+    <h4>Sur une vignette de galerie</h4>
+    <p><strong>Ouvrir en vue unique</strong> <span class="pill p-ok">décidé le 22 août</span> · <strong>Comparer les candidats</strong> <span class="pill p-ok">dans la spine</span> · <strong>Voir la page de planche correspondante</strong> <span class="pill p-ok">dans la spine</span></p>
+  </div>
+
+  <div class="carte" data-c="ctx-tache">
+    <h4>Sur une tâche</h4>
+    <p><strong>Annuler</strong> · <strong>Révéler le résultat</strong> · <strong>Copier le motif d'échec</strong> <span class="pill p-warn">proposition ouverte</span> — utile pour me l'envoyer, mais rien ne l'a demandé.</p>
+  </div>
+
+  <div class="carte" data-c="ctx-projet">
+    <h4>Sur un projet dans la liste</h4>
+    <p><strong>Révéler le dossier</strong> · <strong>Retirer de la liste</strong> <span class="pill p-warn">proposition ouverte</span> — une liste de projets récents finit toujours par se remplir de projets morts.</p>
+  </div>
+
+  <div class="encart" data-c="ctx-regle">
+    <p class="lbl">La règle que je propose</p>
+    <p><strong>Sauf « rattacher à », aucune commande ne doit exister uniquement au clic droit.</strong> Une commande qu'on ne peut atteindre qu'en essayant le clic droit est introuvable pour qui n'y pense pas — et personne n'y pense sur un logiciel qu'il découvre.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section id="barre" data-sec="Barre de menus">
+  <h2 data-c="h-barre">La barre de menus — trois apports, et un piège</h2>
+
+  <p data-c="barre-question">La vraie question n'est pas « quelles entrées mettre » mais <strong>« qu'apporte-t-elle qu'on n'a pas déjà »</strong>. Elle apporte trois choses, et une seule est indispensable.</p>
+
+  <div class="ligne" data-c="apport-1">
+    <div class="ligne-n">1</div>
+    <div class="ligne-corps">
+      <p class="ligne-tags"><span class="pill p-crit">indispensable</span></p>
+      <p><strong>Ce que le système exige.</strong> Sur macOS, une application sans <em>À propos</em>, <em>Préférences</em> et <em>Quitter</em> au bon endroit est une application qui se comporte mal. Ce n'est pas une opinion : c'est la seule façon d'atteindre les Préférences avant d'avoir ouvert un projet.</p>
+    </div>
+  </div>
+
+  <div class="ligne" data-c="apport-2">
+    <div class="ligne-n">2</div>
+    <div class="ligne-corps">
+      <p class="ligne-tags"><span class="pill p-ok">réellement utile</span></p>
+      <p><strong>Apprendre les raccourcis clavier.</strong> C'est le seul endroit d'un logiciel où un raccourci s'apprend sans le chercher : on ouvre le menu pour cliquer, et on lit le raccourci à côté. Pour un monteur qui passera des heures sur le même geste, ça vaut plus que la commande elle-même.</p>
+    </div>
+  </div>
+
+  <div class="ligne" data-c="apport-3">
+    <div class="ligne-n">3</div>
+    <div class="ligne-corps">
+      <p class="ligne-tags"><span class="pill p-warn">discutable</span></p>
+      <p><strong>Un second chemin vers ce qui existe déjà.</strong> Changer d'atelier, ajuster l'image, ouvrir un panneau. C'est ce qui gonfle une barre de menus, et c'est ce qui la rend illisible.</p>
+    </div>
+  </div>
+
+  <div class="encart e-blocage" data-c="barre-piege">
+    <p class="lbl">Le piège</p>
+    <p>Une barre de menus complète est <strong>une seconde interface à maintenir</strong>. Chaque commande y existe deux fois : si l'une change et pas l'autre, elles divergent en silence. J'en ai dessiné une complète hier sans poser la question.</p>
+  </div>
+
+  <div class="carte" data-c="barre-mini">
+    <h4>Ce que je propose : une barre minimale</h4>
+    <p><strong>mmu</strong> — À propos, Préférences, Quitter. <span class="pill p-crit">exigé par macOS</span></p>
+    <p><strong>Fichier</strong> — Nouveau projet, Ouvrir, Importer, Récents, Fermer. <span class="pill p-ok">les trois actions de l'écran de projets</span></p>
+    <p><strong>Aller</strong> — image précédente / suivante, aller à l'entrée / la sortie, marqueur précédent / suivant, <strong>aller au timecode</strong>. <span class="pill p-info">les gestes qu'un monteur répète mille fois</span></p>
+    <p><strong>Aide</strong> — <span class="pill p-crit">exigé par les deux systèmes</span></p>
+    <p>Et c'est tout. Pas de menu <em>Édition</em> — il n'y a rien à couper-coller dans cet outil. Pas de menu <em>Affichage</em> qui doublerait les onglets et les boutons de barre.</p>
+  </div>
+
+  <div class="encart e-neuf" data-c="timecode">
+    <p class="lbl">Une commande qui n'existe nulle part</p>
+    <p><strong>Aller à un timecode</strong> : taper <code>00:00:12:14</code> et y sauter. C'est la seule entrée de toute cette note qui n'a d'équivalent sur aucun écran. Un monteur l'utilise en permanence.</p>
+    <p>Si elle mérite d'exister, elle mérite aussi un chemin visible. Je propose : <strong>cliquer le timecode affiché dans le lecteur le rend saisissable</strong>. Le menu ne serait alors que le raccourci clavier.</p>
+  </div>
+
+  <div class="carte" data-c="barre-windows">
+    <h4>Windows</h4>
+    <p>Pas de menu applicatif : les Préférences passent sous <em>Outils</em>, avec <code>Ctrl</code> + <code>,</code>. C'est la seule divergence, et elle est nécessaire — chercher les Préférences au mauvais endroit est le premier réflexe qu'on perd en changeant de système.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section id="inconnues" data-sec="Ce qu'on ne sait pas">
+  <h2 data-c="h-inconnues">Ce que je ne sais pas</h2>
+
+  <div class="carte" data-c="inc-defauts">
+    <h4>Si les paramètres de travail méritent des défauts globaux</h4>
+    <p>Le dpi du scan et la cadence changent d'un lot à l'autre, donc ils vivent dans le projet. Mais tu scannes probablement toujours au même dpi sur le même scanner. Un défaut global t'éviterait de le ressaisir — au prix d'un réglage de plus, à un endroit où tu ne le chercheras pas.</p>
+  </div>
+
+  <div class="carte" data-c="inc-couleur">
+    <h4>Ce que « options de couleur avancées » voudrait dire</h4>
+    <p>Tu as écrit qu'on verrait plus tard. Le seul réglage couleur que le cœur expose aujourd'hui est la compression de gamut à la génération des planches — il est par planche, pas global. Donc rien à mettre maintenant.</p>
+  </div>
+
+  <div class="carte" data-c="inc-preferences-projet">
+    <h4>Où finit la préférence et où commence le projet</h4>
+    <p>J'ai posé que ce qui appartient à un projet n'est pas une préférence. Ça tient tant qu'on ouvre un projet à la fois. Le jour où tu voudras qu'un nouveau projet hérite de tes habitudes, il faudra une troisième catégorie : les <em>valeurs initiales</em>.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section id="trancher" data-sec="À trancher">
+  <h2 data-c="h-trancher">Ce dont j'ai besoin de toi</h2>
+  <p data-c="trancher-intro">Six points. Un mot suffit pour chacun — et « on verra » est une réponse valable, je la noterai comme telle.</p>
+
+  <div class="carte" data-c="q1">
+    <p class="carte-id">Q1</p>
+    <h4>Le seuil de largeur de la file : on le supprime ?</h4>
+    <p>Je propose de ne pas le mettre du tout. Tu bascules à la main quand ça te gêne, ce qui règle le problème mieux qu'un nombre choisi à l'avance.</p>
+  </div>
+
+  <div class="carte" data-c="q2">
+    <p class="carte-id">Q2</p>
+    <h4>Un cache sur disque, ou seulement en mémoire ?</h4>
+    <p>Le cache mémoire existe. Un cache disque n'existe pas. S'il doit exister : dans le dossier du projet, ou dans le dossier système ?</p>
+  </div>
+
+  <div class="carte" data-c="q3">
+    <p class="carte-id">Q3</p>
+    <h4>La barre de menus : minimale, ou complète ?</h4>
+    <p>Minimale = quatre menus, rien qui double l'écran. Complète = ce que j'ai dessiné hier, avec le coût de maintenance qui va avec.</p>
+  </div>
+
+  <div class="carte" data-c="q4">
+    <p class="carte-id">Q4</p>
+    <h4>« Aller au timecode » : on le garde ?</h4>
+    <p>Et si oui, le timecode du lecteur devient-il cliquable et saisissable ?</p>
+  </div>
+
+  <div class="carte" data-c="q5">
+    <p class="carte-id">Q5</p>
+    <h4>Supprimer un lot depuis le chutier : autorisé ?</h4>
+    <p>Aujourd'hui l'outil n'efface rien de ce qu'il produit. Un lot raté reste sur le disque jusqu'à ce que tu le supprimes au Finder.</p>
+  </div>
+
+  <div class="carte" data-c="q6">
+    <p class="carte-id">Q6</p>
+    <h4>Des défauts globaux pour le dpi et la cadence ?</h4>
+    <p>Ou bien ils restent entièrement dans le projet, quitte à les ressaisir à chaque nouveau film.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<p class="meta" data-c="colophon">Cette note est un rendu. La trace fait foi dans <code>decisions-2026-08-20-epic-7.md</code>, arbitrages EPIC7-ARB-29 à 31, branche <code>oc/epic-7-ux</code>. Le tri des 35 réglages a été fait sur le code, pas de mémoire.</p>
+
+</div>

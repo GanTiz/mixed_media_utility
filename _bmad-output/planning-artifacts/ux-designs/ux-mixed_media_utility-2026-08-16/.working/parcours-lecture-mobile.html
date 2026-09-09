@@ -1,0 +1,1259 @@
+<title>Parcours Camille &amp; Inès</title>
+
+<style>
+  :root {
+    --paper:#F5F5F1; --surface:#FFFFFF; --surface-2:#EFEFE9;
+    --ink:#161B21; --ink-soft:#5C6771; --ink-faint:#8A939B;
+    --rule:#DCDCD5; --rule-soft:#E8E8E2;
+    --accent:#0D6E6B; --accent-bg:#E2F0EF;
+    --mark:#B8860B; --mark-bg:#FBF3DF;
+    --ok:#2E7A57; --ok-bg:#E4F0E9;
+    --warn:#9E6B0A; --warn-bg:#F5EBD8;
+    --crit:#A83A2C; --crit-bg:#F6E4E1;
+    --reg:#C4C4BC; --scrim:rgba(22,27,33,.42);
+    --shadow:0 1px 2px rgba(22,27,33,.05),0 6px 18px -12px rgba(22,27,33,.22);
+    --shadow-lg:0 -8px 40px -12px rgba(22,27,33,.3);
+    --f-display:"Iowan Old Style","Palatino Linotype",Palatino,"Source Serif 4",Georgia,ui-serif,serif;
+    --f-body:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --f-mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    --measure:68ch; --pad:clamp(1rem,4vw,2rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:#12161A; --surface:#191E24; --surface-2:#1F252C;
+      --ink:#E7E8E3; --ink-soft:#9BA5AE; --ink-faint:#77828B;
+      --rule:#2B323A; --rule-soft:#232A31;
+      --accent:#48ADA7; --accent-bg:#14312F;
+      --mark:#D9A93F; --mark-bg:#2E2712;
+      --ok:#5CB489; --ok-bg:#16301F;
+      --warn:#D2A044; --warn-bg:#33280F;
+      --crit:#E07B6B; --crit-bg:#351C18;
+      --reg:#3A424A; --scrim:rgba(0,0,0,.62);
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px -14px rgba(0,0,0,.7);
+      --shadow-lg:0 -8px 40px -10px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:#12161A; --surface:#191E24; --surface-2:#1F252C;
+    --ink:#E7E8E3; --ink-soft:#9BA5AE; --ink-faint:#77828B;
+    --rule:#2B323A; --rule-soft:#232A31;
+    --accent:#48ADA7; --accent-bg:#14312F;
+    --mark:#D9A93F; --mark-bg:#2E2712;
+    --ok:#5CB489; --ok-bg:#16301F;
+    --warn:#D2A044; --warn-bg:#33280F;
+    --crit:#E07B6B; --crit-bg:#351C18;
+    --reg:#3A424A; --scrim:rgba(0,0,0,.62);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px -14px rgba(0,0,0,.7);
+    --shadow-lg:0 -8px 40px -10px rgba(0,0,0,.8);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--f-body); font-size:16px; line-height:1.62;
+    -webkit-text-size-adjust:100%; overflow-x:hidden;
+  }
+  .wrap { max-width:var(--measure); margin:0 auto; padding:0 var(--pad) 7rem; }
+
+  .topbar {
+    position:sticky; top:0; z-index:20;
+    background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter:saturate(1.4) blur(10px); -webkit-backdrop-filter:saturate(1.4) blur(10px);
+    border-bottom:1px solid var(--rule);
+  }
+  .topbar-inner {
+    max-width:var(--measure); margin:0 auto; padding:.5rem var(--pad);
+    display:flex; gap:.35rem; overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch;
+  }
+  .topbar-inner::-webkit-scrollbar { display:none; }
+  .chip {
+    flex:0 0 auto; font-family:var(--f-mono); font-size:.7rem; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--ink-soft); text-decoration:none;
+    padding:.35rem .6rem; border:1px solid var(--rule); border-radius:2px;
+    background:var(--surface); white-space:nowrap;
+  }
+  .chip:hover, .chip:focus-visible { color:var(--accent); border-color:var(--accent); }
+
+  header.masthead { padding:2.6rem 0 1.6rem; }
+  .eyebrow {
+    font-family:var(--f-mono); font-size:.7rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); margin:0 0 .9rem;
+  }
+  h1 {
+    font-family:var(--f-display); font-weight:600; font-size:clamp(2rem,8vw,2.9rem);
+    line-height:1.1; letter-spacing:-.015em; text-wrap:balance; margin:0 0 .7rem;
+  }
+  .standfirst { font-size:1.06rem; color:var(--ink-soft); margin:0 0 1.4rem; text-wrap:pretty; }
+  .meta {
+    font-family:var(--f-mono); font-size:.72rem; color:var(--ink-faint);
+    display:flex; flex-wrap:wrap; gap:.3rem .9rem;
+    padding-top:1rem; border-top:1px solid var(--rule);
+  }
+
+  h2 {
+    font-family:var(--f-display); font-weight:600; font-size:clamp(1.35rem,5vw,1.75rem);
+    line-height:1.2; letter-spacing:-.01em; text-wrap:balance; margin:0 0 .5rem;
+  }
+  h3 { font-family:var(--f-body); font-weight:650; font-size:.95rem; margin:1.8rem 0 .5rem; }
+  p { margin:0 0 1rem; text-wrap:pretty; }
+  a { color:var(--accent); }
+  strong { font-weight:650; }
+  section { margin-top:3rem; }
+
+  .people { display:grid; gap:1rem; }
+  @media (min-width:620px) { .people { grid-template-columns:1fr 1fr; } }
+  .person {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:1.1rem 1.2rem; box-shadow:var(--shadow);
+  }
+  .person .name { font-family:var(--f-display); font-size:1.2rem; font-weight:600; margin:0 0 .1rem; }
+  .person .role {
+    font-family:var(--f-mono); font-size:.68rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--accent); margin:0 0 .7rem;
+  }
+  .person p { font-size:.92rem; color:var(--ink-soft); margin:0 0 .6rem; }
+  .person p:last-child { margin-bottom:0; }
+
+  .planche {
+    position:relative; background:var(--surface); border:1px solid var(--rule);
+    border-radius:3px; padding:1.5rem 1.2rem 1.3rem; box-shadow:var(--shadow); margin-top:1rem;
+  }
+  .planche::before, .planche::after,
+  .planche > .reg-b::before, .planche > .reg-b::after {
+    content:""; position:absolute; width:9px; height:9px; background:var(--reg); pointer-events:none;
+  }
+  .planche::before { top:7px; left:7px; }
+  .planche::after { top:7px; right:7px; }
+  .planche > .reg-b::before { bottom:7px; left:7px; }
+  .planche > .reg-b::after { bottom:7px; right:7px; }
+  .planche-head { margin-bottom:1rem; }
+  .planche-id {
+    font-family:var(--f-mono); font-size:.72rem; letter-spacing:.12em;
+    color:var(--accent); margin:0 0 .3rem;
+  }
+  .situation {
+    font-size:.95rem; color:var(--ink-soft); border-left:2px solid var(--rule);
+    padding-left:.9rem; margin:0 0 1.2rem;
+  }
+  .situation strong { color:var(--ink); }
+
+  ol.steps { list-style:none; counter-reset:s; margin:0 0 1.2rem; padding:0; }
+  ol.steps > li { counter-increment:s; position:relative; padding:.3rem 0 .3rem 2.5rem; font-size:.95rem; }
+  ol.steps > li::before {
+    content:counter(s,decimal-leading-zero); position:absolute; left:0; top:.45rem;
+    font-family:var(--f-mono); font-size:.72rem; font-variant-numeric:tabular-nums; color:var(--ink-faint);
+  }
+  ol.steps > li.climax {
+    background:var(--accent-bg); border-left:2px solid var(--accent);
+    padding-left:2.4rem; margin:.5rem 0; border-radius:0 3px 3px 0;
+  }
+  ol.steps > li.climax::before { left:.55rem; color:var(--accent); }
+  .climax-tag {
+    display:block; font-family:var(--f-mono); font-size:.65rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:.15rem;
+  }
+  ol.steps > li.pause { font-family:var(--f-display); font-size:1.02rem; color:var(--ink); }
+  .subhead {
+    font-family:var(--f-mono); font-size:.68rem; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ink-faint); margin:1.6rem 0 .5rem;
+  }
+
+  .note-block {
+    border:1px solid var(--rule); border-left-width:3px; border-radius:0 3px 3px 0;
+    padding:.85rem 1rem; margin:1rem 0; font-size:.9rem; background:var(--surface-2);
+  }
+  .note-block .lbl {
+    display:block; font-family:var(--f-mono); font-size:.65rem; letter-spacing:.12em;
+    text-transform:uppercase; margin-bottom:.3rem;
+  }
+  .note-block p { margin:0 0 .6rem; }
+  .note-block p:last-child { margin-bottom:0; }
+  .nb-open { border-left-color:var(--accent); } .nb-open .lbl { color:var(--accent); }
+  .nb-warn { border-left-color:var(--warn); background:var(--warn-bg); } .nb-warn .lbl { color:var(--warn); }
+  .nb-crit { border-left-color:var(--crit); background:var(--crit-bg); } .nb-crit .lbl { color:var(--crit); }
+  .nb-new  { border-left-color:var(--mark); background:var(--mark-bg); } .nb-new .lbl { color:var(--mark); }
+
+  .surfaces {
+    font-family:var(--f-mono); font-size:.75rem; line-height:1.65; color:var(--ink-soft);
+    border-top:1px solid var(--rule-soft); padding-top:.8rem; margin-top:1.2rem;
+  }
+  .surfaces .lbl {
+    display:block; font-size:.65rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-faint); margin-bottom:.3rem;
+  }
+
+  .pill {
+    display:inline-block; font-family:var(--f-mono); font-size:.63rem; letter-spacing:.1em;
+    text-transform:uppercase; padding:.16rem .45rem; border-radius:2px; white-space:nowrap;
+  }
+  .p-ok { background:var(--ok-bg); color:var(--ok); }
+  .p-warn { background:var(--warn-bg); color:var(--warn); }
+  .p-crit { background:var(--crit-bg); color:var(--crit); }
+  .p-info { background:var(--accent-bg); color:var(--accent); }
+  .p-new { background:var(--mark-bg); color:var(--mark); }
+
+  .gap-row {
+    display:grid; grid-template-columns:2.2rem 1fr; gap:0 .7rem;
+    padding:.95rem 0; border-bottom:1px solid var(--rule-soft);
+  }
+  .gap-row:last-of-type { border-bottom:0; }
+  .gap-n {
+    font-family:var(--f-mono); font-size:.78rem; font-variant-numeric:tabular-nums;
+    color:var(--ink-faint); padding-top:.12rem;
+  }
+  .gap-body p { margin:0 0 .45rem; font-size:.93rem; }
+  .gap-tags { display:flex; flex-wrap:wrap; gap:.35rem; align-items:center; }
+
+  /* ---- Annotation ---- */
+  .ann { position:relative; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .ann::after {
+    content:""; position:absolute; inset:-.15rem -.4rem; border-radius:3px;
+    background:transparent; pointer-events:none; transition:background .12s ease;
+  }
+  @media (hover:hover) { .ann:hover::after { background:color-mix(in srgb,var(--accent) 7%,transparent); } }
+  .ann.tapped::after { background:color-mix(in srgb,var(--accent) 16%,transparent); }
+  .ann.noted {
+    box-shadow:inset 3px 0 0 var(--mark);
+    background:color-mix(in srgb,var(--mark) 8%,transparent);
+    border-radius:0 3px 3px 0;
+  }
+  ol.steps > li.ann.noted { padding-left:2.6rem; }
+  ol.steps > li.ann.noted::before { left:.6rem; }
+  .gap-row.ann.noted { padding-left:.5rem; }
+  .person.ann.noted, .note-block.ann.noted { padding-left:1.35rem; }
+  .pin {
+    display:inline-flex; align-items:center; justify-content:center;
+    min-width:1.15rem; height:1.15rem; margin-left:.35rem; padding:0 .25rem;
+    border-radius:2px; background:var(--mark); color:var(--paper);
+    font-family:var(--f-mono); font-size:.62rem; font-variant-numeric:tabular-nums; vertical-align:.05rem;
+  }
+
+  .hint {
+    display:flex; gap:.6rem; align-items:flex-start; background:var(--accent-bg);
+    border:1px solid var(--accent); border-radius:3px; padding:.8rem .9rem;
+    margin:1.4rem 0; font-size:.88rem; color:var(--ink);
+  }
+  .hint button { flex:0 0 auto; margin-left:auto; }
+
+  /* ---- Alerte de stockage : permanente, non masquable ---- */
+  .storage-alarm {
+    display:none; gap:.6rem; align-items:flex-start;
+    background:var(--crit-bg); border:1px solid var(--crit); border-left-width:4px;
+    border-radius:3px; padding:.9rem 1rem; margin:1.4rem 0; font-size:.9rem;
+  }
+  .storage-alarm.on { display:flex; }
+  .storage-alarm .lbl {
+    display:block; font-family:var(--f-mono); font-size:.65rem; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--crit); margin-bottom:.25rem;
+  }
+  .storage-alarm p { margin:0; }
+
+  .nudge {
+    position:fixed; left:var(--pad); right:var(--pad); bottom:4.6rem; z-index:25;
+    max-width:var(--measure); margin:0 auto;
+    background:var(--mark-bg); border:1px solid var(--mark); border-radius:3px;
+    padding:.6rem .8rem; font-size:.85rem;
+    display:none; gap:.6rem; align-items:center;
+    box-shadow:var(--shadow);
+  }
+  .nudge.on { display:flex; }
+  .nudge button { flex:0 0 auto; margin-left:auto; }
+
+  /* ---- Feuilles ---- */
+  .scrim {
+    position:fixed; inset:0; background:var(--scrim); z-index:40;
+    opacity:0; pointer-events:none; transition:opacity .16s ease;
+  }
+  .scrim.open { opacity:1; pointer-events:auto; }
+  .sheet {
+    position:fixed; left:0; right:0; bottom:0; z-index:50;
+    background:var(--surface); border-top:1px solid var(--rule);
+    border-radius:10px 10px 0 0; box-shadow:var(--shadow-lg);
+    padding:.9rem var(--pad) calc(1rem + env(safe-area-inset-bottom,0px));
+    max-height:86vh; overflow-y:auto;
+    transform:translateY(102%); transition:transform .2s cubic-bezier(.32,.72,0,1);
+  }
+  .sheet.open { transform:translateY(0); }
+  .sheet-inner { max-width:var(--measure); margin:0 auto; }
+  .grabber { width:34px; height:4px; border-radius:2px; background:var(--rule); margin:0 auto .8rem; }
+  .sheet-title {
+    font-family:var(--f-mono); font-size:.68rem; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--accent); margin:0 0 .5rem;
+  }
+  blockquote.quote {
+    margin:0 0 .8rem; padding:.6rem .8rem; background:var(--surface-2);
+    border-left:3px solid var(--mark); border-radius:0 3px 3px 0;
+    font-size:.87rem; line-height:1.5; color:var(--ink-soft);
+    max-height:8.5rem; overflow-y:auto;
+  }
+  .sheet-actions { display:flex; gap:.5rem; margin-top:.8rem; flex-wrap:wrap; }
+  .sheet-actions .spacer { margin-left:auto; }
+
+  textarea {
+    display:block; width:100%; min-height:7rem; resize:vertical;
+    font-family:var(--f-body); font-size:1rem; line-height:1.55;
+    color:var(--ink); background:var(--paper);
+    border:1px solid var(--accent); border-radius:3px; padding:.7rem .8rem;
+  }
+  button {
+    font-family:var(--f-mono); font-size:.7rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-soft); background:var(--paper); border:1px solid var(--rule);
+    border-radius:2px; padding:.55rem .8rem; cursor:pointer;
+  }
+  button:hover, button:focus-visible { color:var(--accent); border-color:var(--accent); }
+  button.primary { color:var(--paper); background:var(--accent); border-color:var(--accent); }
+  button.primary:hover, button.primary:focus-visible { color:var(--paper); opacity:.88; }
+  button.urgent { color:var(--paper); background:var(--mark); border-color:var(--mark); }
+  button.danger { color:var(--crit); border-color:var(--crit); }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  .idx-item { padding:.8rem 0; border-bottom:1px solid var(--rule-soft); cursor:pointer; }
+  .idx-item:last-child { border-bottom:0; }
+  .idx-head {
+    display:flex; gap:.5rem; align-items:baseline; font-family:var(--f-mono);
+    font-size:.66rem; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--ink-faint); margin-bottom:.25rem;
+  }
+  .idx-quote {
+    font-size:.84rem; color:var(--ink-soft); margin:0 0 .25rem;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .idx-note { font-size:.93rem; margin:0; white-space:pre-wrap; }
+  .idx-empty { color:var(--ink-faint); font-size:.92rem; }
+  .orphan-flag { color:var(--warn); }
+
+  .drop {
+    border:1px dashed var(--rule); border-radius:3px; padding:1rem;
+    text-align:center; font-size:.88rem; color:var(--ink-soft); margin-bottom:.8rem;
+  }
+  .io-msg { font-size:.85rem; margin:.6rem 0 0; }
+  .io-ok { color:var(--ok); } .io-err { color:var(--crit); } .io-warn { color:var(--warn); }
+
+  .toolbar {
+    position:fixed; left:0; right:0; bottom:0; z-index:30;
+    background:color-mix(in srgb,var(--paper) 94%,transparent);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    border-top:1px solid var(--rule);
+    padding:.55rem var(--pad) calc(.55rem + env(safe-area-inset-bottom,0px));
+  }
+  .toolbar-inner { max-width:var(--measure); margin:0 auto; display:flex; gap:.45rem; align-items:center; }
+  .toolbar .state {
+    font-family:var(--f-mono); font-size:.68rem; margin-left:auto;
+    font-variant-numeric:tabular-nums; text-align:right; line-height:1.35;
+  }
+  .state .count { color:var(--ink-faint); display:block; }
+  .state .saved { display:block; }
+  .s-ok { color:var(--ok); } .s-warn { color:var(--mark); } .s-bad { color:var(--crit); }
+
+  .rule { border:0; border-top:1px solid var(--rule); margin:2.5rem 0 0; }
+  @media (prefers-reduced-motion:reduce) {
+    * { animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+  }
+  html { scroll-behavior:smooth; scroll-padding-top:3.6rem; }
+</style>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a class="chip" href="#personnes">Camille &amp; Inès</a>
+    <a class="chip" href="#p1">P1 · chaîne complète</a>
+    <a class="chip" href="#p2">P2 · sans les rushes</a>
+    <a class="chip" href="#p3">P3 · scan cassé</a>
+    <a class="chip" href="#p4">P4 · arrêt planche</a>
+    <a class="chip" href="#p5">P5 · composer</a>
+    <a class="chip" href="#ouvert">Ce qui reste</a>
+  </div>
+</nav>
+
+<div class="wrap" id="content">
+
+  <header class="masthead">
+    <p class="eyebrow">Epic 7 · Application GUI · Parcours utilisateurs · v2</p>
+    <h1>Parcours Camille &amp; Inès</h1>
+    <p class="standfirst">Deuxième version, réécrite après tes 38 notes. La chaîne compte maintenant des points de jugement avant écriture, P2 ne passe plus de coup de téléphone, et P5 ne choisit plus une version — il en compose une.</p>
+    <div class="meta">
+      <span>2026-08-17</span>
+      <span>branche oc/epic-7-ux</span>
+      <span>7 arbitrages tranchés</span>
+    </div>
+  </header>
+
+  <div class="storage-alarm" id="alarm">
+    <span>
+      <span class="lbl">Ce navigateur ne conserve rien</span>
+      <p>Tes notes ne survivront pas à la fermeture de cette page. <strong>Exporte régulièrement</strong> — le bouton en bas te donne le texte, à copier ou à enregistrer. C'est exactement le défaut qui t'a fait perdre la première relecture&nbsp;; cette fois, au moins, tu le sais.</p>
+    </span>
+  </div>
+
+  <div class="hint" id="hint">
+    <span><strong>Touche n'importe quel paragraphe</strong> pour y attacher une note. En bas&nbsp;: l'index, l'export et la reprise. L'état de sauvegarde est affiché en permanence à droite de la barre.</span>
+    <button type="button" id="hint-close">OK</button>
+  </div>
+
+  <div class="note-block nb-new">
+    <span class="lbl">Ce qui a changé depuis la version 1</span>
+    <p><strong>P1</strong> gagne deux points de jugement avant écriture. <strong>P2</strong> part d'un projet transmis et ne demande plus la cadence source. <strong>P3</strong> se termine sur la relecture en mouvement. <strong>P5</strong> est refait&nbsp;: le climax n'est plus de choisir une version mais de <strong>composer un lot</strong>. Les passages neufs sont signalés <span class="pill p-new">nouveau</span>.</p>
+  </div>
+
+  <!-- ============ PROTAGONISTES ============ -->
+  <section id="personnes" data-sec="Protagonistes">
+    <h2>Qui travaille</h2>
+    <div class="people">
+      <article class="person ann">
+        <p class="name">Camille</p>
+        <p class="role">Cinéaste</p>
+        <p>C'est son film. Elle pilote les arbitrages de rendu et elle porte le geste&nbsp;: c'est elle qui peint, plie, découpe les planches imprimées.</p>
+        <p>Elle sait que les <strong>lectures techniques de la planche doivent rester intactes</strong> et se limite à l'espace réservé de chaque frame. Cette contrainte, elle l'a intégrée comme un cadre de travail&nbsp;; ce n'est pas l'interface qui la lui impose.</p>
+      </article>
+      <article class="person ann">
+        <p class="name">Inès</p>
+        <p class="role">Monteuse</p>
+        <p>Elle travaille sur <strong>sa propre station</strong>, et dispose généralement des rushes natifs — le disque du projet circule entre elles.</p>
+        <p>Mais à certains moments elle n'a pas le disque&nbsp;: elle reçoit alors le projet et les scans, et doit pouvoir travailler quand même. C'est souvent elle qui <strong>prépare le projet pour et avec Camille</strong>.</p>
+      </article>
+    </div>
+
+    <p class="ann" style="margin-top:1rem;"><span class="pill p-new">nouveau</span> <strong>Et autour d'elles.</strong> Les autres membres de la chaîne de post-production, Egan compris. Puis, à terme, <strong>le public — des vidéastes</strong>, quand le dépôt s'ouvrira.</p>
+
+    <div class="note-block nb-open ann">
+      <span class="lbl">Ce que cet élargissement impose</span>
+      <p>Un outil qui tient parce qu'Egan est joignable n'est pas le même produit qu'un outil que des vidéastes prennent en main seuls. Le <strong>tutoriel dynamique est hors v1</strong> — l'apprentissage se conçoit sur une interface arrêtée.</p>
+      <p>Mais <strong>l'exigence reste</strong>, et elle pèse sur tout ce qui suit&nbsp;: choix par défaut partout, paramétrage avancé dans les Préférences, et un point de jugement avant chaque écriture. Ce n'est pas un tutoriel qui rendra l'outil prenable en main — c'est de ne jamais laisser quelqu'un fabriquer quelque chose qu'il n'a pas d'abord regardé.</p>
+    </div>
+
+    <h3>Ce que le projet contient, et ce qu'il ne contient pas</h3>
+    <p class="ann"><strong>Les rushes ne bougent pas.</strong> Ils restent à leur place sur le disque&nbsp;; l'outil ne collecte que leur <strong>chemin d'accès</strong>, et sait les <strong>relinker</strong> si cet emplacement change.</p>
+    <p class="ann"><strong>Le dossier de travail ne contient que ce que mmu produit</strong>&nbsp;: frames extraites, scans, frames reconstruites à partir des scans, exports, calibrations. Rien d'autre.</p>
+    <p class="ann">Le chutier, lui, est un espace de travail&nbsp;: elles peuvent y <strong>créer des dossiers</strong> pour organiser leurs rushes («&nbsp;séquence 3&nbsp;»). Ces dossiers n'existent que dans le chutier et ne se reflètent <strong>jamais</strong> dans le dossier de travail.</p>
+    <p class="ann">Le plus souvent elles travaillent sur le <strong>disque du projet</strong>, qui circule. Un projet peut totaliser des <strong>centaines de pages</strong>, et le scan est parfois fait <strong>chez un prestataire</strong> qui renvoie tout en vrac.</p>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ P1 ============ -->
+  <section id="p1" data-sec="P1 — Chaîne complète">
+    <article class="planche">
+      <span class="reg-b"></span>
+      <div class="planche-head"><p class="planche-id">P1</p><h2>La chaîne complète, d'extract à encode</h2></div>
+
+      <p class="situation ann"><strong>Situation.</strong> Camille veut faire passer par le papier un plan de 4 secondes tourné en 25 fps — cent images. <span class="pill p-new">nouveau</span> Ce n'est pas forcément un rush entier&nbsp;: elle peut tout aussi bien <strong>extraire quatre secondes du montage en cours</strong>. Le disque du projet est chez Inès&nbsp;; Camille est à côté d'elle.</p>
+
+      <ol class="steps">
+        <li class="ann">Inès lance l'application. L'<strong>écran de gestion de projet</strong> s'ouvre — il s'ouvre toujours au lancement. Elle crée un projet et désigne le dossier de travail.</li>
+        <li class="ann">L'atelier <strong>Extraction</strong> s'ouvre, chutier vide à gauche. Inès ajoute le rush — <span class="pill p-new">nouveau</span> par la boîte de dialogue du système ou en le glissant dans le chutier, plusieurs à la fois si besoin. Le rush n'est <strong>pas copié</strong>&nbsp;: seul son chemin est retenu.</li>
+        <li class="ann">Le bandeau du haut affiche ce qu'il a lu du rush&nbsp;: source, résolution, cadence, durée. Le panneau du bas est <strong>prérempli</strong>. Rien n'est en rouge&nbsp;: aucune métadonnée essentielle ne manque.</li>
+        <li class="ann">Camille veut voir. Inès bascule en <strong>mode vidéo</strong> et lit le plan. Puis en <strong>mode galerie</strong>. Camille active le toggle des <strong>frames supprimées</strong> — elles apparaissent en grisé au milieu des retenues, et elle voit d'un coup ce qui saute.</li>
+        <li class="ann">Elles posent les bornes sur les cent images du plan, image par image dans le <strong>bus de transport</strong>, puis au timecode exact dans les champs prévus.</li>
+        <li class="ann">Cadence cible&nbsp;: l'originale par défaut. Camille veut la moitié — 12,5&nbsp;fps, cinquante images à peindre plutôt que cent. Profondeur&nbsp;: 16 bits, non discutée.</li>
+        <li class="ann">Inès clique <strong>Extract</strong>. Une fenêtre de confirmation liste les cadences retenues — on peut en lancer plusieurs en une passe — <span class="pill p-new">nouveau</span> et <strong>annonce l'espace disque requis</strong>.</li>
+        <li class="ann">Une <strong>carte de progression</strong> apparaît dans le panneau latéral&nbsp;: fonction, nom du lot, frames/total, temps passé et restant. L'extraction tourne <strong>en arrière-plan</strong>.</li>
+        <li class="ann">La carte passe au <strong>vert</strong>. Le lot apparaît <strong>sous son rush</strong>. Un bouton ouvre le dossier des frames — dossier seul, puisqu'il s'agit de fichiers multiples.</li>
+        <li class="ann">Inès clique sur le lot et arrive sur l'atelier <strong>Pdf</strong>, ce lot déjà ouvert. Même chutier&nbsp;: rush &gt; lots &gt; planches.</li>
+        <li class="ann">Réglages&nbsp;: 6 frames par page, format A4. <span class="pill p-new">nouveau</span> La <strong>marge de travail est à 0 par défaut</strong>&nbsp;; c'est éventuellement Camille qui en demande. L'orientation est décidée automatiquement.</li>
+        <li class="ann">L'<strong>aperçu est vivant</strong>&nbsp;: chaque réglage redessine la planche sous leurs yeux. Elles peuvent demander <strong>plusieurs dispositions</strong>, et choisissent laquelle prévisualiser.</li>
+        <li class="ann">Camille clique <strong>planche de calibration</strong>. <span class="pill p-new">nouveau</span> Le mini-dialogue lui demande <strong>le nom du scanner cible</strong>, rien de plus — le reste sera demandé au scan.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> Génération&nbsp;: <strong>une planche est générée</strong> pour ce lot dans cette disposition. Elle fait neuf pages, la dernière n'en portant que deux, mais c'est <strong>une planche composée de pages</strong>, donc <strong>un seul PDF</strong>. Deux PDF au total avec la calibration.</li>
+        <li class="ann pause"><strong>Trois semaines passent.</strong> Camille peint, plie, découpe — dans les cadres, sans jamais toucher les angles ni le QR. Le prestataire numérise à 600&nbsp;dpi.</li>
+        <li class="ann">Atelier <strong>Scan</strong>. Elle dépose le scan de la planche de calibration et clique <strong>calibration scanner</strong>. <span class="pill p-new">nouveau</span> On lui demande le <strong>nom du scanner</strong>, le <strong>dpi</strong>, le <strong>format</strong>, et on l'invite à <strong>laisser un commentaire</strong> pour identifier ses réglages.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> Elle dépose les scans des planches. <strong>Rien ne se lance tout seul</strong>&nbsp;: un bouton <strong>Détecter</strong> apparaît au niveau du <strong>chutier</strong>, et elle continue à charger des fichiers pendant ce temps. Elle <strong>coche ce qu'elle envoie</strong>.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> La détection part. Des <strong>cartes «&nbsp;détection&nbsp;»</strong> se forment en file d'attente. À la fin de chacune, <strong>on sait tout de suite si le lot est complet</strong> — code couleur dans le chutier.</li>
+        <li class="ann">En <strong>mode PDF</strong>, la page s'affiche avec ses surimpressions&nbsp;: marqueurs détectés, QR décodé au vert, position de chaque frame. La peinture est là, la géométrie tient dessous. <strong>Rien n'a encore été écrit sur le disque.</strong></li>
+        <li class="ann">Elle active la calibration couleur et choisit son profil. Le rendu change à l'écran&nbsp;; elle bascule plusieurs fois pour juger.</li>
+        <li class="ann">En <strong>mode galerie</strong>, les frames retrouvées se rangent par timecode. Aucune n'est en rouge.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> Elle passe en <strong>mode lecteur</strong> — le troisième mode de l'atelier Scan. Le lot se relit <strong>à sa cadence cible</strong>, en qualité temporaire. Le lot étant complet, elle a <strong>l'aperçu du rendu final avant d'avoir écrit une seule frame</strong>. Elle regarde. C'est bon.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> Alors seulement elle lance l'<strong>extraction</strong>&nbsp;: les TIFF s'écrivent, une tâche par planche. Les réglages du bas se limitent au dpi et au profil de calibration.</li>
+        <li class="ann">Atelier <strong>Exports</strong>. Le lot reconstruit est là. <span class="pill p-new">nouveau</span> Elle le visionne&nbsp;: <strong>la cadence cible est sélectionnée par défaut</strong>, elle peut en changer si elle veut.</li>
+        <li class="ann">Le rush original est sur le disque&nbsp;: le lecteur lui propose le <strong>son du rush</strong> et le <strong>balayage</strong>. Elle tire le wipe.</li>
+        <li class="ann climax"><span class="climax-tag">Climax</span>On glisse, et l'image se transforme sous le curseur — à gauche l'image tournée, à droite la même passée par la gouache et par le scanner. <span class="pill p-new">nouveau</span> Elle met en pause, rejoue <strong>image par image</strong>, coupe et remet le wipe <strong>d'un clic</strong>. Le geste de la main est entré dans le plan, et elle peut l'inspecter frame à frame.</li>
+        <li class="ann">Réglages d'export&nbsp;: résolution, cadence, profil. Taille estimée, nom de fichier et destination prévisionnels s'affichent. Elle enregistre un <strong>preset</strong>.</li>
+        <li class="ann">Elle lance l'export. La previz se bloque pendant l'encodage. Carte de progression, vert, deux boutons&nbsp;: dossier, fichier.</li>
+      </ol>
+
+      <div class="note-block nb-new ann">
+        <span class="lbl">Ce que le parcours a gagné à ta relecture</span>
+        <p>La chaîne compte désormais <strong>deux points de jugement avant écriture</strong>&nbsp;: l'aperçu vivant de la planche avant de générer le PDF, et le mode lecteur avant d'extraire les TIFF. <strong>L'outil ne fabrique rien qu'on n'ait d'abord regardé.</strong></p>
+      </div>
+
+      <div class="note-block nb-warn ann">
+        <span class="lbl">Échec à mi-parcours</span>
+        <p>Si le lot existe déjà au moment du clic «&nbsp;extraire les lots&nbsp;», l'erreur se lève <strong>là</strong>, pas dans la fenêtre de confirmation.</p>
+      </div>
+
+      <div class="surfaces ann">
+        <span class="lbl">Surfaces exercées</span>
+        Gestion de projet · Extraction (chutier, ajout par dialogue ou glisser-déposer, previz vidéo + galerie, transport, confirmation avec espace disque) · Pdf (dispositions multiples, aperçu vivant, calibration) · Scan (détection depuis le chutier, previz PDF + galerie + lecteur, extraction) · Exports (previz, wipe inspectable, presets) · Panneau latéral
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ P2 ============ -->
+  <section id="p2" data-sec="P2 — Sans les rushes">
+    <article class="planche">
+      <span class="reg-b"></span>
+      <div class="planche-head"><p class="planche-id">P2</p><h2>Reprendre sans les rushes</h2></div>
+
+      <p class="situation ann"><strong>Situation.</strong> Inès est chez elle. Le disque des rushes est resté chez Camille. <span class="pill p-new">nouveau</span> Mais <strong>on lui a transmis le projet</strong>&nbsp;: elle le charge et retrouve la structure — rushes déclarés, lots, planches — sans les médias. Puis les scans arrivent.</p>
+
+      <div class="note-block nb-new ann">
+        <span class="lbl">Ce que ta relecture a changé</span>
+        <p>J'avais écrit ce parcours en supposant un projet vide reconstruit de zéro depuis les scans. <strong>Ce n'est pas le cas nominal.</strong> Le cas nominal, c'est le projet transmis. La reconstruction depuis les seuls scans reste le filet, mais n'est plus l'histoire principale.</p>
+      </div>
+
+      <ol class="steps">
+        <li class="ann">Inès <strong>ouvre le projet qu'on lui a transmis</strong>. Il se charge&nbsp;: les rushes déclarés, les lots extraits, les planches générées.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> Dans les chutiers, les rushes apparaissent <strong>en rouge</strong>&nbsp;: déclarés, mais absents de cette machine. Pas de badge, pas de mention particulière — <strong>le code couleur suffit</strong>.</li>
+        <li class="ann">Elle va à l'atelier <strong>Scan</strong>, dépose les scans reçus, coche ce qui part et lance la <strong>détection</strong> depuis le chutier.</li>
+        <li class="ann">Les QR sont lus. Les lots qu'elle voyait déjà se peuplent de leurs pages. Les cartes passent au vert, le lot est annoncé complet.</li>
+        <li class="ann">Elle regarde en <strong>galerie</strong>, puis en <strong>mode lecteur</strong>&nbsp;: le lot se relit à sa cadence cible. C'est un aperçu, pas le rendu final — mais assez pour juger.</li>
+        <li class="ann">Elle lance l'<strong>extraction</strong>. Les TIFF s'écrivent.</li>
+        <li class="ann">Elle passe à <strong>Exports</strong> et visionne à la cadence cible.</li>
+        <li class="ann">Le lecteur ne lui propose <strong>ni le son, ni le balayage</strong>&nbsp;: le rush n'est pas sur cette machine. <span class="pill p-new">nouveau</span> <strong>Si Camille le lui envoie par ailleurs</strong>, elle peut le <strong>relinker</strong> — le rouge s'éteint, le son et le wipe reviennent.</li>
+        <li class="ann">Elle règle résolution, cadence, profil, et lance l'encodage.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> <strong>L'outil ne lui demande rien.</strong> La cadence source, le QR la porte désormais&nbsp;; les timecodes de chaque frame y étaient déjà. Elle n'a personne à appeler.</li>
+        <li class="ann climax"><span class="climax-tag">Climax</span>Le master s'écrit, à la cadence source, timecodes réinjectés. Un film reconstruit à partir de feuilles de papier numérisées, sur une machine qui n'a jamais vu le rush — <strong>et sans qu'aucun coup de téléphone n'ait été nécessaire.</strong></li>
+      </ol>
+
+      <div class="note-block nb-crit ann">
+        <span class="lbl">Dépendance</span>
+        <p>L'étape 10 décrit la cible, pas le produit d'aujourd'hui. Elle repose sur l'arbitrage du 2026-08-17&nbsp;: la cadence source entre dans le payload, qui passe en <strong>version 2.1 avec un lecteur bi-format</strong> pour que les planches déjà imprimées restent scannables. Tant que cette story n'est pas livrée, l'encodage exige une saisie manuelle — le coup de téléphone que tu veux supprimer.</p>
+      </div>
+
+      <div class="note-block nb-open ann">
+        <span class="lbl">Ce que le projet ne portera toujours pas</span>
+        <p>Même avec la cadence source au QR, un projet né du scan seul ne porte ni la résolution source, ni la politique d'arrondi, ni l'empreinte de sélection. <strong>Ce n'est pas un manque à combler, c'est une propriété du document</strong> — et tu le dis toi-même, la résolution «&nbsp;n'est pas tant le sujet&nbsp;».</p>
+      </div>
+
+      <div class="surfaces ann">
+        <span class="lbl">Surfaces exercées</span>
+        Gestion de projet (ouverture d'un projet transmis) · Chutiers (rushes déclarés absents, en rouge&nbsp;; relink) · Scan (dépôt, détection, galerie, lecteur, extraction) · Exports (previz sans son ni wipe, puis avec après relink)
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ P3 ============ -->
+  <section id="p3" data-sec="P3 — Scan défectueux">
+    <article class="planche">
+      <span class="reg-b"></span>
+      <div class="planche-head"><p class="planche-id">P3</p><h2>Un scan qui ne passe pas</h2></div>
+
+      <p class="situation ann"><strong>Situation.</strong> Suite de P1. Sur les neuf pages, une résiste&nbsp;: Camille a plié la page 4 pour travailler un raccord, et le pli passe en travers du QR. <em>C'est la contrepartie assumée d'un outil qui laisse l'artiste maltraiter le support.</em></p>
+
+      <ol class="steps">
+        <li class="ann"><span class="pill p-new">nouveau</span> La détection tourne. Le lot ressort <strong>incomplet</strong>&nbsp;: le code couleur le dit dès la fin de la tâche, <strong>avant toute écriture</strong>.</li>
+        <li class="ann">Camille ouvre la <strong>galerie</strong>. <strong>Six images sont en rouge</strong> — elles manquent, elles correspondent à une page.</li>
+        <li class="ann">Elle clique sur une image rouge. L'outil la renvoie à la <strong>vue PDF, sur la page concernée</strong>.</li>
+        <li class="ann">Les quatre marqueurs sont détectés, la page est bien lue géométriquement. Mais la <strong>position du QR est marquée comme non décodée</strong> — et sans QR, l'outil ne sait pas quelles frames sont censées être là.</li>
+        <li class="ann">Elle clique sur le QR. Un formulaire demande ce que le code aurait dit&nbsp;: frames par page, numéro de page, identifiant du lot, timecodes de la première et de la dernière image.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> <strong>L'interface ne la laisse pas chercher.</strong> Ces informations sont imprimées en clair sur la planche, et l'outil <strong>sait où</strong>&nbsp;: à mesure qu'elle passe d'un champ à l'autre, la zone correspondante du scan est <strong>pointée à l'écran</strong>. Elle lit, elle recopie. Un <strong>zoom</strong> est proposé si la peinture gêne.</li>
+        <li class="ann">Le QR complété, l'outil détecte les zones. Cinq des six tombent juste&nbsp;; la sixième est de travers — le pli a déplacé le coin.</li>
+        <li class="ann">Elle clique dans cette zone. Quatre poignées apparaissent. Elle tire le coin fautif&nbsp;; le <strong>mode loupe</strong> s'active tout seul, elle règle au pixel.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> Elle relance la <strong>détection</strong> sur cette page. Pas le lot, pas l'extraction&nbsp;: <strong>la détection de cette page</strong>.</li>
+        <li class="ann">Retour en galerie&nbsp;: le rouge a disparu, le lot est annoncé complet.</li>
+        <li class="ann climax"><span class="climax-tag">Climax</span><span class="pill p-new">nouveau</span> Elle passe en <strong>mode lecteur</strong> et relit le lot entier à sa cadence. Les cinquante frames défilent et <strong>la peinture d'une page pliée passe comme les autres</strong>. C'est là qu'elle sait que la réparation a tenu — <strong>pas sur une pastille verte, sur le mouvement</strong>.</li>
+        <li class="ann">Elle lance l'extraction, puis part vers Exports.</li>
+      </ol>
+
+      <p class="subhead">Deuxième défaut, d'une autre nature</p>
+      <ol class="steps" style="counter-reset:s 12;">
+        <li class="ann">En parcourant la galerie, elle trouve une image dont les couleurs partent — trop froide. Ce n'est pas une frame manquante&nbsp;: elle est là, elle est mal calibrée.</li>
+        <li class="ann">Plein écran, zoom, bouton <strong>éditer</strong> → la page PDF correspondante.</li>
+        <li class="ann">Elle bascule le profil de calibration&nbsp;: le rendu change. Elle en essaie un autre. Le bon revient.</li>
+        <li class="ann">Elle relance la détection de <strong>cette page</strong>, avec ce profil.</li>
+      </ol>
+
+      <div class="note-block nb-open ann">
+        <span class="lbl">Acquis de conception</span>
+        <p>Une image absente et une image de remplacement <strong>ne sont pas la même chose</strong>. Quand une page est là mais que sa géométrie a échoué, le produit pose une <strong>mire de remplacement</strong>&nbsp;; le lot n'est alors pas complet, même si aucune page ne manque.</p>
+        <p>Le rouge de la galerie dit «&nbsp;il n'y a rien ici&nbsp;»&nbsp;; la mire dit «&nbsp;il y a quelque chose ici, mais ce n'est pas ton image&nbsp;». L'interface ne doit pas les fondre en un seul indicateur.</p>
+      </div>
+
+      <div class="note-block nb-warn ann">
+        <span class="lbl">Reporté</span>
+        <p>La <strong>lecture automatique</strong> des informations imprimées — champs préremplis par reconnaissance de caractères — part en <code>deferred-work.md</code>. Motif&nbsp;: c'est une brique à fiabiliser sur du papier peint, et <strong>un champ prérempli faux est plus dangereux qu'un champ vide, parce qu'il n'appelle pas la vérification</strong>. Le pointage suffit à rendre la réparation praticable.</p>
+      </div>
+
+      <div class="surfaces ann">
+        <span class="lbl">Surfaces exercées</span>
+        Scan mode PDF (surimpression, formulaire QR avec pointage et zoom, édition des quatre coins, loupe, relance de détection sur une page) · Scan galerie (rouge, plein écran, renvoi) · Scan lecteur (vérification par la relecture) · Bascule de profil
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ P4 ============ -->
+  <section id="p4" data-sec="P4 — Arrêt à la planche">
+    <article class="planche">
+      <span class="reg-b"></span>
+      <div class="planche-head"><p class="planche-id">P4</p><h2>S'arrêter à la planche, et revenir</h2></div>
+
+      <p class="situation ann"><strong>Situation.</strong> Inès a généré la planche. À partir de là, plus rien ne dépend de l'ordinateur&nbsp;: c'est Camille qui prend, avec ses mains, pour trois semaines. <em>Ce parcours ne produit rien de neuf. Il teste si l'outil sait attendre, et s'il sait dire où on en est quand on revient.</em></p>
+
+      <ol class="steps">
+        <li class="ann">Inès finit la génération. Une carte verte, <strong>un PDF</strong>, dans un dossier au nom du lot.</li>
+        <li class="ann">Elle clique le bouton <strong>dossier</strong>&nbsp;: le dossier s'ouvre dans le système. Elle envoie le PDF à l'imprimeur.</li>
+        <li class="ann pause"><strong>Elle ferme l'application.</strong> C'est ici que le parcours devient intéressant.</li>
+        <li class="ann">Trois semaines plus tard, Camille rapporte les planches peintes. Le prestataire les numérise.</li>
+        <li class="ann">Inès rouvre l'application. L'écran de gestion de projet s'affiche, <strong>le dernier projet ouvert en tête</strong>.</li>
+        <li class="ann climax"><span class="climax-tag">Climax</span>Le chutier lui dit exactement où elle en était <strong>sans qu'elle ait à se souvenir</strong>. Sous le rush, le lot&nbsp;; sous le lot, la planche générée, et rien après. La chaîne est visiblement arrêtée à l'étape «&nbsp;planche produite&nbsp;». Elle n'a pas besoin de se demander si elle avait lancé le scan.</li>
+        <li class="ann">Elle passe à Scan et dépose les scans. La chaîne repart.</li>
+      </ol>
+
+      <p class="subhead">Le prestataire renvoie tout en vrac</p>
+      <ol class="steps" style="counter-reset:s 7;">
+        <li class="ann">Ce qui revient n'est pas rangé&nbsp;: plusieurs centaines de pages à plat, mêlant plusieurs lots et parfois plusieurs projets. Il n'a pas trié — ce n'est pas son métier.</li>
+        <li class="ann">Inès désigne <strong>le dossier entier</strong>. L'outil lit tous les QR, <strong>range chaque page sous le lot auquel elle appartient</strong>, et met à part ce qu'il n'a pas su rattacher.</li>
+        <li class="ann">Elle coche les lots à traiter et lance la détection. Le vrac est devenu une arborescence.</li>
+      </ol>
+
+      <div class="note-block nb-crit ann">
+        <span class="lbl">Dépendance</span>
+        <p>Les étapes 9 et 10 décrivent la cible. Le produit d'aujourd'hui ingère <strong>un document à la fois</strong>, sans tri par QR — l'information est dans les QR, la fonction n'existe pas. Ton arbitrage&nbsp;: <strong>c'est une story d'Epic 5 en amont</strong>, pas une boucle dans la GUI. Le tri devient une fonction du cœur, la CLI en bénéficie aussi.</p>
+      </div>
+
+      <div class="surfaces ann">
+        <span class="lbl">Surfaces exercées</span>
+        Pdf (cartes finies, bouton dossier) · Gestion de projet (dernier projet en tête) · Chutier comme <strong>état d'avancement lisible</strong> — un rôle qu'aucun autre parcours ne sollicite aussi directement · Scan (ingest d'un dossier en vrac, rattachement par QR, panier des non-rattachés)
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ P5 ============ -->
+  <section id="p5" data-sec="P5 — Composer">
+    <article class="planche">
+      <span class="reg-b"></span>
+      <div class="planche-head"><p class="planche-id">P5</p><h2>Essayer, refaire, composer</h2></div>
+
+      <p class="situation ann"><strong>Situation.</strong> Camille ne sait pas encore comment elle veut traiter ce plan. Le papier coûte du temps mais presque rien à réimprimer — et <strong>rien ne l'oblige à écrire des frames tant qu'elle n'est pas contente</strong>.</p>
+
+      <div class="note-block nb-new ann">
+        <span class="lbl">Ce que ta relecture a changé</span>
+        <p>J'avais écrit «&nbsp;deux passes, elle en choisit une&nbsp;». C'est trop simple. Le vrai scénario est un cycle d'essais où <strong>rien ne s'écrit tant que l'aperçu ne convainc pas</strong>, et il se termine sur un besoin que personne n'avait formulé&nbsp;: <strong>composer un lot hybride</strong> en mêlant les frames réussies de deux passes.</p>
+      </div>
+
+      <ol class="steps">
+        <li class="ann">Camille extrait son plan à <strong>deux cadences</strong> en une passe — 12,5 et 25 — sur les mêmes bornes. Deux lots sous le même rush. <span class="pill p-ok">livré</span></li>
+        <li class="ann">Sur l'atelier Pdf elle coche les deux lots et demande deux dispositions&nbsp;: 6 frames par page pour l'un, 12 pour l'autre. <span class="pill p-ok">livré</span></li>
+        <li class="ann">Elle imprime, elle peint. Les deux traitements ne se ressemblent pas — c'est le but.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> Elle scanne, lance la <strong>détection</strong>, <strong>visionne l'aperçu</strong> en mode lecteur. <strong>Elle n'aime pas ce qu'elle a fait sur le premier lot.</strong> Elle n'extrait pas. Rien n'a été écrit.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> Elle <strong>réimprime la même planche</strong> — deuxième tirage — la retravaille autrement, et la rescanne. Un deuxième fichier arrive <strong>sous le même lot</strong>. Elle pourrait aussi réimprimer avec une <strong>disposition plus grande</strong>, 2 frames par page au lieu de 4.</li>
+        <li class="ann"><strong>Ici le produit bloque.</strong> Une seconde passe sur le même lot est <strong>refusée</strong> — planche périmée — et aucune option ne lève le refus. <span class="pill p-crit">non livré</span></li>
+        <li class="ann"><span class="pill p-new">nouveau</span> <strong>Ce que le parcours demande.</strong> L'interface <strong>ne refuse pas</strong>&nbsp;: elle propose de <strong>garder une nouvelle version</strong>. Camille peut aussi choisir d'<strong>écraser</strong> les frames existantes — mais l'outil <strong>ne le force jamais</strong> et <strong>avertit que c'est destructeur</strong>.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> Elle compare. Pas de côte à côte&nbsp;: elle visionne <strong>l'un après l'autre</strong>, et un outil <strong>comparer</strong> la fait basculer d'une version à l'autre <strong>au même timecode</strong>, sans perdre son point de lecture.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> Sur les neuf pages du lot, elle n'en a refait que trois. Le deuxième scan n'apporte donc pas un lot entier&nbsp;: il apporte <strong>des candidats</strong> pour les frames de ces trois pages. Partout ailleurs, un seul candidat, rien à décider.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> Elle tranche <strong>en bloc</strong>, d'un geste&nbsp;: <em>les frames du second scan l'emportent partout où elles font doublon.</em> Les six autres pages ne bougent pas. C'est le cas courant, et c'est <strong>une seule décision</strong>.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> Mais sur deux frames, elle hésite. Elle clique dessus <strong>dans la galerie</strong>&nbsp;: les candidats s'affichent côte à côte. Elle garde le premier sur l'une, le second sur l'autre. Son choix en bloc ne bouge pas.</li>
+        <li class="ann"><span class="pill p-new">nouveau</span> Elle repasse en <strong>mode lecteur</strong>. Le lot composé se relit à sa cadence, avec exactement les frames qu'elle vient de désigner — <strong>le montage de ses deux passes en mouvement</strong>, pas en vignettes.</li>
+        <li class="ann climax"><span class="climax-tag">Climax</span>Ce n'est plus «&nbsp;choisir une version&nbsp;», c'est <strong>monter les deux</strong>. Le lot est unique, complet, composite — et l'outil ne l'a laissée composer que parce qu'il <strong>reste complet</strong>&nbsp;: aucune frame n'a disparu en chemin, et aucun choix ne pouvait en faire disparaître une.</li>
+        <li class="ann">Elle exporte. Le master porte le lot composé, et la composition est inscrite dans le projet&nbsp;: elle survit au disque qui change de main. Les candidats non retenus <strong>restent là</strong> — trancher n'a rien supprimé.</li>
+      </ol>
+
+      <p class="subhead">Ce que ce parcours demande au produit</p>
+
+      <div class="note-block nb-crit ann">
+        <span class="lbl">1 · Autoriser la seconde passe</span>
+        <p>Aujourd'hui refusée. La story existe, spécifiée et prête à développer. Le comportement voulu est celui de l'étape 7&nbsp;: nouvelle version proposée, écrasement possible mais jamais forcé, avertissement explicite.</p>
+      </div>
+
+      <div class="note-block nb-crit ann">
+        <span class="lbl">2 · Dater les passes</span>
+        <p>Le manifest <strong>interdit</strong> aujourd'hui toute date dans la section de scan — une horodate casserait la reproductibilité octet à octet. <strong>Cet arbitrage est défait</strong>&nbsp;: la date est voulue, et la story qui la porte existe déjà. Tant qu'elle n'est pas développée, l'interface ne peut pas trier deux passes par ancienneté, et tout affichage du type «&nbsp;dernière version&nbsp;» serait faux.</p>
+      </div>
+
+      <div class="note-block nb-new ann">
+        <span class="lbl">3 · Composer un lot hybride — ta conception</span>
+        <p>Le modèle tient en un mot&nbsp;: <strong>candidat</strong>. Plusieurs scans d'un même lot produisent, pour une même frame, plusieurs candidats. Composer, c'est choisir lequel est retenu — <strong>jamais supprimer</strong>.</p>
+        <p><strong>L'invariant, garde centrale de la fonction&nbsp;:</strong> le lot doit <strong>rester ou devenir complet</strong>. L'interface ne doit pas laisser <em>construire</em> un choix qui ferait disparaître une frame.</p>
+        <p><strong>Deux grains.</strong> Le geste courant est <strong>en bloc, par scan</strong> — une décision pour trois pages refaites. Le grain fin est la <strong>frame</strong>, sans défaire le bloc.</p>
+        <p><strong>Où&nbsp;:</strong> on compare les candidats depuis la <strong>galerie</strong>, on vérifie en <strong>mode lecteur</strong>, en mouvement, avant d'exporter.</p>
+        <p><strong>Nommage&nbsp;:</strong> une icône (ou la mention <strong>composite</strong>), puis <strong>le nom du lot — commun aux deux scans</strong> — puis une <strong>date</strong>. Ce choix dit quelque chose de fort&nbsp;: <strong>le lot ne change pas d'identité en étant composé.</strong> Une composition est une <em>variante datée d'un lot</em>, pas un nouveau lot. C'est ce qui permet au chutier de garder son arborescence sans qu'une branche parallèle apparaisse à chaque essai.</p>
+      </div>
+
+      <div class="note-block nb-warn ann">
+        <span class="lbl">Les deux stories se tiennent</span>
+        <p>Le nommage repose sur la date, donc sur la story qui ouvre une date au manifest. Sans elle, un lot composé n'a pas de nom — et deux compositions successives du même lot seraient indistinguables.</p>
+      </div>
+
+      <div class="surfaces ann">
+        <span class="lbl">Surfaces exercées</span>
+        Extraction (cadences multiples) · Pdf (multi-lots, dispositions multiples, second tirage) · Scan (dialogue de version au dépôt, previz native, lecteur, comparaison au même timecode, <strong>choix des candidats depuis la galerie</strong>) · Chutier (deux lots sous un rush&nbsp;: livré ; deux passes et un lot composé&nbsp;: à créer) · Exports
+      </div>
+    </article>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ CE QUI RESTE ============ -->
+  <section id="ouvert" data-sec="Ce qui reste">
+    <h2>Ce qui reste ouvert</h2>
+
+    <h3>Les sept arbitrages tranchés</h3>
+    <div class="gap-row ann"><div class="gap-n">A</div><div class="gap-body">
+      <p><strong>Ingest en masse et en vrac</strong> → story d'Epic 5 en amont. Le tri par QR devient une fonction du cœur.</p></div></div>
+    <div class="gap-row ann"><div class="gap-n">B</div><div class="gap-body">
+      <p><strong>Désignation de la version</strong> → elle vit au manifest. Un contrat, donc Epic 5 avant Epic 7.</p></div></div>
+    <div class="gap-row ann"><div class="gap-n">C</div><div class="gap-body">
+      <p><strong>Cadence source</strong> → portée par le QR. Payload 2.1 <strong>avec lecteur bi-format</strong>, pour ne pas rejouer la rupture 1.0 → 2.0.</p></div></div>
+    <div class="gap-row ann"><div class="gap-n">D</div><div class="gap-body">
+      <p><strong>QR illisible</strong> → pointage des informations sur le scan. La lecture automatique part en deferred-work.</p></div></div>
+    <div class="gap-row ann"><div class="gap-n">E</div><div class="gap-body">
+      <p><strong>État « projet reconstruit »</strong> → pas de badge, le code couleur du délinké suffit.</p></div></div>
+    <div class="gap-row ann"><div class="gap-n">F</div><div class="gap-body">
+      <p><strong>Date de scan au manifest</strong> → voulue. L'arbitrage d'origine est explicitement défait.</p></div></div>
+    <div class="gap-row ann"><div class="gap-n">G</div><div class="gap-body">
+      <p><strong>Tutoriel dynamique</strong> → hors v1. L'exigence de facilité d'utilisation reste, la surface attend.</p></div></div>
+
+    <h3>Ce que ça coûte au planning</h3>
+    <p class="ann"><strong>Quatre stories d'Epic 5 passent devant l'Epic 7</strong>&nbsp;: tri par QR à l'ingest, désignation au manifest, payload 2.1 avec lecteur bi-format, et date de scan. Les spines peuvent décrire l'interface cible sans elles&nbsp;; les stories 7.x, non.</p>
+
+    <h3>Ce que les parcours confirment</h3>
+    <p class="ann">L'architecture d'information à quatre ateliers tient, et ta relecture l'a renforcée plutôt que déplacée. Une seule surface décidée le 2026-08-16 n'est toujours atteinte par aucun parcours&nbsp;: les <strong>Préférences</strong>, dont le contenu était déjà renvoyé à plus tard.</p>
+    <p class="ann">Le <strong>chutier commun</strong> ressort comme la pièce la plus sollicitée, et ta relecture l'a encore chargé&nbsp;: il est une source (P1), un état d'avancement lisible après trois semaines (P4), <strong>le lieu d'où l'on déclenche la détection</strong> (P1, P2, P3), un espace d'organisation avec ses propres dossiers, l'endroit où se lit le code couleur de complétude et le rouge d'un média absent, et le lieu où se poseraient les versions et le lot composé (P5). <strong>C'est le point où une erreur de conception coûterait le plus cher.</strong></p>
+  </section>
+
+</div>
+
+<div class="nudge" id="nudge">
+  <span id="nudge-text"></span>
+  <button type="button" id="nudge-go">Exporter</button>
+</div>
+
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <button type="button" id="btn-index">Mes notes</button>
+    <button type="button" id="btn-export">Exporter</button>
+    <button type="button" id="btn-import">Reprendre</button>
+    <span class="state">
+      <span class="count" id="count">0</span>
+      <span class="saved" id="saved">—</span>
+    </span>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<div class="sheet" id="sheet-note" role="dialog" aria-modal="true" aria-labelledby="note-title">
+  <div class="sheet-inner">
+    <div class="grabber"></div>
+    <p class="sheet-title" id="note-title">Note</p>
+    <blockquote class="quote" id="note-quote"></blockquote>
+    <textarea id="note-text" placeholder="Ta remarque sur ce passage…"></textarea>
+    <div class="sheet-actions">
+      <button type="button" class="primary" id="note-save">Enregistrer</button>
+      <button type="button" id="note-cancel">Annuler</button>
+      <button type="button" class="danger spacer" id="note-delete">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<div class="sheet" id="sheet-index" role="dialog" aria-modal="true" aria-labelledby="index-title">
+  <div class="sheet-inner">
+    <div class="grabber"></div>
+    <p class="sheet-title" id="index-title">Mes notes</p>
+    <div id="index-list"></div>
+    <div class="sheet-actions"><button type="button" id="index-close">Fermer</button></div>
+  </div>
+</div>
+
+<div class="sheet" id="sheet-export" role="dialog" aria-modal="true" aria-labelledby="export-title">
+  <div class="sheet-inner">
+    <div class="grabber"></div>
+    <p class="sheet-title" id="export-title">Exporter la relecture</p>
+    <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:.6rem;">Ce texte contient tes notes <em>et</em> le bloc qui permet de les recharger. Enregistre-le, copie-le, ou sélectionne-le à la main&nbsp;— les trois donnent le même résultat.</p>
+    <div class="sheet-actions" style="margin:0 0 .6rem;">
+      <button type="button" class="primary" id="ex-save">Enregistrer le fichier</button>
+      <button type="button" id="ex-copy">Copier</button>
+      <button type="button" id="ex-share" hidden>Partager</button>
+      <button type="button" id="ex-select">Tout sélectionner</button>
+    </div>
+    <textarea id="ex-text" readonly spellcheck="false" style="min-height:11rem;font-family:var(--f-mono);font-size:.78rem;line-height:1.5;"></textarea>
+    <p class="io-msg" id="ex-msg"></p>
+    <div class="sheet-actions"><button type="button" id="ex-close">Fermer</button></div>
+  </div>
+</div>
+
+<div class="sheet" id="sheet-io" role="dialog" aria-modal="true" aria-labelledby="io-title">
+  <div class="sheet-inner">
+    <div class="grabber"></div>
+    <p class="sheet-title" id="io-title">Reprendre une relecture</p>
+    <p style="font-size:.9rem;color:var(--ink-soft);">Choisis le fichier exporté précédemment, ou colle son contenu. Tes notes actuelles seront remplacées.</p>
+    <div class="drop"><input type="file" id="io-file" accept=".md,.markdown,.json,.txt,text/markdown,text/plain,application/json"></div>
+    <textarea id="io-paste" placeholder="…ou colle ici le contenu du fichier exporté"></textarea>
+    <p class="io-msg" id="io-msg"></p>
+    <div class="sheet-actions">
+      <button type="button" class="primary" id="io-load">Charger le collage</button>
+      <button type="button" id="io-close">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var KEY = "mmu-parcours-epic7-v3";
+  var FILENAME = "relecture-parcours-epic7-v2.md";
+  var NUDGE_AFTER = 5;   // notes non exportees avant rappel
+
+  var state = { notes: {}, hint: false };
+  var anchors = {};
+  var currentId = null;
+  var storageOk = null;      // null = pas encore teste
+  var lastSaved = null;      // horodatage de la derniere ecriture verifiee
+  var sinceExport = 0;       // notes posees depuis le dernier export
+
+  // ================= STOCKAGE VERIFIE =================
+  // Lecon de la premiere relecture : la page ecrivait sans jamais verifier,
+  // et une passe entiere a ete perdue en silence. Ici, toute ecriture est
+  // relue ; un echec s'affiche au lieu de se taire.
+
+  var mem = null;            // repli en memoire, toujours present
+
+  function backend() {
+    try {
+      if (window.localStorage) return window.localStorage;
+    } catch (e) {}
+    try {
+      if (window.sessionStorage) return window.sessionStorage;
+    } catch (e) {}
+    return null;
+  }
+
+  function probe() {
+    var b = backend();
+    if (!b) return false;
+    var k = "__mmu_probe__";
+    try {
+      b.setItem(k, "1");
+      var back = b.getItem(k);
+      b.removeItem(k);
+      return back === "1";
+    } catch (e) { return false; }
+  }
+
+  function persist() {
+    var payload = JSON.stringify({ notes: state.notes, hint: state.hint });
+    mem = payload;
+    var b = backend();
+    if (!b) { storageOk = false; paintState(); return false; }
+    try {
+      b.setItem(KEY, payload);
+      // relire : une ecriture qui ne se relit pas n'a pas eu lieu
+      if (b.getItem(KEY) !== payload) throw new Error("relecture divergente");
+      storageOk = true;
+      lastSaved = new Date();
+    } catch (e) {
+      storageOk = false;
+    }
+    paintState();
+    return storageOk;
+  }
+
+  function load() {
+    var b = backend();
+    if (!b) return;
+    try {
+      var raw = b.getItem(KEY);
+      if (!raw) return;
+      var p = JSON.parse(raw);
+      if (p && typeof p === "object") {
+        state.notes = p.notes || {};
+        state.hint = !!p.hint;
+      }
+    } catch (e) {}
+  }
+
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+
+  function paintState() {
+    var ids = orderedIds(), orph = orphanIds();
+    var n = ids.length + orph.length;
+    document.getElementById("count").textContent =
+      n === 0 ? "aucune note" : n + (n > 1 ? " notes" : " note");
+
+    var el = document.getElementById("saved");
+    el.className = "saved";
+    if (storageOk === false) {
+      el.classList.add("s-bad");
+      el.textContent = "non conservé";
+    } else if (storageOk === true && lastSaved) {
+      el.classList.add("s-ok");
+      el.textContent = "sauvé " + pad2(lastSaved.getHours()) + ":" + pad2(lastSaved.getMinutes());
+    } else {
+      el.classList.add("s-warn");
+      el.textContent = "—";
+    }
+    document.getElementById("alarm").classList.toggle("on", storageOk === false);
+
+    // rappel d'export : plus il y a a perdre, plus il insiste
+    var nudge = document.getElementById("nudge");
+    var seuil = storageOk === false ? 1 : NUDGE_AFTER;
+    if (sinceExport >= seuil) {
+      document.getElementById("nudge-text").textContent =
+        storageOk === false
+          ? sinceExport + (sinceExport > 1 ? " notes non sauvegardées." : " note non sauvegardée.")
+          : sinceExport + (sinceExport > 1 ? " notes depuis ton dernier export." : " note depuis ton dernier export.");
+      nudge.classList.add("on");
+    } else {
+      nudge.classList.remove("on");
+    }
+    document.getElementById("btn-export").classList.toggle("urgent", storageOk === false && n > 0);
+  }
+
+  // ================= ANCRES =================
+  function hash(str) {
+    var h = 5381, i;
+    for (i = 0; i < str.length; i++) { h = ((h << 5) + h + str.charCodeAt(i)) | 0; }
+    return (h >>> 0).toString(36);
+  }
+  function textOf(el) {
+    var c = el.cloneNode(true);
+    Array.prototype.forEach.call(c.querySelectorAll(".pin"), function (p) { p.remove(); });
+    return (c.textContent || "").replace(/\s+/g, " ").trim();
+  }
+  function truncate(s, n) { return s.length > n ? s.slice(0, n).replace(/\s+\S*$/, "") + "…" : s; }
+  function sectionOf(el) {
+    var sec = el.closest("section");
+    return sec ? (sec.getAttribute("data-sec") || sec.id || "?") : "?";
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".ann"), function (el) {
+    var txt = textOf(el);
+    if (!txt) return;
+    var base = hash(txt.slice(0, 90)), id = base, n = 1;
+    while (anchors[id]) { id = base + "-" + (++n); }
+    anchors[id] = el;
+    el.setAttribute("data-anchor", id);
+    el.setAttribute("tabindex", "0");
+    el.setAttribute("role", "button");
+    el.setAttribute("aria-label", "Annoter : " + truncate(txt, 60));
+  });
+
+  function orderedIds() {
+    var out = [];
+    Array.prototype.forEach.call(document.querySelectorAll("[data-anchor]"), function (el) {
+      var id = el.getAttribute("data-anchor");
+      if (state.notes[id] && state.notes[id].text) out.push(id);
+    });
+    return out;
+  }
+  function orphanIds() {
+    var out = [], k;
+    for (k in state.notes) { if (state.notes[k] && state.notes[k].text && !anchors[k]) out.push(k); }
+    return out;
+  }
+
+  function pinHost(el) {
+    if (el.classList.contains("gap-row")) return el.querySelector(".gap-body") || el;
+    if (el.classList.contains("person") || el.classList.contains("note-block")) {
+      var ps = el.querySelectorAll("p");
+      if (ps.length) return ps[ps.length - 1];
+    }
+    return el;
+  }
+
+  function render() {
+    var ids = orderedIds();
+    Array.prototype.forEach.call(document.querySelectorAll("[data-anchor]"), function (el) {
+      el.classList.remove("noted");
+      Array.prototype.forEach.call(el.querySelectorAll(".pin"), function (p) { p.remove(); });
+    });
+    ids.forEach(function (id, i) {
+      var el = anchors[id];
+      el.classList.add("noted");
+      var pin = document.createElement("span");
+      pin.className = "pin";
+      pin.textContent = String(i + 1);
+      pinHost(el).appendChild(pin);
+    });
+    persist();
+  }
+
+  // ================= FEUILLES =================
+  var scrim = document.getElementById("scrim");
+  var sheets = {
+    note: document.getElementById("sheet-note"),
+    index: document.getElementById("sheet-index"),
+    io: document.getElementById("sheet-io"),
+    "export": document.getElementById("sheet-export")
+  };
+  function closeSheets() {
+    var k; for (k in sheets) sheets[k].classList.remove("open");
+    scrim.classList.remove("open"); currentId = null;
+  }
+  function openSheet(name) {
+    var k; for (k in sheets) sheets[k].classList.toggle("open", k === name);
+    scrim.classList.add("open");
+  }
+  scrim.addEventListener("click", closeSheets);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeSheets(); });
+
+  var noteQuote = document.getElementById("note-quote");
+  var noteText = document.getElementById("note-text");
+  var noteDelete = document.getElementById("note-delete");
+
+  function openNote(el) {
+    var id = el.getAttribute("data-anchor");
+    currentId = id;
+    var existing = state.notes[id], sel = "";
+    try {
+      var s = window.getSelection();
+      if (s && !s.isCollapsed && el.contains(s.anchorNode)) sel = s.toString().trim();
+    } catch (e) {}
+    noteQuote.textContent = truncate(sel || textOf(el), 320);
+    noteText.value = existing ? existing.text : "";
+    noteDelete.style.visibility = existing ? "visible" : "hidden";
+    document.getElementById("note-title").textContent = sectionOf(el);
+    openSheet("note");
+    setTimeout(function () { noteText.focus(); }, 220);
+  }
+
+  document.getElementById("content").addEventListener("click", function (e) {
+    if (e.target.closest("a, button, input, label, textarea")) return;
+    var el = e.target.closest(".ann");
+    if (!el) return;
+    el.classList.add("tapped");
+    setTimeout(function () { el.classList.remove("tapped"); }, 200);
+    openNote(el);
+  });
+  document.getElementById("content").addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    var el = e.target.closest(".ann");
+    if (!el || e.target.closest("a, button, input, label, textarea")) return;
+    e.preventDefault();
+    openNote(el);
+  });
+
+  document.getElementById("note-save").addEventListener("click", function () {
+    if (!currentId) return closeSheets();
+    var v = noteText.value.trim();
+    var etait = !!state.notes[currentId];
+    if (v) {
+      state.notes[currentId] = {
+        text: v,
+        quote: truncate(textOf(anchors[currentId] || document.body), 220),
+        section: anchors[currentId] ? sectionOf(anchors[currentId]) : "?"
+      };
+      if (!etait) sinceExport++;
+    } else {
+      delete state.notes[currentId];
+    }
+    render();
+    closeSheets();
+  });
+  document.getElementById("note-cancel").addEventListener("click", closeSheets);
+  document.getElementById("note-delete").addEventListener("click", function () {
+    if (currentId) delete state.notes[currentId];
+    render(); closeSheets();
+  });
+
+  // ================= INDEX =================
+  document.getElementById("btn-index").addEventListener("click", function () {
+    var list = document.getElementById("index-list");
+    list.innerHTML = "";
+    var ids = orderedIds(), orph = orphanIds();
+    if (!ids.length && !orph.length) {
+      var p = document.createElement("p");
+      p.className = "idx-empty";
+      p.textContent = "Aucune note pour l'instant. Touche un paragraphe pour en poser une.";
+      list.appendChild(p);
+    }
+    function item(id, num, orphan) {
+      var n = state.notes[id];
+      var el = document.createElement("div");
+      el.className = "idx-item";
+      var head = document.createElement("div");
+      head.className = "idx-head" + (orphan ? " orphan-flag" : "");
+      head.innerHTML = orphan
+        ? "passage introuvable · " + (n.section || "?")
+        : '<span class="pin">' + num + "</span><span>" + n.section + "</span>";
+      var q = document.createElement("p");
+      q.className = "idx-quote";
+      q.textContent = "« " + (n.quote || "") + " »";
+      var t = document.createElement("p");
+      t.className = "idx-note";
+      t.textContent = n.text;
+      el.appendChild(head); el.appendChild(q); el.appendChild(t);
+      if (!orphan) el.addEventListener("click", function () {
+        closeSheets();
+        var target = anchors[id];
+        if (target) target.scrollIntoView({ block: "center" });
+      });
+      list.appendChild(el);
+    }
+    ids.forEach(function (id, i) { item(id, i + 1, false); });
+    orph.forEach(function (id) { item(id, 0, true); });
+    openSheet("index");
+  });
+  document.getElementById("index-close").addEventListener("click", closeSheets);
+
+  // ================= EXPORT =================
+  var exText = document.getElementById("ex-text");
+  var exMsg = document.getElementById("ex-msg");
+  function exSay(cls, txt) { exMsg.className = "io-msg " + cls; exMsg.textContent = txt; }
+
+  function buildMarkdown() {
+    var out = ["# Notes de relecture — Parcours Camille & Ines (version 2)", "",
+               "Epic 7 · UX · relecture depuis l'artefact publie.", ""];
+    var ids = orderedIds(), orph = orphanIds();
+    if (ids.length || orph.length) {
+      out.push("## Notes", "");
+      var lastSec = null;
+      ids.forEach(function (id, i) {
+        var n = state.notes[id];
+        if (n.section !== lastSec) { out.push("### " + n.section, ""); lastSec = n.section; }
+        out.push("**" + (i + 1) + ".** Sur : « " + n.quote + " »", "");
+        out.push("> " + n.text.split("\n").join("\n> "), "");
+      });
+      if (orph.length) {
+        out.push("### Passages introuvables (le texte a change depuis)", "");
+        orph.forEach(function (id) {
+          var n = state.notes[id];
+          out.push("**·** Sur : « " + (n.quote || "") + " »", "");
+          out.push("> " + n.text.split("\n").join("\n> "), "");
+        });
+      }
+    } else {
+      out.push("_Aucune note saisie._", "");
+    }
+    out.push("---", "", "## Donnees de reprise", "");
+    out.push("Ne pas modifier ce bloc : il permet de recharger cette relecture.", "");
+    out.push("```json");
+    out.push(JSON.stringify({ notes: state.notes }, null, 1));
+    out.push("```", "");
+    return out.join("\n");
+  }
+
+  function exported() { sinceExport = 0; paintState(); }
+
+  document.getElementById("btn-export").addEventListener("click", function () {
+    exText.value = buildMarkdown();
+    exSay("", "");
+    document.getElementById("ex-share").hidden = !(navigator.share);
+    openSheet("export");
+  });
+  document.getElementById("nudge-go").addEventListener("click", function () {
+    document.getElementById("btn-export").click();
+  });
+  document.getElementById("ex-close").addEventListener("click", closeSheets);
+
+  document.getElementById("ex-select").addEventListener("click", function () {
+    exText.focus();
+    exText.setSelectionRange(0, exText.value.length);
+    try { exText.select(); } catch (e) {}
+    exSay("io-ok", "Tout est sélectionné : copie avec le menu de ton téléphone.");
+    exported();
+  });
+
+  document.getElementById("ex-copy").addEventListener("click", function () {
+    var md = exText.value;
+    function fallback() {
+      exText.focus();
+      exText.setSelectionRange(0, md.length);
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      if (ok) { exSay("io-ok", "Copié dans le presse-papiers."); exported(); }
+      else exSay("io-err", "Copie refusée. Le texte est sélectionné : copie-le avec le menu de ton téléphone.");
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(md).then(
+        function () { exSay("io-ok", "Copié dans le presse-papiers."); exported(); }, fallback);
+    } else { fallback(); }
+  });
+
+  document.getElementById("ex-share").addEventListener("click", function () {
+    if (!navigator.share) return;
+    navigator.share({ title: "Relecture des parcours Epic 7", text: exText.value })
+      .then(function () { exSay("io-ok", "Partagé."); exported(); })
+      .catch(function (e) {
+        exSay("io-err", "Partage indisponible ici (" + ((e && e.name) || "refus") + "). Utilise Copier.");
+      });
+  });
+
+  document.getElementById("ex-save").addEventListener("click", function () {
+    var md = exText.value;
+    exSay("", "Enregistrement…");
+    (async function () {
+      var downloads = null;
+      try { downloads = await window.claude.use("downloads"); } catch (e) { downloads = null; }
+      if (!downloads) {
+        exSay("io-err", "L'enregistrement de fichier n'est pas disponible dans cette vue. Utilise Copier, ou Tout sélectionner.");
+        return;
+      }
+      try {
+        await downloads.save({ filename: FILENAME, data: md });
+        exSay("io-ok", "Fichier enregistré : " + FILENAME);
+        exported();
+      } catch (err) {
+        var code = (err && err.code) || "inconnu";
+        if (code === "declined") exSay("io-err", "Enregistrement refusé ou expiré. Réessaie, ou utilise Copier.");
+        else exSay("io-err", "Échec (" + code + "). Utilise Copier, ou Tout sélectionner.");
+      }
+    })();
+  });
+
+  // ================= IMPORT =================
+  function applyImport(raw) {
+    var msg = document.getElementById("io-msg");
+    var candidates = [], m;
+    m = raw.match(/```json\s*([\s\S]*?)```/); if (m) candidates.push(m[1]);
+    m = raw.match(/```json\s*([\s\S]*)```/);  if (m) candidates.push(m[1]);
+    candidates.push(raw);
+    var parsed = null, i;
+    for (i = 0; i < candidates.length && !parsed; i++) {
+      try { parsed = JSON.parse(candidates[i]); } catch (e) { parsed = null; }
+    }
+    if (!parsed || typeof parsed !== "object" || !parsed.notes) {
+      msg.className = "io-msg io-err";
+      msg.textContent = "Fichier illisible : aucun bloc de reprise trouvé.";
+      return;
+    }
+    state.notes = parsed.notes || {};
+    render();
+    var n = orderedIds().length + orphanIds().length;
+    msg.className = "io-msg " + (storageOk === false ? "io-warn" : "io-ok");
+    msg.textContent = n + (n > 1 ? " notes rechargées." : " note rechargée.")
+      + (storageOk === false ? " Attention : ce navigateur ne les conservera pas." : "");
+    setTimeout(closeSheets, 1400);
+  }
+
+  document.getElementById("btn-import").addEventListener("click", function () {
+    document.getElementById("io-msg").textContent = "";
+    document.getElementById("io-paste").value = "";
+    openSheet("io");
+  });
+  document.getElementById("io-close").addEventListener("click", closeSheets);
+  document.getElementById("io-load").addEventListener("click", function () {
+    var v = document.getElementById("io-paste").value.trim();
+    if (!v) {
+      var msg = document.getElementById("io-msg");
+      msg.className = "io-msg io-err";
+      msg.textContent = "Rien à charger : colle le contenu du fichier.";
+      return;
+    }
+    applyImport(v);
+  });
+  document.getElementById("io-file").addEventListener("change", function (e) {
+    var f = e.target.files && e.target.files[0];
+    if (!f) return;
+    var r = new FileReader();
+    r.onload = function () { applyImport(String(r.result || "")); };
+    r.onerror = function () {
+      var msg = document.getElementById("io-msg");
+      msg.className = "io-msg io-err";
+      msg.textContent = "Lecture du fichier impossible — utilise le collage.";
+    };
+    r.readAsText(f);
+  });
+
+  // ================= DEMARRAGE =================
+  var hint = document.getElementById("hint");
+  document.getElementById("hint-close").addEventListener("click", function () {
+    hint.style.display = "none";
+    state.hint = true;
+    persist();
+  });
+
+  storageOk = probe();
+  if (storageOk) load();
+  if (state.hint) hint.style.display = "none";
+  render();
+})();
+</script>

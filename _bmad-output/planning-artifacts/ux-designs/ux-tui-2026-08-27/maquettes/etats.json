@@ -1,0 +1,190 @@
+{
+  "E0-3-projet-refus": {
+    "12": "absent"
+  },
+  "E1-1-menu-ateliers": {
+    "15": "complete"
+  },
+  "E2-1-extraction-rush": {
+    "6": "complete",
+    "7": "complete",
+    "8": "absent"
+  },
+  "E2-1d-relink-refus-nomme": {
+    "7": "absent"
+  },
+  "E2-1f-declaration-rush-deja-declare": {
+    "5": "absent"
+  },
+  "E2-1g-declaration-colorimetrie-inconnue": {
+    "12": "substitute",
+    "15": "substitute"
+  },
+  "E2-1j-declaration-rangs-epuises": {
+    "5": "absent"
+  },
+  "E2-3c-extraction-nom-refuse": {
+    "13": "absent",
+    "9": "absent"
+  },
+  "E2-5-extraction-resultat": {
+    "5": "complete",
+    "6": "complete"
+  },
+  "E3-3-scan-rapport-complet": {
+    "7": "complete",
+    "8": "complete"
+  },
+  "E3-4-scan-rapport-incomplet": {
+    "7": "complete",
+    "8": "absent"
+  },
+  "E3-4b-scan-completion-qr": {
+    "18": "complete"
+  },
+  "E3-6-scan-confirmation": {
+    "7": "complete"
+  },
+  "E3-8-scan-resultat": {
+    "5": "complete",
+    "6": "complete"
+  },
+  "E4-1-exports-lot": {
+    "16": "complete",
+    "6": "complete",
+    "7": "complete"
+  },
+  "E4-2b-exports-cadence-modifiee": {
+    "11": "substitute",
+    "12": "substitute"
+  },
+  "E4-3-exports-confirmation": {
+    "11": "complete"
+  },
+  "E4-3b-exports-master-existe": {
+    "11": "substitute",
+    "12": "substitute",
+    "18": "substitute",
+    "5": "substitute"
+  },
+  "E4-4-exports-execution": {
+    "6": "complete"
+  },
+  "E4-5-exports-resultat": {
+    "5": "complete"
+  },
+  "E5-1-pdf-lots": {
+    "10": "complete",
+    "6": "complete",
+    "7": "complete",
+    "8": "complete",
+    "9": "complete"
+  },
+  "E5-2-pdf-reglages": {
+    "11": "complete",
+    "13": "complete",
+    "16": "complete",
+    "17": "substitute",
+    "18": "substitute"
+  },
+  "E5-2b-pdf-cardinal-refiltre": {
+    "12": "complete",
+    "13": "complete",
+    "15": "complete",
+    "16": "complete"
+  },
+  "E5-3b-pdf-tirage-existe": {
+    "11": "substitute",
+    "12": "substitute",
+    "16": "substitute",
+    "18": "substitute",
+    "4": "substitute"
+  },
+  "E5-3c-pdf-tirage-scanne": {
+    "11": "substitute",
+    "12": "substitute",
+    "4": "substitute",
+    "9": "substitute"
+  },
+  "E5-4-pdf-execution": {
+    "6": "complete"
+  },
+  "E5-5-pdf-resultat": {
+    "6": "complete",
+    "7": "complete"
+  },
+  "E5-5b-pdf-resultat-nombreux": {
+    "10": "complete",
+    "7": "complete",
+    "8": "complete",
+    "9": "complete"
+  },
+  "E5-5c-pdf-resultat-liste-parcourue": {
+    "10": "complete",
+    "8": "complete"
+  },
+  "E5-6d-pdf-calibration-existe": {
+    "16": "substitute",
+    "5": "substitute"
+  },
+  "E5-6e-pdf-calibration-resultat": {
+    "5": "complete"
+  },
+  "E6-1-projet-inventaire": {
+    "11": "absent",
+    "16": "substitute"
+  },
+  "E6-1b-projet-ecart-manifeste-disque": {
+    "14": "substitute",
+    "15": "substitute",
+    "7": "absent",
+    "9": "absent"
+  },
+  "E6-1c-projet-inventaire-defilement": {
+    "12": "substitute"
+  },
+  "E6-1d-projet-inventaire-selection": {
+    "13": "substitute",
+    "15": "substitute"
+  },
+  "E6-2-projet-suppression-confirmation": {
+    "13": "absent",
+    "17": "substitute",
+    "18": "substitute"
+  },
+  "E6-2b-projet-suppression-dernier-lot": {
+    "12": "absent",
+    "17": "substitute",
+    "18": "substitute"
+  },
+  "E6-3-projet-suppression-resultat": {
+    "5": "absent"
+  },
+  "E6-3b-projet-suppression-reussie": {
+    "14": "absent",
+    "5": "complete"
+  },
+  "T4-1-ecrasement": {
+    "5": "substitute"
+  },
+  "T4-2-ecrasement-cartouche-defilant": {
+    "5": "substitute"
+  },
+  "T5-1-refus-nomme": {
+    "7": "absent"
+  },
+  "T6-1-interruption": {
+    "5": "substitute"
+  },
+  "X2-explorateur-apres-entree": {
+    "12": "complete",
+    "19": "complete",
+    "9": "complete"
+  },
+  "X7-explorateur-cas-limites": {
+    "11": "absent"
+  },
+  "X8-explorateur-chemin-inexistant": {
+    "9": "absent"
+  }
+}

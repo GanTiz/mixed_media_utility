@@ -1,0 +1,5005 @@
+{
+  "lattice_levels": [
+    8,
+    68,
+    128,
+    188,
+    245
+  ],
+  "page_size_mm": [
+    210.0,
+    297.0
+  ],
+  "pages": [
+    {
+      "elements": [
+        {
+          "kind": "corner_marker",
+          "marker_id": 0,
+          "size_mm": 30.0,
+          "x_mm": 15.0,
+          "y_mm": 15.0
+        },
+        {
+          "kind": "corner_marker",
+          "marker_id": 1,
+          "size_mm": 30.0,
+          "x_mm": 165.0,
+          "y_mm": 15.0
+        },
+        {
+          "kind": "corner_marker",
+          "marker_id": 2,
+          "size_mm": 30.0,
+          "x_mm": 165.0,
+          "y_mm": 252.0
+        },
+        {
+          "kind": "corner_marker",
+          "marker_id": 3,
+          "size_mm": 30.0,
+          "x_mm": 15.0,
+          "y_mm": 252.0
+        },
+        {
+          "axis": "noir",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            20,
+            20,
+            20
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "value_id": "neutral-020",
+          "x_mm": 5.0,
+          "y_mm": 59.0
+        },
+        {
+          "axis": "noir",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            20,
+            20,
+            20
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "value_id": "neutral-020",
+          "x_mm": 177.0,
+          "y_mm": 59.0
+        },
+        {
+          "axis": "noir",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            20,
+            20,
+            20
+          ],
+          "repeat": 2,
+          "size_mm": 12.0,
+          "value_id": "neutral-020",
+          "x_mm": 77.5,
+          "y_mm": 59.0
+        },
+        {
+          "axis": "noir",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            20,
+            20,
+            20
+          ],
+          "repeat": 3,
+          "size_mm": 12.0,
+          "value_id": "neutral-020",
+          "x_mm": 92.5,
+          "y_mm": 59.0
+        },
+        {
+          "axis": "noir",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            0,
+            0,
+            0
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "value_id": "sentinel-black-1",
+          "x_mm": 5.0,
+          "y_mm": 74.0
+        },
+        {
+          "axis": "noir",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            0,
+            0,
+            0
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "value_id": "sentinel-black-1",
+          "x_mm": 177.0,
+          "y_mm": 74.0
+        },
+        {
+          "axis": "noir",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            0,
+            0,
+            0
+          ],
+          "repeat": 2,
+          "size_mm": 12.0,
+          "value_id": "sentinel-black-1",
+          "x_mm": 77.5,
+          "y_mm": 74.0
+        },
+        {
+          "axis": "noir",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            0,
+            0,
+            0
+          ],
+          "repeat": 3,
+          "size_mm": 12.0,
+          "value_id": "sentinel-black-1",
+          "x_mm": 92.5,
+          "y_mm": 74.0
+        },
+        {
+          "axis": "blanc",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            245,
+            245,
+            245
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "value_id": "neutral-245",
+          "x_mm": 5.0,
+          "y_mm": 89.0
+        },
+        {
+          "axis": "blanc",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            245,
+            245,
+            245
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "value_id": "neutral-245",
+          "x_mm": 177.0,
+          "y_mm": 89.0
+        },
+        {
+          "axis": "blanc",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            245,
+            245,
+            245
+          ],
+          "repeat": 2,
+          "size_mm": 12.0,
+          "value_id": "neutral-245",
+          "x_mm": 77.5,
+          "y_mm": 89.0
+        },
+        {
+          "axis": "blanc",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            245,
+            245,
+            245
+          ],
+          "repeat": 3,
+          "size_mm": 12.0,
+          "value_id": "neutral-245",
+          "x_mm": 92.5,
+          "y_mm": 89.0
+        },
+        {
+          "axis": "blanc",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            255,
+            255,
+            255
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "value_id": "sentinel-white-1",
+          "x_mm": 5.0,
+          "y_mm": 104.0
+        },
+        {
+          "axis": "blanc",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            255,
+            255,
+            255
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "value_id": "sentinel-white-1",
+          "x_mm": 177.0,
+          "y_mm": 104.0
+        },
+        {
+          "axis": "blanc",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            255,
+            255,
+            255
+          ],
+          "repeat": 2,
+          "size_mm": 12.0,
+          "value_id": "sentinel-white-1",
+          "x_mm": 77.5,
+          "y_mm": 104.0
+        },
+        {
+          "axis": "blanc",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            255,
+            255,
+            255
+          ],
+          "repeat": 3,
+          "size_mm": 12.0,
+          "value_id": "sentinel-white-1",
+          "x_mm": 92.5,
+          "y_mm": 104.0
+        },
+        {
+          "axis": "vert",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            55,
+            150,
+            70
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "value_id": "primary-green",
+          "x_mm": 5.0,
+          "y_mm": 119.0
+        },
+        {
+          "axis": "vert",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            55,
+            150,
+            70
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "value_id": "primary-green",
+          "x_mm": 177.0,
+          "y_mm": 119.0
+        },
+        {
+          "axis": "vert",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            55,
+            150,
+            70
+          ],
+          "repeat": 2,
+          "size_mm": 12.0,
+          "value_id": "primary-green",
+          "x_mm": 77.5,
+          "y_mm": 119.0
+        },
+        {
+          "axis": "vert",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            55,
+            150,
+            70
+          ],
+          "repeat": 3,
+          "size_mm": 12.0,
+          "value_id": "primary-green",
+          "x_mm": 92.5,
+          "y_mm": 119.0
+        },
+        {
+          "axis": "vert",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            25,
+            205,
+            35
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "value_id": "sentinel-green-1",
+          "x_mm": 5.0,
+          "y_mm": 134.0
+        },
+        {
+          "axis": "vert",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            25,
+            205,
+            35
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "value_id": "sentinel-green-1",
+          "x_mm": 177.0,
+          "y_mm": 134.0
+        },
+        {
+          "axis": "vert",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            25,
+            205,
+            35
+          ],
+          "repeat": 2,
+          "size_mm": 12.0,
+          "value_id": "sentinel-green-1",
+          "x_mm": 77.5,
+          "y_mm": 134.0
+        },
+        {
+          "axis": "vert",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            25,
+            205,
+            35
+          ],
+          "repeat": 3,
+          "size_mm": 12.0,
+          "value_id": "sentinel-green-1",
+          "x_mm": 92.5,
+          "y_mm": 134.0
+        },
+        {
+          "axis": "vert",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            0,
+            255,
+            0
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "value_id": "sentinel-green-2",
+          "x_mm": 5.0,
+          "y_mm": 149.0
+        },
+        {
+          "axis": "vert",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            0,
+            255,
+            0
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "value_id": "sentinel-green-2",
+          "x_mm": 177.0,
+          "y_mm": 149.0
+        },
+        {
+          "axis": "vert",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            0,
+            255,
+            0
+          ],
+          "repeat": 2,
+          "size_mm": 12.0,
+          "value_id": "sentinel-green-2",
+          "x_mm": 77.5,
+          "y_mm": 149.0
+        },
+        {
+          "axis": "vert",
+          "band": "haut",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            0,
+            255,
+            0
+          ],
+          "repeat": 3,
+          "size_mm": 12.0,
+          "value_id": "sentinel-green-2",
+          "x_mm": 92.5,
+          "y_mm": 149.0
+        },
+        {
+          "axis": "noir",
+          "band": "bas",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            20,
+            20,
+            20
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "value_id": "neutral-020",
+          "x_mm": 5.0,
+          "y_mm": 214.0
+        },
+        {
+          "axis": "noir",
+          "band": "bas",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            20,
+            20,
+            20
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "value_id": "neutral-020",
+          "x_mm": 177.0,
+          "y_mm": 214.0
+        },
+        {
+          "axis": "noir",
+          "band": "bas",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            20,
+            20,
+            20
+          ],
+          "repeat": 2,
+          "size_mm": 12.0,
+          "value_id": "neutral-020",
+          "x_mm": 77.5,
+          "y_mm": 214.0
+        },
+        {
+          "axis": "noir",
+          "band": "bas",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            20,
+            20,
+            20
+          ],
+          "repeat": 3,
+          "size_mm": 12.0,
+          "value_id": "neutral-020",
+          "x_mm": 92.5,
+          "y_mm": 214.0
+        },
+        {
+          "axis": "noir",
+          "band": "bas",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            0,
+            0,
+            0
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "value_id": "sentinel-black-1",
+          "x_mm": 5.0,
+          "y_mm": 229.0
+        },
+        {
+          "axis": "noir",
+          "band": "bas",
+          "kind": "position_probe",
+          "placement": "marge",
+          "reference_rgb": [
+            0,
+            0,
+            0
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "value_id": "sentinel-black-1",
+          "x_mm": 177.0,
+          "y_mm": 229.0
+        },
+        {
+          "axis": "noir",
+          "band": "bas",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            0,
+            0,
+            0
+          ],
+          "repeat": 2,
+          "size_mm": 12.0,
+          "value_id": "sentinel-black-1",
+          "x_mm": 77.5,
+          "y_mm": 229.0
+        },
+        {
+          "axis": "noir",
+          "band": "bas",
+          "kind": "position_probe",
+          "placement": "centre",
+          "reference_rgb": [
+            0,
+            0,
+            0
+          ],
+          "repeat": 3,
+          "size_mm": 12.0,
+          "value_id": "sentinel-black-1",
+          "x_mm": 92.5,
+          "y_mm": 229.0
+        }
+      ],
+      "page_index": 0
+    },
+    {
+      "elements": [
+        {
+          "kind": "corner_marker",
+          "marker_id": 0,
+          "size_mm": 30.0,
+          "x_mm": 15.0,
+          "y_mm": 15.0
+        },
+        {
+          "kind": "corner_marker",
+          "marker_id": 1,
+          "size_mm": 30.0,
+          "x_mm": 165.0,
+          "y_mm": 15.0
+        },
+        {
+          "kind": "corner_marker",
+          "marker_id": 2,
+          "size_mm": 30.0,
+          "x_mm": 165.0,
+          "y_mm": 252.0
+        },
+        {
+          "kind": "corner_marker",
+          "marker_id": 3,
+          "size_mm": 30.0,
+          "x_mm": 15.0,
+          "y_mm": 252.0
+        },
+        {
+          "index": 0,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            8,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 1,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            8,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 2,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            8,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 3,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            8,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 4,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            8,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 5,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            68,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 6,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            68,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 7,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            68,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 8,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            68,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 9,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            68,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 10,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            128,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 11,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            128,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 115.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 12,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            128,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 124.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 13,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            128,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 133.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 14,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            128,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 142.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 15,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            188,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 151.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 16,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            188,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 160.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 17,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            188,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 169.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 18,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            188,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 178.0,
+          "y_mm": 59.0
+        },
+        {
+          "index": 19,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            188,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 20,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            245,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 21,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            245,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 22,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            245,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 23,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            245,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 24,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            8,
+            245,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 25,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            8,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 26,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            8,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 27,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            8,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 28,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            8,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 29,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            8,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 30,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            68,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 115.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 31,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            68,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 124.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 32,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            68,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 133.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 33,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            68,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 142.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 34,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            68,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 151.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 35,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            128,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 160.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 36,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            128,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 169.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 37,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            128,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 178.0,
+          "y_mm": 68.0
+        },
+        {
+          "index": 38,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            128,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 39,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            128,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 40,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            188,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 41,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            188,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 42,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            188,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 43,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            188,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 44,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            188,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 45,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            245,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 46,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            245,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 47,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            245,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 48,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            245,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 49,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            68,
+            245,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 115.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 50,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            8,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 124.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 51,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            8,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 133.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 52,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            8,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 142.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 53,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            8,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 151.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 54,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            8,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 160.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 55,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            68,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 169.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 56,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            68,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 178.0,
+          "y_mm": 77.0
+        },
+        {
+          "index": 57,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            68,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 58,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            68,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 59,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            68,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 60,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            128,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 61,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            128,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 62,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            128,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 63,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            128,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 64,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            128,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 65,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            188,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 66,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            188,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 67,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            188,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 68,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            188,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 115.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 69,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            188,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 124.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 70,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            245,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 133.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 71,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            245,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 142.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 72,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            245,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 151.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 73,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            245,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 160.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 74,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            128,
+            245,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 169.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 75,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            8,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 178.0,
+          "y_mm": 86.0
+        },
+        {
+          "index": 76,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            8,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 77,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            8,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 78,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            8,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 79,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            8,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 80,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            68,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 81,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            68,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 82,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            68,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 83,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            68,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 84,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            68,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 85,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            128,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 86,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            128,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 87,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            128,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 115.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 88,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            128,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 124.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 89,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            128,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 133.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 90,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            188,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 142.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 91,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            188,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 151.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 92,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            188,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 160.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 93,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            188,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 169.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 94,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            188,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 178.0,
+          "y_mm": 95.0
+        },
+        {
+          "index": 95,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            245,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 96,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            245,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 97,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            245,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 98,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            245,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 99,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            188,
+            245,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 100,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            8,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 101,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            8,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 102,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            8,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 103,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            8,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 104,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            8,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 105,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            68,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 106,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            68,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 115.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 107,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            68,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 124.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 108,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            68,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 133.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 109,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            68,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 142.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 110,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            128,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 151.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 111,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            128,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 160.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 112,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            128,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 169.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 113,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            128,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 178.0,
+          "y_mm": 104.0
+        },
+        {
+          "index": 114,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            128,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 113.0
+        },
+        {
+          "index": 115,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            188,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 113.0
+        },
+        {
+          "index": 116,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            188,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 113.0
+        },
+        {
+          "index": 117,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            188,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 113.0
+        },
+        {
+          "index": 118,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            188,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 113.0
+        },
+        {
+          "index": 119,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            188,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 113.0
+        },
+        {
+          "index": 120,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            245,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 113.0
+        },
+        {
+          "index": 121,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            245,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 113.0
+        },
+        {
+          "index": 122,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            245,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 113.0
+        },
+        {
+          "index": 123,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            245,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 113.0
+        },
+        {
+          "index": 124,
+          "kind": "lattice_patch",
+          "order": 0,
+          "reference_rgb": [
+            245,
+            245,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 113.0
+        },
+        {
+          "index": 0,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            245,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 1,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            245,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 2,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            245,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 3,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            245,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 4,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            245,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 5,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            188,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 6,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            188,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 7,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            188,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 8,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            188,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 9,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            188,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 10,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            128,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 11,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            128,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 115.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 12,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            128,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 124.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 13,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            128,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 133.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 14,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            128,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 142.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 15,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            68,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 151.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 16,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            68,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 160.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 17,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            68,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 169.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 18,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            68,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 178.0,
+          "y_mm": 128.0
+        },
+        {
+          "index": 19,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            68,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 20,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            8,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 21,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            8,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 22,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            8,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 23,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            8,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 24,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            245,
+            8,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 25,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            245,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 26,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            245,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 27,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            245,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 28,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            245,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 29,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            245,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 30,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            188,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 115.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 31,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            188,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 124.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 32,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            188,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 133.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 33,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            188,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 142.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 34,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            188,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 151.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 35,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            128,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 160.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 36,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            128,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 169.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 37,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            128,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 178.0,
+          "y_mm": 137.0
+        },
+        {
+          "index": 38,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            128,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 39,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            128,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 40,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            68,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 41,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            68,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 42,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            68,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 43,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            68,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 44,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            68,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 45,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            8,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 46,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            8,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 47,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            8,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 48,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            8,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 49,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            188,
+            8,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 115.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 50,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            245,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 124.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 51,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            245,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 133.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 52,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            245,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 142.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 53,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            245,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 151.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 54,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            245,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 160.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 55,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            188,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 169.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 56,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            188,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 178.0,
+          "y_mm": 146.0
+        },
+        {
+          "index": 57,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            188,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 58,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            188,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 59,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            188,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 60,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            128,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 61,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            128,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 62,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            128,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 63,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            128,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 64,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            128,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 65,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            68,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 66,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            68,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 67,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            68,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 68,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            68,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 115.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 69,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            68,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 124.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 70,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            8,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 133.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 71,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            8,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 142.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 72,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            8,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 151.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 73,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            8,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 160.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 74,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            128,
+            8,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 169.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 75,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            245,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 178.0,
+          "y_mm": 155.0
+        },
+        {
+          "index": 76,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            245,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 77,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            245,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 78,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            245,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 79,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            245,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 80,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            188,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 81,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            188,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 82,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            188,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 83,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            188,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 84,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            188,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 85,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            128,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 86,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            128,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 87,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            128,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 115.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 88,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            128,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 124.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 89,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            128,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 133.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 90,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            68,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 142.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 91,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            68,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 151.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 92,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            68,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 160.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 93,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            68,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 169.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 94,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            68,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 178.0,
+          "y_mm": 164.0
+        },
+        {
+          "index": 95,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            8,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 96,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            8,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 97,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            8,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 98,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            8,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 99,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            68,
+            8,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 100,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            245,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 101,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            245,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 102,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            245,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 103,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            245,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 104,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            245,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 105,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            188,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 106,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            188,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 115.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 107,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            188,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 124.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 108,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            188,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 133.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 109,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            188,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 142.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 110,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            128,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 151.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 111,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            128,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 160.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 112,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            128,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 169.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 113,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            128,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 178.0,
+          "y_mm": 173.0
+        },
+        {
+          "index": 114,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            128,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 16.0,
+          "y_mm": 182.0
+        },
+        {
+          "index": 115,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            68,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 25.0,
+          "y_mm": 182.0
+        },
+        {
+          "index": 116,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            68,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 34.0,
+          "y_mm": 182.0
+        },
+        {
+          "index": 117,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            68,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 43.0,
+          "y_mm": 182.0
+        },
+        {
+          "index": 118,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            68,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 52.0,
+          "y_mm": 182.0
+        },
+        {
+          "index": 119,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            68,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 61.0,
+          "y_mm": 182.0
+        },
+        {
+          "index": 120,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            8,
+            245
+          ],
+          "size_mm": 6.0,
+          "x_mm": 70.0,
+          "y_mm": 182.0
+        },
+        {
+          "index": 121,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            8,
+            188
+          ],
+          "size_mm": 6.0,
+          "x_mm": 79.0,
+          "y_mm": 182.0
+        },
+        {
+          "index": 122,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            8,
+            128
+          ],
+          "size_mm": 6.0,
+          "x_mm": 88.0,
+          "y_mm": 182.0
+        },
+        {
+          "index": 123,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            8,
+            68
+          ],
+          "size_mm": 6.0,
+          "x_mm": 97.0,
+          "y_mm": 182.0
+        },
+        {
+          "index": 124,
+          "kind": "lattice_patch",
+          "order": 1,
+          "reference_rgb": [
+            8,
+            8,
+            8
+          ],
+          "size_mm": 6.0,
+          "x_mm": 106.0,
+          "y_mm": 182.0
+        }
+      ],
+      "page_index": 1
+    },
+    {
+      "elements": [
+        {
+          "kind": "corner_marker",
+          "marker_id": 0,
+          "size_mm": 30.0,
+          "x_mm": 15.0,
+          "y_mm": 15.0
+        },
+        {
+          "kind": "corner_marker",
+          "marker_id": 1,
+          "size_mm": 30.0,
+          "x_mm": 165.0,
+          "y_mm": 15.0
+        },
+        {
+          "kind": "corner_marker",
+          "marker_id": 2,
+          "size_mm": 30.0,
+          "x_mm": 165.0,
+          "y_mm": 252.0
+        },
+        {
+          "kind": "corner_marker",
+          "marker_id": 3,
+          "size_mm": 30.0,
+          "x_mm": 15.0,
+          "y_mm": 252.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 2,
+          "reference_rgb": [
+            2,
+            2,
+            2
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "x_mm": 16.0,
+          "y_mm": 66.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 5,
+          "reference_rgb": [
+            5,
+            5,
+            5
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "x_mm": 31.0,
+          "y_mm": 66.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 8,
+          "reference_rgb": [
+            8,
+            8,
+            8
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "x_mm": 46.0,
+          "y_mm": 66.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 12,
+          "reference_rgb": [
+            12,
+            12,
+            12
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "x_mm": 61.0,
+          "y_mm": 66.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 16,
+          "reference_rgb": [
+            16,
+            16,
+            16
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "x_mm": 76.0,
+          "y_mm": 66.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 20,
+          "reference_rgb": [
+            20,
+            20,
+            20
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "x_mm": 91.0,
+          "y_mm": 66.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 28,
+          "reference_rgb": [
+            28,
+            28,
+            28
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "x_mm": 106.0,
+          "y_mm": 66.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 36,
+          "reference_rgb": [
+            36,
+            36,
+            36
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "x_mm": 121.0,
+          "y_mm": 66.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 36,
+          "reference_rgb": [
+            36,
+            36,
+            36
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "x_mm": 16.0,
+          "y_mm": 81.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 28,
+          "reference_rgb": [
+            28,
+            28,
+            28
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "x_mm": 31.0,
+          "y_mm": 81.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 20,
+          "reference_rgb": [
+            20,
+            20,
+            20
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "x_mm": 46.0,
+          "y_mm": 81.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 16,
+          "reference_rgb": [
+            16,
+            16,
+            16
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "x_mm": 61.0,
+          "y_mm": 81.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 12,
+          "reference_rgb": [
+            12,
+            12,
+            12
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "x_mm": 76.0,
+          "y_mm": 81.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 8,
+          "reference_rgb": [
+            8,
+            8,
+            8
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "x_mm": 91.0,
+          "y_mm": 81.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 5,
+          "reference_rgb": [
+            5,
+            5,
+            5
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "x_mm": 106.0,
+          "y_mm": 81.0
+        },
+        {
+          "kind": "shadow_probe",
+          "level_8bit": 2,
+          "reference_rgb": [
+            2,
+            2,
+            2
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "x_mm": 121.0,
+          "y_mm": 81.0
+        },
+        {
+          "axis": "rouge",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            190,
+            45,
+            45
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 0,
+          "x_mm": 16.0,
+          "y_mm": 107.0
+        },
+        {
+          "axis": "rouge",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            210,
+            30,
+            30
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 1,
+          "x_mm": 31.0,
+          "y_mm": 107.0
+        },
+        {
+          "axis": "rouge",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            230,
+            15,
+            15
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 2,
+          "x_mm": 46.0,
+          "y_mm": 107.0
+        },
+        {
+          "axis": "rouge",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            245,
+            5,
+            5
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 3,
+          "x_mm": 61.0,
+          "y_mm": 107.0
+        },
+        {
+          "axis": "rouge",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            255,
+            0,
+            0
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 4,
+          "x_mm": 76.0,
+          "y_mm": 107.0
+        },
+        {
+          "axis": "rouge",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            255,
+            0,
+            0
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 4,
+          "x_mm": 95.0,
+          "y_mm": 107.0
+        },
+        {
+          "axis": "rouge",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            245,
+            5,
+            5
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 3,
+          "x_mm": 110.0,
+          "y_mm": 107.0
+        },
+        {
+          "axis": "rouge",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            230,
+            15,
+            15
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 2,
+          "x_mm": 125.0,
+          "y_mm": 107.0
+        },
+        {
+          "axis": "rouge",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            210,
+            30,
+            30
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 1,
+          "x_mm": 140.0,
+          "y_mm": 107.0
+        },
+        {
+          "axis": "rouge",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            190,
+            45,
+            45
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 0,
+          "x_mm": 155.0,
+          "y_mm": 107.0
+        },
+        {
+          "axis": "vert",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            55,
+            150,
+            70
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 0,
+          "x_mm": 16.0,
+          "y_mm": 124.0
+        },
+        {
+          "axis": "vert",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            35,
+            180,
+            50
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 1,
+          "x_mm": 31.0,
+          "y_mm": 124.0
+        },
+        {
+          "axis": "vert",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            20,
+            210,
+            35
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 2,
+          "x_mm": 46.0,
+          "y_mm": 124.0
+        },
+        {
+          "axis": "vert",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            8,
+            235,
+            20
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 3,
+          "x_mm": 61.0,
+          "y_mm": 124.0
+        },
+        {
+          "axis": "vert",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            0,
+            255,
+            0
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 4,
+          "x_mm": 76.0,
+          "y_mm": 124.0
+        },
+        {
+          "axis": "vert",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            0,
+            255,
+            0
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 4,
+          "x_mm": 95.0,
+          "y_mm": 124.0
+        },
+        {
+          "axis": "vert",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            8,
+            235,
+            20
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 3,
+          "x_mm": 110.0,
+          "y_mm": 124.0
+        },
+        {
+          "axis": "vert",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            20,
+            210,
+            35
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 2,
+          "x_mm": 125.0,
+          "y_mm": 124.0
+        },
+        {
+          "axis": "vert",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            35,
+            180,
+            50
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 1,
+          "x_mm": 140.0,
+          "y_mm": 124.0
+        },
+        {
+          "axis": "vert",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            55,
+            150,
+            70
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 0,
+          "x_mm": 155.0,
+          "y_mm": 124.0
+        },
+        {
+          "axis": "bleu",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            45,
+            75,
+            160
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 0,
+          "x_mm": 16.0,
+          "y_mm": 141.0
+        },
+        {
+          "axis": "bleu",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            30,
+            55,
+            195
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 1,
+          "x_mm": 31.0,
+          "y_mm": 141.0
+        },
+        {
+          "axis": "bleu",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            18,
+            35,
+            220
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 2,
+          "x_mm": 46.0,
+          "y_mm": 141.0
+        },
+        {
+          "axis": "bleu",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            8,
+            15,
+            240
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 3,
+          "x_mm": 61.0,
+          "y_mm": 141.0
+        },
+        {
+          "axis": "bleu",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            0,
+            0,
+            255
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 4,
+          "x_mm": 76.0,
+          "y_mm": 141.0
+        },
+        {
+          "axis": "bleu",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            0,
+            0,
+            255
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 4,
+          "x_mm": 95.0,
+          "y_mm": 141.0
+        },
+        {
+          "axis": "bleu",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            8,
+            15,
+            240
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 3,
+          "x_mm": 110.0,
+          "y_mm": 141.0
+        },
+        {
+          "axis": "bleu",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            18,
+            35,
+            220
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 2,
+          "x_mm": 125.0,
+          "y_mm": 141.0
+        },
+        {
+          "axis": "bleu",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            30,
+            55,
+            195
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 1,
+          "x_mm": 140.0,
+          "y_mm": 141.0
+        },
+        {
+          "axis": "bleu",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            45,
+            75,
+            160
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 0,
+          "x_mm": 155.0,
+          "y_mm": 141.0
+        },
+        {
+          "axis": "cyan",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            60,
+            165,
+            175
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 0,
+          "x_mm": 16.0,
+          "y_mm": 158.0
+        },
+        {
+          "axis": "cyan",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            45,
+            190,
+            200
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 1,
+          "x_mm": 31.0,
+          "y_mm": 158.0
+        },
+        {
+          "axis": "cyan",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            30,
+            215,
+            225
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 2,
+          "x_mm": 46.0,
+          "y_mm": 158.0
+        },
+        {
+          "axis": "cyan",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            15,
+            238,
+            242
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 3,
+          "x_mm": 61.0,
+          "y_mm": 158.0
+        },
+        {
+          "axis": "cyan",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            0,
+            255,
+            255
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 4,
+          "x_mm": 76.0,
+          "y_mm": 158.0
+        },
+        {
+          "axis": "cyan",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            0,
+            255,
+            255
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 4,
+          "x_mm": 95.0,
+          "y_mm": 158.0
+        },
+        {
+          "axis": "cyan",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            15,
+            238,
+            242
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 3,
+          "x_mm": 110.0,
+          "y_mm": 158.0
+        },
+        {
+          "axis": "cyan",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            30,
+            215,
+            225
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 2,
+          "x_mm": 125.0,
+          "y_mm": 158.0
+        },
+        {
+          "axis": "cyan",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            45,
+            190,
+            200
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 1,
+          "x_mm": 140.0,
+          "y_mm": 158.0
+        },
+        {
+          "axis": "cyan",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            60,
+            165,
+            175
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 0,
+          "x_mm": 155.0,
+          "y_mm": 158.0
+        },
+        {
+          "axis": "magenta",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            175,
+            60,
+            150
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 0,
+          "x_mm": 16.0,
+          "y_mm": 175.0
+        },
+        {
+          "axis": "magenta",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            200,
+            45,
+            178
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 1,
+          "x_mm": 31.0,
+          "y_mm": 175.0
+        },
+        {
+          "axis": "magenta",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            222,
+            30,
+            205
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 2,
+          "x_mm": 46.0,
+          "y_mm": 175.0
+        },
+        {
+          "axis": "magenta",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            240,
+            15,
+            232
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 3,
+          "x_mm": 61.0,
+          "y_mm": 175.0
+        },
+        {
+          "axis": "magenta",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            255,
+            0,
+            255
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 4,
+          "x_mm": 76.0,
+          "y_mm": 175.0
+        },
+        {
+          "axis": "magenta",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            255,
+            0,
+            255
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 4,
+          "x_mm": 95.0,
+          "y_mm": 175.0
+        },
+        {
+          "axis": "magenta",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            240,
+            15,
+            232
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 3,
+          "x_mm": 110.0,
+          "y_mm": 175.0
+        },
+        {
+          "axis": "magenta",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            222,
+            30,
+            205
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 2,
+          "x_mm": 125.0,
+          "y_mm": 175.0
+        },
+        {
+          "axis": "magenta",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            200,
+            45,
+            178
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 1,
+          "x_mm": 140.0,
+          "y_mm": 175.0
+        },
+        {
+          "axis": "magenta",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            175,
+            60,
+            150
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 0,
+          "x_mm": 155.0,
+          "y_mm": 175.0
+        },
+        {
+          "axis": "jaune",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            220,
+            200,
+            60
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 0,
+          "x_mm": 16.0,
+          "y_mm": 192.0
+        },
+        {
+          "axis": "jaune",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            232,
+            215,
+            45
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 1,
+          "x_mm": 31.0,
+          "y_mm": 192.0
+        },
+        {
+          "axis": "jaune",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            242,
+            232,
+            30
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 2,
+          "x_mm": 46.0,
+          "y_mm": 192.0
+        },
+        {
+          "axis": "jaune",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            250,
+            245,
+            15
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 3,
+          "x_mm": 61.0,
+          "y_mm": 192.0
+        },
+        {
+          "axis": "jaune",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            255,
+            255,
+            0
+          ],
+          "repeat": 0,
+          "size_mm": 12.0,
+          "step": 4,
+          "x_mm": 76.0,
+          "y_mm": 192.0
+        },
+        {
+          "axis": "jaune",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            255,
+            255,
+            0
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 4,
+          "x_mm": 95.0,
+          "y_mm": 192.0
+        },
+        {
+          "axis": "jaune",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            250,
+            245,
+            15
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 3,
+          "x_mm": 110.0,
+          "y_mm": 192.0
+        },
+        {
+          "axis": "jaune",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            242,
+            232,
+            30
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 2,
+          "x_mm": 125.0,
+          "y_mm": 192.0
+        },
+        {
+          "axis": "jaune",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            232,
+            215,
+            45
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 1,
+          "x_mm": 140.0,
+          "y_mm": 192.0
+        },
+        {
+          "axis": "jaune",
+          "kind": "saturation_probe",
+          "reference_rgb": [
+            220,
+            200,
+            60
+          ],
+          "repeat": 1,
+          "size_mm": 12.0,
+          "step": 0,
+          "x_mm": 155.0,
+          "y_mm": 192.0
+        }
+      ],
+      "page_index": 2
+    }
+  ],
+  "production_margin_x_mm": [
+    5.0,
+    177.0
+  ],
+  "render_dpi": 600,
+  "shadow_levels": [
+    2,
+    5,
+    8,
+    12,
+    16,
+    20,
+    28,
+    36
+  ],
+  "target": "cible-lut-v3",
+  "values_version": "patch-values-2"
+}

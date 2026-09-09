@@ -1,0 +1,80 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf                      1 conflit sur 5 · tirage scanné │
+├──────────────────────────────────────────────────────────────────────────────┤
+│   ┌ Ce tirage existe déjà, et il a été scanné ───────────────────────────┐   │
+│   │ ▲ projet_demo_plan-04_25_6f-pay_v3.pdf                               │   │
+│   │                                                                      │   │
+│   │ Lot                plan-04_25       3e tirage, le plus récent        │   │
+│   │ Écrit le           26/08 à 16:22                                     │   │
+│   │ Contient           21 pages · 124 frames · 352 Mo                    │   │
+│   │ Scanné             ▲ oui            scan-WIN, le 27/08               │   │
+│   │                                                                      │   │
+│   │ ▲ Ce tirage a déjà été imprimé. Vous ne pouvez pas l'écraser         │   │
+│   │   car cela pourrait causer des conflits de version.                  │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│    ▸ Créer la v4                                                             │
+│      Appliquer ce choix aux 4 conflits restants                              │
+│        · 4 versions créées — rien n'est effacé                               │
+│      Annuler                                                                 │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ✕  Remplacer n'est pas offert — ce tirage a été scanné le 27/08              │
+│ ⏎ valider  ↑↓ choisir  Échap retour  F1 aide                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE (2026-09-02, n°3) : « S'il est scanné on ne peut de fait pas l'écraser. »
+
+  -> ÉCRAN NEUF, l'autre moitié de la règle. C'est le même lot, le même tirage et la même
+     date que `E5-3b` : seule la ligne `Scanné` change, et avec elle la liste des issues,
+     qui perd `Remplacer ce tirage`. L'écran DIT pourquoi plutôt que de faire disparaître
+     une ligne en silence -- une issue qui manque sans motif se lit comme un bug.
+     Le motif dessiné est ta déduction elle-même : un tirage scanné a forcément été
+     imprimé, et la feuille imprimée porte son rang dans son QR (`EPIC11-ARB-91`).
+     Remplacer le fichier ferait dire deux choses au même numéro, et la feuille sur le
+     bureau ne se met pas à jour.
+     Deux issues restent offertes -- `Créer la v4`, `Annuler` -- donc `EPIC11-ARB-89`
+     tient (jamais de blocage sec) et `EPIC11-ARB-104` aussi (l'objet reste versionnable ;
+     c'est l'écrasement seul qui tombe).
+     ÉCART SIGNALÉ, ET IL VAUT POUR `E5-3b` AUSSI : le curseur est posé sur `Créer la v4`,
+     qui ÉCRIT. `panneau.ChoixExclusif.__post_init__` déplace au montage le curseur vers
+     une issue qui n'écrit pas -- ici `Annuler`. Les deux maquettes posent le curseur sur
+     l'issue non destructive plutôt que sur l'issue qui n'écrit rien, et ces deux notions
+     ne coïncident pas quand toutes les issues sauf `Annuler` écrivent. Soit le produit
+     descend `Créer la vN` dans la catégorie « n'écrit pas au sens d'`ARB-7` » (elle
+     n'efface rien), soit les maquettes montrent `Annuler` sous le curseur. À trancher au
+     développement ; le dessin ne le cache pas.
+     Le nom du scan (`scan-WIN`) est un scan réel du dépôt, pas une valeur inventée.
+
+NOTE (2026-09-02, EPIC11-ARB-177) : l'issue de masse porte ici AUTRE CHOSE.
+
+  -> `Remplacer` etant tombe, « ce choix » ne peut designer que `Creer la v4` : la
+     masse n'efface rien, ne saute personne, et sa ligne de consequence le dit
+     avec le glyphe NEUTRE plutot qu'avec l'avertissement. Une meme entree, deux
+     poids, selon l'issue qu'elle prolonge -- c'est le meilleur endroit de la
+     planche pour le voir, cote a cote avec `E5-3b`.
+     Le bandeau passe a `1 conflit sur 5` comme celui de `E5-3b` : les deux ecrans
+     sont deux etats du MEME premier conflit d'une meme passe, et un bandeau
+     different les aurait fait lire comme deux passes.
+
+NOTE (2026-09-02, retour du soir n°4) : « Le message est trop long. » Reecriture, mot
+pour mot : « ce tirage a deja ete imprime. Vous ne pouvez pas l'ecraser car cela
+pourrait causer des conflits de version. »
+
+  -> Porte, et c'est la SEULE chose qui change sur cet ecran. Deux phrases remplacent
+     les trois lignes qui expliquaient le mecanisme (« la feuille porte son rang dans
+     son QR, le remplacer ferait dire deux choses au meme numero »). Ce mecanisme
+     n'est pas perdu : il vit dans `EPIC11-ARB-174` et `EPIC11-ARB-176`, c'est-a-dire
+     la ou on le cherche quand on veut savoir POURQUOI -- pas sous les yeux de qui
+     veut seulement savoir QUOI.
+     Deux ecarts avec ta frappe, nommes plutot que tus : les accents sont poses (ton
+     message etait en ASCII, la TUI ecrit accentue et replie par table) et la premiere
+     lettre passe en majuscule -- une phrase de cartouche qui commencerait en
+     minuscule se lirait comme un defaut de rendu. Aucun mot n'est change ni ajoute,
+     et le banc du lot G mesure la suite des mots a l'egalite.
+     Le glyphe reste `▲` et non `✕` : c'est la ligne d'ETAT qui porte l'interdit
+     (`✕  Remplacer n'est pas offert`), et deux rouges sur le meme ecran diraient deux
+     refus la ou il n'y en a qu'un. La declaration de hauteur passe de 3 a 2 lignes,
+     pour que la colorisation couvre le message entier (`EPIC11-ARB-71`).
+     L'ecran gagne une ligne libre : `E5-3b`, lui, occupe les 17 lignes de la zone
+     centrale a la ligne pres, et c'est lui qui fixe le budget du lot.

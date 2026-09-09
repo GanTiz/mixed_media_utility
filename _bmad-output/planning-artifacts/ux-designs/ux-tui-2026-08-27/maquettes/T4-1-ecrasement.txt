@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                       rush_01 · 25 fps · 4:12 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ Ce lot existe déjà ──────────────────────────────────────────────────┐   │
+│   │ ▲ projet_demo_rush_01_25fps                                          │   │
+│   │                                                                      │   │
+│   │ Écrit le          22/08 à 09:14                                      │   │
+│   │ Contient          124 frames · 16 bits · 2,1 Go                      │   │
+│   │ Référencé par     1 planche PDF, 1 master encodé                     │   │
+│   │                                                                      │   │
+│   │ Écraser supprime ces 124 fichiers avant d'en écrire 124 autres.      │   │
+│   │ La planche et le master déjà produits ne sont PAS regénérés.         │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      ( ) Écraser le lot     ( ) Écrire sous un autre nom     ( ) Annuler     │
+│                                                                              │
+│      Autre nom            > projet_demo_rush_01_25fps_v2                     │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ▲  Aucune issue présélectionnée — l'écrasement n'est jamais implicite        │
+│ ⏎ valider  ↑↓ choisir  E éditer le nom  Échap retour  F1 aide                │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : parfait.
+
+  -> approbation, rien change.

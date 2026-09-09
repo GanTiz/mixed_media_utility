@@ -1,0 +1,39 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf · Calibration                 temps 2 sur 2 · écrire │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ Cette mire existe déjà ──────────────────────────────────────────────┐   │
+│   │ ▲ projet_demo_hp-envy-4520-t…-73881cda_calibration.pdf               │   │
+│   │                                                                      │   │
+│   │ Écrit le           27/08 à 09:14                                     │   │
+│   │ Contient           1 page · 164 pastilles                            │   │
+│   │                                                                      │   │
+│   │ Le nom ne porte que le projet et la chaîne. La géométrie, le         │   │
+│   │ jeu de patchs et le commentaire n'y entrent pas : deux mires         │   │
+│   │ de la même chaîne réglées autrement se disputent ce fichier.         │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│    ▸ Changer le nom de la chaîne     écrit à côté, sans rien effacer         │
+│      Remplacer cette mire            ▲ efface celle du 27/08                 │
+│      Annuler                                                                 │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ▲  1 page · 164 pastilles écrites le 27/08 · aucun rang pour cet objet       │
+│ ⏎ valider  ↑↓ choisir  Échap retour  F1 aide                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE (2026-09-01, relecture v5, n°6) : la mire portait le MEME défaut que le tirage.
+
+  -> Ta note n°6 visait `E5-3b` (« Sorti à l'imprimante : on retire ! Rien n'en parle
+     nulle part »). Le lot qui l'a appliquée a signalé que cet écran-ci portait la même
+     ligne, « Imprimée ?  l'outil ne peut pas le savoir », et l'a laissée hors de son
+     périmètre plutôt que d'y toucher. Elle est retirée ici, sous la même décision
+     (`EPIC11-ARB-174`) : rien dans l'outil ne porte cette notion, ni pour un tirage ni
+     pour une mire.
+     Rien ne part avec elle sur cet écran, à la différence d'`E5-3b`. Le paragraphe qui
+     suit ne parle pas d'impression mais de nommage -- « deux mires de la même chaîne
+     réglées autrement se disputent ce fichier » --, et ce fait-là reste vrai.
+     Il porte d'ailleurs, pour la mire, exactement le défaut que ta note n°7 désigne pour
+     le tirage : un nom qui ne dit pas ce qui distingue deux objets. La réponse y sera
+     la même le jour où on la traitera, mais elle n'est pas dessinée ici.

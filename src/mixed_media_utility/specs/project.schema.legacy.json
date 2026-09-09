@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MMU Project Manifest (legacy v1, transitional)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "created",
+    "inputs",
+    "calibration",
+    "artifacts"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "raw",
+        "frames"
+      ],
+      "properties": {
+        "raw": {
+          "type": "string",
+          "minLength": 1
+        },
+        "frames": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "calibration": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifacts": {
+      "type": "string",
+      "minLength": 1
+    },
+    "meta": {
+      "type": "object"
+    }
+  }
+}

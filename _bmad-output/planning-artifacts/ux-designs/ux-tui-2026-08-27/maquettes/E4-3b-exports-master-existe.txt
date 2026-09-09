@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Exports                    master présent · rang 2 libre │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ Ce master existe déjà ───────────────────────────────────────────────┐   │
+│   │ ▲ plan-04_25_mmu_prores_hq.mov                                       │   │
+│   │ Lot                plan-04_25           aucun rang encore posé       │   │
+│   │ Écrit le           26/08 à 16:22                                     │   │
+│   │ Contient           124 échantillons · 25 fps · 4 s 96 · 1,38 Go      │   │
+│   │ Profil · cible     prores_hq · 1920×1080     la même clé qu'ici      │   │
+│   │                                                                      │   │
+│   │ ▲ Remplacer efface les 1,38 Go écrits le 26/08, et le rapport        │   │
+│   │   ffprobe qui les accompagne. Rien d'autre n'est touché.             │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│       Créer la v2                                                            │
+│         · écrit plan-04_25_mmu_prores_hq_v2.mov, sans rien effacer           │
+│       Remplacer ce master                                                    │
+│         ▲ efface les 1,38 Go écrits le 26/08                                 │
+│     ▸ Annuler                                                                │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ▲  1,38 Go écrits le 26/08 · le prochain rang est 2 · rien n'est effacé      │
+│ ⏎ valider  ↑↓ choisir  Échap retour  F1 aide                                 │
+└──────────────────────────────────────────────────────────────────────────────┘

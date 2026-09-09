@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atelier Scan, mode PDF — maquette d'ecran cle</title>
+<style>
+/* ===========================================================================
+   MAQUETTE D'ECRAN CLE — ATELIER SCAN, MODE PDF
+   Sections de spine qui gouvernent cet ecran :
+     EXPERIENCE.md > Component Patterns   (overlay-zone, overlay-handle + loupe,
+                                           formulaire de completion de QR,
+                                           bascule de calibration, params-field)
+     EXPERIENCE.md > State Patterns       (QR non decode ; metadonnee manquante)
+     EXPERIENCE.md > Interaction Primitives (glisser une poignee ouvre la loupe,
+                                           puis clavier ; bannis)
+     EXPERIENCE.md > Key Flows > Flow 3   (Camille a plie la page 4)
+     EXPERIENCE.md > Voice and Tone       (codes du coeur verbatim)
+     DESIGN.md    > components.viewer-stage, page-preview, overlay-*, params-field
+   Deux etats, parce que l'un est la consequence de l'autre :
+     A. le QR n'est pas lu -> les zones d'image NE SONT PAS proposees ;
+     B. le QR est complete -> l'outil propose, on ajuste, la loupe s'ouvre.
+   La spine reste le contrat ; cette maquette illustre.
+   =========================================================================== */
+
+:root{
+  --surface-canvas:#141414; --surface-panel:#1C1C1C; --surface-raised:#242424;
+  --surface-hover:#2E2E2E; --surface-sunken:#0E0E0E;
+  --border:#383838; --border-strong:#4A4A4A;
+  --text-primary:#E8E8E8; --text-secondary:#9A9A9A; --text-disabled:#6A6A6A;
+  --image-mat:#2B2B2B; --paper:#FFFFFF; --paper-ink:#111111;
+  --accent:#4C7EF3; --accent-on:#FFFFFF;
+  --state-complete:#3FBF6F; --state-absent:#E5484D; --state-substitute:#F5A623;
+  --overlay-halo:#000000; --overlay-handle:#FFFFFF;
+
+  --sp2:4px; --sp3:6px; --sp4:8px; --sp5:12px; --sp6:16px; --sp7:24px; --sp8:32px;
+  --panel-pad:10px; --row-height:28px; --mat-min:16px;
+  --header-height:44px; --tabbar-height:54px; --side-panel-width:300px;
+  --r-sm:4px; --r-md:6px; --r-lg:8px; --r-full:9999px;
+  --f-ui:-apple-system,"Segoe UI",system-ui,sans-serif;
+  --f-data:"SF Mono",Menlo,Consolas,"Cascadia Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#0A0A0A;color:var(--text-primary);
+  font-family:var(--f-ui);font-size:13px;line-height:1.45;-webkit-font-smoothing:antialiased}
+.sheet{max-width:1180px;margin:0 auto;padding:var(--sp8) var(--sp6) 64px}
+h1{font-size:28px;font-weight:600;line-height:1.2;margin:0 0 var(--sp3)}
+.sub{color:var(--text-secondary);margin:0 0 var(--sp8);max-width:72ch}
+h2{font-size:15px;font-weight:600;line-height:1.3;margin:var(--sp8) 0 var(--sp5)}
+.caption{color:var(--text-secondary);margin:var(--sp5) 0 0;font-size:12px;max-width:78ch}
+code{font-family:var(--f-data);font-size:11px;color:var(--text-secondary)}
+.lbl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}
+
+/* --- cadre applicatif ---------------------------------------------------- */
+.app{background:var(--surface-canvas);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.app-header{height:var(--header-height);background:var(--surface-panel);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;padding:0 var(--sp5)}
+.pill-activity{display:inline-flex;align-items:center;gap:var(--sp4);color:var(--text-secondary);font-size:12px}
+.pill-activity i{width:7px;height:7px;border-radius:var(--r-full);background:var(--accent);display:inline-block}
+.app-body{display:flex;min-height:430px}
+
+/* --- scene de previz ----------------------------------------------------- */
+.stage-wrap{flex:1 1 auto;display:flex;flex-direction:column;min-width:0}
+.stage-top{display:flex;align-items:center;gap:var(--sp5);padding:var(--sp4) var(--sp5);border-bottom:1px solid var(--border)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
+.seg span{padding:3px var(--sp5);font-size:12px;color:var(--text-secondary)}
+.seg span.on{background:var(--surface-hover);color:var(--text-primary)}
+.toggle{display:inline-flex;align-items:center;gap:var(--sp4);color:var(--text-secondary);font-size:12px;margin-left:auto}
+.sw{width:26px;height:15px;border-radius:var(--r-full);background:var(--surface-raised);border:1px solid var(--border-strong);position:relative;flex:0 0 26px}
+.sw.on{background:var(--accent);border-color:var(--accent)}
+.sw::after{content:"";position:absolute;top:1px;left:1px;width:11px;height:11px;border-radius:var(--r-full);background:var(--text-secondary)}
+.sw.on::after{left:12px;background:var(--accent-on)}
+
+.stage{flex:1 1 auto;background:var(--image-mat);padding:var(--mat-min);display:flex;align-items:center;justify-content:center}
+.page{background:var(--paper);color:var(--paper-ink);width:250px;height:354px;position:relative;flex:0 0 250px}
+
+/* --- surimpressions : traits, jamais aplats ------------------------------ */
+.zone{position:absolute;border:1.5px solid var(--accent);
+  filter:drop-shadow(0 0 1.5px var(--overlay-halo)) drop-shadow(0 0 1.5px var(--overlay-halo));background:none}
+.zone.qr-unread{border-color:var(--state-substitute)}
+.zone.qr-ok{border-color:var(--state-complete)}
+.zone.edit{border-color:var(--accent)}
+.zlab{position:absolute;top:-15px;left:0;font-family:var(--f-data);font-size:9px;color:var(--paper-ink);
+  background:rgba(255,255,255,.86);padding:0 2px;white-space:nowrap}
+.hnd{position:absolute;width:11px;height:11px;background:var(--overlay-handle);
+  box-shadow:0 0 0 1px var(--overlay-halo)}
+.hnd.tl{left:-6px;top:-6px}.hnd.tr{right:-6px;top:-6px}
+.hnd.bl{left:-6px;bottom:-6px}.hnd.br{right:-6px;bottom:-6px}
+.pli{position:absolute;left:0;right:0;top:44%;height:10px;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.22) 50%,rgba(0,0,0,0) 100%)}
+
+/* --- loupe --------------------------------------------------------------- */
+/* La loupe flotte dans le mat, JAMAIS au-dessus de la page: une surimpression
+   ne masque pas ce qu'on juge, et une loupe posee sur le scan masquerait la
+   zone voisine. */
+.loupe{position:absolute;width:112px;height:112px;border:1px solid var(--border-strong);
+  background:var(--surface-sunken);left:calc(100% + 28px);top:176px;overflow:hidden}
+.loupe::before{content:"";position:absolute;left:-28px;top:44px;width:28px;height:1px;
+  background:var(--border-strong)}
+.loupe-grid{position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,#2A2A2A 0 1px,transparent 1px 13px),
+             repeating-linear-gradient(90deg,#2A2A2A 0 1px,transparent 1px 13px)}
+.loupe-x{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--overlay-handle);opacity:.8}
+.loupe-y{position:absolute;top:50%;left:0;right:0;height:1px;background:var(--overlay-handle);opacity:.8}
+.loupe-cap{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.72);
+  font-family:var(--f-data);font-size:10px;color:var(--text-primary);padding:2px 4px;font-variant-numeric:tabular-nums}
+
+/* --- panneau lateral ----------------------------------------------------- */
+.side{width:var(--side-panel-width);flex:0 0 var(--side-panel-width);
+  background:var(--surface-panel);border-left:1px solid var(--border);padding:var(--panel-pad);overflow:hidden}
+.side h3{margin:0 0 var(--sp3);font-size:15px;font-weight:600;line-height:1.3}
+.side .why{color:var(--text-secondary);font-size:12px;margin:0 0 var(--sp5)}
+.field{margin-bottom:var(--sp5)}
+.field label{display:block;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-secondary);margin-bottom:var(--sp2)}
+.inp{background:var(--surface-raised);border:1px solid var(--border);border-radius:var(--r-sm);
+  padding:var(--sp3) var(--sp4);font-family:var(--f-data);font-size:12px;color:var(--text-disabled);
+  font-variant-numeric:tabular-nums}
+.inp.focus{border-color:var(--accent);color:var(--text-primary)}
+.inp.missing{border-color:var(--state-absent)}
+.two{display:flex;gap:var(--sp4)}.two>div{flex:1 1 0;min-width:0}
+.hint{font-size:11px;color:var(--text-disabled);margin-top:var(--sp2)}
+.btn{display:block;width:100%;background:var(--accent);color:var(--accent-on);border:0;
+  border-radius:var(--r-md);padding:var(--sp4) var(--sp5);font-family:var(--f-ui);font-size:13px;font-weight:600;cursor:default}
+.btn[disabled]{background:var(--surface-raised);color:var(--text-disabled)}
+
+/* --- barre de reglages --------------------------------------------------- */
+.params{display:flex;align-items:center;gap:var(--sp5);padding:var(--sp4) var(--sp5);
+  border-top:1px solid var(--border);background:var(--surface-panel)}
+.params .grow{margin-left:auto}
+.msg{display:flex;align-items:flex-start;gap:var(--sp4);font-size:12px;color:var(--text-secondary);
+  max-width:56ch}
+.msg .dot{width:9px;height:9px;flex:0 0 9px;margin-top:4px;
+  background:repeating-linear-gradient(45deg,var(--state-substitute) 0 2px,var(--surface-panel) 2px 4px);border-radius:var(--r-full)}
+.tabs{display:flex;height:var(--tabbar-height);background:var(--surface-panel);border-top:1px solid var(--border)}
+.tabs div{flex:1 1 0;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);
+  font-size:12px;border-top:2px solid transparent;margin-top:-1px}
+.tabs div.on{color:var(--text-primary);border-top-color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <h1>Atelier Scan, mode PDF</h1>
+  <p class="sub">L'ecran le plus dense du produit, et celui de Flow 3 : Camille a plie la page 4 et
+  le pli traverse le QR. Deux etats, parce que le second est la <b>consequence</b> du premier —
+  sans QR, l'outil ignore quelles frames devraient etre la, et ne propose donc <b>rien</b>.</p>
+
+  <h2>Etat A — le QR n'est pas lu</h2>
+  <div class="app">
+    <div class="app-header">
+      <span class="lbl">Scan &middot; scan-planches-02.tif &middot; page 4</span>
+      <span class="pill-activity"><i></i>1 tache en cours</span>
+    </div>
+    <div class="app-body">
+      <div class="stage-wrap">
+        <div class="stage-top">
+          <span class="seg"><span class="on">PDF</span><span>Galerie</span><span>Lecteur</span></span>
+          <span class="toggle">Calibration couleur <span class="sw on"></span> <span class="mono">profil-epson-600</span></span>
+        </div>
+        <div class="stage">
+          <div class="page">
+            <div class="pli"></div>
+            <div class="zone qr-unread" style="left:14px;top:14px;width:52px;height:52px">
+              <span class="zlab">QR &mdash; non lu</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="side">
+        <h3>Completer le QR</h3>
+        <p class="why">Le QR de la page 4 n'a pas ete lu. Completez ce qui est imprime dessus.
+          <code>PAGE_QR_UNREADABLE</code></p>
+        <div class="field"><label>Identifiant du lot</label><div class="inp focus">|</div>
+          <div class="hint">Le champ actif pointe sa zone sur le scan.</div></div>
+        <div class="two">
+          <div class="field"><label>Frames / page</label><div class="inp">&nbsp;</div></div>
+          <div class="field"><label>N&deg; de page</label><div class="inp">&nbsp;</div></div>
+        </div>
+        <div class="two">
+          <div class="field"><label>TC premiere</label><div class="inp">&nbsp;</div></div>
+          <div class="field"><label>TC derniere</label><div class="inp">&nbsp;</div></div>
+        </div>
+        <button class="btn" disabled>Proposer les zones d'image</button>
+        <p class="hint">Aucun champ n'est prerempli : un champ vide appelle la verification,
+        un champ faux ne l'appelle pas.</p>
+      </div>
+    </div>
+    <div class="params">
+      <span class="msg"><span class="dot"></span><span>Les zones d'image ne sont pas proposees
+        tant que le QR n'est pas connu.</span></span>
+      <span class="grow"></span>
+      <button class="btn" style="width:auto" disabled>Extraire les TIFF</button>
+    </div>
+    <div class="tabs"><div>Extraction</div><div>Pdf</div><div class="on">Scan</div><div>Exports</div></div>
+  </div>
+  <p class="caption">La zone du QR est en ambre, pas en rouge : elle n'est pas absente, elle est
+  illisible. Aucune zone d'image n'apparait — c'est la difference entre « l'outil ne sait pas » et
+  « l'outil se trompe ». L'action de l'atelier reste bloquee.</p>
+
+  <h2>Etat B — QR complete : l'outil propose, on ajuste</h2>
+  <div class="app">
+    <div class="app-header">
+      <span class="lbl">Scan &middot; scan-planches-02.tif &middot; page 4</span>
+      <span class="pill-activity"><i></i>1 tache en cours</span>
+    </div>
+    <div class="app-body">
+      <div class="stage-wrap">
+        <div class="stage-top">
+          <span class="seg"><span class="on">PDF</span><span>Galerie</span><span>Lecteur</span></span>
+          <span class="toggle">Calibration couleur <span class="sw on"></span> <span class="mono">profil-epson-600</span></span>
+        </div>
+        <div class="stage">
+          <div class="page">
+            <div class="pli"></div>
+            <div class="zone qr-ok" style="left:14px;top:14px;width:52px;height:52px">
+              <span class="zlab">QR &mdash; complete a la main</span>
+            </div>
+            <div class="zone" style="left:14px;top:88px;width:104px;height:76px"><span class="zlab">p4 &middot; s0</span></div>
+            <div class="zone" style="left:132px;top:88px;width:104px;height:76px"><span class="zlab">p4 &middot; s1</span></div>
+            <div class="zone edit" style="left:14px;top:182px;width:104px;height:76px">
+              <span class="zlab">p4 &middot; s2</span>
+              <span class="hnd tl"></span><span class="hnd tr"></span>
+              <span class="hnd bl"></span><span class="hnd br"></span>
+            </div>
+            <div class="zone" style="left:132px;top:182px;width:104px;height:76px"><span class="zlab">p4 &middot; s3</span></div>
+            <div class="loupe">
+              <div class="loupe-grid"></div><div class="loupe-x"></div><div class="loupe-y"></div>
+              <div class="loupe-cap">x 1284 &nbsp; y 2077</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="side">
+        <h3>Zone p4 &middot; s2</h3>
+        <p class="why">Poignee saisie : la loupe s'est ouverte seule. Les fleches ajustent d'un
+          pixel. Au relachement, rien a relancer.</p>
+        <div class="two">
+          <div class="field"><label>Coin haut-gauche</label><div class="inp focus">1284, 2077</div></div>
+          <div class="field"><label>Coin bas-droit</label><div class="inp">1908, 2533</div></div>
+        </div>
+        <div class="field"><label>Completude du lot</label>
+          <div class="inp" style="color:var(--state-substitute);border-color:var(--state-substitute)">
+            9 pages &middot; 3 mires</div>
+          <div class="hint">Se reactualise a chaque relachement de poignee.</div></div>
+        <p class="hint">Chaque zone reste editable, y compris quand la detection se declare
+        satisfaite. L'outil propose une geometrie, il ne la valide jamais lui-meme.</p>
+      </div>
+    </div>
+    <div class="params">
+      <span class="msg" style="color:var(--text-secondary)"><span>9 pages, 3 mires de remplacement.
+        Le lot n'est pas complet.</span></span>
+      <span class="grow"></span>
+      <button class="btn" style="width:auto">Extraire les TIFF</button>
+    </div>
+    <div class="tabs"><div>Extraction</div><div>Pdf</div><div class="on">Scan</div><div>Exports</div></div>
+  </div>
+  <p class="caption">Les surimpressions sont des <b>traits cernes de noir</b>, jamais des aplats :
+  elles doivent se lire sur un scan blanc comme sur une image sombre, sans rien masquer de ce qu'on
+  juge. Le message compte, nomme, et s'arrete la — pages manquantes et mires ne se fondent pas en un
+  seul compteur.</p>
+
+</div>
+</body>
+</html>

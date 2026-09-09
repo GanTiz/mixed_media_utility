@@ -1,0 +1,64 @@
+{
+ "key-exports-a": [
+  {
+   "when": "22/08 16:37",
+   "text": "Je pense que le menu d’export que tu proposes tient dans ce panneau qui fait la meme largeur. Tu peux donc le mettre directement"
+  }
+ ],
+ "key-exports-b": [
+  {
+   "when": "22/08 14:19",
+   "text": "Ok mais toutes les infos a droite sont inutiles"
+  },
+  {
+   "when": "22/08 16:38",
+   "text": "Le balayage doit s’actionner et se couper via un bouton (icone) en haut de l’affichage. Pas de panneau a droite c’est inutile. Il doit rsster grisé quand on n’a pas le rush natif."
+  }
+ ],
+ "key-exports-c": [
+  {
+   "when": "22/08 14:20",
+   "text": "Les reglages d’export doivent etre plus complets : resolution, cadence, codec et variante, debit, codec audio (si on exporte avec l’audio) etc. S’inspirer de Resolve et autres logiciels video pro"
+  },
+  {
+   "when": "22/08 14:21",
+   "text": "l’export ouvre une carte sur le côté.\nPar ailleurs on avait evoqué une lecture possible d’un autre rushe. A voir a l’usage. Pas prio"
+  },
+  {
+   "when": "22/08 16:39",
+   "text": "La carte sur le côté est une carte de tâche comme toutes les autres : export, progression temps écoulé et temps restant. On n’a pas revu cette surface dans toutes tes maquettes."
+  }
+ ],
+ "key-comparaison-a": [
+  {
+   "when": "22/08 16:39",
+   "text": "Le menu a droite est inutile, ou alors il faut pouvoir le retirer."
+  }
+ ],
+ "key-comparaison-b": [
+  {
+   "when": "22/08 14:23",
+   "text": "Ok sauf pour l’ecran de droite. On veut un choix comme tu avais fait avant. Liste de choix et on coche le lot prioritaire. Moins bavard chaque fonction n’a pas besoin d’etre expliquée en détails dans le texte. Prioriser le visuel et l’efficace. Ta proposition précédente était mieux sur ce panneau."
+  },
+  {
+   "when": "22/08 16:41",
+   "text": "Oui ok. Pas encore pleinement convaincu mais on jugera sur l’ensemble. Je trouve les menus sous optimals."
+  }
+ ],
+ "key-extraction-v3-a": [
+  {
+   "when": "22/08 14:26",
+   "text": "Oui mais où choisit-on cette liste qui est une entree utilisateur ? Comment ajoute-t-on une cadence à cette liste ?"
+  },
+  {
+   "when": "22/08 16:41",
+   "text": "Ok, enlver raccourci laisser juste le +"
+  }
+ ],
+ "bascule": [
+  {
+   "when": "22/08 16:43",
+   "text": "Non mais ok pourquoi pas. On l’actionne en cas de selection multiple uniquement et en cas de lot composite.\nPas prioritaire. Mais ok."
+  }
+ ]
+}

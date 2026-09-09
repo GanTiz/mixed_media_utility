@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan                              temps 2 sur 2 · écrire │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Écriture des TIFF — lot 1 sur 2                                            │
+│                                                                              │
+│      projet_demo_lot_25fps_ingest01                        en cours          │
+│      projet_demo_lot_12p5_ingest01                         en attente        │
+│                                                                              │
+│   ── Journal ─────────────────────────────────────────────────────────────   │
+│                                                                              │
+│      15:09:40  lot_25fps : correction hp-envy-4520-tiff-600 appliquée        │
+│      15:09:41  page 1/8 : 8 frames recadrées sur marge encodée               │
+│      15:09:48  page 2/8 : 8 frames recadrées sur marge encodée               │
+│      15:10:02  frame 000031 écrite (16 bits)                                 │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  17 %  31/186 frames  reste ~ 3 min 40  │
+│ Tab journal  Échap interrompre  F1 aide                                      │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : parfait.
+
+  -> approbation, rien change.

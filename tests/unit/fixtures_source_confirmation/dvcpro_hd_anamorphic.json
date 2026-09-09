@@ -1,0 +1,35 @@
+{
+  "_comment": "ffprobe 6.1.1 sur un DVCPRO HD (codec dvvideo) 1440x1080 en pixels non carres: sample_aspect_ratio 4:3, donc une resolution d'affichage de 1920x1080. N'afficher que width x height masquerait l'anamorphose et ferait porter le controle de ratio 16:9 sur le mauvais nombre. Timecode au niveau format (MXF/MOV DV), pas sur le flux video.",
+  "streams": [
+    {
+      "index": 0,
+      "codec_name": "dvvideo",
+      "codec_long_name": "DV (Digital Video)",
+      "codec_type": "video",
+      "width": 1440,
+      "height": 1080,
+      "sample_aspect_ratio": "4:3",
+      "display_aspect_ratio": "16:9",
+      "pix_fmt": "yuv422p",
+      "color_range": "tv",
+      "r_frame_rate": "25/1",
+      "avg_frame_rate": "25/1",
+      "time_base": "1/25",
+      "duration": "4.000000",
+      "nb_frames": "100",
+      "tags": {
+        "language": "und"
+      }
+    }
+  ],
+  "format": {
+    "filename": "rush_dvcpro_hd.mxf",
+    "nb_streams": 1,
+    "format_name": "mxf",
+    "duration": "4.000000",
+    "tags": {
+      "timecode": "02:00:00:00",
+      "company_name": "FFmpeg"
+    }
+  }
+}

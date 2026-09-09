@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan                            temps 1 sur 2 · détecter │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Détection en cours — aucune frame n'est écrite                             │
+│                                                                              │
+│   ── Journal ─────────────────────────────────────────────────────────────   │
+│                                                                              │
+│      15:02:11  planche_01.tiff : 4 marqueurs ArUco, QR décodé                │
+│      15:02:11    → lot_25fps, page 1/8, 8 emplacements                       │
+│      15:02:13  planche_02.tiff : 4 marqueurs ArUco, QR décodé                │
+│      15:02:13    → lot_25fps, page 2/8, 8 emplacements                       │
+│      15:02:15  planche_03.tiff : 4 marqueurs ArUco, QR ✕ non décodé          │
+│      15:02:15    → non rattaché, reste en attente de lecture                 │
+│      15:02:17  planche_04.tiff : 4 marqueurs ArUco, QR décodé                │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░  58 %  14/24 pages  reste ~ 26 s        │
+│ Tab journal  Échap interrompre  F1 aide                                      │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : OK très bien. Comment faire si le QR n'a pas été décodé ? Formulaire pour completer les infos manquantes ? C'est le travail en cours sur la GUI btw (en dehors de ce worktree !).
+
+  -> EPIC11-ARB-27 : oui, formulaire E3-4b -- la planche imprime les identifiants en clair (secours 4.6).

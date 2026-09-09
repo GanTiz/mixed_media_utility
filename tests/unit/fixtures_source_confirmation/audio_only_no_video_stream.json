@@ -1,0 +1,22 @@
+{
+  "_comment": "ffprobe 6.1.1 sur un fichier audio seul (WAV PCM): aucun flux codec_type == 'video'. video_metadata._video_stream leve FfprobeError sur ce probe; la story 3.3 doit la rattraper et la traduire, jamais la laisser remonter en trace Python.",
+  "streams": [
+    {
+      "index": 0,
+      "codec_name": "pcm_s24le",
+      "codec_long_name": "PCM signed 24-bit little-endian",
+      "codec_type": "audio",
+      "sample_rate": "48000",
+      "channels": 2,
+      "bits_per_raw_sample": "24",
+      "r_frame_rate": "0/0",
+      "duration": "12.000000"
+    }
+  ],
+  "format": {
+    "filename": "prise_son.wav",
+    "nb_streams": 1,
+    "format_name": "wav",
+    "duration": "12.000000"
+  }
+}

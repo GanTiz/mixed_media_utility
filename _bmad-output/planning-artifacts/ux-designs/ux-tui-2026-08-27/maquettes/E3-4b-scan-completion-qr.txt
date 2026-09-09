@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan · QR                                planche_03.tiff │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Compléter ce que le QR aurait dit                                          │
+│                                                                              │
+│      Recopiez le bloc d'identité imprimé en clair sur la planche.            │
+│                                                                              │
+│    Lot                     lot_12p5                                 lid      │
+│    Page                    3                                 sur 4 · pi      │
+│    Gabarit                 tpl-a4-paysage-4f-v2                     tid      │
+│    Images sur la planche   4                                                 │
+│    Timecode première       00:00:08:00                                       │
+│    Timecode dernière     > ·                                     requis      │
+│                                                                              │
+│    Ouvrir le scan          scans/scans-in/planche_03.tiff                    │
+│   ── Vérification ────────────────────────────────────────────────────────   │
+│                                                                              │
+│      ● Cohérent avec les 3 pages déjà lues de ce lot                         │
+│      Le manifeste donne  pid rid fps ppi tbf tcs gmi pc                      │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ✕  5 champs sur 6 saisis                                                     │
+│ ⏎ valider  Tab champ  Échap abandonner  F1 où lire ce champ                  │
+└──────────────────────────────────────────────────────────────────────────────┘

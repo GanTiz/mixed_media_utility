@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan                              temps 2 sur 2 · écrire │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ Interrompre l'écriture ? ────────────────────────────────────────────┐   │
+│   │ ▲ 40 frames sur 186 sont déjà écrites sur le disque.                 │   │
+│   │                                                                      │   │
+│   │ Interrompre les laisse en place : le lot sera sur le disque mais     │   │
+│   │ INCOMPLET, et le manifest ne le déclarera pas terminé.               │   │
+│   │                                                                      │   │
+│   │ Le document de détection reste valide : reprendre l'écriture plus    │   │
+│   │ tard ne redemande pas de détecter.                                   │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│    ▸ Interrompre et garder les 40 frames                                     │
+│      Interrompre et effacer les 40 frames                                    │
+│      Reprendre l'écriture                                                    │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ▲  L'écriture continue tant que rien n'est choisi ici                        │
+│ ⏎ valider  ↑↓ choisir  Échap reprendre l'écriture  F1 aide                   │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : top.
+
+  -> approbation, rien change.

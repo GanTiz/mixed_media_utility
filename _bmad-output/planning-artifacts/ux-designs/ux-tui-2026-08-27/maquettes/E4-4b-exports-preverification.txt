@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Exports                               plan-04_25 · 124 f │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Pré-vérification des frames                                                │
+│                                                                              │
+│      ◐ Pré-vérification    124 frames à ouvrir           en cours            │
+│      · Encodage            plan-04_25_mmu_prores_hq.mov  en attente          │
+│      · Vérification        ffprobe sur le fichier écrit  en attente          │
+│      · Bascule             vers projet_demo/outputs/     en attente          │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ Étape 1 sur 4 · lecture des 124 frames                                       │
+│ Échap interrompre  F1 aide                                                   │
+└──────────────────────────────────────────────────────────────────────────────┘

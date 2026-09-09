@@ -1,0 +1,30 @@
+{
+ "key-preferences-a": [
+  {
+   "when": "23/08 11:06",
+   "text": "Absurde ! On ne met pas un réglage qu’on ne peut pas régler. On verra plus tard si on propose des options de couleur avancées.\n\nLe titre de cet onglet devrait plutôt etre « interface ». Que peut-on y régler d’autre ?"
+  }
+ ],
+ "key-preferences-b": [
+  {
+   "when": "23/08 11:06",
+   "text": "Pareil on oublie ce qui ne se règle pas"
+  },
+  {
+   "when": "23/08 11:07",
+   "text": "La barre de taches va dans l’apparence. Je pense que ce réglage est inutile"
+  }
+ ],
+ "key-preferences-c": [
+  {
+   "when": "23/08 11:34",
+   "text": "Le reglage du dossier de base est bien\nOn pourrait avoir des choses liées a la gestion du cache.\nUn onglet performances : Optimisation materielle (pas encore en place)"
+  }
+ ],
+ "key-clic-droit-b": [
+  {
+   "when": "23/08 11:35",
+   "text": "On ne voit pas la fenetre du marqueur"
+  }
+ ]
+}

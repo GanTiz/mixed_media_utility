@@ -1,0 +1,2997 @@
+{
+ "entrees": {
+  "projet-avec-lot/frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+  "projet-avec-lot/frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+  "projet-avec-lot/frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+  "projet-avec-lot/frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+  "projet-avec-lot/project.json": {
+   "artifacts.frames_dir": "frames",
+   "color.target_colorspace": "rec709",
+   "lots[0].confirmation.mode": "non_interactif",
+   "lots[0].confirmation.unknown_color_accepted": true,
+   "lots[0].expected_frame_count": 4,
+   "lots[0].first_frame_timecode": "00:00:00:00",
+   "lots[0].fps_target": 5.0,
+   "lots[0].fps_target_exact": "5/1",
+   "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+   "lots[0].frames_dir": "frames/rush-001_5",
+   "lots[0].last_frame_timecode": "00:00:00:15",
+   "lots[0].lot_id": "rush-001_5",
+   "lots[0].output_bit_depth": 16,
+   "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+   "lots[0].rush_id": "rush-001",
+   "lots[0].selection_warnings": "<liste vide>",
+   "lots[0].source_frame_count": 20,
+   "lots[0].source_frame_count_is_exact": true,
+   "lots[0].source_tail_frames": 4,
+   "lots[0].state": "extraction",
+   "lots[0].timecode_base": "source",
+   "lots[0].timecode_base_fps": "25/1",
+   "project_id": "proj-identite-makepdf",
+   "reconstruction": "<objet vide>",
+   "rushes[0].fps_source": 25.0,
+   "rushes[0].fps_source_exact": "25/1",
+   "rushes[0].resolution_source.height": 1080,
+   "rushes[0].resolution_source.width": 1920,
+   "rushes[0].rush_id": "rush-001",
+   "rushes[0].source_frame_count": 20,
+   "rushes[0].source_frame_count_is_exact": true,
+   "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+   "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+   "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+   "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+   "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+   "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+   "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+   "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+   "rushes[0].source_name": "rush-001.mov",
+   "schema_version": "2.1",
+   "video": "<objet vide>"
+  }
+ },
+ "rendu_pdf_gele": true,
+ "scenarios": {
+  "01-nominal": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5"
+   ],
+   "code": 0,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_rush-001_5_planches.pdf": "15d5412ceafc9bc85f2a1072396d7a1a39a40e48226e013977bb0560ae0603e2"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].gamut_map_id": "gamut-map-none-1",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].patch_preset_id": "patches-17-v4",
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].sheets_pdfs[0].path": "patches/proj-identite-makepdf_rush-001_5_planches.pdf",
+      "lots[0].sheets_version_watermark": 1,
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "pdf",
+      "lots[0].template_id": "tpl-a4-portrait-2f-v2",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "compression de gamut: gamut-map-none-1",
+    "PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+    "Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1."
+   ],
+   "stdout": [
+    "makepdf termine avec succes. 2 page(s) (2 frame(s) par page, template tpl-a4-portrait-2f-v2, patchs patches-17-v4) dans <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf.",
+    "Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+    "Consigne de numerisation: scanner a 600 dpi minimum."
+   ]
+  },
+  "02-relance-identique": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_rush-001_5_planches.pdf": "15d5412ceafc9bc85f2a1072396d7a1a39a40e48226e013977bb0560ae0603e2"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].gamut_map_id": "gamut-map-none-1",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].patch_preset_id": "patches-17-v4",
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].sheets_pdfs[0].path": "patches/proj-identite-makepdf_rush-001_5_planches.pdf",
+      "lots[0].sheets_version_watermark": 1,
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "pdf",
+      "lots[0].template_id": "tpl-a4-portrait-2f-v2",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "Erreur: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf existe deja. Trois issues: relancer avec --nouvelle-version pour imprimer un tirage voisin sans toucher a celui-ci (son rang apparaitra sur la planche ET dans son QR); relancer avec --overwrite pour le remplacer sciemment; ou supprimer ce qui est devenu inutile (`mmu project remove --lot <id>`, qui retire le lot et ses planches)."
+   ],
+   "stdout": []
+  },
+  "03-relance-nouvelle-version": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5",
+    "--nouvelle-version"
+   ],
+   "code": 0,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_rush-001_5_planches.pdf": "15d5412ceafc9bc85f2a1072396d7a1a39a40e48226e013977bb0560ae0603e2",
+     "patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf": "ffb758abe7ccb30121f70b26720425e6dd881dc7d1c3de1582f61e94a3a08468"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].gamut_map_id": "gamut-map-none-1",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].patch_preset_id": "patches-17-v4",
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].sheets_pdfs[0].path": "patches/proj-identite-makepdf_rush-001_5_planches.pdf",
+      "lots[0].sheets_pdfs[1].path": "patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf",
+      "lots[0].sheets_pdfs[1].version_rank": 2,
+      "lots[0].sheets_version_watermark": 2,
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "pdf",
+      "lots[0].template_id": "tpl-a4-portrait-2f-v2",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "compression de gamut: gamut-map-none-1",
+    "PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf (2 page(s))",
+    "Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1."
+   ],
+   "stdout": [
+    "makepdf termine avec succes. 2 page(s) (2 frame(s) par page, template tpl-a4-portrait-2f-v2, patchs patches-17-v4) dans <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf.",
+    "Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+    "Consigne de numerisation: scanner a 600 dpi minimum."
+   ]
+  },
+  "04-relance-overwrite": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5",
+    "--overwrite"
+   ],
+   "code": 0,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_rush-001_5_planches.pdf": "15d5412ceafc9bc85f2a1072396d7a1a39a40e48226e013977bb0560ae0603e2",
+     "patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf": "ffb758abe7ccb30121f70b26720425e6dd881dc7d1c3de1582f61e94a3a08468"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].gamut_map_id": "gamut-map-none-1",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].patch_preset_id": "patches-17-v4",
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].sheets_pdfs[0].path": "patches/proj-identite-makepdf_rush-001_5_planches.pdf",
+      "lots[0].sheets_pdfs[1].path": "patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf",
+      "lots[0].sheets_pdfs[1].version_rank": 2,
+      "lots[0].sheets_version_watermark": 2,
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "pdf",
+      "lots[0].template_id": "tpl-a4-portrait-2f-v2",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "compression de gamut: gamut-map-none-1",
+    "PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+    "Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1."
+   ],
+   "stdout": [
+    "makepdf termine avec succes. 2 page(s) (2 frame(s) par page, template tpl-a4-portrait-2f-v2, patchs patches-17-v4) dans <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf.",
+    "Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+    "Consigne de numerisation: scanner a 600 dpi minimum."
+   ]
+  },
+  "05-autre-mise-en-page-4f": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5",
+    "--frames-par-page",
+    "4"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_rush-001_5_planches.pdf": "15d5412ceafc9bc85f2a1072396d7a1a39a40e48226e013977bb0560ae0603e2",
+     "patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf": "ffb758abe7ccb30121f70b26720425e6dd881dc7d1c3de1582f61e94a3a08468"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].gamut_map_id": "gamut-map-none-1",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].patch_preset_id": "patches-17-v4",
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].sheets_pdfs[0].path": "patches/proj-identite-makepdf_rush-001_5_planches.pdf",
+      "lots[0].sheets_pdfs[1].path": "patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf",
+      "lots[0].sheets_pdfs[1].version_rank": 2,
+      "lots[0].sheets_version_watermark": 2,
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "pdf",
+      "lots[0].template_id": "tpl-a4-portrait-2f-v2",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "Erreur: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf existe deja. Trois issues: relancer avec --nouvelle-version pour imprimer un tirage voisin sans toucher a celui-ci (son rang apparaitra sur la planche ET dans son QR); relancer avec --overwrite pour le remplacer sciemment; ou supprimer ce qui est devenu inutile (`mmu project remove --lot <id>`, qui retire le lot et ses planches)."
+   ],
+   "stdout": []
+  },
+  "06-autre-mise-en-page-1f": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5",
+    "--frames-par-page",
+    "1"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_rush-001_5_planches.pdf": "15d5412ceafc9bc85f2a1072396d7a1a39a40e48226e013977bb0560ae0603e2",
+     "patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf": "ffb758abe7ccb30121f70b26720425e6dd881dc7d1c3de1582f61e94a3a08468"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].gamut_map_id": "gamut-map-none-1",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].patch_preset_id": "patches-17-v4",
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].sheets_pdfs[0].path": "patches/proj-identite-makepdf_rush-001_5_planches.pdf",
+      "lots[0].sheets_pdfs[1].path": "patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf",
+      "lots[0].sheets_pdfs[1].version_rank": 2,
+      "lots[0].sheets_version_watermark": 2,
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "pdf",
+      "lots[0].template_id": "tpl-a4-portrait-2f-v2",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "Erreur: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf existe deja. Trois issues: relancer avec --nouvelle-version pour imprimer un tirage voisin sans toucher a celui-ci (son rang apparaitra sur la planche ET dans son QR); relancer avec --overwrite pour le remplacer sciemment; ou supprimer ce qui est devenu inutile (`mmu project remove --lot <id>`, qui retire le lot et ses planches)."
+   ],
+   "stdout": []
+  },
+  "07-par-rush-et-fps": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--rush",
+    "rush-001",
+    "--fps",
+    "5"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_rush-001_5_planches.pdf": "15d5412ceafc9bc85f2a1072396d7a1a39a40e48226e013977bb0560ae0603e2",
+     "patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf": "ffb758abe7ccb30121f70b26720425e6dd881dc7d1c3de1582f61e94a3a08468"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].gamut_map_id": "gamut-map-none-1",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].patch_preset_id": "patches-17-v4",
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].sheets_pdfs[0].path": "patches/proj-identite-makepdf_rush-001_5_planches.pdf",
+      "lots[0].sheets_pdfs[1].path": "patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf",
+      "lots[0].sheets_pdfs[1].version_rank": 2,
+      "lots[0].sheets_version_watermark": 2,
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "pdf",
+      "lots[0].template_id": "tpl-a4-portrait-2f-v2",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches_v2.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-none-1",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "Erreur: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf existe deja. Trois issues: relancer avec --nouvelle-version pour imprimer un tirage voisin sans toucher a celui-ci (son rang apparaitra sur la planche ET dans son QR); relancer avec --overwrite pour le remplacer sciemment; ou supprimer ce qui est devenu inutile (`mmu project remove --lot <id>`, qui retire le lot et ses planches)."
+   ],
+   "stdout": []
+  },
+  "10-designation-ambigue": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5",
+    "--rush",
+    "rush-001"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {}
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Erreur: designer le lot soit par --lot, soit par le couple --rush/--fps, jamais les deux."
+   ],
+   "stdout": []
+  },
+  "11-designation-absente": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {}
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Erreur: designer le lot a imprimer avec --rush <rush_id> et --fps <cadence cible>, ou directement avec --lot <lot_id>."
+   ],
+   "stdout": []
+  },
+  "12-lot-absent-du-manifest": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-999_5"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[ERROR] Lot rush-999_5 non conforme: LOT_ABSENT_DU_MANIFEST"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Lot rush-999_5 non conforme: LOT_ABSENT_DU_MANIFEST",
+    "Erreur: le lot 'rush-999_5' n'est pas imprimable en l'etat. Constats bloquants:",
+    "  - LOT_ABSENT_DU_MANIFEST",
+    "  Lots disponibles dans le manifest: rush-001_5"
+   ],
+   "stdout": []
+  },
+  "13-vocabulaire-refuse": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5",
+    "--frames-par-page",
+    "7"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[ERROR] Lot rush-999_5 non conforme: LOT_ABSENT_DU_MANIFEST",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1)."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1).",
+    "Erreur: Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1)."
+   ],
+   "stdout": []
+  },
+  "14-preset-de-patchs-inconnu": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5",
+    "--nombre-patchs",
+    "patches-000-v0"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[ERROR] Lot rush-999_5 non conforme: LOT_ABSENT_DU_MANIFEST",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Aucun preset de patchs ne correspond a 'patches-000-v0'. Presets disponibles (registre 4.7): patches-9-v1, patches-12-v1, patches-18-v2, patches-14-v3, patches-17-v4 -- designables par identifiant ou par cardinal de valeurs (9, 12, 14, 17, 18)."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "Aucun preset de patchs ne correspond a 'patches-000-v0'. Presets disponibles (registre 4.7): patches-9-v1, patches-12-v1, patches-18-v2, patches-14-v3, patches-17-v4 -- designables par identifiant ou par cardinal de valeurs (9, 12, 14, 17, 18).",
+    "Erreur: Aucun preset de patchs ne correspond a 'patches-000-v0'. Presets disponibles (registre 4.7): patches-9-v1, patches-12-v1, patches-18-v2, patches-14-v3, patches-17-v4 -- designables par identifiant ou par cardinal de valeurs (9, 12, 14, 17, 18)."
+   ],
+   "stdout": []
+  },
+  "15-gamut-map-inconnu": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5",
+    "--gamut-map",
+    "compression-000"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[ERROR] Lot rush-999_5 non conforme: LOT_ABSENT_DU_MANIFEST",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Aucun preset de patchs ne correspond a 'patches-000-v0'. Presets disponibles (registre 4.7): patches-9-v1, patches-12-v1, patches-18-v2, patches-14-v3, patches-17-v4 -- designables par identifiant ou par cardinal de valeurs (9, 12, 14, 17, 18).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Compression de gamut inconnue: 'compression-000'. Identifiants connus: gamut-map-none-1, gamut-map-lin-1. Defaut: gamut-map-none-1."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "Compression de gamut inconnue: 'compression-000'. Identifiants connus: gamut-map-none-1, gamut-map-lin-1. Defaut: gamut-map-none-1.",
+    "Erreur: Compression de gamut inconnue: 'compression-000'. Identifiants connus: gamut-map-none-1, gamut-map-lin-1. Defaut: gamut-map-none-1."
+   ],
+   "stdout": []
+  },
+  "16-format-inconnu": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5",
+    "--format",
+    "A9"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[ERROR] Lot rush-999_5 non conforme: LOT_ABSENT_DU_MANIFEST",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Aucun preset de patchs ne correspond a 'patches-000-v0'. Presets disponibles (registre 4.7): patches-9-v1, patches-12-v1, patches-18-v2, patches-14-v3, patches-17-v4 -- designables par identifiant ou par cardinal de valeurs (9, 12, 14, 17, 18).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Compression de gamut inconnue: 'compression-000'. Identifiants connus: gamut-map-none-1, gamut-map-lin-1. Defaut: gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Format de page hors vocabulaire: 'A9'. Formats acceptes: A4."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "Format de page hors vocabulaire: 'A9'. Formats acceptes: A4.",
+    "Erreur: Format de page hors vocabulaire: 'A9'. Formats acceptes: A4."
+   ],
+   "stdout": []
+  },
+  "17-marge-inconnue": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5",
+    "--marge",
+    "7"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[ERROR] Lot rush-999_5 non conforme: LOT_ABSENT_DU_MANIFEST",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Aucun preset de patchs ne correspond a 'patches-000-v0'. Presets disponibles (registre 4.7): patches-9-v1, patches-12-v1, patches-18-v2, patches-14-v3, patches-17-v4 -- designables par identifiant ou par cardinal de valeurs (9, 12, 14, 17, 18).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Compression de gamut inconnue: 'compression-000'. Identifiants connus: gamut-map-none-1, gamut-map-lin-1. Defaut: gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Format de page hors vocabulaire: 'A9'. Formats acceptes: A4.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Preset de marge hors vocabulaire: '7'. Presets acceptes (en mm): 0, 2, 5. La marge est un preset discret du template (decision 4.4), jamais un flottant libre."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "Preset de marge hors vocabulaire: '7'. Presets acceptes (en mm): 0, 2, 5. La marge est un preset discret du template (decision 4.4), jamais un flottant libre.",
+    "Erreur: Preset de marge hors vocabulaire: '7'. Presets acceptes (en mm): 0, 2, 5. La marge est un preset discret du template (decision 4.4), jamais un flottant libre."
+   ],
+   "stdout": []
+  },
+  "18-geometrie-inconnue": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5",
+    "--geometrie",
+    "v0"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[ERROR] Lot rush-999_5 non conforme: LOT_ABSENT_DU_MANIFEST",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Aucun preset de patchs ne correspond a 'patches-000-v0'. Presets disponibles (registre 4.7): patches-9-v1, patches-12-v1, patches-18-v2, patches-14-v3, patches-17-v4 -- designables par identifiant ou par cardinal de valeurs (9, 12, 14, 17, 18).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Compression de gamut inconnue: 'compression-000'. Identifiants connus: gamut-map-none-1, gamut-map-lin-1. Defaut: gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Format de page hors vocabulaire: 'A9'. Formats acceptes: A4.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Preset de marge hors vocabulaire: '7'. Presets acceptes (en mm): 0, 2, 5. La marge est un preset discret du template (decision 4.4), jamais un flottant libre.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Version de geometrie de page inconnue: 'v0'. Versions connues: v1, v2. Defaut: v2."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "Version de geometrie de page inconnue: 'v0'. Versions connues: v1, v2. Defaut: v2.",
+    "Erreur: Version de geometrie de page inconnue: 'v0'. Versions connues: v1, v2. Defaut: v2."
+   ],
+   "stdout": []
+  },
+  "19-geometrie-impossible": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5",
+    "--orientation",
+    "paysage",
+    "--nombre-patchs",
+    "patches-18-v2"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[ERROR] Lot rush-999_5 non conforme: LOT_ABSENT_DU_MANIFEST",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Aucun preset de patchs ne correspond a 'patches-000-v0'. Presets disponibles (registre 4.7): patches-9-v1, patches-12-v1, patches-18-v2, patches-14-v3, patches-17-v4 -- designables par identifiant ou par cardinal de valeurs (9, 12, 14, 17, 18).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Compression de gamut inconnue: 'compression-000'. Identifiants connus: gamut-map-none-1, gamut-map-lin-1. Defaut: gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Format de page hors vocabulaire: 'A9'. Formats acceptes: A4.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Preset de marge hors vocabulaire: '7'. Presets acceptes (en mm): 0, 2, 5. La marge est un preset discret du template (decision 4.4), jamais un flottant libre.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Version de geometrie de page inconnue: 'v0'. Versions connues: v1, v2. Defaut: v2.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Couple geometriquement infaisable, et non un placement manquant: le preset 'patches-18-v2' pose 18 valeur(s) par cote, soit 18 rangee(s) de 6.0 mm au pas de 9.0 mm, qui exigent 159.0 mm -- quand le couloir lateral d'une page paysage sous la geometrie v2 n'en offre que 151.0 (17 rangee(s)). Motif du plafond: cette version n'ouvre qu'1 colonne(s) de temoins par cote parce que c'est cette colonne unique qui rend la bande de dessin large (`EPIC5-ARB-57`); en ajouter une pour ce seul preset reprendrait au dessin ce que la story 5.15 lui donne. Le couple reste composable sous la geometrie v1 (makepdf --geometrie v1)."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "Couple geometriquement infaisable, et non un placement manquant: le preset 'patches-18-v2' pose 18 valeur(s) par cote, soit 18 rangee(s) de 6.0 mm au pas de 9.0 mm, qui exigent 159.0 mm -- quand le couloir lateral d'une page paysage sous la geometrie v2 n'en offre que 151.0 (17 rangee(s)). Motif du plafond: cette version n'ouvre qu'1 colonne(s) de temoins par cote parce que c'est cette colonne unique qui rend la bande de dessin large (`EPIC5-ARB-57`); en ajouter une pour ce seul preset reprendrait au dessin ce que la story 5.15 lui donne. Le couple reste composable sous la geometrie v1 (makepdf --geometrie v1).",
+    "Erreur: Couple geometriquement infaisable, et non un placement manquant: le preset 'patches-18-v2' pose 18 valeur(s) par cote, soit 18 rangee(s) de 6.0 mm au pas de 9.0 mm, qui exigent 159.0 mm -- quand le couloir lateral d'une page paysage sous la geometrie v2 n'en offre que 151.0 (17 rangee(s)). Motif du plafond: cette version n'ouvre qu'1 colonne(s) de temoins par cote parce que c'est cette colonne unique qui rend la bande de dessin large (`EPIC5-ARB-57`); en ajouter une pour ce seul preset reprendrait au dessin ce que la story 5.15 lui donne. Le couple reste composable sous la geometrie v1 (makepdf --geometrie v1)."
+   ],
+   "stdout": []
+  },
+  "20-compression-non-triviale": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5",
+    "--gamut-map",
+    "gamut-map-lin-1"
+   ],
+   "code": 0,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_rush-001_5_planches.pdf": "d0870003bb1dd48dcc9f1c7dc0544c652cbfb7d7d3827f66375677af89dd752a"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].gamut_map_id": "gamut-map-lin-1",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].patch_preset_id": "patches-17-v4",
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].sheets_pdfs[0].path": "patches/proj-identite-makepdf_rush-001_5_planches.pdf",
+      "lots[0].sheets_version_watermark": 1,
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "pdf",
+      "lots[0].template_id": "tpl-a4-portrait-2f-v2",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[ERROR] Lot rush-999_5 non conforme: LOT_ABSENT_DU_MANIFEST",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Aucun preset de patchs ne correspond a 'patches-000-v0'. Presets disponibles (registre 4.7): patches-9-v1, patches-12-v1, patches-18-v2, patches-14-v3, patches-17-v4 -- designables par identifiant ou par cardinal de valeurs (9, 12, 14, 17, 18).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Compression de gamut inconnue: 'compression-000'. Identifiants connus: gamut-map-none-1, gamut-map-lin-1. Defaut: gamut-map-none-1.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Format de page hors vocabulaire: 'A9'. Formats acceptes: A4.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Preset de marge hors vocabulaire: '7'. Presets acceptes (en mm): 0, 2, 5. La marge est un preset discret du template (decision 4.4), jamais un flottant libre.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Version de geometrie de page inconnue: 'v0'. Versions connues: v1, v2. Defaut: v2.",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[ERROR] Couple geometriquement infaisable, et non un placement manquant: le preset 'patches-18-v2' pose 18 valeur(s) par cote, soit 18 rangee(s) de 6.0 mm au pas de 9.0 mm, qui exigent 159.0 mm -- quand le couloir lateral d'une page paysage sous la geometrie v2 n'en offre que 151.0 (17 rangee(s)). Motif du plafond: cette version n'ouvre qu'1 colonne(s) de temoins par cote parce que c'est cette colonne unique qui rend la bande de dessin large (`EPIC5-ARB-57`); en ajouter une pour ce seul preset reprendrait au dessin ce que la story 5.15 lui donne. Le couple reste composable sous la geometrie v1 (makepdf --geometrie v1).",
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[INFO] Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+      "[INFO] compression de gamut: gamut-map-lin-1",
+      "[WARNING] COMPRESSION_SANS_EXPANSION: les frames sont comprimees par gamut-map-lin-1, et aucune etape du scan ne les decomprime encore (l'expansion appartient a la story 5.4b). Les images reconstruites depuis ces planches seront delavees tant que G^-1 n'est pas livree.",
+      "[INFO] PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+      "[INFO] Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-lin-1."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Reserve informative sur le lot rush-001_5: METADONNEES_A_RENSEIGNER_AVANT_ENCODE",
+    "compression de gamut: gamut-map-lin-1",
+    "COMPRESSION_SANS_EXPANSION: les frames sont comprimees par gamut-map-lin-1, et aucune etape du scan ne les decomprime encore (l'expansion appartient a la story 5.4b). Les images reconstruites depuis ces planches seront delavees tant que G^-1 n'est pas livree.",
+    "PDF ecrit: <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf (2 page(s))",
+    "Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-lin-1."
+   ],
+   "stdout": [
+    "makepdf termine avec succes. 2 page(s) (2 frame(s) par page, template tpl-a4-portrait-2f-v2, patchs patches-17-v4) dans <PROJET>/patches/proj-identite-makepdf_rush-001_5_planches.pdf.",
+    "Lot rush-001_5 declare au manifest (project.json): etat pdf, template tpl-a4-portrait-2f-v2, patchs patches-17-v4, compression gamut-map-lin-1.",
+    "Consigne de numerisation: scanner a 600 dpi minimum."
+   ]
+  },
+  "21-lot-non-conforme": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[ERROR] Lot rush-001_5 non conforme: FRAMES_MANQUANTES, CARDINAL_DE_FICHIERS_DIVERGENT"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Lot rush-001_5 non conforme: FRAMES_MANQUANTES, CARDINAL_DE_FICHIERS_DIVERGENT",
+    "Erreur: le lot 'rush-001_5' n'est pas imprimable en l'etat. Constats bloquants:",
+    "  - FRAMES_MANQUANTES",
+    "  - CARDINAL_DE_FICHIERS_DIVERGENT",
+    "  Le lot sur disque ne correspond plus a ce que le manifest declare: re-extraire (extract --overwrite) avant makepdf."
+   ],
+   "stdout": []
+  },
+  "30-mire-nominale": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "calibration-page",
+    "--chaine",
+    "banc identite 600 dpi"
+   ],
+   "code": 0,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_banc-identite-600-dpi-6f5e6f71_calibration.pdf": "6728b580758bd4e81090bb10ee4031564182ef13c1760f984b56863fa87c6b2d"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de la generation de page de calibration pour le projet <PROJET>"
+   ],
+   "stdout": [
+    "page de calibration ecrite: <PROJET>/patches/proj-identite-makepdf_banc-identite-600-dpi-6f5e6f71_calibration.pdf (chaine \"banc identite 600 dpi\", template tpl-a4-portrait-2f-v2, a scanner a 600 dpi minimum). Imprimez-la, scannez-la, puis lancez `scan ... calibrate` pour consigner le profil de la chaine."
+   ]
+  },
+  "31-mire-relance-identique": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "calibration-page",
+    "--chaine",
+    "banc identite 600 dpi"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_banc-identite-600-dpi-6f5e6f71_calibration.pdf": "6728b580758bd4e81090bb10ee4031564182ef13c1760f984b56863fa87c6b2d"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de la generation de page de calibration pour le projet <PROJET>",
+    "Erreur: <PROJET>/patches/proj-identite-makepdf_banc-identite-600-dpi-6f5e6f71_calibration.pdf existe deja. Trois issues: donner un autre --chaine, qui entre dans le nom et laisse ce fichier intact (la geometrie, le nombre de patchs et le commentaire, eux, n'entrent PAS dans le nom: deux pages de la meme chaine reglees differemment se disputeraient ce fichier); relancer avec --overwrite pour le remplacer sciemment; ou supprimer ce fichier."
+   ],
+   "stdout": []
+  },
+  "32-mire-autre-chaine": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "calibration-page",
+    "--chaine",
+    "banc identite 1200 dpi"
+   ],
+   "code": 0,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_banc-identite-1200-dpi-e6c223d3_calibration.pdf": "50a25a8d14411f76adb8da62fbaad6bc1d7cd2561f5d245e91c76953acf782da",
+     "patches/proj-identite-makepdf_banc-identite-600-dpi-6f5e6f71_calibration.pdf": "6728b580758bd4e81090bb10ee4031564182ef13c1760f984b56863fa87c6b2d"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de la generation de page de calibration pour le projet <PROJET>"
+   ],
+   "stdout": [
+    "page de calibration ecrite: <PROJET>/patches/proj-identite-makepdf_banc-identite-1200-dpi-e6c223d3_calibration.pdf (chaine \"banc identite 1200 dpi\", template tpl-a4-portrait-2f-v2, a scanner a 600 dpi minimum). Imprimez-la, scannez-la, puis lancez `scan ... calibrate` pour consigner le profil de la chaine."
+   ]
+  },
+  "33-mire-overwrite": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--overwrite",
+    "calibration-page",
+    "--chaine",
+    "banc identite 600 dpi"
+   ],
+   "code": 0,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_banc-identite-1200-dpi-e6c223d3_calibration.pdf": "50a25a8d14411f76adb8da62fbaad6bc1d7cd2561f5d245e91c76953acf782da",
+     "patches/proj-identite-makepdf_banc-identite-600-dpi-6f5e6f71_calibration.pdf": "6728b580758bd4e81090bb10ee4031564182ef13c1760f984b56863fa87c6b2d"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de la generation de page de calibration pour le projet <PROJET>"
+   ],
+   "stdout": [
+    "page de calibration ecrite: <PROJET>/patches/proj-identite-makepdf_banc-identite-600-dpi-6f5e6f71_calibration.pdf (chaine \"banc identite 600 dpi\", template tpl-a4-portrait-2f-v2, a scanner a 600 dpi minimum). Imprimez-la, scannez-la, puis lancez `scan ... calibrate` pour consigner le profil de la chaine."
+   ]
+  },
+  "34-mire-avec-commentaire": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "calibration-page",
+    "--chaine",
+    "banc identite commentee",
+    "--commentaire",
+    "chaine de banc, jamais imprimee"
+   ],
+   "code": 0,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_banc-identite-1200-dpi-e6c223d3_calibration.pdf": "50a25a8d14411f76adb8da62fbaad6bc1d7cd2561f5d245e91c76953acf782da",
+     "patches/proj-identite-makepdf_banc-identite-600-dpi-6f5e6f71_calibration.pdf": "6728b580758bd4e81090bb10ee4031564182ef13c1760f984b56863fa87c6b2d",
+     "patches/proj-identite-makepdf_banc-identite-commentee-6eaebfc5_calibration.pdf": "0baadd43573c95eba4e54cbb0a93b995391e8838629633bf804b327dbc4e1377"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de la generation de page de calibration pour le projet <PROJET>"
+   ],
+   "stdout": [
+    "page de calibration ecrite: <PROJET>/patches/proj-identite-makepdf_banc-identite-commentee-6eaebfc5_calibration.pdf (chaine \"banc identite commentee\", template tpl-a4-portrait-2f-v2, a scanner a 600 dpi minimum). Imprimez-la, scannez-la, puis lancez `scan ... calibrate` pour consigner le profil de la chaine."
+   ]
+  },
+  "35-mire-chaine-trop-longue": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "calibration-page",
+    "--chaine",
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] Payload field 'scan_chain_label' is 120 characters long, over the contractual maximum of 96 (chaque caractere coute un octet au QR imprime, et les mentions de la page s'impriment verbatim): 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de la generation de page de calibration pour le projet <PROJET>",
+    "Payload field 'scan_chain_label' is 120 characters long, over the contractual maximum of 96 (chaque caractere coute un octet au QR imprime, et les mentions de la page s'impriment verbatim): 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'",
+    "Erreur: Payload field 'scan_chain_label' is 120 characters long, over the contractual maximum of 96 (chaque caractere coute un octet au QR imprime, et les mentions de la page s'impriment verbatim): 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'"
+   ],
+   "stdout": []
+  },
+  "36-mire-commentaire-trop-long": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "calibration-page",
+    "--chaine",
+    "banc identite 600 dpi",
+    "--commentaire",
+    "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] Payload field 'scan_chain_label' is 120 characters long, over the contractual maximum of 96 (chaque caractere coute un octet au QR imprime, et les mentions de la page s'impriment verbatim): 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] Commentaire de page de calibration de 400 caracteres, pour un maximum de 72. Il s'imprime **verbatim** dans la bande d'entete, dont chaque rangee se paie en cellules reprises au treillis: au-dela, la seule autre issue serait de le tronquer, et une mention tronquee sur une feuille imprimee est indetectable apres coup."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de la generation de page de calibration pour le projet <PROJET>",
+    "Commentaire de page de calibration de 400 caracteres, pour un maximum de 72. Il s'imprime **verbatim** dans la bande d'entete, dont chaque rangee se paie en cellules reprises au treillis: au-dela, la seule autre issue serait de le tronquer, et une mention tronquee sur une feuille imprimee est indetectable apres coup.",
+    "Erreur: Commentaire de page de calibration de 400 caracteres, pour un maximum de 72. Il s'imprime **verbatim** dans la bande d'entete, dont chaque rangee se paie en cellules reprises au treillis: au-dela, la seule autre issue serait de le tronquer, et une mention tronquee sur une feuille imprimee est indetectable apres coup."
+   ],
+   "stdout": []
+  },
+  "37-mire-preset-sans-bandeau": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--nombre-patchs",
+    "patches-14-v3",
+    "calibration-page",
+    "--chaine",
+    "banc identite 600 dpi"
+   ],
+   "code": 0,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_banc-identite-600-dpi-6f5e6f71_calibration.pdf": "35c1a50e605068ee2051777b3e85e1e16b9c1d210e034d772cfefb4c6695ff7c"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] Payload field 'scan_chain_label' is 120 characters long, over the contractual maximum of 96 (chaque caractere coute un octet au QR imprime, et les mentions de la page s'impriment verbatim): 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] Commentaire de page de calibration de 400 caracteres, pour un maximum de 72. Il s'imprime **verbatim** dans la bande d'entete, dont chaque rangee se paie en cellules reprises au treillis: au-dela, la seule autre issue serait de le tronquer, et une mention tronquee sur une feuille imprimee est indetectable apres coup.",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de la generation de page de calibration pour le projet <PROJET>"
+   ],
+   "stdout": [
+    "page de calibration ecrite: <PROJET>/patches/proj-identite-makepdf_banc-identite-600-dpi-6f5e6f71_calibration.pdf (chaine \"banc identite 600 dpi\", template tpl-a4-portrait-2f-v2, a scanner a 600 dpi minimum). Imprimez-la, scannez-la, puis lancez `scan ... calibrate` pour consigner le profil de la chaine."
+   ]
+  },
+  "38-mire-vocabulaire-refuse": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--frames-par-page",
+    "7",
+    "calibration-page",
+    "--chaine",
+    "banc identite 600 dpi"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_banc-identite-600-dpi-6f5e6f71_calibration.pdf": "35c1a50e605068ee2051777b3e85e1e16b9c1d210e034d772cfefb4c6695ff7c"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] Payload field 'scan_chain_label' is 120 characters long, over the contractual maximum of 96 (chaque caractere coute un octet au QR imprime, et les mentions de la page s'impriment verbatim): 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] Commentaire de page de calibration de 400 caracteres, pour un maximum de 72. Il s'imprime **verbatim** dans la bande d'entete, dont chaque rangee se paie en cellules reprises au treillis: au-dela, la seule autre issue serait de le tronquer, et une mention tronquee sur une feuille imprimee est indetectable apres coup.",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1)."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de la generation de page de calibration pour le projet <PROJET>",
+    "Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1).",
+    "Erreur: Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1)."
+   ],
+   "stdout": []
+  },
+  "39-mire-geometrie-impossible": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--orientation",
+    "paysage",
+    "--nombre-patchs",
+    "patches-18-v2",
+    "calibration-page",
+    "--chaine",
+    "banc identite 600 dpi"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1",
+     "patches/proj-identite-makepdf_banc-identite-600-dpi-6f5e6f71_calibration.pdf": "35c1a50e605068ee2051777b3e85e1e16b9c1d210e034d772cfefb4c6695ff7c"
+    },
+    "documents": {
+     "project.json": {
+      "artifacts.frames_dir": "frames",
+      "color.target_colorspace": "rec709",
+      "lots[0].confirmation.mode": "non_interactif",
+      "lots[0].confirmation.unknown_color_accepted": true,
+      "lots[0].expected_frame_count": 4,
+      "lots[0].first_frame_timecode": "00:00:00:00",
+      "lots[0].fps_target": 5.0,
+      "lots[0].fps_target_exact": "5/1",
+      "lots[0].frame_timecodes_digest": "sha256-v1:2b6c4673d232e36fd296089c2a166a65e69f350c058275321f317a9fcc4268ed",
+      "lots[0].frames_dir": "frames/rush-001_5",
+      "lots[0].last_frame_timecode": "00:00:00:15",
+      "lots[0].lot_id": "rush-001_5",
+      "lots[0].output_bit_depth": 16,
+      "lots[0].rounding_policy": "floor-index-ceil-count-v1",
+      "lots[0].rush_id": "rush-001",
+      "lots[0].selection_warnings": "<liste vide>",
+      "lots[0].source_frame_count": 20,
+      "lots[0].source_frame_count_is_exact": true,
+      "lots[0].source_tail_frames": 4,
+      "lots[0].state": "extraction",
+      "lots[0].timecode_base": "source",
+      "lots[0].timecode_base_fps": "25/1",
+      "project_id": "proj-identite-makepdf",
+      "reconstruction": "<objet vide>",
+      "rushes[0].fps_source": 25.0,
+      "rushes[0].fps_source_exact": "25/1",
+      "rushes[0].resolution_source.height": 1080,
+      "rushes[0].resolution_source.width": 1920,
+      "rushes[0].rush_id": "rush-001",
+      "rushes[0].source_frame_count": 20,
+      "rushes[0].source_frame_count_is_exact": true,
+      "rushes[0].source_metadata_absent_fields[0]": "source_bit_depth",
+      "rushes[0].source_metadata_absent_fields[1]": "source_codec",
+      "rushes[0].source_metadata_absent_fields[2]": "source_color_primaries",
+      "rushes[0].source_metadata_absent_fields[3]": "source_color_range",
+      "rushes[0].source_metadata_absent_fields[4]": "source_color_trc",
+      "rushes[0].source_metadata_absent_fields[5]": "source_colorspace",
+      "rushes[0].source_metadata_absent_fields[6]": "source_pix_fmt",
+      "rushes[0].source_metadata_absent_fields[7]": "source_sample_aspect_ratio",
+      "rushes[0].source_name": "rush-001.mov",
+      "schema_version": "2.1",
+      "video": "<objet vide>"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] Payload field 'scan_chain_label' is 120 characters long, over the contractual maximum of 96 (chaque caractere coute un octet au QR imprime, et les mentions de la page s'impriment verbatim): 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] Commentaire de page de calibration de 400 caracteres, pour un maximum de 72. Il s'imprime **verbatim** dans la bande d'entete, dont chaque rangee se paie en cellules reprises au treillis: au-dela, la seule autre issue serait de le tronquer, et une mention tronquee sur une feuille imprimee est indetectable apres coup.",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] Cardinal de frames par page hors vocabulaire: '7'. En orientation portrait et en geometrie v2 les valeurs acceptees sont: 1, 2, 3, 4, 8 (EPIC4-ARB-1).",
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] Couple geometriquement infaisable, et non un placement manquant: le preset 'patches-18-v2' pose 18 valeur(s) par cote, soit 18 rangee(s) de 6.0 mm au pas de 9.0 mm, qui exigent 159.0 mm -- quand le couloir lateral d'une page paysage sous la geometrie v2 n'en offre que 151.0 (17 rangee(s)). Motif du plafond: cette version n'ouvre qu'1 colonne(s) de temoins par cote parce que c'est cette colonne unique qui rend la bande de dessin large (`EPIC5-ARB-57`); en ajouter une pour ce seul preset reprendrait au dessin ce que la story 5.15 lui donne. Le couple reste composable sous la geometrie v1 (makepdf --geometrie v1)."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de la generation de page de calibration pour le projet <PROJET>",
+    "Couple geometriquement infaisable, et non un placement manquant: le preset 'patches-18-v2' pose 18 valeur(s) par cote, soit 18 rangee(s) de 6.0 mm au pas de 9.0 mm, qui exigent 159.0 mm -- quand le couloir lateral d'une page paysage sous la geometrie v2 n'en offre que 151.0 (17 rangee(s)). Motif du plafond: cette version n'ouvre qu'1 colonne(s) de temoins par cote parce que c'est cette colonne unique qui rend la bande de dessin large (`EPIC5-ARB-57`); en ajouter une pour ce seul preset reprendrait au dessin ce que la story 5.15 lui donne. Le couple reste composable sous la geometrie v1 (makepdf --geometrie v1).",
+    "Erreur: Couple geometriquement infaisable, et non un placement manquant: le preset 'patches-18-v2' pose 18 valeur(s) par cote, soit 18 rangee(s) de 6.0 mm au pas de 9.0 mm, qui exigent 159.0 mm -- quand le couloir lateral d'une page paysage sous la geometrie v2 n'en offre que 151.0 (17 rangee(s)). Motif du plafond: cette version n'ouvre qu'1 colonne(s) de temoins par cote parce que c'est cette colonne unique qui rend la bande de dessin large (`EPIC5-ARB-57`); en ajouter une pour ce seul preset reprendrait au dessin ce que la story 5.15 lui donne. Le couple reste composable sous la geometrie v1 (makepdf --geometrie v1)."
+   ],
+   "stdout": []
+  },
+  "40-projet-inexistant": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {},
+    "documents": {},
+    "existe": false,
+    "journaux": {}
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Erreur: Le dossier projet n'existe pas: <PROJET>. makepdf opere sur un projet existant (cree par extract), il n'en cree pas."
+   ],
+   "stdout": []
+  },
+  "41-mire-projet-inexistant": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "calibration-page",
+    "--chaine",
+    "banc identite 600 dpi"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {},
+    "documents": {},
+    "existe": false,
+    "journaux": {}
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Erreur: Le dossier projet n'existe pas: <PROJET>. La page de calibration se genere dans un projet existant (cree par extract)."
+   ],
+   "stdout": []
+  },
+  "42-manifest-absent": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {},
+    "documents": {},
+    "existe": true,
+    "journaux": {}
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Erreur: Aucun manifest project.json dans <PROJET>. Extraire un lot d'abord (commande extract)."
+   ],
+   "stdout": []
+  },
+  "43-mire-manifest-absent": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "calibration-page",
+    "--chaine",
+    "banc identite 600 dpi"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {},
+    "documents": {},
+    "existe": true,
+    "journaux": {}
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Erreur: Aucun manifest project.json dans <PROJET>. La page de calibration se range dans un projet et lit son espace couleur cible: creer le projet d'abord (commande extract)."
+   ],
+   "stdout": []
+  },
+  "44-manifest-illisible": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "<illisible>": "JSONDecodeError"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[ERROR] project.json n'est pas un JSON valide (Expecting property name enclosed in double quotes: line 1 column 3 (char 2)). Le manifest est corrompu ou a ete edite a la main: le reparer ou re-extraire le lot."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "project.json n'est pas un JSON valide (Expecting property name enclosed in double quotes: line 1 column 3 (char 2)). Le manifest est corrompu ou a ete edite a la main: le reparer ou re-extraire le lot.",
+    "Erreur: project.json n'est pas un JSON valide (Expecting property name enclosed in double quotes: line 1 column 3 (char 2)). Le manifest est corrompu ou a ete edite a la main: le reparer ou re-extraire le lot."
+   ],
+   "stdout": []
+  },
+  "45-mire-manifest-illisible": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "calibration-page",
+    "--chaine",
+    "banc identite 600 dpi"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "<illisible>": "JSONDecodeError"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] project.json n'est pas un JSON valide (Expecting property name enclosed in double quotes: line 1 column 3 (char 2)). Le manifest est corrompu ou a ete edite a la main: le reparer ou re-extraire le lot."
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de la generation de page de calibration pour le projet <PROJET>",
+    "project.json n'est pas un JSON valide (Expecting property name enclosed in double quotes: line 1 column 3 (char 2)). Le manifest est corrompu ou a ete edite a la main: le reparer ou re-extraire le lot.",
+    "Erreur: project.json n'est pas un JSON valide (Expecting property name enclosed in double quotes: line 1 column 3 (char 2)). Le manifest est corrompu ou a ete edite a la main: le reparer ou re-extraire le lot."
+   ],
+   "stdout": []
+  },
+  "46-manifest-hors-schema": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "--lot",
+    "rush-001_5"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "lots": "pas une liste",
+      "schema_version": "2.0"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de makepdf pour le projet <PROJET>",
+      "[ERROR] Invalid manifest: 'project_id' is a required property"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de makepdf pour le projet <PROJET>",
+    "Invalid manifest: 'project_id' is a required property",
+    "Erreur: Invalid manifest: 'project_id' is a required property"
+   ],
+   "stdout": []
+  },
+  "47-mire-manifest-hors-schema": {
+   "argv": [
+    "makepdf",
+    "--project",
+    "<PROJET>",
+    "calibration-page",
+    "--chaine",
+    "banc identite 600 dpi"
+   ],
+   "code": 1,
+   "horloge_figee": false,
+   "projet": {
+    "arbre": {
+     "frames/rush-001_5/rush-001_5_00-00-00-00.tiff": "a855dc8a24308453cd4e02ba92355ec3f01a2fba1e6a221638a672fa695391da",
+     "frames/rush-001_5/rush-001_5_00-00-00-05.tiff": "b3cfa4b4e721dce48e7d63907bdf6c900501dc21bf878103e99ac64fabc07b4b",
+     "frames/rush-001_5/rush-001_5_00-00-00-10.tiff": "83c1444bac6cc02f81789ec13d45b2c87e935fbef650dc6c682ac7de5bc6e6b2",
+     "frames/rush-001_5/rush-001_5_00-00-00-15.tiff": "417b2f1cd565ca4e0a57a444a75fc3a14fc6eec0cff6b9199b14e3a0b9561cd1"
+    },
+    "documents": {
+     "project.json": {
+      "lots": "pas une liste",
+      "schema_version": "2.0"
+     }
+    },
+    "existe": true,
+    "journaux": {
+     "logs/makepdf.log": [
+      "[INFO] Demarrage de la generation de page de calibration pour le projet <PROJET>",
+      "[ERROR] Invalid manifest: 'project_id' is a required property"
+     ]
+    }
+   },
+   "regime_stdin": "hors terminal",
+   "reponses": [],
+   "stderr": [
+    "Demarrage de la generation de page de calibration pour le projet <PROJET>",
+    "Invalid manifest: 'project_id' is a required property",
+    "Erreur: Invalid manifest: 'project_id' is a required property"
+   ],
+   "stdout": []
+  }
+ }
+}

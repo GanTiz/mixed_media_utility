@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                 temps 1 sur 2 · prévisualiser │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Lecture comparée — une fenêtre s'est ouverte à côté du terminal            │
+│                                                                              │
+│      Dans la fenêtre :  L boucle · N suivante · P précédente · R relire      │
+│                         Q fermer et revenir au terminal                      │
+│                                                                              │
+│   ── Rapport, au fil de la lecture ───────────────────────────────────────   │
+│                                                                              │
+│      cadence     retenues   présentées                                       │
+│      25 fps           124          124                                       │
+│      12,5 fps          62           62                                       │
+│      8,333 fps         42           32                                       │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 3 cadences lues · 228 retenues, 218 présentées                               │
+│ ⏎ choisir quoi extraire  O revoir  Échap les cadences  F1 aide               │
+└──────────────────────────────────────────────────────────────────────────────┘

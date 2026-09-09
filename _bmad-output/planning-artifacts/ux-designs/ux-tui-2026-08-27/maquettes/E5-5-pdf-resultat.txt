@@ -1,0 +1,70 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf                                  2 lots · 164 frames │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ Écrit ───────────────────────────────────────────────────────────────┐   │
+│   │ fichier                                              pages   tirage  │   │
+│   │ ● projet_demo_plan-04_25_6f-pay_v4.pdf                  21        4  │   │
+│   │ ● projet_demo_plan-04_8_6f-pay.pdf                       7        1  │   │
+│   │                                                                      │   │
+│   │ Gabarit                     tpl-a4-paysage-6f-v2                     │   │
+│   │ Emplacement                 projet_demo/patches/                     │   │
+│   │ Manifest mis à jour         projet_demo/manifest.json                │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│    ▸ Ouvrir le dossier                                                       │
+│      Générer une planche de calibration          (à imprimer avec)           │
+│      Mettre d'autres lots en planches                                        │
+│      Retour aux ateliers                                                     │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ●  28 pages écrites · 164 frames placées · ~ 470 Mo · aucun refus            │
+│ ⏎ choisir  ↑↓ naviguer  Échap ateliers  F1 aide                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE (2026-09-01, n°10) : CF ma remarque précédente : pas pris en compte.
+
+  -> Même correction qu'en `E5-3`, et c'est ici qu'elle mordait le plus fort : la ligne
+     « Tirage 1 · le prochain sera 2 » sur une passe à deux lots annonçait un rang FAUX
+     pour l'un des deux. Le rang écrit et le rang suivant sont désormais portés par la
+     ligne de chaque lot. Le chiffre affiché est la LIGNE D'EAU
+     (`sheets_version_watermark`), pas le premier rang libre : c'est le seul qui reste
+     exact après un retrait hors queue (EPIC11-ARB-92).
+
+NOTE (2026-09-01, relecture v5, n°8) : Garder juste tirage. Enlever « puis ». C'est
+inutile.
+
+  -> Retirée. Et le retrait porte sur les DEUX écrans à la fois : `E5-5` et `E5-5b`
+     partagent la fabrique `table_des_ecrits`, donc une seule rédaction les corrige tous
+     les deux -- c'est exactement ce pour quoi cette fabrique existe.
+     Ce que le retrait rend n'est pas rien : six colonnes, reversées à la colonne des
+     noms, qui passe de 41 à 49. C'est précisément ce qu'il fallait pour absorber le
+     fragment de mise en page de la note 7 -- sans ce retrait, les quatre noms de la
+     démonstration auraient tous été élidés. Les deux notes se paient l'une l'autre.
+     Ce que la colonne `puis` disait n'est perdu nulle part : le prochain rang est
+     annoncé par `E5-3b`, au moment où il commande quelque chose.
+     Ceci corrige la réponse à ta note n°10 ci-dessus, qui posait « le rang écrit ET le
+     rang suivant sur la ligne de chaque lot ». Le premier reste, le second tombe.
+
+NOTE (2026-09-02, n°1 et n°2) : les noms perdent le mot `planches`, et `Tab journal` part.
+
+  -> Les deux noms du cartouche passent à `6f-pay`. La ligne `Gabarit` garde
+     `tpl-a4-paysage-6f-v2` : c'est le `template_id` du produit, et les deux formes se
+     lisent ici l'une sous l'autre, ce qui est le meilleur endroit pour voir qu'elles ne
+     disent pas la même chose.
+     `TAB JOURNAL` PART, ET C'EST UNE CORRECTION, PAS UNE PERTE. La ligne du PRODUIT pour
+     un écran de compte rendu est `atelier_scan_parcours.RACCOURCIS_RAPPORT` (`:127`) et
+     elle ne porte aucun `Tab` -- son commentaire dit pourquoi, verbatim : « aucun écran
+     de journal n'est monté par le temps 1, et `CoqueTui.BINDINGS` n'a pas de liaison
+     `tab` [...] la maquette se corrige avec la 11.6 ». Le pied de cet écran est désormais
+     mot pour mot celui du produit.
+     Le retrait a une seconde raison, et c'est elle qui l'a déclenché : il LIBÈRE `Tab`
+     pour la bascule de zone que tu demandes en note 2 (`E5-5b`). Sans lui, la même touche
+     aurait eu deux sens sur deux états du même écran -- ouvrir le journal ici, entrer
+     dans la liste là. Ici la liste tient entière et il n'y a rien à parcourir : `Tab`
+     n'est donc pas offert du tout, la ligne de raccourcis étant contextuelle (`DESIGN.md`
+     §4, « elle ne montre que ce qui marche sur l'écran courant »).
+     Les quatre autres écrans de compte rendu du dépôt -- `E2-5`, `E3-8`, `E4-5`, `E5-6e`
+     -- portent encore `Tab journal`. Ils sont hors du périmètre de cette passe et tombent
+     sous la même mesure.

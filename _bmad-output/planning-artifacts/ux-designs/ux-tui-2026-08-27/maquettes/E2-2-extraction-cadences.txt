@@ -1,0 +1,31 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                 temps 1 sur 2 · prévisualiser │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Quelles cadences regarder ?                                                │
+│                                                                              │
+│    ▸ [x] 25        source            124 frames        (toutes)              │
+│      [x] 12,5      source / 2         62 frames                              │
+│      [x] 8,333     source / 3         42 frames                              │
+│      [ ] 6,25      source / 4         31 frames                              │
+│      …                                             1-4 sur 8 cadences        │
+│                                                                              │
+│      3 cochées sur 8 · 228 frames                                            │
+│                                                                              │
+│   ── Bornes ──────────────────────────────────────────────────────────────   │
+│                                                                              │
+│      Borne d'entrée       00:00:04:12                                        │
+│      Borne de sortie      ·                                   (facultatif)   │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 3 cadences cochées · 228 frames sur 8 cadences proposées                     │
+│ Espace cocher  A ajouter  ⏎ prévisualiser  X extraire sans voir              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE (ecrite sur E2-2-extraction-reglages.txt, l'ecran que celui-ci remplace) :
+NOTE : OK mais je ne comprens pas → comment ajouter des cadences ? Comment naviguer dans la liste des cadences à ajouter (1;2;3 etc). Il faut trouver une expérience utilisateur simple avec ajout à la volée et cases à cocher ?
+L'idée serait de faire en 2 temps : on prévisualise (previz) puis on extrait les cadences qu'on choisit dans la liste de celles qu'on a visualisées.
+A developper !
+
+  -> EPIC11-ARB-24 : liste cochable + previz en deux temps, exactement ton idee.

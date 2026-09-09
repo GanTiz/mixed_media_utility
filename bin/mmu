@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Raccourci "mmu" -> `python -m mixed_media_utility.cli`, sans installation pip.
+#
+# Le depot n'installe rien (aucun `pip install`, cf. docs/test-chaine-complete-
+# avec-calibration.md, section 0) : la CLI tourne via PYTHONPATH pointant sur
+# `src/`. Ce script porte ce reglage lui-meme, calcule depuis SA PROPRE
+# position et non depuis le repertoire courant, pour fonctionner qu'on
+# l'appelle depuis n'importe ou une fois `bin/` sur le PATH (voir
+# `scripts/install-mmu.sh`).
+set -euo pipefail
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Prepend, jamais ecrase: un PYTHONPATH deja pose par l'utilisateur (autre
+# projet, autre outillage) doit survivre a cet appel.
+export PYTHONPATH="${script_dir}/../src${PYTHONPATH:+:${PYTHONPATH}}"
+
+# `python3` d'abord (convention Unix/macOS), repli sur `python` si absent.
+python_bin="python3"
+command -v "${python_bin}" >/dev/null 2>&1 || python_bin="python"
+
+exec "${python_bin}" -m mixed_media_utility.cli "$@"

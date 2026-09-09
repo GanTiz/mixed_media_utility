@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan                              temps 2 sur 2 · écrire │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ À écrire ────────────────────────────────────────────────────────────┐   │
+│   │ Lots écrits              2                                           │   │
+│   │ Frames attendues         124  +  62         =  186                   │   │
+│   │ Frames obtenues          124  +  62         =  186        ● toutes   │   │
+│   │ Profondeur               16 bits                                     │   │
+│   │ Calibration              hp-envy-4520-tiff-600                       │   │
+│   │ Espace disque            ~ 5,4 Go                    (majorant)      │   │
+│   │                                                                      │   │
+│   │   projet_demo_lot_25fps_ingest01                                     │   │
+│   │   projet_demo_lot_12p5_ingest01                                      │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      Écrire les TIFF                                                         │
+│    ▸ Modifier                                                                │
+│      Annuler                                                                 │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 2 lots · 186 frames · ~ 5,4 Go — rien n'a encore été écrit                   │
+│ ⏎ valider  ↑↓ choisir  Échap retour  F1 aide                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : parfait. Même question sur la modification du nom. quel est le mécanisme ?
+
+  -> EPIC11-ARB-25, meme mecanisme : `e`, 48 caracteres, A-Z a-z 0-9 - _

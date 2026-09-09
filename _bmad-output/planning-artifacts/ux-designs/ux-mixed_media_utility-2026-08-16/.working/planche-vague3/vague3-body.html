@@ -1,0 +1,97 @@
+<div class="sheet">
+<header class="masthead">
+  <p class="eyebrow">mixed_media_utility &middot; Epic 7 &middot; vague 3 &middot; 22 ao&ucirc;t 2026</p>
+  <h1>Vague 3, corrigée</h1>
+  <p class="lede">Tes <strong>six retours</strong> appliqués. Deux touchaient le fond : les réglages d'export sont refaits en <strong>carte complète</strong>, et ta question sur les cadences a trouvé un vrai trou dans ma maquette — <strong>la cadence est une valeur qu'on saisit</strong>. Un troisième état a été retiré : il attend ton arbitrage.</p>
+  <p class="howto"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8FAEF8" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.4 10.4 14 14M7 5v4M5 7h4"/></svg><span>Touche une image pour l'agrandir. Sous chaque vignette, écris ton retour et enregistre : il reste dans la page, et je le lis d'ici.</span></p>
+  <p class="mode" id="mode">Vérification de l'enregistrement&hellip;</p>
+</header>
+
+<div class="frames">
+
+__FRAMES__
+
+</div>
+
+<hr>
+
+<section class="block">
+  <h3>Ce que tes six retours ont changé</h3>
+  <ul>
+    <li><b>Les réglages d'export sont ceux d'un outil de post-production.</b> Résolution, cadence, codec et variante, débit, profondeur, audio complet, nom, destination — dans une carte qui s'ouvre sur le côté, avec le vocabulaire de Resolve.</li>
+    <li><b>La cadence est une valeur qu'on saisit.</b> Ta question a trouvé un vrai trou : rien ne disait d'où venait la liste. Les pastilles ne sont que des raccourcis du projet ; le champ à côté prend n'importe quelle valeur.</li>
+    <li><b>Les panneaux ne commentent plus l'image.</b> Troisième fois que tu me le dis, donc c'est devenu une règle écrite : un panneau porte des contrôles, pas de la prose, et un choix y prend la forme d'une liste à cocher.</li>
+  </ul>
+</section>
+
+<section class="block">
+  <h3>Une chose que je dois te rendre</h3>
+  <p>Sur la bascule entre deux passes au même timecode, tu écris : <em>« je ne crois pas que ce soit une fonction listée »</em>. Elle l'est — <code>EXPERIENCE.md</code>, section <em>Composer un lot</em>, mot pour mot :</p>
+  <p class="open">« Comparer deux passes <em>entières</em> ne se fait pas côte à côte : on bascule de l'une à l'autre <b>au même timecode</b>, sans perdre son point de lecture. »</p>
+  <p>Je ne l'avais donc pas inventée pour la maquette. Ce que tu corriges, c'est son <strong>terrain</strong> : elle n'a pas d'objet sur un lot reconstruit, et en aurait un sur une sélection multiple. Deux sorties possibles, et c'est à toi de choisir : <strong>(a)</strong> on la garde en la restreignant à la sélection multiple, et je corrige la phrase de la spine ; <strong>(b)</strong> on la retire, et la phrase part avec elle.</p>
+  <div class="note-block" data-key="bascule">
+    <div class="notes"></div>
+    <div class="compose">
+      <textarea class="note-input" rows="2" aria-label="Retour sur la bascule entre passes" placeholder="(a) restreindre a la selection multiple, (b) retirer&hellip;"></textarea>
+      <div class="compose-row"><span class="status" role="status"></span><button type="button" class="save">Enregistrer</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <h3>Sur les couleurs et les polices</h3>
+  <p>Tu as raison de les traiter en dernier : elles sont <strong>déjà paramétrables</strong>. Chaque maquette tire ses gris, son accent et ses deux polices d'une vingtaine de variables en tête de feuille — <code>--surface-*</code>, <code>--text-*</code>, <code>--accent</code>, <code>--state-*</code>, <code>--f-ui</code>, <code>--f-data</code>. Changer la charte, c'est changer ces valeurs, pas redessiner les écrans.</p>
+  <p>Une seule contrainte survivra au changement : <strong>tous les gris restent R=G=B</strong> et aucune couleur ne touche une image que tu juges. Ce n'est pas un goût, c'est ce qui te permet de voir une dominante sur un scan.</p>
+  <div class="note-block" data-key="charte">
+    <div class="notes"></div>
+    <div class="compose">
+      <textarea class="note-input" rows="2" aria-label="Retour sur la charte" placeholder="Ce qui te déplaît dans les couleurs ou les polices&hellip;"></textarea>
+      <div class="compose-row"><span class="status" role="status"></span><button type="button" class="save">Enregistrer</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <h3>Ce qui vient ensuite</h3>
+  <p>Vague 4 : gestion de projet, plein écran, modales, préférences. Reste en attente, hors vagues : l'inventaire du clic droit dans le chutier, le mode vignette du chutier, et — depuis aujourd'hui — la lecture d'un autre lot pendant un encodage, que tu as classée « pas prio ».</p>
+  <div class="note-block" data-key="suite">
+    <div class="notes"></div>
+    <div class="compose">
+      <textarea class="note-input" rows="2" aria-label="Retour sur la suite" placeholder="Un ordre à changer, quelque chose à ajouter&hellip;"></textarea>
+      <div class="compose-row"><span class="status" role="status"></span><button type="button" class="save">Enregistrer</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <h3>Emporter tes retours</h3>
+  <p>Tes retours sont enregistrés dans la page : je les relis d'ici. Ce bouton est là pour le cas où l'enregistrement échoue, ou si tu préfères me les envoyer en conversation.</p>
+  <div class="copy-row">
+    <button type="button" class="copy" id="copy-all">Copier tous mes retours</button>
+    <span class="status" id="copy-status" role="status"></span>
+  </div>
+</section>
+
+<hr>
+
+<p class="colophon">
+  Maquettes : <code>mockups/key-exports.html</code>, <code>key-comparaison.html</code>, <code>key-extraction-v3.html</code><br>
+  Retours de la vague 2 : <code>retours-vague-2-2026-08-22.md</code><br>
+  Retours de la vague 3 : <code>retours-vague-3-2026-08-22.md</code><br>
+  Décisions appliquées : <code>decisions-2026-08-20-epic-7.md</code>, EPIC7-ARB-16 à 22 &mdash; branche <code>oc/epic-7-ux</code><br>
+  Vignettes capturées sur les fichiers du dépôt, sans retouche.
+</p>
+
+</div>
+
+<div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Image agrandie">
+  <div class="viewer-bar">
+    <span class="viewer-title" id="viewer-title"></span>
+    <button type="button" id="zoom-out" aria-label="Réduire">&minus;</button>
+    <button type="button" id="zoom-fit">Ajuster</button>
+    <button type="button" id="zoom-in" aria-label="Agrandir">+</button>
+    <button type="button" id="viewer-close" aria-label="Fermer"><span class="lbl-long">Fermer</span><span class="lbl-short" aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="viewer-scroll" id="viewer-scroll"><img id="viewer-img" alt=""></div>
+  <p class="viewer-hint">Fais glisser pour te d&eacute;placer &middot; double-touche pour zoomer d'un coup</p>
+</div>

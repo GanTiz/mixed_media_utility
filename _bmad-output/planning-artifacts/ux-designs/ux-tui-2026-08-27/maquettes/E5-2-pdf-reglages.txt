@@ -1,0 +1,191 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf                                  2 lots · 164 frames │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Réglages des planches                                                      │
+│                                                                              │
+│      Orientation          (•) paysage      ( ) portrait                      │
+│      Format · DPI         A4 · 600                                           │
+│      Marge de travail     0            0 · 2 · 5 mm                          │
+│                                                                              │
+│   ── Frames par page ─────────────────────────────────────────────────────   │
+│      ( ) 1●   235,3 × 132,4 mm   311,5 cm²   164 pages                       │
+│      ( ) 2    134,0 ×  75,4 mm   101,0 cm²    82 pages                       │
+│      ( ) 4●   113,2 ×  63,7 mm    72,1 cm²    41 pages                       │
+│      (•) 6     88,3 ×  49,7 mm    43,9 cm²    28 pages                       │
+│      ( ) 8     65,5 ×  36,8 mm    24,1 cm²    21 pages                       │
+│      ● choix optimal                                                         │
+│      ▲ 8 frames portrait est plus optimal :                                  │
+│        surface de dessin supérieure et gain de pages     46,1 cm² · 21 pages │
+│                         > Valider                                            │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 28 pages — plan-04_25 21 · plan-04_8 7 · 164 frames sur 168 emplacements     │
+│ ⏎ valider  Tab champ  ↑↓ naviguer  Échap retour  F1 aide                     │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : la marge est une marge de travail non ?
+
+  -> EPIC11-ARB-34 : oui, « marge de travail ». Libelle corrige ici et a la confirmation.
+
+NOTE (2026-09-01, n°5) : J'aurais aimé ajouter une indication : la taille des frames
+produites sur le papier (surface de dessin : largeur (mm) x hauteur (mm)). J'aimerais
+aussi que l'outil nous avertisse dans 2 cas [...] Tous les éléments de calcul existent
+dans le code. La logique d'optimisation non mais elle est simple.
+
+  -> Vérifié : tu as raison, tout existe. Les quatre pièces, nommées --
+       * `page_templates.template_for(orientation, cardinal, marge)` -> `TemplateSpec`,
+         dont `frame_zones_mm` porte les zones en millimètres ;
+       * `page_templates.frame_image_rect_mm(zone, marge_mm)` -> (x, y, largeur,
+         hauteur) en mm : le plus grand 16:9 inscrit, c'est-à-dire EXACTEMENT la
+         surface de dessin. Le scan recalcule ce même rectangle depuis le QR ;
+       * `page_templates.frames_per_page_vocabulary(orientation)` et
+         `MARGIN_PRESETS_MM` ;
+       * `pdf_composition.page_count_du_lot` (:647) pour les pages.
+     Il ne manque qu'une comparaison, et rien à écrire dans le cœur.
+     Les deux lignes ajoutées portent des valeurs MESURÉES sur cet arbre (A4, v2,
+     marge 0) : paysage 8 f = 65,5 × 36,8 mm = 24,1 cm² sur 21 pages ; portrait 8 f =
+     90,5 × 50,9 mm = 46,1 cm² sur les MÊMES 21 pages, soit +91 % de surface. C'est
+     ton premier cas d'avertissement, et il est spectaculaire.
+     Deux autres cas mesurés, que tu n'avais pas cités : portrait 1 f et portrait 2 f
+     rendent EXACTEMENT la même surface (184,0 × 103,5 mm), donc 1 f/page est toujours
+     dominé -- même dessin, deux fois plus de papier ; et 8 f portrait (46,1 cm²,
+     21 pages) bat 6 f paysage (43,9 cm², 28 pages) sur les DEUX critères à la fois.
+     Rien n'est implémenté : c'est un dessin.
+
+NOTE (2026-09-01, v5 n°1) : « On enlève compression de gamut »
+
+  -> Retirée des deux écrans de réglages. Et la mesure va dans ton sens plus loin
+     que la préférence : `cli.py --gamut-map` documente lui-même que « la
+     compression reelle s'active explicitement: la decompression G^-1 est
+     post-MVP (story 5.4b), donc un defaut comprimant produirait des exports
+     delaves que rien ne redresse ». La seule valeur sûre aujourd'hui est donc le
+     défaut, et un champ dont une seule valeur est sûre n'est pas un réglage.
+     L'option reste sur la ligne de commande ; elle ne s'affiche plus ici.
+
+NOTE (2026-09-01, v5 n°2) : « comment change-t-on la puce ? Une liste déroulante
+serait le mieux : on y entre par Tab, on navigue aux flèches, Entrée valide et
+sort du champ. Hors du champ, Entrée revalide le formulaire. Sinon, que
+proposes-tu ? Et : une seule liste, les choix optimisés en vert + astérisque pour
+la lecture monochrome, avec une légende. Tout cela est-il faisable ? »
+
+  -> Réponse de faisabilité, puisque tu la demandes explicitement, en trois
+     points et tous mesurés.
+
+     1. LE DÉROULANT : faisable techniquement, refusé par la charte. Textual sait
+        ouvrir un panneau flottant. Mais `tui/jetons.GLYPHES` ne porte AUCUN
+        glyphe de déroulant et `DESIGN.md` §7.3 ne connaît que deux formes de
+        champ -- la saisie libre et le choix exclusif `(•)`/`( )`. Un déroulant
+        RECOUVRE, et toute la TUI est bâtie sur une grille 80x24 où rien ne
+        recouvre, avec un repli ASCII qui doit rendre la même information. Il
+        faudrait donc un glyphe neuf, une règle de recouvrement, et l'équivalent
+        ASCII des deux. C'est ce que tu as toi-même tranché en note 3.
+
+     2. UNE SEULE LISTE : faite, et c'est `EPIC11-ARB-173`. Les deux rangées
+        « proposés d'office » / « et aussi » disparaissent. Aucun cardinal n'est
+        retiré -- `EPIC11-ARB-154` tient à l'identique, on guide, on n'interdit
+        pas -- et la liste est celle du vocabulaire du cœur,
+        `frames_per_page_vocabulary(orientation, "v2")`, dans son ordre.
+
+     3. VERT + ASTÉRISQUE : faisable sans rien de neuf, parce que les deux ne
+        font qu'UN seul jeton. `DESIGN.md` §6 : le glyphe `●` vaut
+        `state-complete` -- le VERT -- et son repli ASCII est `*` -- l'ASTÉRISQUE.
+        Écrire un `*` littéral en UTF-8 aurait fait deux fautes d'un coup : un
+        glyphe hors table (interdit §6) et une collision avec le repli de `●`.
+        La légende que tu demandes est la ligne `● non dominé : …`, qui porte le
+        glyphe elle-même et se replie donc avec lui.
+
+     CE QUI A COMMANDÉ LA FORME VERTICALE, et c'est une mesure : `jetons.peindre`
+     peint PAR LIGNE, jamais par fragment de ligne. Ses deux règles portent sur
+     « la ligne du curseur » et sur « une ligne qui porte un glyphe d'état », et
+     son paramètre `etats` est un `Mapping[int, str]` -- un jeton PAR RANG. Du
+     vert sur quelques puces d'une même rangée n'était donc pas exprimable sans
+     changer le contrat de peinture du produit. Une entrée par ligne le rend
+     exprimable par la règle qui existe déjà, sans une ligne de produit en plus.
+     C'est le seul motif du passage en liste verticale.
+
+NOTE (2026-09-01, v5 n°3) : « Ok ça me convainc finalement [...] je veux essayer
+cette forme. » Mais Entrée est ambigu : elle garde ici la fonction de sélection,
+et on ajoute un bouton « Valider » en bas de page, atteint en changeant de champ.
+« Enter vaut donc sélectionner »
+
+  -> Fait, et les deux écrans se partagent la démonstration plutôt que de la
+     répéter. `E5-2` pose le focus sur le bouton `Valider` -- sa ligne de
+     raccourcis dit alors « ⏎ valider ». `E5-2b` pose le focus dans la liste --
+     elle dit « ⏎ sélectionner ». La ligne de raccourcis est contextuelle par
+     charte (`DESIGN.md` §4) : ta règle se lit donc à l'écran, elle n'est pas
+     seulement respectée.
+     Le bouton se dessine comme un champ : rien à gauche, la valeur à la colonne
+     des valeurs, le glyphe `>` quand il a le focus (§7.3). Aucun dessin de
+     bouton n'est inventé -- la table de glyphes est close.
+
+NOTE (2026-09-01, v5 n°4) : les deux rangées tombent : « juste le code couleur +
+glyphe »
+
+  -> Fait. Les rangées « proposés d'office » / « et aussi » étaient l'ANCIENNE
+     manière de dire la domination : une séparation spatiale. Le glyphe la dit
+     maintenant sur la ligne.
+     CE QUI RESTE, et il faut le dire parce que c'est un ajout à ta note : la
+     ligne « ▲ N frames <orientation> est plus optimal » survit. Motif : le
+     glyphe se calcule sur le PRODUIT des deux orientations (`EPIC11-ARB-154`),
+     alors que la liste n'en montre qu'une. Une entrée peut donc être sans glyphe
+     à cause d'une combinaison de l'AUTRE orientation, que la liste ne montre
+     pas -- ce conseil est le seul endroit qui la nomme. Dis-le si tu la veux
+     partir aussi : elle tombe sans rien casser, on perd la seule passerelle
+     entre les deux orientations.
+     Le bloc « Ce qui en découle » disparaît, lui, et rien n'est perdu : la
+     surface de dessin et les pages vivent désormais SUR chaque entrée, pour les
+     cinq mises en page et non pour la seule retenue -- c'est ce qui rend le
+     glyphe lisible au lieu d'être à croire. Le `template_id`, lui, n'a jamais
+     été un réglage : il se lit à la confirmation `E5-3`, qui le porte déjà.
+
+MESURE QUI FAIT FOI (sortie brute du script, refaite sur cet arbre le
+2026-09-01). Aucune valeur de cet écran n'est recopiée : les zones sont lues à
+`page_templates.frame_zones_mm`, passées à `frame_image_rect_mm` (le plus grand
+16:9 inscrit, donc exactement la surface de dessin, celle que le scan recalcule
+depuis le QR), le vocabulaire vient de `frames_per_page_vocabulary` et les pages
+de `pdf_composition.page_count_du_lot`, lot par lot.
+    MESURE DES GEOMETRIES DE PLANCHE -- lot V5-A, 2026-09-01
+    regime : gabarit v2 · A4 · marge 0 mm (0 mm sur les 4 cotes)
+    lots   : plan-04_25 124 frames · plan-04_8 40 frames  =  164 frames
+    
+    vocabulaire lu par frames_per_page_vocabulary(orientation, 'v2') :
+      portrait  (1, 2, 3, 4, 8)   retire : (6,)
+      paysage   (1, 2, 4, 6, 8)
+    
+    orientation  f/p   largeur   hauteur  cm2/frame    ratio  pages  gabarit
+    ------------------------------------------------------------------------
+    portrait      1    184.0mm    103.5mm      190.4   1.7778    164  tpl-a4-portrait-1f-v2
+    portrait      2    184.0mm    103.5mm      190.4   1.7778     82  tpl-a4-portrait-2f-v2
+    portrait      3    126.6mm     71.2mm       90.2   1.7778     56  tpl-a4-portrait-3f-v2
+    portrait      4     92.7mm     52.2mm       48.4   1.7778     41  tpl-a4-portrait-4f-v2
+    portrait      8     90.5mm     50.9mm       46.1   1.7778     21  tpl-a4-portrait-8f-v2
+    paysage       1    235.3mm    132.4mm      311.5   1.7778    164  tpl-a4-paysage-1f-v2
+    paysage       2    134.0mm     75.4mm      101.0   1.7778     82  tpl-a4-paysage-2f-v2
+    paysage       4    113.2mm     63.7mm       72.1   1.7778     41  tpl-a4-paysage-4f-v2
+    paysage       6     88.3mm     49.7mm       43.9   1.7778     28  tpl-a4-paysage-6f-v2
+    paysage       8     65.5mm     36.8mm       24.1   1.7778     21  tpl-a4-paysage-8f-v2
+    
+    controle du ratio : chaque zone de chaque gabarit v2
+      ensemble des ratios mesures = [1.77778]
+      ecart maximal a 16/9 (1.77778) = 0.00000
+    
+    DOMINATION -- une combinaison est dominee si une autre a
+      surface >= ET pages <=, avec au moins une inegalite stricte
+    
+      portrait  1f   190.4 cm2  164 pages   DOMINEE par portrait 2f, paysage 1f
+      portrait  2f   190.4 cm2   82 pages   NON DOMINEE
+      portrait  3f    90.2 cm2   56 pages   NON DOMINEE
+      portrait  4f    48.4 cm2   41 pages   DOMINEE par paysage 4f
+      portrait  8f    46.1 cm2   21 pages   NON DOMINEE
+      paysage   1f   311.5 cm2  164 pages   NON DOMINEE
+      paysage   2f   101.0 cm2   82 pages   DOMINEE par portrait 2f
+      paysage   4f    72.1 cm2   41 pages   NON DOMINEE
+      paysage   6f    43.9 cm2   28 pages   DOMINEE par portrait 8f
+      paysage   8f    24.1 cm2   21 pages   DOMINEE par portrait 8f
+    
+    Les NON DOMINEES, dans l'ordre des pages croissantes :
+      * portrait  8f   90.5 x  50.9 mm    46.1 cm2/frame   21 pages  (plan-04_25 16 · plan-04_8 5)
+      * paysage   4f  113.2 x  63.7 mm    72.1 cm2/frame   41 pages  (plan-04_25 31 · plan-04_8 10)
+      * portrait  3f  126.6 x  71.2 mm    90.2 cm2/frame   56 pages  (plan-04_25 42 · plan-04_8 14)
+      * portrait  2f  184.0 x 103.5 mm   190.4 cm2/frame   82 pages  (plan-04_25 62 · plan-04_8 20)
+      * paysage   1f  235.3 x 132.4 mm   311.5 cm2/frame  164 pages  (plan-04_25 124 · plan-04_8 40)

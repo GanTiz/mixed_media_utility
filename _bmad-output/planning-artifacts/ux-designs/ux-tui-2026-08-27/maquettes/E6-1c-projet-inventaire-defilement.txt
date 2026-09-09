@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · tournage_2026 · Projet           inventaire · 14 812 fichiers · 214 Go │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   tournage_2026                                                              │
+│                                                                              │
+│        …                                                                     │
+│      + [ ] plan-11_nuit_ext                           1 lot · 412 f.  6,8 Go │
+│      + [ ] plan-12_nuit_int                           1 lot · 198 f.  3,1 Go │
+│      - [ ] plan-13_coupe                           3 lots · 1 204 f. 18,7 Go │
+│        + [ ] plan-13_coupe_25                      5 objets · 702 f. 11,2 Go │
+│    ▸   + [ ] plan-13_coupe_12p5                    5 objets · 502 f.  7,5 Go │
+│        + [ ] ▲ plan-13_coupe_12p5_v2 · non déclaré 3 objets · 348 f.  5,2 Go │
+│      + [ ] plan-14_raccords                            1 lot · 96 f.  1,4 Go │
+│        [ ] plan-15_sons_seuls                                  0 lot       · │
+│      + [ ] plan-16_timelapse                       4 lots · 2 118 f. 31,4 Go │
+│      + [ ] plan-17_essais_pellicule                    1 lot · 84 f.  1,2 Go │
+│        …                                                        11-17 sur 30 │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 30 rushes · 10 au-dessus, 13 en dessous · 14 812 fichiers · 214 Go           │
+│ Espace cocher  Suppr retirer  Ctrl+A ajouter  Ctrl+D déclarer  F1 aide       │
+└──────────────────────────────────────────────────────────────────────────────┘

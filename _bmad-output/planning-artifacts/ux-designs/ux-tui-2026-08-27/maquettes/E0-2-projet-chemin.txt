@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · — aucun projet —                                                  v0.1 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Ouvrir un projet                                                           │
+│                                                                              │
+│      projet_demo                     ouvert le 26/08 · 3 rushes · 5 lots     │
+│      film_court_2026                 ouvert le 21/08 · 1 rush  · 2 lots      │
+│      tests_calibration               ouvert le 14/08 · 0 rush  · 0 lot       │
+│                                                                              │
+│   ────────────────────────────────────────────────────────────────────────   │
+│                                                                              │
+│    ▸ Dossier du projet  > D:\HOKO\Documents\mmu\projects\pr                  │
+│                                                                              │
+│       projet_demo/         projet_hiver/         projet_hiver_v2/            │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 3 dossiers correspondent — Tab complète, ↓ descend dans la liste             │
+│ ⏎ ouvrir  Tab compléter  Échap récents  F1 aide  Q quitter                   │
+└──────────────────────────────────────────────────────────────────────────────┘

@@ -1,0 +1,39 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan                            temps 1 sur 2 · détecter │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Que faut-il détecter ?                                                     │
+│                                                                              │
+│      Source               sources multiples                                  │
+│                                                                              │
+│      Résolution de scan > ·                                requis · dpi      │
+│                                                                              │
+│   ── Ce qui sera lu ──────────────────────────────────────────────────────   │
+│                                                                              │
+│      sources multiples · 8 fichiers · 635 Mo                                 │
+│                                                                              │
+│      planche_01.tiff                                              78 Mo      │
+│      planche_03.tiff                                              78 Mo      │
+│      planche_04.tiff                                              81 Mo      │
+│      planche_07.tiff                                              79 Mo      │
+│      …                                                        1-4 sur 8      │
+│                           Valider                    résolution requise      │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ✕  résolution de scan requise — la détection ne peut pas partir              │
+│ ↑↓ sources  Tab champ  Échap ateliers  F1 aide  Q quitter                    │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : Comment faire pour ne déposer qu'un seul fichier ? Ou un dossier ?
+Très bien sinon.
+
+  -> EPIC11-ARB-26 : un seul champ, la completion propose dossiers ET fichiers. Ecran E3-1b.
+
+NOTE (retour terrain d'Egan, 2026-09-06) : « sur l'ecran de parametrage [scan] une
+fois le chemin specifie il manque un bouton valider. Le seul moyen de valider est
+de faire Enter sur le DPI, pas intuitif. » Meme grief qu'`EPIC11-ARB-158` sur E3-9,
+et la forme en est declinee : `Valider` est une LIGNE DU FORMULAIRE, en bas, avec
+sa mention de refus a droite. Deux ecarts assumes avec E3-9, tous deux mesures :
+elle s'atteint par `Tab` (les fleches font defiler la liste des sources sur cet
+ecran-la), et elle n'a PAS de seconde colonne -- c'est la forme d'E5-2, dont Egan
+a fait retirer la sienne le 2026-09-02. Le pied dit desormais le geste de la ligne
+courante : « ⏎ détecter » n'est annonce que sur `Valider`.

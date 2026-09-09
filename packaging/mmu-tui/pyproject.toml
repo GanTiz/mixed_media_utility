@@ -1,0 +1,119 @@
+[build-system]
+# Meme plancher que la racine, et pour le meme motif : c'est la version de
+# hatchling qui lit `license` comme EXPRESSION SPDX (PEP 639).
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+# EPIC8-ARB-5 (Egan, 2026-09-07, verbatim) : « mmu-tui depend de la cli. On a
+# donc deux paquets. » Cette distribution ne porte QUE
+# `src/mixed_media_utility/tui/` ; tout le reste -- coeur, `cli`, `gui` --
+# arrive par `mmu-cli`, dont elle depend.
+name = "mmu-tui"
+# EPIC8-ARB-10 : la version se LIT dans le coeur, elle ne se recopie pas.
+# Le chemin remonte a la racine du depot : c'est mesure, pas suppose (voir
+# `[tool.hatch.build.targets.wheel.force-include]` plus bas).
+dynamic = ["version"]
+description = "Mixed Media Utility — Terminal UI, on top of mmu-cli"
+readme = "README.md"
+requires-python = ">=3.11"
+# Meme licence que `mmu-cli`, et le meme TEXTE, a l'octet : `LICENSE` et
+# `THIRD-PARTY-NOTICES.md` sont des COPIES de ceux de la racine, et
+# `test_deux_distributions.py` mesure qu'elles n'ont pas derive.
+#
+# DEUX formes ont ete essayees avant, et chacune a rendu un artefact casse :
+#
+#  1. `license-files = ["../../LICENSE"]` CONSTRUIT sans broncher, et la roue
+#     porte alors `mmu_tui-0.1.0.dist-info/licenses/../../LICENSE` -- un chemin
+#     qui REMONTE hors du dist-info a l'installation ;
+#  2. des LIENS SYMBOLIQUES vers la racine : la roue est correcte (hatchling
+#     suit le lien et embarque les 35 149 octets du vrai texte), mais la
+#     distribution SOURCE les garde tels quels, pendants, et `pip install` sur
+#     cette sdist echoue par `LinkOutsideDestinationError`.
+#
+# Une copie mesuree vaut mieux qu'un lien qui casse un artefact sur deux : le
+# defaut qu'une copie fait craindre -- deux textes qui divergent -- se mesure,
+# alors que le chemin remontant ne se voyait qu'en ouvrant l'archive.
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE", "THIRD-PARTY-NOTICES.md"]
+authors = [
+  {name = "Egan"}
+]
+maintainers = [
+  {name = "Egan"}
+]
+keywords = ["terminal", "tui", "media", "scan", "calibration", "ffmpeg"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Multimedia :: Graphics",
+  "Topic :: System :: Shells",
+]
+# EXACTEMENT trois entrees, et `tests/unit/test_deux_distributions.py` le
+# mesure :
+#
+# * `mmu-cli==<version>` -- l'epinglage est STRICT parce que les deux roues
+#   sont deux moities d'un meme arbre : `tui/` importe le coeur par des chemins
+#   internes (`mixed_media_utility.io.naming`, ...), qui ne portent aucune
+#   garantie de compatibilite entre versions. Une borne large y ferait entrer
+#   une combinaison que personne n'a jouee ;
+# * `textual` et `rich` -- les deux seuls paquets tiers que SEUL le chemin TUI
+#   importe. `rich` se declare explicitement plutot que de reposer sur la
+#   transitivite de textual (EPIC8-ARB-2) : la borne `<9` ne protege en rien
+#   des dependances que textual choisit.
+dependencies = [
+  "mmu-cli==0.1.0",
+  "textual>=8.2,<9",
+  "rich>=14.2",
+]
+
+[project.scripts]
+mmu-tui = "mixed_media_utility.tui.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/GanTiz/mixed_media_utility"
+Repository = "https://github.com/GanTiz/mixed_media_utility"
+Issues = "https://github.com/GanTiz/mixed_media_utility/issues"
+Auteur = "https://github.com/GanTiz"
+
+[tool.hatch.version]
+# Le repertoire racine du backend est celui qui porte CE fichier : le chemin
+# remonte donc de deux crans. MESURE le 2026-09-07, pas suppose -- hatchling
+# accepte un chemin de version hors de sa racine.
+path = "../../src/mixed_media_utility/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+# `packages` est vide DELIBEREMENT : il ne sait designer qu'un repertoire sous
+# la racine du backend, et `src/` est deux crans plus haut. C'est
+# `force-include` ci-dessous qui porte le contenu.
+packages = []
+#
+# PAS d'`exclude` pour le bytecode, et c'est une MESURE, pas un oubli. Ce
+# fichier en portait un (`["**/__pycache__/**", "**/*.pyc"]`) ; la campagne de
+# mutation du 2026-09-07 l'a retire et les 23 bancs sont restes VERTS, alors
+# que `src/mixed_media_utility/tui/__pycache__/` existe bel et bien dans
+# l'arbre de travail. Cause lue dans le backend : hatchling exclut le bytecode
+# LUI-MEME, hors de toute configuration --
+# `hatchling/builders/constants.py` (`EXCLUDED_DIRECTORIES` porte
+# `__pycache__`) et `hatchling/builders/config.py:816` (`*.py[cdo]`).
+# La ligne etait donc une surface morte : elle rassurait sans rien tenir.
+# Ce qui reste mesure, c'est le RESULTAT --
+# `test_aucune_des_deux_roues_n_embarque_de_bytecode` ouvre les roues et
+# rougirait si un backend futur changeait d'avis.
+
+[tool.hatch.build.targets.wheel.force-include]
+# LA forme mesuree le 2026-09-07, et la seule des trois essayees qui rende une
+# roue correcte depuis un sous-repertoire :
+#
+#   1. `packages = ["../../src/mixed_media_utility/tui"]` -- refuse par
+#      hatchling, qui exige un chemin sous sa racine ;
+#   2. un second `pyproject.toml` copie a la racine par le job de construction
+#      -- le repli annonce par la story, jamais joue : celle-ci marche ;
+#   3. `force-include` -- 52 fichiers `tui/`, aucun `.pyc`, aucun fichier
+#      commun avec la roue `mmu-cli`.
+"../../src/mixed_media_utility/tui" = "mixed_media_utility/tui"

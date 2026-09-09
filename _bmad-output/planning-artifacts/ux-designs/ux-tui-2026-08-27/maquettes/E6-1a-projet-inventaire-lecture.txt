@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Projet                     inventaire · lecture en cours │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   projet_demo                                                                │
+│                                                                              │
+│      ◐  lecture du disque                                                    │
+│                                                                              │
+│   ────────────────────────────────────────────────────────────────────────   │
+│                                                                              │
+│      Le manifeste est lu, puis le disque est parcouru : c'est                │
+│      l'écart entre les deux qui fait l'intérêt de cet écran, et il           │
+│      ne se mesure pas sans les deux.                                         │
+│                                                                              │
+│      Sur un projet local la lecture est immédiate. Elle se voit sur          │
+│      un volume réseau, ou sur plusieurs dizaines de milliers de              │
+│      fichiers.                                                               │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ lecture en cours — aucune écriture, aucun décompte disponible                │
+│ F1 aide                                                                      │
+└──────────────────────────────────────────────────────────────────────────────┘

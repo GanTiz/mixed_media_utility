@@ -1,0 +1,71 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf · Calibration                 temps 2 sur 2 · écrire │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Génération en cours — planche de calibration                               │
+│                                                                              │
+│      ◐ projet_demo_hp-envy-4520…-73881cda_calibration.pdf  1 page   en cours │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 1 page · 164 pastilles — la page n'est pas encore écrite                     │
+│ Échap interrompre  F1 aide                                                   │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE (2026-09-01, relecture v5, n°10) : Cette progression existe au cœur ?
+
+  -> NON, et ma mesure va plus loin que ta question. `grep` de `rappel_progression` sur
+     `src/` : 38 occurrences dans 11 modules -- sept de cœur (`extraction`, `scan_write`,
+     `scan_detect`, `scan_detection`, `scan_output_frames`, `ffmpeg_utils`,
+     `progression`) et quatre surfaces (`gui/executeur`, `tui/atelier_scan_detection`,
+     `tui/atelier_scan_ecriture`, `tui/atelier_extraction_ecriture`). ZÉRO dans
+     `pdf_composition.py`, zéro dans `pdf_render.py`, zéro sur le chemin `makepdf` de
+     `cli.py`. `pdf_render.render_lot_pdf` (`:370`) porte pourtant la seule boucle qui
+     pourrait jalonner -- `for page in plan.pages` -- et elle n'émet rien.
+     Ce n'est pas un oubli : c'est la tâche B4 du lot de cœur de la story 11.7, qui la
+     nomme déjà, verbatim : « `rappel_progression` sur le rendu (AC 2.6), contrat
+     identique à celui d'`ecrire_le_lot_detecte` : un jalon par page, `total =
+     plan.page_count`, aucun jalon avant la première page, optionnel mais jamais
+     silencieusement éteint ».
+     MAIS B4 NE COUVRE PAS CET ÉCRAN-CI, et je préfère le dire. Son contrat est « un
+     jalon par PAGE, `total = plan.page_count` ». Une mire tient sur UNE page : B4 lui
+     rendrait une barre à deux états, qui ne dit rien -- c'est exactement pourquoi la
+     barre dessinée ici compte les pastilles (164, mesurées) et non les pages. Elle
+     demande donc un jalon d'une autre granularité, que ni B4 ni AC 2.6 ne prévoient.
+     Deux issues, à trancher au développement et pas ici : étendre le contrat de B4 à un
+     cardinal fourni par le plan, ou renoncer à la barre pour la mire et n'y laisser que
+     le journal. L'écran garde la barre parce que c'est la forme utile ; il ne prétend
+     pas qu'elle est câblée. Le « reste ~ 3 s » reste une forme et non un engagement :
+     personne n'a chronométré la composition.
+
+NOTE (2026-09-02, n°4) : « Un jalon par page mais pas le détail du QR et des pastilles
+générées donc. »
+
+  -> LA BARRE DISPARAÎT. Les `130/164 pastilles` étaient exactement le détail que tu
+     exclus. Ce qui reste : la ligne du fichier en cours, le journal qui nomme ce qui se
+     fait, et une ligne d'état qui ne dit que ce que l'écran sait -- une page, 164
+     pastilles, rien d'écrit encore.
+     ELLE DISPARAÎT PARCE QUE LE CŒUR NE PEUT PAS L'ALIMENTER, PAS PARCE QU'ON L'A JUGÉE
+     INUTILE -- et la nuance compte, parce qu'elle dit ce qu'il faudrait pour la rendre.
+     Le canal de progression livré émet un jalon par PAGE, `total = plan.page_count`. Une
+     mire tient sur une page : la seule barre alimentable ici aurait DEUX états, 0 % puis
+     100 %. Une barre à deux états n'informe pas, elle occupe. La compter en pastilles
+     demanderait un jalon d'une autre granularité, que ni la tâche B4 de la 11.7 ni son
+     AC 2.6 ne prévoient -- c'est-à-dire précisément ce que tu viens d'écarter.
+     Ta note tranche donc la question que la version précédente laissait ouverte : des
+     deux issues proposées -- étendre le contrat de B4 à un cardinal fourni par le plan,
+     ou renoncer à la barre pour la mire --, c'est la seconde qui est retenue, et le
+     contrat de B4 reste tel quel.
+     Aucun `reste ~ 3 s` non plus : personne n'a chronométré la composition, et
+     `EPIC7-ARB-67` interdit de rendre un temps tant qu'aucune mesure n'existe.

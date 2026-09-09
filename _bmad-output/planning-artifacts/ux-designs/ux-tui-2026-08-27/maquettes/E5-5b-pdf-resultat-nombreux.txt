@@ -1,0 +1,99 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf                                  7 lots · 512 frames │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ── Écrit — 7 PDF, 512 frames ───────────────────────────────────────────   │
+│                                                                              │
+│      fichier                                                  pages   tirage │
+│      ● projet_demo_plan-01_25_6f-pay_v2.pdf                      21        2 │
+│      ● projet_demo_plan-02_12p5_6f-pay.pdf                       16        1 │
+│      ● projet_demo_plan-03_8_6f-pay_v5.pdf                        9        5 │
+│      ● projet_demo_sequence-12-atelier-fonde…12p5_6f-pay.pdf     13        1 │
+│      …                                                  1-4 sur 7 PDF écrits │
+│                                                                              │
+│      Gabarit                     tpl-a4-paysage-6f-v2                        │
+│      Emplacement                 projet_demo/patches/                        │
+│                                                                              │
+│    ▸ Ouvrir le dossier                                                       │
+│      Générer une planche de calibration          (à imprimer avec)           │
+│      Mettre d'autres lots en planches                                        │
+│      Retour aux ateliers                                                     │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ●  7 PDF écrits · 512 frames placées · aucun refus                           │
+│ ⏎ choisir  ↑↓ naviguer  Tab champ  Échap ateliers  F1 aide                   │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE (2026-09-01, relecture v5, n°9) : Les flèches ne peuvent pas faire défiler si elles
+naviguent... solution ?
+
+  -> Tu as vu juste, et le défaut était dans le marqueur, pas dans le mécanisme. La ligne
+     disait `1-4 sur 7 PDF écrits · ↑↓ fait défiler` alors que le pied du MÊME écran dit
+     `↑↓ naviguer` -- pour la liste des issues, la seule qui porte un curseur `▸`.
+     `DESIGN.md` §7.5 tranche : « il n'y a donc jamais deux curseurs à l'écran »
+     (EPIC11-ARB-50). Deux listes ne peuvent pas se disputer `↑↓`. La promesse était donc
+     fausse, et c'est elle qui part : le marqueur redevient une POSITION, pas une touche.
+     Le pied, lui, était déjà juste, et pas seulement par cohérence de maquette : c'est
+     mot pour mot la constante du produit pour un écran de compte rendu,
+     `atelier_scan_parcours.RACCOURCIS_RAPPORT` (`:127`) = `⏎ choisir  ↑↓ naviguer
+     Échap ateliers  F1 aide`. Le changer aurait fait diverger la maquette du code livré.
+     Je ne l'ai donc pas touché -- il est aussi celui de `E5-5`, `E3-8`, `E2-5`, `E4-5`
+     et `E5-6e`.
+     Il n'y a rien à inventer par ailleurs : le mécanisme existe et il est partagé.
+     `jetons.fenetre_de_liste(total, premier_visible, hauteur)` rend les rangs visibles
+     d'une liste qui défile ; `jetons.recadrer_la_fenetre(premier_visible, curseur,
+     total, hauteur)` ramène la fenêtre sur le curseur, UN RANG À LA FOIS. Les flèches
+     déplacent donc le curseur, et la fenêtre suit -- elles ne défilent jamais. Cinq
+     surfaces s'en servent déjà : `explorateur.py:608`, `cadences.py:669`,
+     `rushes.py:620`, `atelier_scan.py:1015`, `atelier_scan_calibration.py:509`. Et la
+     ligne `…` se réserve AVANT le découpage, « sans cela la dernière entrée se cacherait
+     derrière le `…` qui annonce justement qu'elle existe » (docstring de
+     `fenetre_de_liste`). C'est ce mécanisme qui répond à ta question là où elle se pose
+     vraiment : sur une liste qui A le curseur -- `E5-1`, `E2-2`, l'explorateur.
+     Ici, ce que l'écran ne montre pas se lit au journal (`Tab`) et dans le dossier
+     (`Ouvrir le dossier`), qui sont déjà deux issues de cet écran. Le marqueur le dit.
+     Le nom long est élidé au milieu : ce qu'il garde -- la cadence, la mise en page, le
+     rang -- est ce qui distingue une ligne d'une autre, la longueur protégée étant
+     dérivée de la position du marqueur `_planches` dans le nom produit, jamais comptée
+     à la main.
+
+NOTE (2026-09-02, n°2) : « Donc si on fait 100 lots d'un coup on doit tout faire défiler
+avant d'atteindre les choix ? Non il faut basculer d'une zone à l'autre si possible.
+TAB ? »
+
+  -> Tu as raison de refuser la réponse précédente : le marqueur de défilement disait où
+     on est dans la liste, il ne donnait aucun moyen d'y entrer ni d'en sortir. `Tab`, oui,
+     et le dépôt le fait déjà à trois endroits -- rien à inventer :
+       * `X1` / `X5`, l'explorateur : `Tab chemin` entre dans la barre d'adresse, `Tab
+         liste` en sort. C'est écrit au `DESIGN.md` §7.5, « `Tab` entre dans la barre
+         d'adresse et en sort -- et rien d'autre » ;
+       * `E2-3` / `E2-3b`, la confirmation d'extraction : `Tab éditer les noms` entre dans
+         le bloc du haut, `Tab les choix` revient aux issues. C'est le patron le plus
+         proche d'ici : du contenu en haut, des issues en bas, une seule zone éclairée ;
+       * `E6-1` / `E6-1b` : `Tab écarts` / `Tab inventaire`.
+     `EPIC11-ARB-50` NE S'Y OPPOSE PAS, et je l'ai vérifié plutôt que supposé. Le principe
+     dit « il n'y a donc jamais deux curseurs à l'écran » : il interdit deux curseurs
+     SIMULTANÉS, pas deux zones navigables. `Tab` ne duplique pas le curseur, il le
+     DÉPLACE -- et le paragraphe où `ARB-50` est écrit est justement celui de
+     l'explorateur, qui bascule au `Tab`. Ma réponse précédente confondait « deux listes
+     ne peuvent pas se disputer `↑↓` » (vrai, et toujours vrai) avec « une seule zone peut
+     être navigable » (faux).
+     CET ÉCRAN EST L'ÉTAT D'ARRIVÉE, et il répond seul à ta question : le curseur est sur
+     les issues, en bas, sans qu'on ait rien fait défiler. `E5-5c` montre l'autre état,
+     après un `Tab` : le curseur passe dans la liste, la fenêtre le suit, et les issues
+     restent dessinées, entières, sans curseur -- elles ne disparaissent pas, elles
+     perdent la main.
+     CONSÉQUENCE DE FORME, et elle est mesurée. La liste sort du cartouche et devient une
+     liste §7.1 sous filet. Ce n'est pas un choix de style : le colorisateur ne reconnaît
+     l'entrée du curseur que si le glyphe `▸` ouvre la ligne une fois `strip()` faite
+     (`coloriser_maquette._segments_du_centre`), et `construire_maquette._declarer_le_
+     curseur` cherche le même motif. Un `▸` posé DANS un cartouche est précédé du bord
+     `│` : invisible aux deux, la ligne se peindrait en vert d'état au lieu de l'accent du
+     curseur. `E5-5` garde son cartouche §7.4 parce que sa liste de deux lignes ne se
+     parcourt pas.
+     Le mécanisme de fenêtre reste celui du dépôt : `jetons.fenetre_de_liste(total,
+     premier_visible, hauteur)` réserve la ligne `…` AVANT le découpage,
+     `jetons.recadrer_la_fenetre` ramène la fenêtre sur le curseur un rang à la fois. Les
+     flèches déplacent le curseur, la fenêtre suit -- elles ne défilent jamais.
+     Ce que ça ne ferme pas, dit plutôt que tu : à cent lots la liste reste une liste de
+     cent lignes. `Tab` supprime le trajet forcé vers les issues, il ne remplace pas un
+     filtre ni une recherche, et il n'y en a aucun ici.

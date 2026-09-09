@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Projet                        suppression · plan-04_12p5 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ Supprimé ────────────────────────────────────────────────────────────┐   │
+│   │ ● tout le lot plan-04_12p5                                           │   │
+│   │                                                                      │   │
+│   │ Supprimés               67 fichiers · 1,5 Go libérés                 │   │
+│   │ Manifeste               à jour · l'entrée du lot est retirée         │   │
+│   │ Rang libéré             lot v2 · le prochain lot le reprendra        │   │
+│   │                                                                      │   │
+│   │   extract-frames/plan-04_12p5/              62 fichiers · 770 Mo     │   │
+│   │   plan-04_12p5_mmu_prores_hq.mov            1 fichier · 206 Mo       │   │
+│   │   scans/plan-04_12p5/                       4 fichiers · 550 Mo      │   │
+│   │   ✕ projet_demo_plan-04_12p5_6f-pay.pdf     absente · entrée retirée │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│    ▸ Ouvrir le dossier du projet                                             │
+│      Retour à l'inventaire                                                   │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ●  67 fichiers supprimés · 1,5 Go libérés · manifeste à jour · rang v2 rendu │
+│ ⏎ choisir  ↑↓ naviguer  Échap inventaire  F1 aide                            │
+└──────────────────────────────────────────────────────────────────────────────┘

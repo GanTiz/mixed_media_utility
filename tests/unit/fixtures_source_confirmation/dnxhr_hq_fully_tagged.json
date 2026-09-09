@@ -1,0 +1,44 @@
+{
+  "_comment": "ffprobe 6.1.1 -show_streams -show_format sur un master DNxHR HQX (codec dnxhd, profil dnxhr_hqx) 1920x1080 10 bits, entierement tague: triplet colorimetrique complet ET color_range present, ce que DNxHR/H264/HEVC emettent la ou ProRes n'emet aucune plage. Donnees de test, pas une capture a re-generer.",
+  "streams": [
+    {
+      "index": 0,
+      "codec_name": "dnxhd",
+      "codec_long_name": "VC3/DNxHD",
+      "profile": "DNXHR HQX",
+      "codec_type": "video",
+      "width": 1920,
+      "height": 1080,
+      "coded_width": 1920,
+      "coded_height": 1080,
+      "sample_aspect_ratio": "1:1",
+      "display_aspect_ratio": "16:9",
+      "pix_fmt": "yuv422p10le",
+      "color_range": "tv",
+      "color_space": "bt709",
+      "color_transfer": "bt709",
+      "color_primaries": "bt709",
+      "bits_per_raw_sample": "10",
+      "r_frame_rate": "25/1",
+      "avg_frame_rate": "25/1",
+      "time_base": "1/12800",
+      "duration": "8.000000",
+      "nb_frames": "200",
+      "tags": {
+        "language": "und",
+        "handler_name": "VideoHandler",
+        "timecode": "10:00:00:00"
+      }
+    }
+  ],
+  "format": {
+    "filename": "rush_dnxhr_hqx.mov",
+    "nb_streams": 1,
+    "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+    "duration": "8.000000",
+    "tags": {
+      "major_brand": "qt  ",
+      "encoder": "Lavf60.16.100"
+    }
+  }
+}

@@ -1,0 +1,82 @@
+<div class="sheet">
+<header class="masthead">
+  <p class="eyebrow">mixed_media_utility &middot; Epic 7 &middot; vague 1 &middot; revision du 21 ao&ucirc;t</p>
+  <h1>Vague 1, corrigee</h1>
+  <p class="lede">Les trois écrans, révisés le 21 août avec <strong>tes 14 retours appliqués</strong>. Tes remarques sont restées sous les vignettes qu'elles visaient : tu peux vérifier chacune contre l'image corrigée. <strong>Les spines restent le contrat</strong> ; ces maquettes illustrent.</p>
+  <p class="howto" style="border-color:#F5A623"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#F5A623" stroke-width="1.6" aria-hidden="true"><path d="M8 1.6 15 14H1z"/><path d="M8 6.4v3.2M8 11.6v.4"/></svg><span>Trois de tes retours ont défait une décision de conception, pas une finition : le mode automatique de la réconciliation, le point d'entrée du lot hybride, et le périmètre du bouton d'extraction. Ces trois-là ont été refaits, pas retouchés.</span></p>
+  <p class="howto"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8FAEF8" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.4 10.4 14 14M7 5v4M5 7h4"/></svg><span>Touche une image pour l'agrandir. Sous chaque vignette, écris ton retour et enregistre : il reste dans la page, et je le lis d'ici.</span></p>
+  <p class="mode" id="mode">Vérification de l'enregistrement&hellip;</p>
+</header>
+
+<div class="frames">
+
+__FRAMES__
+
+</div>
+
+<hr>
+
+<section class="block">
+  <h3>Ce que tes retours ont changé</h3>
+  <ul>
+    <li><b>Le chrome de l'arbre tombe.</b> Cartouche, trait d'accent et flèche disparaissent ; la puce et le signe + portent seuls la sélection et la présence d'enfants.</li>
+    <li><b>Aucun critère technique ne décide à ta place.</b> Le mode automatique et les mesures de netteté ont quitté l'écran de décision.</li>
+    <li><b>Le point d'entrée du composite change de bout en bout</b> : sélection de scans, fenêtre de création, puis la galerie qui signale les doublons.</li>
+    <li><b>Extraire, c'est extraire le lot</b>, pas la page qu'on regarde.</li>
+  </ul>
+</section>
+
+<section class="block">
+  <h3>Ce que ces trois écrans décident</h3>
+  <ul>
+    <li><b>La profondeur est un avancement.</b> L'arbre ne s'enfonce que là où le travail a avancé — c'est ce qui rend six niveaux lisibles, et c'est aussi ce qu'on vient y lire.</li>
+    <li><b>La provenance ne se déduit jamais après coup.</b> Une frame dit de quel scan elle vient, du bandeau de réconciliation jusqu'au manifeste d'export.</li>
+    <li><b>Deux verrous, deux indicateurs.</b> Identité et géométrie échouent indépendamment ; l'écran ne les confond pas.</li>
+    <li><b>Un scan en images se range comme un PDF</b>, et l'ordre se corrige.</li>
+    <li><b>Un refus nomme ce qui manque et ce qu'on peut faire.</b> Un bouton grisé sans motif est un mur.</li>
+  </ul>
+</section>
+
+<section class="block">
+  <h3>Ce qui vient ensuite</h3>
+  <p>Vague 2 : l'atelier Extraction, la galerie et le lecteur en gabarit commun à toutes les pages, le badge de cadence avec ta liste complète de contrôles de transport. Vague 3 : Exports, le wipe et la comparaison, la navigation entre cadences.</p>
+  <div class="note-block" data-key="suite">
+    <div class="notes"></div>
+    <div class="compose">
+      <textarea class="note-input" rows="2" aria-label="Retour sur la suite" placeholder="Un ordre à changer, quelque chose à ajouter&hellip;"></textarea>
+      <div class="compose-row"><span class="status" role="status"></span><button type="button" class="save">Enregistrer</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <h3>Emporter tes retours</h3>
+  <p>Tes retours sont enregistrés dans la page : je les relis d'ici. Ce bouton est là pour le cas où l'enregistrement échoue, ou si tu préfères me les envoyer en conversation.</p>
+  <div class="copy-row">
+    <button type="button" class="copy" id="copy-all">Copier tous mes retours</button>
+    <span class="status" id="copy-status" role="status"></span>
+  </div>
+</section>
+
+<hr>
+
+<p class="colophon">
+  Maquettes : <code>mockups/key-chutier-v2.html</code>, <code>key-lot-hybride.html</code>, <code>key-scan-v2.html</code><br>
+  Tes retours : <code>retours-vague-1-2026-08-21.md</code><br>
+  Décisions appliquées : <code>decisions-2026-08-20-epic-7.md</code>, EPIC7-ARB-1 à 15 &mdash; branche <code>oc/epic-7-ux</code><br>
+  Vignettes capturées sur les fichiers du dépôt, sans retouche.
+</p>
+
+</div>
+
+<div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Image agrandie">
+  <div class="viewer-bar">
+    <span class="viewer-title" id="viewer-title"></span>
+    <button type="button" id="zoom-out" aria-label="Réduire">&minus;</button>
+    <button type="button" id="zoom-fit">Ajuster</button>
+    <button type="button" id="zoom-in" aria-label="Agrandir">+</button>
+    <button type="button" id="viewer-close" aria-label="Fermer"><span class="lbl-long">Fermer</span><span class="lbl-short" aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="viewer-scroll" id="viewer-scroll"><img id="viewer-img" alt=""></div>
+  <p class="viewer-hint">Fais glisser pour te d&eacute;placer &middot; double-touche pour zoomer d'un coup</p>
+</div>

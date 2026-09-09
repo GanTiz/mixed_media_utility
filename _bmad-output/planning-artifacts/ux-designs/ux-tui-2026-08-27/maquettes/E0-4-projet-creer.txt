@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · — aucun projet —                                              création │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Créer un projet                                                            │
+│                                                                              │
+│      Dossier parent     > D:\HOKO\Documents\mmu\projects                     │
+│                           le dossier qui CONTIENDRA le projet                │
+│                                                                              │
+│      Nom du projet        planche_hiver_2026                                 │
+│                                                                              │
+│   ── Ce qui sera créé ────────────────────────────────────────────────────   │
+│                                                                              │
+│      Dossier du projet    …\projects\planche_hiver_2026                      │
+│      Arborescence         frames/  patches/  scans/  outputs/  versions/     │
+│      Fichier de projet    project.json                                       │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ Le dossier n'existe pas encore : il sera créé avec son arborescence.         │
+│ ⏎ créer  Tab champ  Échap récents  F1 aide  Q quitter                        │
+└──────────────────────────────────────────────────────────────────────────────┘

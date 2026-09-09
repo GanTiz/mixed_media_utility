@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Exports                                                  │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Quel lot encoder ?                                                         │
+│                                                                              │
+│    ▸ plan-04_25                                      ● complet               │
+│      plan-04_12p5                                    ● complet               │
+│      plan-04_8                                       ◐ balayage              │
+│      hiver_24                                        ◐ balayage              │
+│      sequence-12-atelier-fonderie-prise-3_12p5       ◐ balayage              │
+│                                                                              │
+│   ── Le lot désigné ──────────────────────────────────────────────────────   │
+│                                                                              │
+│      Reconstruction             (•) v2  02/09 · 8 planches · 124 frames      │
+│                                 ( ) v1  26/08 · 6 planches · 118 frames      │
+│      Frames retenues            124 sur 124 attendues     ● complet          │
+│      Cadence du rushe source    25 fps        lue au manifest                │
+│      Géométrie · bits           1920×1080 · 16 bits                          │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 2 lots comptés sur 5 · plan-04_25 : 124 frames sur 124, 2 reconstructions    │
+│ ⏎ choisir  ↑↓ naviguer  Tab reconstruction  Échap ateliers  F1 aide          │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : OK
+
+  -> approbation, rien change.

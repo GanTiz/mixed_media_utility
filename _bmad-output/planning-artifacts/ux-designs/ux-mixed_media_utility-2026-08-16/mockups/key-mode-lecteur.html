@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mode lecteur — maquette d'ecran cle</title>
+<style>
+/* ===========================================================================
+   MAQUETTE D'ECRAN CLE — LE MODE LECTEUR (SCAN), ET LE REPLI SUR MATERIEL LENT
+   Sections de spine qui gouvernent cet ecran :
+     EXPERIENCE.md > Points de jugement avant ecriture (point 2: mode lecteur)
+     EXPERIENCE.md > D'ou viennent les images de l'apercu
+     EXPERIENCE.md > Component Patterns  (viewer-stage, bus de transport,
+                                          frame-thumb, button-primary)
+     EXPERIENCE.md > State Patterns      (lot complet-avec-mires, frame absente)
+     EXPERIENCE.md > Responsive & Platform
+     DESIGN.md    > components.viewer-stage, frame-thumb, badge-state
+   Deux etats:
+     A. lecture a la cadence cible, machine qui suit ;
+     B. machine qui ne suit pas -> la qualite tombe, ET ELLE LE DIT.
+   Le B vient d'une consigne d'Egan du 2026-08-19 consignee au memlog: la previz
+   se concoit avec un repli assume et VISIBLE, jamais comme un chemin unique qui
+   suppose la machine rapide. Un repli muet ferait juger sur une image degradee
+   sans le savoir -- dans un outil dont toute la promesse est qu'on juge sur ce
+   qu'on voit, c'est le pire defaut possible.
+   La spine reste le contrat ; cette maquette illustre.
+   =========================================================================== */
+
+:root{
+  --surface-canvas:#141414; --surface-panel:#1C1C1C; --surface-raised:#242424;
+  --surface-hover:#2E2E2E; --surface-sunken:#0E0E0E;
+  --border:#383838; --border-strong:#4A4A4A;
+  --text-primary:#E8E8E8; --text-secondary:#9A9A9A; --text-disabled:#6A6A6A;
+  --image-mat:#2B2B2B;
+  --accent:#4C7EF3; --accent-on:#FFFFFF;
+  --state-complete:#3FBF6F; --state-absent:#E5484D; --state-substitute:#F5A623;
+  --sp2:4px; --sp3:6px; --sp4:8px; --sp5:12px; --sp6:16px; --sp7:24px; --sp8:32px;
+  --panel-pad:10px; --mat-min:16px; --header-height:44px; --transport-height:44px;
+  --tabbar-height:54px;
+  --r-sm:4px; --r-md:6px; --r-lg:8px; --r-full:9999px;
+  --f-ui:-apple-system,"Segoe UI",system-ui,sans-serif;
+  --f-data:"SF Mono",Menlo,Consolas,"Cascadia Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#0A0A0A;color:var(--text-primary);
+  font-family:var(--f-ui);font-size:13px;line-height:1.45;-webkit-font-smoothing:antialiased}
+.sheet{max-width:1180px;margin:0 auto;padding:var(--sp8) var(--sp6) 64px}
+h1{font-size:28px;font-weight:600;line-height:1.2;margin:0 0 var(--sp3)}
+.sub{color:var(--text-secondary);margin:0 0 var(--sp8);max-width:72ch}
+h2{font-size:15px;font-weight:600;line-height:1.3;margin:var(--sp8) 0 var(--sp5)}
+.caption{color:var(--text-secondary);margin:var(--sp5) 0 0;font-size:12px;max-width:80ch}
+.lbl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}
+.mono{font-family:var(--f-data);font-size:12px;font-variant-numeric:tabular-nums}
+code{font-family:var(--f-data);font-size:11px;color:var(--text-secondary)}
+
+.app{background:var(--surface-canvas);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.app-header{height:var(--header-height);background:var(--surface-panel);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;padding:0 var(--sp5)}
+.stage-top{display:flex;align-items:center;gap:var(--sp5);padding:var(--sp4) var(--sp5);border-bottom:1px solid var(--border)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
+.seg span{padding:3px var(--sp5);font-size:12px;color:var(--text-secondary)}
+.seg span.on{background:var(--surface-hover);color:var(--text-primary)}
+.right{margin-left:auto;display:inline-flex;align-items:center;gap:var(--sp5)}
+
+/* --- scene : l'habillage recule jusqu'a n'etre qu'un cadre --------------- */
+.stage{background:var(--image-mat);padding:var(--mat-min);display:flex;align-items:center;justify-content:center}
+.pic{width:420px;height:236px;flex:0 0 420px;position:relative;
+  background:linear-gradient(150deg,#4a4a4a 0%,#2a2a2a 46%,#5c5c5c 100%)}
+/* Le repli doit SE VOIR a cote de l'etat nominal, sinon la maquette ne montre
+   pas ce qu'elle pretend montrer: gros blocs de quantification, pas un flou. */
+.pic.coarse{
+  background:
+    repeating-conic-gradient(rgba(255,255,255,.05) 0% 25%, rgba(0,0,0,.05) 0% 50%) 0 0 / 22px 22px,
+    linear-gradient(150deg,#4a4a4a 0%,#2a2a2a 46%,#5c5c5c 100%);
+}
+.pic.coarse::after{content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 22px),
+             repeating-linear-gradient(90deg,rgba(0,0,0,.16) 0 1px,transparent 1px 22px)}
+.tc{position:absolute;left:var(--sp4);bottom:var(--sp4);font-family:var(--f-data);font-size:11px;
+  color:#fff;text-shadow:0 0 3px #000;font-variant-numeric:tabular-nums}
+
+/* --- bandeau de repli : il DIT ce qu'il fait ----------------------------- */
+.fallback{display:flex;align-items:center;gap:var(--sp5);
+  background:var(--surface-raised);border-top:1px solid var(--state-substitute);
+  padding:var(--sp4) var(--sp5);font-size:12px;color:var(--text-primary)}
+.fallback .hatch{width:10px;height:10px;flex:0 0 10px;border-radius:var(--r-full);
+  background:repeating-linear-gradient(45deg,var(--state-substitute) 0 2px,var(--surface-raised) 2px 4px)}
+.fallback .why{color:var(--text-secondary)}
+.fallback .act{margin-left:auto;border:1px solid var(--border-strong);border-radius:var(--r-md);
+  padding:2px var(--sp5);color:var(--text-primary);white-space:nowrap}
+
+/* --- bus de transport ---------------------------------------------------- */
+.transport{height:var(--transport-height);background:var(--surface-panel);border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:var(--sp5);padding:0 var(--sp5)}
+.tbtn{width:26px;height:26px;border:1px solid var(--border);border-radius:var(--r-sm);
+  background:var(--surface-raised);display:flex;align-items:center;justify-content:center;
+  color:var(--text-secondary);font-size:11px}
+.tbtn.on{border-color:var(--accent);color:var(--text-primary)}
+.scrub{flex:1 1 auto;height:4px;background:var(--surface-sunken);border-radius:var(--r-full);position:relative}
+.scrub i{position:absolute;left:0;top:0;bottom:0;width:38%;background:var(--border-strong);border-radius:var(--r-full)}
+.scrub b{position:absolute;left:38%;top:-4px;width:2px;height:12px;background:var(--accent)}
+.tcbox{font-family:var(--f-data);font-size:12px;color:var(--text-primary);font-variant-numeric:tabular-nums}
+.fps{font-family:var(--f-data);font-size:11px;color:var(--text-secondary);font-variant-numeric:tabular-nums}
+
+.params{display:flex;align-items:center;gap:var(--sp5);padding:var(--sp4) var(--sp5);
+  border-top:1px solid var(--border);background:var(--surface-panel)}
+.msg{font-size:12px;color:var(--text-secondary)}
+.btn{background:var(--accent);color:var(--accent-on);border:0;border-radius:var(--r-md);
+  padding:var(--sp4) var(--sp6);font-family:var(--f-ui);font-size:13px;font-weight:600;cursor:default;margin-left:auto}
+.tabs{display:flex;height:var(--tabbar-height);background:var(--surface-panel);border-top:1px solid var(--border)}
+.tabs div{flex:1 1 0;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);
+  font-size:12px;border-top:2px solid transparent;margin-top:-1px}
+.tabs div.on{color:var(--text-primary);border-top-color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <h1>Le mode lecteur, et le repli sur materiel lent</h1>
+  <p class="sub">Le second point de jugement : <b>le lot se relit a sa cadence cible avant qu'un
+  seul TIFF ne s'ecrive</b> — si c'est rate, a quoi bon ecrire les frames. Les images viennent de
+  la detection, pas d'une seconde source : deux sources pourraient montrer deux choses
+  differentes de la meme frame.</p>
+
+  <h2>Etat A &mdash; la machine suit</h2>
+  <div class="app">
+    <div class="app-header">
+      <span class="lbl">Scan &middot; Lot 12,5 fps &middot; lecteur</span>
+      <span class="mono" style="color:var(--state-substitute)">9 pages &middot; 3 mires</span>
+    </div>
+    <div class="stage-top">
+      <span class="seg"><span>PDF</span><span>Galerie</span><span class="on">Lecteur</span></span>
+      <span class="right"><span class="fps">12,5 im/s &mdash; cadence cible</span></span>
+    </div>
+    <div class="stage"><div class="pic"><span class="tc">00:00:12:14</span></div></div>
+    <div class="transport">
+      <span class="tbtn">&#9664;&#9664;</span><span class="tbtn on">&#9654;</span><span class="tbtn">&#9654;&#9654;</span>
+      <span class="tcbox">00:00:12:14</span>
+      <span class="scrub"><i></i><b></b></span>
+      <span class="tcbox">00:00:32:00</span>
+    </div>
+    <div class="params">
+      <span class="msg">9 pages, 3 mires de remplacement. Le lot n'est pas complet.</span>
+      <button class="btn">Extraire les TIFF</button>
+    </div>
+    <div class="tabs"><div>Extraction</div><div>Pdf</div><div class="on">Scan</div><div>Exports</div></div>
+  </div>
+  <p class="caption">Rien autour de l'image : l'habillage recule jusqu'a n'etre qu'un cadre, et une
+  bande de neutre d'au moins 16 px separe toute chromie de coque de la zone jugee. Le lot est
+  lisible et incomplet a la fois — l'un n'empeche pas l'autre, et le bandeau le dit sans l'interdire.</p>
+
+  <h2>Etat B &mdash; la machine ne suit pas</h2>
+  <div class="app">
+    <div class="app-header">
+      <span class="lbl">Scan &middot; Lot 12,5 fps &middot; lecteur</span>
+      <span class="mono" style="color:var(--state-substitute)">9 pages &middot; 3 mires</span>
+    </div>
+    <div class="stage-top">
+      <span class="seg"><span>PDF</span><span>Galerie</span><span class="on">Lecteur</span></span>
+      <span class="right"><span class="fps">12,5 im/s &mdash; cadence cible</span></span>
+    </div>
+    <div class="stage"><div class="pic coarse"><span class="tc">00:00:12:14</span></div></div>
+    <div class="fallback">
+      <span class="hatch"></span>
+      <span><b>Qualite reduite pour tenir la cadence.</b>
+        <span class="why">La cadence est juste, l'image ne l'est pas.</span>
+        <code>PREVIEW_QUALITY_REDUCED</code></span>
+      <span class="act">Tenir la qualite, perdre la cadence</span>
+    </div>
+    <div class="transport">
+      <span class="tbtn">&#9664;&#9664;</span><span class="tbtn on">&#9654;</span><span class="tbtn">&#9654;&#9654;</span>
+      <span class="tcbox">00:00:12:14</span>
+      <span class="scrub"><i></i><b></b></span>
+      <span class="tcbox">00:00:32:00</span>
+    </div>
+    <div class="params">
+      <span class="msg">9 pages, 3 mires de remplacement. Le lot n'est pas complet.</span>
+      <button class="btn">Extraire les TIFF</button>
+    </div>
+    <div class="tabs"><div>Extraction</div><div>Pdf</div><div class="on">Scan</div><div>Exports</div></div>
+  </div>
+  <p class="caption"><b>Le repli se voit, se nomme, et se refuse.</b> Un repli muet ferait juger sur
+  une image degradee sans le savoir — dans un outil dont toute la promesse est qu'on juge sur ce
+  qu'on voit, c'est le pire defaut possible. Le bandeau dit <i>quoi</i> a ete sacrifie (l'image, pas
+  la cadence) et offre l'echange inverse en un clic. Il est ambre, pas rouge : ce n'est pas un
+  echec, c'est un compromis assume. Il ne masque jamais l'image, et il disparait des que la machine
+  reprend la main.</p>
+
+</div>
+</body>
+</html>

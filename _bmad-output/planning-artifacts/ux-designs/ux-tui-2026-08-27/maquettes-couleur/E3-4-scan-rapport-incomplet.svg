@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="696" height="432" viewBox="0 0 696 432" role="img" aria-label="E3-4-scan-rapport-incomplet">
+<title>E3-4-scan-rapport-incomplet</title>
+<rect width="100%" height="100%" rx="6" fill="#141414"/>
+<g font-family="ui-monospace, 'DejaVu Sans Mono', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" xml:space="preserve" style="white-space:pre" dominant-baseline="middle">
+<text x="12.0" y="20.5" fill="#9A9A9A" textLength="672.0" lengthAdjust="spacing">┌──────────────────────────────────────────────────────────────────────────────┐</text>
+<text x="12.0" y="37.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="37.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing"> mmu · projet_demo · Scan                       détection · 24 pages · 2 lots </text>
+<text x="675.6" y="37.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="54.5" fill="#9A9A9A" textLength="672.0" lengthAdjust="spacing">├──────────────────────────────────────────────────────────────────────────────┤</text>
+<text x="12.0" y="71.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="71.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">                                                                              </text>
+<text x="675.6" y="71.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="88.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="88.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   Ce que la détection a trouvé — rien n&#x27;est encore écrit                     </text>
+<text x="675.6" y="88.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="105.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="105.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">                                                                              </text>
+<text x="675.6" y="105.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="122.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="122.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   ┌ Lots reconnus ───────────────────────────────────────────────────────┐   </text>
+<text x="675.6" y="122.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="139.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="139.5" fill="#4EC57A" textLength="655.2" lengthAdjust="spacing">   │ ● lot_25fps          8 pages / 8      124 frames / 124    complet    │   </text>
+<text x="675.6" y="139.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="156.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="156.5" fill="#EE878A" textLength="655.2" lengthAdjust="spacing">   │ ✕ lot_12p5           3 pages / 4       46 frames / 62     incomplet  │   </text>
+<text x="675.6" y="156.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="173.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="173.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   │   └─ page 4 manquante          frames 047 à 062 absentes             │   </text>
+<text x="675.6" y="173.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="190.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="190.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   │   └─ planche_03.tiff           QR_NON_DECODE                         │   </text>
+<text x="675.6" y="190.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="207.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="207.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   └──────────────────────────────────────────────────────────────────────┘   </text>
+<text x="675.6" y="207.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="224.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="224.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">                                                                              </text>
+<text x="675.6" y="224.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="241.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="241.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">      En attente de lecture   ✕  1 fichier non rattaché                       </text>
+<text x="675.6" y="241.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="258.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="258.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">                                                                              </text>
+<text x="675.6" y="258.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="275.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="275.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">      Écrire quand même     lot_12p5 sera écrit incomplet, 46 frames          </text>
+<text x="675.6" y="275.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="292.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="292.5" fill="#8FAEF7" font-weight="700" textLength="655.2" lengthAdjust="spacing">    ▸ Compléter le QR        saisir ce que planche_03 n&#x27;a pas livré           </text>
+<text x="675.6" y="292.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="309.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="309.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">      Annuler               ne rien écrire                                    </text>
+<text x="675.6" y="309.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="326.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="326.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">                                                                              </text>
+<text x="675.6" y="326.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="343.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="343.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">                                                                              </text>
+<text x="675.6" y="343.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="360.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">├</text>
+<text x="20.4" y="360.5" fill="#9A9A9A" textLength="655.2" lengthAdjust="spacing">──────────────────────────────────────────────────────────────────────────────</text>
+<text x="675.6" y="360.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">┤</text>
+<text x="12.0" y="377.5" fill="#9A9A9A" textLength="672.0" lengthAdjust="spacing">│ ▲  1 lot sur 2 est incomplet · 3 pages sur 4 · 46 frames sur 62              │</text>
+<text x="12.0" y="394.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="394.5" fill="#9A9A9A" textLength="655.2" lengthAdjust="spacing"> ⏎ valider  ↑↓ choisir  Tab journal  Échap ateliers  F1 aide                  </text>
+<text x="675.6" y="394.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="411.5" fill="#9A9A9A" textLength="672.0" lengthAdjust="spacing">└──────────────────────────────────────────────────────────────────────────────┘</text>
+</g>
+</svg>

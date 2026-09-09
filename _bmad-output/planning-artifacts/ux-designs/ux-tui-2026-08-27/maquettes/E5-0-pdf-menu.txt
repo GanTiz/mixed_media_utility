@@ -1,0 +1,65 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf                          5 lots · 3 tirages produits │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Atelier Pdf                                                                │
+│                                                                              │
+│    ▸ Composer des planches      Mettre un ou plusieurs lots en pages         │
+│                                 imprimables. Le parcours principal.          │
+│                                                                              │
+│      Planche de calibration     Générer la mire à imprimer avec les          │
+│                                 planches, pour calibrer le scanner.          │
+│                                                                              │
+│   ────────────────────────────────────────────────────────────────────────   │
+│                                                                              │
+│      Dernier tirage produit      projet_demo_plan-04_25_8f-pay_v3.pdf        │
+│                                  26/08 · 16 pages · tirage 3                 │
+│                                  tpl-a4-paysage-8f-v2                        │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│ ⏎ entrer  ↑↓ naviguer  Échap ateliers  F1 aide  Q quitter                    │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE (2026-09-01, n°1) : Toujours une seule ligne colorisée. Cela n'a pas été corrigé.
+
+  -> Trouvé pourquoi avant de corriger, et ce n'est PAS un défaut du colorisateur.
+     Le mécanisme existe depuis EPIC11-ARB-125 : `ecrire(..., hauteur_du_curseur=N)`
+     écrit les rangs dans `maquettes/curseurs.json`, que le colorisateur relit.
+     Sans déclaration il retombe sur le repli par MOTIF, qui ne trouve qu'un rang --
+     la ligne où le glyphe ouvre le texte -- et une ligne de continuation n'en porte
+     aucune. Au 2026-09-01, `curseurs.json` ne portait qu'UNE entrée, `E3-0-scan-menu`,
+     et `_gen_b.py` était le seul générateur à appeler ce paramètre. C'est donc la
+     déclaration qui manquait, pas la règle. `_gen_c.py` déclare désormais
+     `hauteur_du_curseur=2` pour cet écran : les deux lignes de l'entrée sont peintes.
+     Peindre à la main aurait fait diverger la maquette de `jetons.peindre`.
+
+NOTE (2026-09-01, n°2) : `lot_hiver` n'existe toujours pas non ? [...] Comment est
+construit un nom de lot aujourd'hui ? Avec le nom du rushe, la cadence et
+éventuellement un suffixe hashé à partir de données techniques comme les points in
+et out.
+
+  -> Tu as raison, et de mémoire tu décris exactement ce que fait le code.
+     `naming.build_lot_id` compose `<rush_id>_<cadence-courte>`, plus un condensat de
+     huit hexa SEULEMENT si l'extraction est bornée par timecodes. `lot_hiver` est
+     donc impossible : aucun chemin ne rend un identifiant sans cadence. Le pied de
+     cet écran porte désormais `projet_demo_plan-04_25_planches_v3.pdf`, sorti de
+     `build_sheets_pdf_filename` à la génération. Plus aucun identifiant de ces
+     maquettes n'est tapé à la main -- ils sont tous CONSTRUITS par les fonctions du
+     produit, donc une valeur inventée ne peut plus y entrer.
+
+NOTE (2026-09-02, n°1) : « Je préfère retirer le mot planches et mettre 4f-por ou 4f-pay
+à la place si besoin et garder la même longueur. »
+
+  -> Cet écran ne figurait pas dans les cinq que ton retour désigne, et il portait
+     pourtant le mot dans un nom de fichier : `projet_demo_plan-04_25_planches_v3.pdf`.
+     Il lit désormais `projet_demo_plan-04_25_8f-pay_v3.pdf` -- 8 f/page, parce que c'est
+     ce que le gabarit de la ligne du dessous annonce, `tpl-a4-paysage-8f-v2`.
+     C'est ici que les DEUX conventions se voient côte à côte, et c'est assumé : le
+     GABARIT garde `paysage-8f` -- orientation puis cardinal, c'est
+     `page_templates.build_template_id` qui le compose et rien ne le change --, le NOM DE
+     FICHIER porte `8f-pay` -- cardinal puis orientation abrégée, ta forme. Le fragment
+     n'est pas recopié pour autant : il est DÉRIVÉ du `template_id` du produit, donc un
+     gabarit qui changerait de vocabulaire changerait le nom avec lui.

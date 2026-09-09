@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="696" height="432" viewBox="0 0 696 432" role="img" aria-label="E2-1j-declaration-rangs-epuises">
+<title>E2-1j-declaration-rangs-epuises</title>
+<rect width="100%" height="100%" rx="6" fill="#141414"/>
+<g font-family="ui-monospace, 'DejaVu Sans Mono', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" xml:space="preserve" style="white-space:pre" dominant-baseline="middle">
+<text x="12.0" y="20.5" fill="#9A9A9A" textLength="672.0" lengthAdjust="spacing">┌──────────────────────────────────────────────────────────────────────────────┐</text>
+<text x="12.0" y="37.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="37.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing"> mmu · projet_demo · Extraction                 plan séquence 12.mov · refusé </text>
+<text x="675.6" y="37.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="54.5" fill="#9A9A9A" textLength="672.0" lengthAdjust="spacing">├──────────────────────────────────────────────────────────────────────────────┤</text>
+<text x="12.0" y="71.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="71.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">                                                                              </text>
+<text x="675.6" y="71.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="88.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="88.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   ┌ Un rush identique existe déjà ───────────────────────────────────────┐   </text>
+<text x="675.6" y="88.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="105.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="105.5" fill="#EE878A" textLength="655.2" lengthAdjust="spacing">   │ ✕ rush-deja-declare                                                  │   </text>
+<text x="675.6" y="105.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="122.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="122.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   │ Les quatre critères d&#x27;identité coïncident avec ceux d&#x27;un rush        │   </text>
+<text x="675.6" y="122.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="139.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="139.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   │ déjà déclaré. Le chemin ne compte pas.                               │   </text>
+<text x="675.6" y="139.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="156.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="156.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   │                                                                      │   </text>
+<text x="675.6" y="156.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="173.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="173.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   │ Nom du fichier           plan séquence 12.mov                        │   </text>
+<text x="675.6" y="173.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="190.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="190.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   │ Durée source             6 300 frames · 4:12                         │   </text>
+<text x="675.6" y="190.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="207.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="207.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   │ Base de timecode         25 fps                                      │   </text>
+<text x="675.6" y="207.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="224.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="224.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   │ Timecode initial         00:00:04:12                                 │   </text>
+<text x="675.6" y="224.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="241.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="241.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   │                                                                      │   </text>
+<text x="675.6" y="241.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="258.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="258.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   │ Déclaré depuis           D:\HOKO\Documents\…\03_tournage_mai\hd\     │   </text>
+<text x="675.6" y="258.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="275.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="275.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   └──────────────────────────────────────────────────────────────────────┘   </text>
+<text x="675.6" y="275.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="292.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="292.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">                                                                              </text>
+<text x="675.6" y="292.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="309.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="309.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">   Les 99 rangs d&#x27;homonyme sont pris : en retirer un du projet, ou renommer.  </text>
+<text x="675.6" y="309.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="326.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="326.5" fill="#E8E8E8" textLength="655.2" lengthAdjust="spacing">      Relinker plan séquence 12.mov vers D:\…\04_tournage_juin\hd\            </text>
+<text x="675.6" y="326.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="343.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="343.5" fill="#8FAEF7" font-weight="700" textLength="655.2" lengthAdjust="spacing">    ▸ Annuler                                                                 </text>
+<text x="675.6" y="343.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="360.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">├</text>
+<text x="20.4" y="360.5" fill="#9A9A9A" textLength="655.2" lengthAdjust="spacing">──────────────────────────────────────────────────────────────────────────────</text>
+<text x="675.6" y="360.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">┤</text>
+<text x="12.0" y="377.5" fill="#9A9A9A" textLength="672.0" lengthAdjust="spacing">│ ✕  rush-deja-declare · 2 issues, 1 écrit · le manifest est inchangé          │</text>
+<text x="12.0" y="394.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="20.4" y="394.5" fill="#9A9A9A" textLength="655.2" lengthAdjust="spacing"> ⏎ choisir  ↑↓ naviguer  Échap rushes  F1 aide                                </text>
+<text x="675.6" y="394.5" fill="#9A9A9A" textLength="8.4" lengthAdjust="spacing">│</text>
+<text x="12.0" y="411.5" fill="#9A9A9A" textLength="672.0" lengthAdjust="spacing">└──────────────────────────────────────────────────────────────────────────────┘</text>
+</g>
+</svg>

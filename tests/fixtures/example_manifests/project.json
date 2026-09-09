@@ -1,0 +1,13 @@
+{
+  "id": "example-001",
+  "created": "2026-07-14T00:00:00Z",
+  "inputs": {
+    "raw": "inputs/",
+    "frames": "frames/"
+  },
+  "calibration": "calib/camera_params.json",
+  "artifacts": "outputs/",
+  "meta": {
+    "dpi_print": 300
+  }
+}

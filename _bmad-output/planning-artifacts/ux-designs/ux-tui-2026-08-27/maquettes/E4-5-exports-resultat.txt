@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Exports                               plan-04_25 · 124 f │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ Écrit ───────────────────────────────────────────────────────────────┐   │
+│   │ ● plan-04_25_mmu_prores_hq.mov                                       │   │
+│   │                                                                      │   │
+│   │ Taille                  1,38 Go                                      │   │
+│   │ Durée                   4 s 96 · 124 échantillons · 25 fps           │   │
+│   │ Timecode de départ      00:00:04:12                                  │   │
+│   │ Emplacement             projet_demo/outputs/                         │   │
+│   │ Reconstruction          v2 · 8 planches scannées le 02/09            │   │
+│   │ État du lot             encode        déclaré au manifest            │   │
+│   │ Durée d'encodage        1 min 04                                     │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│    ▸ Ouvrir le dossier                                                       │
+│      Ouvrir le fichier                                                       │
+│      Encoder un autre lot                                                    │
+│      Retour aux ateliers                                                     │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ●  1,38 Go écrits · métadonnées vérifiées par ffprobe · aucun refus          │
+│ ⏎ choisir  ↑↓ naviguer  Tab journal  Échap ateliers  F1 aide                 │
+└──────────────────────────────────────────────────────────────────────────────┘

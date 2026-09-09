@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan                                détection · 24 pages │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   La détection s'est arrêtée                                                 │
+│                                                                              │
+│   ┌ Refus ───────────────────────────────────────────────────────────────┐   │
+│   │ ✕ DPI_DECLARE_INCOHERENT                                             │   │
+│   │                                                                      │   │
+│   │ planche_07.tiff déclare 600 dpi mais mesure 425 dpi sur une A4.      │   │
+│   │ Le recadrage sur marge encodée serait faux de 4,1 mm.                │   │
+│   │                                                                      │   │
+│   │ Les fichiers déclarent 425 dpi — non repris d'office : un            │   │
+│   │ scanner en auto-fit écrit une résolution qui n'est pas la sienne.    │   │
+│   │ Rien n'a été écrit ; les 6 pages détectées sont conservées.          │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│    ▸ Reprendre à 425 dpi      la résolution que les fichiers déclarent       │
+│      Reprendre à une autre résolution                                        │
+│      Retirer planche_07.tiff et reprendre                                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ✕  DPI_DECLARE_INCOHERENT — code de refus énuméré (story 5.27)               │
+│ ⏎ choisir  ↑↓ naviguer  Tab journal  Échap ateliers  F1 aide                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : Si l'outil est capable de lever cette erreur, on ne pourrait pas obtenir le DPI automatiquement ? Ce serait bien.
+
+  -> EPIC11-ARB-38 : le coeur MESURE deja le dpi du fichier. Il est affiche et reprenable, mais jamais pose d'office.

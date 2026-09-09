@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Extraction                 plan séquence 12.mov · refusé │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   ┌ Un rush identique existe déjà ───────────────────────────────────────┐   │
+│   │ ✕ rush-deja-declare                                                  │   │
+│   │ Les quatre critères d'identité coïncident avec ceux d'un rush        │   │
+│   │ déjà déclaré. Le chemin ne compte pas.                               │   │
+│   │                                                                      │   │
+│   │ Nom du fichier           plan séquence 12.mov                        │   │
+│   │ Durée source             6 300 frames · 4:12                         │   │
+│   │ Base de timecode         25 fps                                      │   │
+│   │ Timecode initial         00:00:04:12                                 │   │
+│   │                                                                      │   │
+│   │ Déclaré depuis           D:\HOKO\Documents\…\03_tournage_mai\hd\     │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│      Relinker plan séquence 12.mov vers D:\…\04_tournage_juin\hd\            │
+│      C'est un autre rush, le déclarer séparément                             │
+│    ▸ Annuler                                                                 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ✕  rush-deja-declare · 3 issues, 2 écrivent · le manifest est inchangé       │
+│ ⏎ choisir  ↑↓ naviguer  Échap rushes  F1 aide                                │
+└──────────────────────────────────────────────────────────────────────────────┘

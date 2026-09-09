@@ -1,0 +1,80 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Pdf · Calibration                 temps 1 sur 2 · régler │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Générer une planche de calibration                                         │
+│                                                                              │
+│      Nom de la chaîne   > hp-envy-4520-tiff-600-dpi-auto-corr-off            │
+│      Commentaire          passe du 27/08, papier mat                         │
+│                                                                              │
+│   ── Imposé par la fonction de calibration ───────────────────────────────   │
+│                                                                              │
+│      Pastilles            164          130 au treillis + 34 témoins          │
+│      Jeu de patchs        patches-17-v4    les 34 témoins du bandeau         │
+│      Format · DPI         A4 · 600                                           │
+│                                                                              │
+│   ── Ce qui sera écrit ───────────────────────────────────────────────────   │
+│                                                                              │
+│      Fichier              projet_demo_hp-envy-4520…-73881cda_calibration.pdf │
+│      Destination          projet_demo/patches/                               │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 1 page · 164 pastilles · aucun fichier de ce nom sous patches/               │
+│ ⏎ continuer  Tab champ  Échap menu Pdf  F1 aide                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : le nombre de patches n'est pas un choix je crois. Il dépend de la fonction de calibration non ?
+
+  -> EPIC11-ARB-36 : tu as raison, `calibration-page` n'a que --chaine et --commentaire. Les patchs deviennent une donnee imposee.
+
+NOTE (2026-09-01, n°11) : La page de calibration a BEAUCOUP PLUS DE PATCHES que 17,
+sauf erreur. [...] Ça ce sont les pastilles sur le côté. Les témoins pour comparer la
+mire à une planche scannée. Mais le profil est calibré sur les pastilles témoin ET les
+pastilles centrales de la page. Il y en a un sacré paquet.
+
+  -> Tu as raison deux fois, et la seconde fois contre une première réponse qui disait
+     34. Mesuré sur cet arbre :
+       patch_presets.calibration_lattice_patch_count()             -> 130
+       patch_presets.calibration_page_patch_count("patches-17-v4") -> 164
+       dont bandeau de témoins                                     ->  34
+     Le treillis CENTRAL porte 130 pastilles (65 valeurs sous le seuil de saturation,
+     en double réplicat) ; le bandeau latéral en porte 34 (17 valeurs × 2), et c'est le
+     MÊME preset qu'une planche ordinaire. Donc 34 ne caractérise pas cette page : il
+     dit ce qu'elle a de commun avec toutes les autres, exactement ton objection.
+     L'écran porte le TOTAL, 164, avec sa décomposition à côté.
+     Le MOT change aussi : `patch_values` et `patch_presets` comptent des PASTILLES.
+     « Patchs » reste le mot du preset (`--nombre-patchs`, `patches-17-v4`) et du profil
+     de calibration (`PART_PATCHS`, tui/atelier_scan_calibration.py:199) -- le libellé
+     suit donc le module qui compte l'objet dont on parle.
+
+NOTE (2026-09-01, n°12) : On aimerait bien savoir où va le fichier. Ce bandeau en bas
+est répétitif et inutile.
+
+  -> Où : `projet_demo/patches/`, mesuré -- `cli.py:3840` compose
+     `project_dir / project_layout.PATCHES_DIRNAME / plan.pdf_filename`, et
+     `PATCHES_DIRNAME` vaut `patches`. La ligne `Destination` entre dans « Ce qui sera
+     écrit », à côté du nom.
+     Le bandeau : tu as raison, il répétait `A4 · 600` que la ligne `Format · DPI` dit
+     déjà trois lignes plus haut. Proposition : il porte le seul fait que l'écran ne dit
+     nulle part ailleurs -- qu'aucun fichier de ce nom n'est encore là. C'est justement
+     la mesure dont dépend le refus de la note 13, apprise AVANT de générer plutôt
+     qu'après.
+
+NOTE (2026-09-01, n°13) : Que dit le code ? (si la mire existe déjà)
+
+  -> Mesuré, `cli.py:3840-3872`. Si le fichier existe et que `--overwrite` est absent,
+     `makepdf calibration-page` REFUSE (code 1) et nomme TROIS issues :
+       1. donner un autre `--chaine` -- le libellé entre dans le nom, donc ça écrit un
+          fichier voisin et laisse l'existant intact : c'est la sortie non destructive
+          qu'EPIC11-ARB-89 exige en premier ;
+       2. `--overwrite`, l'écrasement conscient ;
+       3. supprimer le fichier.
+     Et le message dit POURQUOI la 1 est la bonne : huit paramètres de géométrie plus le
+     commentaire font varier la page sans entrer dans son nom, donc deux pages de la même
+     chaîne réglées différemment se disputent ce fichier.
+     Un rang `_vN` n'existe PAS pour cet objet, délibérément : la page ne déclare ni
+     rush, ni lot, ni cadence (EPIC5-ARB-82), donc elle n'a pas de lot dont numéroter les
+     tirages.
+     Ce qui reste ouvert, et que je signale plutôt que de le dessiner sans que tu l'aies
+     demandé : la CLI tient EPIC11-ARB-89, la TUI n'a pas d'écran pour ce refus -- c'est
+     le même trou que `E5-3b` a fermé pour les planches.

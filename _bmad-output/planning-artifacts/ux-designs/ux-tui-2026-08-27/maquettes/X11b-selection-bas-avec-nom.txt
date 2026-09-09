@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · projet_demo · Scan                            temps 1 sur 2 · détecter │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Que faut-il détecter ?                                                     │
+│                                                                              │
+│    ←  …\scans\                                                               │
+│      Source               D:\HOKO\scans\prestataire_26aout                   │
+│   ────────────────────────────────────────────────────────────────────────   │
+│      [ ] precedents/                                            8 fichiers   │
+│      [x] planche_01.tiff                                             78 Mo   │
+│      [ ] planche_02.tiff                                             78 Mo   │
+│    ▸ [x] planche_03.tiff                                             81 Mo   │
+│      [x] planches_04_08.pdf                                         312 Mo   │
+│       ✕  notes_prestataire.txt                            · pas une source   │
+│      …                                                         1-6 sur 142   │
+│                                                                              │
+│                                                                              │
+│   ────────────────────────────────────────────────────────────────────────   │
+│    ⏎  Valider   3 sélectionnés   • planche_03.tiff                           │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ 142 fichiers · 138 images, 3 PDF, 1 ignoré · 3 sélectionnés                  │
+│ ⏎ valider  Espace cocher  → entrer  ← parent  Tab chemin  Échap sortir       │
+└──────────────────────────────────────────────────────────────────────────────┘

@@ -1,0 +1,28 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ mmu · — aucun projet —                                                  v0.1 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Ouvrir un projet                                                           │
+│                                                                              │
+│      projet_demo                     ouvert le 26/08 · 3 rushes · 5 lots     │
+│      film_court_2026                 ouvert le 21/08 · 1 rush  · 2 lots      │
+│                                                                              │
+│   ────────────────────────────────────────────────────────────────────────   │
+│                                                                              │
+│      Dossier du projet    > D:\HOKO\Documents\rushes_bruts                   │
+│                             ✕                                                │
+│                                                                              │
+│      Ce dossier existe mais ne porte pas de project.json.                    │
+│                                                                              │
+│    ▸ Créer un projet ici                                                     │
+│      Corriger le chemin                                                      │
+│      Revenir aux récents                                                     │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ ✕  Aucun project.json dans ce dossier — rien n'a été écrit                   │
+│ ⏎ choisir  ↑↓ naviguer  Échap récents  F1 aide  Q quitter                    │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+NOTE : non il faut pouvoir créer un projet avec la TUI !
+
+  -> EPIC11-ARB-22 : la TUI cree un projet (E0-4), et E0-3 devient une bifurcation.
