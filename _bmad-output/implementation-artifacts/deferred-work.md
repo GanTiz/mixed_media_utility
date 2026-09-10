@@ -21586,3 +21586,100 @@ trois entrées précédentes.
 particulier. `0.1.0` sans `v`, `v0.1` tronqué, un tag posé sur le mauvais
 commit : aucun ne produit de signal non plus. Une garde qui *nomme* le tag
 refusé les attrape tous ; l'élargissement du motif n'en attrape qu'un.
+
+
+## 2026-09-09 -- tolerances documentees de la revue en trois couches des stories 5.30 et 5.31
+
+Findings des six couches (deux stories x trois couches) que le triage n'a PAS
+fermes, avec leur origine. Aucun n'est enterre en silence, aucun n'a elargi le
+perimetre de la story en cours.
+
+**`ARB281-N1` -- un avertissement d'ingestion n'atteint aucun humain.**
+Couche 1 de 5.30, finding `T4`. La CLI (`cli.py` l. 1812) et la previz ne
+lisent que les avertissements **du lot** ; ceux qui sont portes sur une PAGE
+n'apparaissent nulle part. `ALPHA_CHANNEL_DROPPED` est donc ecrit dans
+`ingest.json` et jamais montre. **Ce n'est pas une regression de 5.30** : la
+famille est partagee avec `PDF_RASTERIZED_AT_8_BITS` depuis 5.1, et
+`PDF_EMBEDS_LOSSY_IMAGE` avec elle. Le geste manquant est un seul, cote
+affichage : la CLI agrege les avertissements de page a cote de ceux du lot.
+
+**`ARB281-N2` -- la frontiere `_code_sans_prose` cesse d'etre juste en Python
+3.12.** Couche 3 de 5.30. La PEP 701 change la tokenisation des f-strings :
+`FSTRING_MIDDLE` n'est plus un `STRING`, donc du texte de chaine reapparaitrait
+dans le « code sans prose » et produirait un faux positif. Le conteneur est en
+3.11. A reprendre quand le depot passera a 3.12, sur les DEUX bancs qui
+emploient l'outil.
+
+**`ARB282-N1` -- la vignette est une garde de SYNTHESE.** Couche 2 de 5.31,
+finding `C2-2`. Aucun des deux fichiers de terrain du 2026-09-09 ne porte de
+vignette : la regle « un repertoire de resolution reduite n'est pas une page »
+est posee sur une fabrique. A confronter a un TIFF d'`Apple Image Capture`
+produit avec apercu, si un tel fichier apparait.
+
+**`ARB282-N2` -- le cardinal de canaux n'est pas un axe d'homogeneite.**
+Couche 2 de 5.31, hors diff. `_homogeneity_warnings` mesure les dimensions et
+les profondeurs, jamais le nombre de canaux : un lot melangeant des pages RGB
+et des pages grises ne le dit pas. Anterieur a 5.31.
+
+**`ARB282-N3` -- le balayage des repertoires est quadratique.** Couche 2 de
+5.31. `Image.seek(n)` d'un TIFF reparcourt la chaine d'IFD : 0,7 ms par page a
+N=50, 2,0 ms a N=200. Sans consequence aux cardinaux du terrain (deux pages) ;
+a mesurer si un scanner produit des fichiers de plusieurs centaines de pages.
+
+**`ARB282-N4` -- derive de vocabulaire dans `tui/atelier_scan`.** Couche 1 de
+5.31, hors diff. La docstring d'`unite_du_cardinal` affirme l'inverse de ce que
+le coeur produit desormais (« 2 fichiers » la ou le cardinal rend « 3 pages »).
+Prose periMee, aucun banc ne rougit.
+
+**`ARB283-N1` -- DIX documents portent l'ancienne phrase de la barre
+d'adresse.** Agent de la 11.15, **chiffre corrige par la couche 3** : l'agent en
+annoncait deux, il y en a dix (huit sont des documents historiques, que rien ne
+demande de reecrire). La conclusion tient, le chiffre ne tenait pas -- et c'est
+la deuxieme fois de la nuit qu'un recensement a la main se trompe d'un ordre de
+grandeur. Aucune maquette `.txt` ne porte la phrase, donc aucun banc de
+confrontation ne rougit.
+
+**`ARB283-N2` -- quatre des six sites de l'explorateur ne sont pas montes en
+banc.** Agent de la 11.15. Meme composant, meme couture ; les deux regimes de
+`montrer_fichiers` sont mesures, mais le cablage individuel des quatre autres
+sites ne l'est pas.
+
+**`ARB282-N5` -- une image mono-page coute TROIS ouvertures Pillow au lieu
+d'une.** Couche 3 de 5.31. Le cardinal, la mesure de dpi et l'ingestion ouvrent
+chacun le fichier. Aucun pixel n'est decode -- c'est la propriete qui borne le
+cout et elle est mesuree --, mais l'ouverture reste payee trois fois. Un memo
+par `(chemin, mtime, taille)` la ramenerait a une. Sans consequence aux
+cardinaux du terrain ; a reprendre si un dossier de plusieurs centaines de
+fichiers devient courant.
+
+**`ARB282-N6` -- les frontieres AST sont contournables par ALIAS.** Couche 3 de
+5.31, demontre : les trois frontieres restent vertes si les appels reels
+passent par un alias local (`_lire = cv2.imreadmulti`). Seuls les deux bancs
+d'EFFET les tuent alors. La frontiere garde sa valeur -- elle attrape la
+reintroduction distraite, pas le contournement delibere -- mais elle ne doit
+pas etre lue comme une preuve.
+
+**`ARB283-N3` -- la frontiere de `Tab` ne mesure que deux champs.** Couche 3 de
+11.15. `EPIC11-ARB-51` dit « Tab entre et sort de la saisie. **Et rien
+d'autre.** » ; la frontiere ne compare que `dans_la_saisie` et `dossier`, donc
+un second role OBSERVABLE ailleurs la passerait. Le code livre est juste ; c'est
+la mesure qui est etroite.
+
+**`ARB283-N4` -- une fenetre TOCTOU entre `lexists` et `relire`.** Couche 3 de
+11.15. Un fichier supprime entre les deux tombe dans le troisieme motif, ce qui
+est le bon comportement -- mais personne ne le mesure, et la fenetre n'est
+fermable que par un verrou que la TUI n'a pas.
+
+**`ARB283-N5` -- les deux bancs d'ECRANS MONTES n'appellent jamais
+`etat(ascii_seul=True)`.** Couche 3 de 11.15. Les phrases neuves sont ASCII pur
+et sont mesurees comme telles sur le COMPOSANT ; sur les ecrans montes, le
+drapeau n'est pas joue. C'est exactement le profil d'ou la regle du 2026-09-06
+est nee -- une garde verte parce qu'elle ne joue jamais son mode.
+
+**`ARB283-N6` -- une clause de `_pourquoi_hors_liste` est inatteignable dans un
+sens.** Triage du 2026-09-09. Le finding `C2-3` de la couche 2 signalait un
+mutant survivant sur `and not self.montrer_caches` ; apres la reordonnance qui
+ferme `C1`/`C2-2`, c'est un mutant **equivalent** -- une cible cachee ET montree
+figure dans la liste, donc la fonction n'est pas appelee. La clause est gardee
+et commentee plutot que simplifiee ; si un chemin la rend un jour atteignable
+dans les deux sens, un banc lui est du.

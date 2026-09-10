@@ -594,7 +594,14 @@ def test_un_chemin_trop_long_est_tronque_PAR_LE_DEBUT_dans_la_saisie(
 
 
 def test_aucune_correspondance_n_est_pas_un_refus(tmp_path, banc):
-    """AC 3.5 : mesure de l'ABSENCE du glyphe, avec volet symetrique plus bas."""
+    """AC 3.5 : mesure de l'ABSENCE du glyphe, avec volet symetrique plus bas.
+
+    `zzz_rien` n'existe ni comme dossier ni comme fichier, et c'est ce qui rend
+    l'assertion encore juste depuis la story 11.15 : `ADRESSE_INEXISTANTE` ne
+    couvre plus que ce qui n'existe VRAIMENT pas. Le regime symetrique -- un
+    chemin de fichier colle dans ce meme ecran, qui ne montre pas les
+    fichiers -- est mesure dans `test_barre_d_adresse_sur_un_fichier.py`.
+    """
     _, recents = _trois_recents(tmp_path)
     ecran = ecran_projet.EcranProjet(recents=recents)
 

@@ -61,7 +61,8 @@ import re
 import shutil
 import unicodedata
 from collections.abc import Mapping, Sequence
-from typing import Any
+from numbers import Real
+from typing import Any, NamedTuple
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -124,7 +125,43 @@ SCAN_INGEST_WARNING_CODES: tuple[str, ...] = (
     "UNREADABLE_FILE_SKIPPED",
     "PDF_RASTERIZED_AT_8_BITS",
     "PDF_EMBEDS_LOSSY_IMAGE",
+    "ALPHA_CHANNEL_DROPPED",
+    "IMAGE_PAGES_PARTIALLY_READABLE",
 )
+
+#: Un fichier image porte plus de pages que le lecteur n'a su en rendre
+#: (story 5.31, finding `C2-1` de la couche 2 de la revue).
+#:
+#: **Le compteur et le lecteur ne sont pas le meme programme**, et ils
+#: divergent : le cardinal se lit chez Pillow (`n_frames`, qui parcourt les
+#: repertoires sans decoder), les pixels se lisent chez OpenCV
+#: (`imreadmulti`). Mesure : un PNG anime est compte a deux pages par Pillow et
+#: OpenCV n'en pagine qu'une. `cv2.imcount` ne rattrape rien -- il rend `2` lui
+#: aussi.
+#:
+#: **La premiere redaction faisait SAUTER le fichier entier** dans ce cas, ce
+#: qui etait une regression mesuree : le meme fichier s'ingerait a une page
+#: avant la story. Faire l'inverse -- rendre les pages lues sans rien dire --
+#: serait le lot plausible et incomplet que cette story existe pour fermer.
+#: C'est donc une TROISIEME issue (`EPIC11-ARB-89`) : les pages lisibles sont
+#: ingerees, et l'ecart est **nomme**.
+IMAGE_PAGES_PARTIALLY_READABLE = "IMAGE_PAGES_PARTIALLY_READABLE"
+
+#: Une page portait un canal alpha qui n'etait **pas** uniformement opaque, et
+#: il a ete retire (story 5.30, `EPIC11-ARB-281`).
+#:
+#: **Retirer plutot que refuser**, parce qu'`EPIC11-ARB-89` interdit le blocage
+#: sec : « Un refus qui n'offre aucune issue est aussi fautif qu'une
+#: destruction silencieuse. » **Mais l'annoncer**, parce que le retrait n'est
+#: alors plus neutre -- sur un alpha ASSOCIE (`ExtraSamples = 1`, ce que le
+#: scanner de terrain ecrit) les valeurs sont premultipliees, donc un pixel a
+#: demi transparent sort plus sombre qu'il ne devrait.
+#:
+#: Le cas n'a **aucun artefact de terrain** : le seul scan mesure porte un
+#: alpha a `255` partout, une seule valeur distincte sur 35,8 millions de
+#: pixels. Ce code existe par doctrine, pas par observation, et c'est dit
+#: plutot que tu.
+ALPHA_NON_OPAQUE_RETIRE = "ALPHA_CHANNEL_DROPPED"
 
 # Filtres PDF qui signent une image compressee avec perte. Une page de scan qui
 # n'est qu'un JPEG encapsule porte deja des artefacts de blocs, invisibles a
@@ -370,10 +407,78 @@ def _measure_file_dpi(path: Path) -> float | None:
         return None
     if not dpi:
         return None
-    horizontal = dpi[0] if isinstance(dpi, (tuple, list)) else dpi
-    if not is_strict_number(horizontal) or horizontal <= 0:
+    if not isinstance(dpi, (tuple, list)):
+        return _resolution_lisible(dpi)
+    # **LES DEUX AXES, et le plus bas des deux** (findings `C1` et `C2-4` de la
+    # revue de 5.30, trouves independamment par deux couches).
+    #
+    # Cette ligne lisait `dpi[0]` seul. Le defaut etait invisible tant que le
+    # dpi d'un TIFF n'etait jamais lu ; c'est 5.30 qui le rend atteignable, et
+    # c'est donc 5.30 qui le porte. Regime mesure -- un TIFF declarant
+    # `XResolution = 600` et `YResolution = 150`, ingere a 600 ppp : la mesure
+    # rendait `600.0` et **aucun avertissement**, sur une page dont un axe est
+    # au quart de la resolution annoncee.
+    #
+    # Or c'est exactement le faux succes que l'AC 7 de la 5.1 existe pour
+    # attraper : elle est posee contre le **scanner en auto-fit** (risque R8),
+    # et l'auto-fit est precisement ce qui produit deux resolutions differentes
+    # sur les deux axes.
+    #
+    # **Le plus bas, et ce n'est pas une regle neuve** : c'est celle que
+    # `_measure_pages_dpi` applique deja d'une page a l'autre -- « c'est elle
+    # qui borne la finesse reellement disponible ». Elle est ici recopiee d'un
+    # cran plus bas, d'un axe a l'autre, plutot qu'inventee.
+    mesures = [lu for lu in (_resolution_lisible(axe) for axe in dpi[:2])
+               if lu is not None]
+    return min(mesures) if mesures else None
+
+
+def _resolution_lisible(valeur: object) -> float | None:
+    """La resolution declaree par un fichier, en flottant, ou `None`.
+
+    **Ce n'est pas `is_strict_number`, et c'est le defaut que 5.30 ferme.**
+    Cette fonction lisait la resolution par `is_strict_number`, qui teste
+    `isinstance(valeur, (int, float))`. Pillow rend un
+    `PIL.TiffImagePlugin.IFDRational` pour la resolution de **tout** TIFF --
+    pas seulement ceux d'Apple : contre-mesure faite sur un TIFF ecrit par
+    Pillow lui-meme. Le dpi d'un TIFF n'a donc **jamais** ete lu, et l'AC 7 de
+    la 5.1 -- le dpi declare confronte au dpi du fichier, posee contre le
+    scanner en auto-fit (risque R8) -- n'a jamais joue sur le format que le
+    produit recommande pour scanner. Sur un PNG, ou Pillow rend un `float`,
+    elle jouait.
+
+    **La garde partagee n'est pas elargie pour autant.** `is_strict_number`
+    reste intacte : d'autres appelants l'emploient sur des cadences et des
+    millimetres, ou son refus des types exotiques est voulu. C'est ici, au
+    point de lecture, que la valeur lue est convertie.
+
+    **Le `nan` ET l'`inf` sont refuses explicitement, et aucun des deux n'est
+    theorique.** `float(IFDRational(0, 0))` ne leve pas, il rend `nan`, et un
+    TIFF peut porter `0/0` en `XResolution`. L'`inf`, lui, arrive par un autre
+    chemin -- une `XResolution` de type TIFF `DOUBLE` (12) ou `FLOAT` (11)
+    portant l'infini, que Pillow relit tel quel : mesure faite, `info["dpi"]`
+    rend `(inf, inf)` en flottants ordinaires. La premiere redaction de cette
+    docstring le passait sous silence, et une couche de revue l'a cru
+    inatteignable ; une autre a mesure qu'il l'etait, ET qu'il est **porteur**
+    -- sans cette clause, `report_json` leve `Out of range float values are
+    not JSON compliant` et **le lot entier est perdu a l'ecriture du
+    rapport**. Un `nan` rendu ici traverserait
+    :func:`_dpi_warnings` sans rien declencher -- `abs(nan - declare) >
+    declare * tolerance` vaut `False` -- : un dpi illisible passerait pour un
+    dpi **conforme**, c'est-a-dire un faux succes de la famille exacte que
+    l'AC 7 existe pour attraper.
+    """
+    if isinstance(valeur, bool) or not isinstance(valeur, Real):
         return None
-    return float(horizontal)
+    try:
+        mesure = float(valeur)
+    except (TypeError, ValueError, ZeroDivisionError, OverflowError):
+        return None
+    # `nan` echoue les DEUX comparaisons : `not (mesure > 0)` l'attrape, la
+    # ecrire `mesure <= 0` ne l'attraperait pas.
+    if not mesure > 0 or mesure == float("inf"):
+        return None
+    return mesure
 
 
 def _measure_pages_dpi(paths: list[Path]) -> float | None:
@@ -414,7 +519,148 @@ def _measure_page_file_dpi(path: Path) -> float | None:
         # que de la doubler d'un test impossible. Verifie en execution :
         # `_measure_page_file_dpi(<pdf casse>)` rend `None`.
         return _measure_pdf_dpi(path)
+    if _pages_d_un_fichier_image(path) > 1:
+        # **La plus basse de ses pages**, comme `_measure_pages_dpi` le fait
+        # deja d'un dossier : c'est elle qui borne la finesse reellement
+        # disponible. Sans cette branche, un multipage passait a
+        # `_measure_file_dpi`, qui ne lit que sa PREMIERE page -- le meme faux
+        # succes que l'AC 7 nomme, par la porte du multipage.
+        return _measure_image_multipage_dpi(path)
     return _measure_file_dpi(path)
+
+
+def _measure_image_multipage_dpi(path: Path) -> float | None:
+    """Le dpi d'un fichier image a N pages : le PLUS BAS de ses pages.
+
+    Mesure **informative**, comme :func:`_measure_file_dpi` : son echec rend
+    `None` et ne fait pas echouer une ingestion valide.
+    """
+    from PIL import Image
+
+    mesures: list[float] = []
+    try:
+        with Image.open(path) as image:
+            for index in range(int(getattr(image, "n_frames", 1))):
+                image.seek(index)
+                dpi = image.info.get("dpi")
+                if not dpi:
+                    continue
+                # **LES DEUX AXES ici aussi** (finding `C1-2` de la couche 1) :
+                # c'est le jumeau du defaut de `_measure_file_dpi`, dans une
+                # fonction NEUVE -- donc le correctif de l'autre ne l'atteignait
+                # pas. Mesure : un TIFF `XResolution=600 / YResolution=75`
+                # rendait 600.0.
+                axes = dpi[:2] if isinstance(dpi, (tuple, list)) else (dpi,)
+                mesures.extend(lu for lu in
+                               (_resolution_lisible(axe) for axe in axes)
+                               if lu is not None)
+    except Exception:
+        return None
+    return min(mesures) if mesures else None
+
+
+def _pages_d_un_fichier_image(path: Path) -> int:
+    """Combien de pages un fichier IMAGE porte -- **sans decoder un seul pixel**.
+
+    Story 5.31 (`EPIC11-ARB-282`), retour de terrain : `Apple Image Capture`
+    ecrit volontiers un TIFF multipage, et `cv2.imread` en rend la PREMIERE
+    page en se taisant sur les autres. Mesure sur le fichier reel a deux
+    pages : `page_count: 1`, `EXIT=0`, lot incomplet, aucun rouge.
+
+    **Les repertoires, pas les bandes.** `n_frames` lit la chaine d'IFD du
+    fichier ; decoder pour compter ferait payer un decodage complet a chaque
+    affichage de l'ecran de depot, sur un dossier qu'on ne fait que regarder.
+
+    **Un fichier qu'on ne sait pas ouvrir compte pour UNE page**, jamais zero
+    -- meme regle que le PDF juste en dessous, et pour le meme motif : il sera
+    saute a l'ingestion et nomme au rapport, et l'annoncer a zero le ferait
+    disparaitre du cardinal sans un mot.
+
+    L'import de Pillow vit **hors** du `try`, comme dans
+    :func:`_measure_file_dpi` et pour la meme raison mesuree en revue 8.4 :
+    sous le `try`, `except Exception` engloberait `ImportError` et une
+    installation cassee rendrait `1` en silence.
+    """
+    return len(_indices_de_pages_d_un_fichier_image(path)) or 1
+
+
+#: Bit 0 de `NewSubfileType` (tag 254) : « image de resolution REDUITE ». Le
+#: tag `SubfileType` (255), plus ancien, code la meme chose par la valeur 2.
+_TIFF_NEW_SUBFILE_TYPE = 254
+_TIFF_SUBFILE_TYPE = 255
+_TIFF_REDUCED_RESOLUTION_BIT = 1
+_TIFF_SUBFILE_TYPE_REDUCED = 2
+
+
+def _indices_de_pages_d_un_fichier_image(path: Path) -> tuple[int, ...]:
+    """Les INDEX des repertoires qui sont de vraies pages, dans l'ordre.
+
+    **Une liste d'index et non un cardinal**, et c'est ce qui fait la
+    difference : le compteur et le lecteur ne sont pas le meme programme --
+    Pillow compte les repertoires, OpenCV decode les pixels --, donc il leur
+    faut une **seule** table de correspondance plutot que deux arithmetiques
+    qui coincident tant qu'aucun repertoire n'est saute.
+
+    **Une VIGNETTE n'est pas une page** (finding `C2-2` de la couche 2). Un
+    scanner peut ecrire un apercu de resolution reduite comme second
+    repertoire ; le compter ferait un lot **sur**-complet, plausible, et
+    d'accord avec son propre cardinal -- l'inverse exact du defaut que la story
+    ferme, donc invisible au controle d'egalite. Les repertoires marques
+    `NewSubfileType` bit 0, ou `SubfileType == 2`, sont ecartes.
+
+    **Ce que cette exclusion ne mesure PAS, dit plutot que tu** : aucun des deux
+    fichiers de terrain du 2026-09-09 ne porte de vignette (deux repertoires,
+    deux pages pleines). La garde est posee sur une fabrique de synthese, et le
+    depot sait ce que ca vaut -- « une fixture de synthese peut fabriquer une
+    panne que le terrain n'a PAS ».
+
+    L'import de Pillow vit **hors** du `try` (revue 8.4) : sous le `try`,
+    `except Exception` engloberait `ImportError` et une installation cassee
+    rendrait une page en silence.
+    """
+    from PIL import Image
+
+    try:
+        with Image.open(path) as image:
+            cardinal = int(getattr(image, "n_frames", 1))
+            if cardinal <= 1:
+                return (0,)
+            indices = []
+            for index in range(cardinal):
+                image.seek(index)
+                tags = getattr(image, "tag_v2", {})
+                nouveau = tags.get(_TIFF_NEW_SUBFILE_TYPE)
+                ancien = tags.get(_TIFF_SUBFILE_TYPE)
+                reduite = (
+                    (nouveau is not None
+                     and int(nouveau) & _TIFF_REDUCED_RESOLUTION_BIT)
+                    or (ancien is not None
+                        and int(ancien) == _TIFF_SUBFILE_TYPE_REDUCED)
+                )
+                if not reduite:
+                    indices.append(index)
+    except Exception:
+        # **On demande au LECTEUR ce que le compteur n'a pas su dire**
+        # (finding `C1-1` de la couche 1). La premiere redaction rendait `1`
+        # ici, avec pour justification que « le fichier sera saute a
+        # l'ingestion et nomme au rapport ». C'etait faux des que Pillow
+        # echoue la ou OpenCV reussit -- et leurs plafonds different d'un
+        # facteur douze : mesure sur un TIFF de deux pages a 180 Mpx la page,
+        # Pillow leve `DecompressionBombError` (seuil 178 956 970 pixels) et
+        # OpenCV lit les deux. Le fichier n'etait alors ni saute ni nomme : il
+        # rendait UNE page, zero avertissement, et la seconde disparaissait --
+        # exactement le defaut que cette story ferme, reintroduit par la porte
+        # du `except`.
+        #
+        # `cv2.imcount` ne decode pas les pixels non plus. Il ne sait pas
+        # distinguer une vignette d'une page ; c'est le prix du repli, et il
+        # vaut mieux qu'une page perdue en silence.
+        try:
+            compte = int(cv2.imcount(str(path)))
+        except Exception:
+            return (0,)
+        return tuple(range(compte)) if compte > 0 else (0,)
+    return tuple(indices) or (0,)
 
 
 def _cardinal_des_pages(paths: list[Path]) -> int:
@@ -433,7 +679,10 @@ def _cardinal_des_pages(paths: list[Path]) -> int:
     total = 0
     for path in paths:
         if path.suffix.lower() not in PDF_EXTENSIONS:
-            total += 1
+            # Une image porte N pages elle aussi (`EPIC11-ARB-282`). Ce n'est
+            # pas une troisieme nature : c'est la SECONDE -- un fichier, N
+            # pages -- appliquee a une image.
+            total += _pages_d_un_fichier_image(path)
             continue
         try:
             document = _open_pdf(path)
@@ -518,17 +767,105 @@ def _channels_of(array: np.ndarray) -> int:
     return 1 if array.ndim == 2 else array.shape[2]
 
 
-def read_image_page(path: Path) -> np.ndarray:
-    """Lire une page-fichier en conservant sa profondeur et ses canaux.
+class PageImageLue(NamedTuple):
+    """Ce qu'une lecture de page-fichier rend, **constat compris**.
+
+    Le tableau est celui que la chaine emploie -- trois canaux BGR apres
+    retrait d'un eventuel alpha --, tandis que `canaux_du_fichier` dit ce que
+    **le fichier** portait. Les deux se separent sur un scan RGBA, et cette
+    separation est le contrat : le rapport d'ingestion est un CONSTAT de ce qui
+    a ete lu, pas un compte rendu de ce que la chaine a garde. Les confondre
+    ferait declarer `channels: 3` d'un fichier qui en porte quatre, c'est-a-dire
+    effacer du rapport la seule trace de ce que le scanner a ecrit.
+    """
+
+    tableau: np.ndarray
+    canaux_du_fichier: int
+    avertissements: tuple[str, ...]
+
+
+def _sans_canal_alpha(array: np.ndarray) -> tuple[np.ndarray, tuple[str, ...]]:
+    """Retirer le quatrieme canal d'une page, et dire s'il portait quelque chose.
+
+    **Le declencheur est un retour de terrain, pas une hypothese** (story 5.30,
+    `EPIC11-ARB-281`) : `Apple Image Capture` -- l'utilitaire de scan livre avec
+    macOS -- ecrit `SamplesPerPixel = 4` et `ExtraSamples = (1,)` la ou le
+    pilote de l'imprimante ecrit trois canaux. Un seul nombre separe les deux
+    fichiers, et il faisait refuser toute la calibration
+    (`color_calibration.FAILURE_NOT_THREE_CHANNELS`) sur un scan dont le QR
+    livrait pourtant son payload et dont la geometrie ArUco se resolvait.
+
+    **Retirer un alpha OPAQUE ne perd rien**, et c'est ce qui rend le geste
+    sur : mesure sur le fichier de terrain, une seule valeur distincte (255)
+    sur 35,8 millions de pixels. C'est aussi ce qui le distingue du cas gris,
+    que l'ingestion continue de laisser passer tel quel : convertir du gris en
+    BGR **fabriquerait** une couleur que le scan ne porte pas, alors que
+    retirer un alpha opaque n'enleve aucune information.
+
+    **Le retrait vit ICI et nulle part ailleurs.** Meme discipline que
+    `io/version_ranks.py` : un appelant qui recopierait le calcul serait la
+    seconde redaction que ce depot paie a chaque fois -- le finding `m4` de la
+    revue de 5.19 l'a deja paye sur la profondeur de bits.
+
+    La copie est **voulue** : `array[:, :, :3]` est une vue non contigue, et le
+    reste de la chaine (cv2, l'export TIFF 16 bits) suppose la contiguite.
+    """
+    if array.ndim != 3 or array.shape[2] != 4:
+        return array, ()
+    alpha = array[:, :, 3]
+    opaque = bool((alpha == np.iinfo(alpha.dtype).max).all())
+    avertissements = () if opaque else (ALPHA_NON_OPAQUE_RETIRE,)
+    return np.ascontiguousarray(array[:, :, :3]), avertissements
+
+
+def lire_une_page_image(path: Path, page_index: int | None = None) -> PageImageLue:
+    """Lire une page-fichier : le tableau employable, et ce que le fichier portait.
 
     `IMREAD_UNCHANGED`, jamais `cv2.imread` nu. L'entree est validee par
     `color_pipeline.validate_bgr_input`, importee et jamais reecrite: elle
-    traite deja l'`uint16` big-endian qu'un scanner ecrit en byte order `MM`.
+    traite deja l'`uint16` big-endian qu'un scanner ecrit en byte order `MM`,
+    et elle **accepte** deliberement un a quatre canaux -- elle valide, elle ne
+    normalise pas. La normalisation est ici, une fois.
+
+    ``page_index`` designe une page d'un fichier MULTIPAGE (story 5.31). Deux
+    pieges tenus ici, tous deux mesures :
+
+    (1) **la surcharge BORNEE d'`imreadmulti`**, `(fichier, start, count)`, et
+    jamais celle qui lit tout : a 600 ppp en RGBA une page pese 143 Mo, donc un
+    fichier de dix pages ferait 1,4 Go en memoire pour en rendre une ;
+
+    (2) **le `flags` se passe EXPLICITEMENT.** Son defaut n'est pas
+    `IMREAD_UNCHANGED` -- c'est `IMREAD_ANYCOLOR` sur cette surcharge --, et
+    sans lui un TIFF 16 bits redescendrait a 8 bits sans un mot, ce que la
+    docstring de ce module interdit depuis 5.1.
+
+    Et le verdict se lit sur la LISTE rendue, jamais sur le booleen : un index
+    hors bornes rend une liste vide.
     """
-    array = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
+    if page_index is None:
+        array = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
+    else:
+        _, pages = cv2.imreadmulti(str(path), page_index, 1,
+                                   flags=cv2.IMREAD_UNCHANGED)
+        array = pages[0] if len(pages) else None
     if array is None:
-        raise UnsupportedScanInputError(f"Image de scan illisible: {path}")
-    return color_pipeline.validate_bgr_input(array)
+        raise UnsupportedScanInputError(
+            f"Image de scan illisible: {path}"
+            + ("" if page_index is None else f" (page {page_index})"))
+    array = color_pipeline.validate_bgr_input(array)
+    canaux_du_fichier = _channels_of(array)
+    tableau, avertissements = _sans_canal_alpha(array)
+    return PageImageLue(tableau, canaux_du_fichier, avertissements)
+
+
+def read_image_page(path: Path) -> np.ndarray:
+    """Les pixels d'une page-fichier, en BGR et a la profondeur du scan.
+
+    Enveloppe de :func:`lire_une_page_image` pour les appelants qui n'ont que
+    faire du constat -- `load_page_array` en tete, c'est-a-dire le contrat de
+    jonction publie a l'usage des stories aval. Sa signature ne change pas.
+    """
+    return lire_une_page_image(path).tableau
 
 
 def _render_pdf_page(document, page_index: int, dpi: int) -> np.ndarray:
@@ -847,6 +1184,68 @@ def _ingest_pdf(
     return pages, []
 
 
+def _ingest_image_multipage(
+    image_path: Path, *, relative_source: str, rang_initial: int = 0,
+    emetteur: progression.EmetteurProgression | None = None,
+    deja_faites: int = 0,
+) -> tuple[list[IngestedPage], list[str]]:
+    """Les pages d'un fichier image multipage, jumelle de :func:`_ingest_pdf`.
+
+    Meme signature, meme politique, meme emission de jalons -- **et c'est
+    voulu** : `EPIC11-ARB-157` a pose UN dispatch entre un fichier a une page
+    et un fichier a N pages. Un TIFF multipage n'est pas une troisieme nature,
+    c'est la seconde appliquee a une image.
+
+    **Une page illisible fait sauter le FICHIER ENTIER, en le nommant**, comme
+    pour un PDF : rendre les pages saines d'un fichier dont une page manque
+    produirait exactement le lot plausible et incomplet que cette story existe
+    pour fermer -- et il serait, lui, indistinguable d'un fichier sain. Le
+    `raise` remonte a :func:`_ingest_files`, qui nomme le fichier au rapport et
+    laisse vivre les autres du dossier.
+
+    `read_rank` reste un rang de lecture GLOBAL au lot ; l'index de page vit
+    dans le `PageLocator`, seul endroit ou il veut dire quelque chose.
+    """
+    pages: list[IngestedPage] = []
+    indices = _indices_de_pages_d_un_fichier_image(image_path)
+    avertissements_du_lot: list[str] = []
+    for rang, page_index in enumerate(indices):
+        try:
+            page_lue = lire_une_page_image(image_path, page_index)
+        except (UnsupportedScanInputError, ValueError):
+            if not pages:
+                # Pas une seule page lisible : c'est un fichier illisible, et
+                # l'appelant le saute en le nommant, comme un PDF corrompu.
+                raise
+            # **Au moins une page lue : le fichier n'est pas perdu, et l'ecart
+            # est NOMME** (finding `C2-1`). Ni la regression qui faisait
+            # disparaitre un fichier que la version d'avant ingerait, ni le lot
+            # court et muet que la story ferme.
+            avertissements_du_lot.append(IMAGE_PAGES_PARTIALLY_READABLE)
+            break
+        array = page_lue.tableau
+        pages.append(
+            IngestedPage(
+                # Le RANG suit les pages produites, l'INDEX designe le
+                # repertoire du fichier : les deux divergent des qu'une
+                # vignette est ecartee, et les confondre ferait un trou dans la
+                # numerotation du lot.
+                read_rank=rang_initial + rang,
+                locator=PageLocator(relative_source, page_index),
+                scan_input_format=image_path.suffix.lower().lstrip("."),
+                source_bit_depth=_bit_depth_of(array),
+                width_px=int(array.shape[1]),
+                height_px=int(array.shape[0]),
+                channels=page_lue.canaux_du_fichier,
+                warnings=tuple(validate_warning_code(c)
+                               for c in page_lue.avertissements),
+            )
+        )
+        if emetteur is not None:
+            emetteur.emettre(deja_faites + rang + 1)
+    return pages, avertissements_du_lot
+
+
 def _le_saut_peut_emettre(
     emetteur: progression.EmetteurProgression | None,
     pages_produites: list,
@@ -953,6 +1352,9 @@ def _ingest_files(
     """
     pages: list[IngestedPage] = []
     skipped: list[str] = []
+    #: Les avertissements qui portent sur le LOT et non sur une page -- une
+    #: lecture partielle de fichier multipage, pour l'instant.
+    avertissements_de_lot: list[str] = []
     # Les pages traversees depuis le debut du lot -- l'echelle du canal.
     faites = 0
     for path in files:
@@ -1002,8 +1404,35 @@ def _ingest_files(
             pages.extend(pages_du_pdf)
             faites += len(pages_du_pdf)
             continue
+        # **Le second etage du dispatch d'`EPIC11-ARB-157`** : une image porte
+        # N pages comme un PDF. La relativisation est HORS du `try`, pour le
+        # meme motif que la branche PDF ci-dessus.
+        if _pages_d_un_fichier_image(path) > 1:
+            relative_source = path.relative_to(base_dir).as_posix()
+            try:
+                pages_du_fichier, alertes = _ingest_image_multipage(
+                    path,
+                    relative_source=relative_source,
+                    rang_initial=len(pages),
+                    emetteur=emetteur,
+                    deja_faites=faites,
+                )
+            except (UnsupportedScanInputError, ValueError):
+                skipped.append(path.name)
+                # Le rattrapage se DEMANDE au cardinal, il ne se recopie pas :
+                # un fichier de N pages en vaut N, parce que c'est N que le
+                # total annonce.
+                faites += _cardinal_des_pages([path])
+                if _le_saut_peut_emettre(emetteur, pages):
+                    emetteur.emettre(faites)
+                continue
+            pages.extend(pages_du_fichier)
+            avertissements_de_lot.extend(alertes)
+            faites += len(pages_du_fichier)
+            continue
         try:
-            array = read_image_page(path)
+            page_lue = lire_une_page_image(path)
+            array = page_lue.tableau
             depth = _bit_depth_of(array)
         except (UnsupportedScanInputError, ValueError):
             # Le message precis de `_bit_depth_of` (« profondeur non geree »)
@@ -1027,14 +1456,25 @@ def _ingest_files(
                 source_bit_depth=depth,
                 width_px=int(array.shape[1]),
                 height_px=int(array.shape[0]),
-                channels=_channels_of(array),
-                warnings=(),
+                # **Ce que le FICHIER portait**, pas ce que la chaine a garde:
+                # un scan RGBA declare `4` et rend trois canaux. Le rapport est
+                # un constat, et effacer le quatrieme canal d'ici retirerait la
+                # seule trace de ce que le scanner a ecrit.
+                channels=page_lue.canaux_du_fichier,
+                # `validate_warning_code` sur CE chemin aussi (finding `T1` de
+                # la couche 1, `C2-5` de la couche 2, trouve deux fois) : les
+                # trois autres constructions d'`IngestedPage` validaient, celle
+                # -ci non. Mesure par greffon : un code hors du vocabulaire
+                # ferme atterrissait dans `ingest.json` **sans une levee**, ce
+                # que le vocabulaire existe precisement pour empecher.
+                warnings=tuple(validate_warning_code(c)
+                               for c in page_lue.avertissements),
             )
         )
         faites += 1
         if emetteur is not None:
             emetteur.emettre(faites)
-    return pages, skipped
+    return pages, skipped, avertissements_de_lot
 
 
 def ingest_scan_lot(
@@ -1145,8 +1585,8 @@ def ingest_scan_lot(
 
     if selection is not None:
         lot_dir, files = _materialise_selection(selection, lot_dir)
-        pages, skipped = _ingest_files(files, base_dir=project_dir, dpi=dpi,
-                                       emetteur=_emetteur(files))
+        pages, skipped, alertes = _ingest_files(
+            files, base_dir=project_dir, dpi=dpi, emetteur=_emetteur(files))
         measured = _measure_pages_dpi(files)
     elif scan_path.is_dir():
         sources, _ignored = _discover_folder_pages(scan_path)
@@ -1157,8 +1597,8 @@ def ingest_scan_lot(
             )
         lot_dir = _materialise_folder(scan_path, lot_dir, sources)
         files = [lot_dir / path.name for path in sources]
-        pages, skipped = _ingest_files(files, base_dir=project_dir, dpi=dpi,
-                                       emetteur=_emetteur(files))
+        pages, skipped, alertes = _ingest_files(
+            files, base_dir=project_dir, dpi=dpi, emetteur=_emetteur(files))
         measured = _measure_pages_dpi(files)
     elif scan_path.suffix.lower() in PDF_EXTENSIONS:
         copied = _materialise_file(scan_path, lot_dir)
@@ -1167,12 +1607,14 @@ def ingest_scan_lot(
             copied, relative_source=copied.relative_to(project_dir).as_posix(),
             dpi=dpi, emetteur=_emetteur([copied])
         )
+        alertes = []
         measured = _measure_pdf_dpi(copied)
     elif scan_path.suffix.lower() in IMAGE_EXTENSIONS:
         copied = _materialise_file(scan_path, lot_dir)
         lot_dir = copied.parent
-        pages, skipped = _ingest_files([copied], base_dir=project_dir, dpi=dpi,
-                                       emetteur=_emetteur([copied]))
+        pages, skipped, alertes = _ingest_files(
+            [copied], base_dir=project_dir, dpi=dpi,
+            emetteur=_emetteur([copied]))
         measured = _measure_pages_dpi([copied])
     else:
         raise UnsupportedScanInputError(
@@ -1186,7 +1628,10 @@ def ingest_scan_lot(
             f"{len(skipped)} fichier(s) illisible(s) saute(s)."
         )
 
-    warnings = _dpi_warnings(dpi, measured) + _homogeneity_warnings(pages)
+    # `dict.fromkeys` plutot qu'un `set` : l'ordre des avertissements est
+    # deterministe, et le rapport entre dans un condensat.
+    warnings = list(dict.fromkeys(
+        _dpi_warnings(dpi, measured) + _homogeneity_warnings(pages) + alertes))
     if skipped:
         warnings.append("UNREADABLE_FILE_SKIPPED")
     return ScanIngestReport(
@@ -1531,8 +1976,14 @@ def load_page_array(
     """
     dpi = validate_scan_dpi(dpi)
     source = Path(project_dir) / locator.source_path
-    if locator.page_index is None:
-        return read_image_page(source)
+    # **Le dispatch se fait sur la NATURE du fichier, jamais sur la presence
+    # d'un index** (story 5.31). Il lisait `page_index is None` : depuis qu'une
+    # page d'IMAGE peut porter un index, ce critere aurait envoye chaque page
+    # de TIFF multipage dans `_open_pdf` -- une panne franche, mais LOIN de sa
+    # cause, et seulement a la lecture des pixels, c'est-a-dire apres une
+    # ingestion qui a l'air reussie.
+    if source.suffix.lower() not in PDF_EXTENSIONS:
+        return lire_une_page_image(source, locator.page_index).tableau
     document = _open_pdf(source)
     try:
         return _render_pdf_page(document, locator.page_index, dpi)
@@ -1950,6 +2401,8 @@ __all__ = [
     "INGEST_DOCUMENT_FILENAME",
     "PDF_EXTENSIONS",
     "SCAN_INGEST_WARNING_CODES",
+    "ALPHA_NON_OPAQUE_RETIRE",
+    "IMAGE_PAGES_PARTIALLY_READABLE",
     "EmptyScanLotError",
     "IngestedPage",
     "InvalidScanDpiError",
@@ -1966,6 +2419,7 @@ __all__ = [
     "mesurer_le_dpi",
     "slug_par_defaut",
     "load_page_array",
+    "lire_une_page_image",
     "read_image_page",
     "report_document",
     "report_json",

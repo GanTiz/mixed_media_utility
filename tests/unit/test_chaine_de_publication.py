@@ -385,18 +385,28 @@ def test_la_release_est_une_SEQUENCE_et_non_deux_cibles_exclusives():
     avoir ete essayee nulle part -- et personne ne le verrait, puisque le run
     serait vert.
     """
-    assert _noms_des_jobs() == ["valider", "build", "publish", "release"], (
-        _noms_des_jobs()
-    )
+    assert _noms_des_jobs() == ["valider", "build", "publish", "garde",
+                                "release"], _noms_des_jobs()
     besoins_build = [l.strip() for l in _bloc_de_job("build")
                      if l.strip().startswith("needs:")]
     assert besoins_build == ["needs: valider"], besoins_build
     besoins_publish = [l.strip() for l in _bloc_de_job("publish")
                        if l.strip().startswith("needs:")]
     assert besoins_publish == ["needs: build"], besoins_publish
+    # `garde` s'est INTERCALE ici le 2026-09-10 : la garde d'installation
+    # vivait dans `valider`, donc AVANT `publish` -- alors qu'elle INSTALLE
+    # depuis TestPyPI et exige la version qu'on publie. Interblocage mesure
+    # sur la v0.1.1, quatre jambes rouges sur quatre.
+    besoins_garde = [l.strip() for l in _bloc_de_job("garde")
+                     if l.strip().startswith("needs:")]
+    assert besoins_garde == ["needs: publish"], (
+        "la garde d'installation ne suit plus TestPyPI : si elle repasse "
+        "AVANT, elle exigera de l'index une version que rien n'y a encore "
+        f"mise, et aucune release ne demarrera. Lu : {besoins_garde}"
+    )
     besoins_release = [l.strip() for l in _bloc_de_job("release")
                        if l.strip().startswith("needs:")]
-    assert besoins_release == ["needs: [build, publish]"], (
+    assert besoins_release == ["needs: [build, publish, garde]"], (
         "le job de production ne depend pas du passage par TestPyPI : la "
         f"sequence est rompue. Lu : {besoins_release}"
     )
@@ -1148,6 +1158,21 @@ RUN_NUMBER_DU_BANC = 7
 RUN_ATTEMPT_DU_BANC = 2
 SUFFIXE_DU_BAC_A_SABLE = f".post{RUN_NUMBER_DU_BANC * 100 + RUN_ATTEMPT_DU_BANC}"
 
+
+def _version_du_depot() -> str:
+    """La version REELLE du depot, lue a sa source unique.
+
+    `EPIC8-ARB-10` : « UNE seule source de version pour les deux
+    distributions ». Un banc qui travaille sur les fichiers reels la lit ici ;
+    la recopier en litteral le ferait rougir a chaque release, en accusant le
+    code d'un defaut qui serait le sien.
+    """
+    texte = (RACINE / "src" / "mixed_media_utility" / "__init__.py").read_text(
+        encoding="utf-8")
+    trouve = re.search(r'__version__\s*=\s*"([^"]+)"', texte)
+    assert trouve, "la source unique de version ne porte pas `__version__`"
+    return trouve.group(1)
+
 #: Les cinq substitutions, dans l'ordre du script. La fabrique ci-dessous les
 #: produit toutes ; les tests de panne visent chacune a son tour -- donc la
 #: PREMIERE et la DERNIERE comprises, et pas seulement une du milieu.
@@ -1347,10 +1372,20 @@ def test_le_renommage_mord_sur_les_DECLARATIONS_REELLES_du_depot(tmp_path):
     assert '\nmmu-test = ' in racine
     assert 'name = "mmu-tui-test"' in tui
     assert '\nmmu-tui-test = ' in tui
-    assert f'"mmu-cli-test==0.1.0{SUFFIXE_DU_BAC_A_SABLE}"' in tui, (
+    # **La version se LIT a sa source, elle ne se recopie pas ici** (corrige le
+    # 2026-09-09, a la release v0.1.1). Ce banc portait `0.1.0` en dur alors
+    # qu'il travaille sur les fichiers REELS : il rougissait donc a la premiere
+    # version suivante, en accusant le renommage d'un defaut qui etait le sien.
+    # C'est le defaut exact que `CLAUDE.md` releve deja sur `depot_public.py`
+    # -- « le second etait perime des `v0.2.0`, et un recapitulatif perime
+    # dicte un tag faux ». Les fabriques de SYNTHESE de ce fichier gardent
+    # leur version litterale, et c'est juste : elles choisissent la leur.
+    version_reelle = _version_du_depot()
+    assert f'"mmu-cli-test=={version_reelle}{SUFFIXE_DU_BAC_A_SABLE}"' in tui, (
         "sur les fichiers REELS, l'epinglage ne porte pas le rang de "
         "tentative : la roue de l'interface exigerait une version du coeur "
-        "que TestPyPI ne portera pas.\n" + tui)
+        f"que TestPyPI ne portera pas (version du depot : {version_reelle}).\n"
+        + tui)
     # Frontiere NEGATIVE, sur le terrain : plus aucune dependance vers le
     # paquet de PRODUCTION dans la declaration de l'interface.
     assert '"mmu-cli==' not in tui, (

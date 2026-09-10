@@ -477,6 +477,13 @@ def test_the_warning_vocabulary_covers_what_the_story_names() -> None:
         "UNREADABLE_FILE_SKIPPED",
         "PDF_RASTERIZED_AT_8_BITS",
         "PDF_EMBEDS_LOSSY_IMAGE",
+        # Story 5.30 (`EPIC11-ARB-281`): un alpha NON opaque est retire et
+        # s'annonce, plutot que de faire refuser la page.
+        "ALPHA_CHANNEL_DROPPED",
+        # Story 5.31 (`EPIC11-ARB-282`): un fichier image porte plus de pages
+        # que le lecteur n'a su en rendre -- ni fichier perdu, ni lot court et
+        # muet.
+        "IMAGE_PAGES_PARTIALLY_READABLE",
     }
 
 

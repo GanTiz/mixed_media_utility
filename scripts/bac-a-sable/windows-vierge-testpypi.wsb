@@ -1,0 +1,25 @@
+<Configuration>
+  <!--
+    Meme bac a sable jetable, mais qui vise TestPyPI et ne pose AUCUNE
+    question. C'est la forme a employer pour valider un candidat de release
+    avant qu'il parte sur le vrai PyPI.
+
+    Deux differences avec `windows-vierge.wsb`, et elles comptent toutes deux.
+
+      * `[scriptblock]::Create(...)` remplace `| iex`. Un script tire par
+        `irm | iex` ne prend AUCUN parametre : c'est le piege qui fait croire
+        que `-TestPyPI` est ignore. Cette forme la, elle, les passe.
+      * `-NonInteractif` prend la valeur par DEFAUT de chaque question restee
+        sans reponse, et l'annonce en clair plutot que d'attendre au clavier.
+
+    Les commandes installees s'appellent alors `mmu-test` et `mmu-tui-test`,
+    et non `mmu` et `mmu-tui` : le bac a sable de PyPI porte des noms
+    distincts.
+
+    Le prealable est le meme que pour `windows-vierge.wsb` : voir son en-tete.
+  -->
+  <Networking>Enable</Networking>
+  <LogonCommand>
+    <Command>powershell.exe -NoExit -ExecutionPolicy Bypass -Command "&amp; ([scriptblock]::Create((irm https://raw.githubusercontent.com/GanTiz/mixed_media_utility/main/scripts/install.ps1))) -Tui -Ffmpeg -AjouterAuPath -SansRaccourci -Verifier -TestPyPI -NonInteractif"</Command>
+  </LogonCommand>
+</Configuration>

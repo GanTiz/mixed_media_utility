@@ -1,0 +1,44 @@
+<Configuration>
+  <!--
+    Bac a sable Windows JETABLE pour essayer Mixed Media Utility.
+
+    A quoi ca sert : lancer l'installation en une commande sur un Windows qui
+    n'a RIEN (ni Python, ni ffmpeg, ni pipx, ni meme winget) et voir ce qu'un
+    inconnu voit. Tout ce qui se passe dedans est detruit a la fermeture de la
+    fenetre. La machine hote n'est pas touchee.
+
+    COMMENT S'EN SERVIR
+      1. activer la fonctionnalite, une fois pour toutes, dans un PowerShell
+         ADMINISTRATEUR (un redemarrage est demande a la fin) :
+
+           Enable-WindowsOptionalFeature -Online `
+             -FeatureName "Containers-DisposableClientVM" -All
+
+      2. double-cliquer ce fichier.
+
+    CE QU'IL FAUT SAVOIR AVANT
+      * Windows Sandbox existe sur Windows 10 et 11 editions Pro, Enterprise
+        et Education. Il n'existe PAS sur l'edition Familiale (Home).
+      * La virtualisation materielle doit etre active dans le BIOS/UEFI.
+      * Le bac a sable n'a ni Microsoft Store ni winget. C'est voulu : c'est
+        exactement le chemin que l'installeur doit savoir amorcer lui-meme (il
+        pose winget par le module PowerShell officiel), et c'est ce chemin la
+        qui n'a jamais ete essaye en vrai.
+
+    LA VARIANTE TestPyPI, sans interaction, est dans le fichier voisin
+    `windows-vierge-testpypi.wsb`.
+  -->
+  <Networking>Enable</Networking>
+  <LogonCommand>
+    <!--
+      `iex` sur une CHAINE n'est pas un fichier de script : la politique
+      d'execution ne s'y applique pas. `-ExecutionPolicy Bypass` est quand
+      meme pose ici, parce qu'il ne coute rien et qu'il couvre le cas ou
+      l'installeur ecrirait un fichier intermediaire.
+
+      `-NoExit` garde la fenetre ouverte apres l'installation : sans lui, elle
+      se referme et on ne lit ni le resultat ni l'erreur.
+    -->
+    <Command>powershell.exe -NoExit -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/GanTiz/mixed_media_utility/main/scripts/install.ps1 | iex"</Command>
+  </LogonCommand>
+</Configuration>

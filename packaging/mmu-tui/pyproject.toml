@@ -67,7 +67,7 @@ classifiers = [
 #   transitivite de textual (EPIC8-ARB-2) : la borne `<9` ne protege en rien
 #   des dependances que textual choisit.
 dependencies = [
-  "mmu-cli==0.1.0",
+  "mmu-cli==0.1.1",
   "textual>=8.2,<9",
   "rich>=14.2",
 ]

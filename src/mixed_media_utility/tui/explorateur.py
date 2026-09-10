@@ -60,11 +60,33 @@ PARENTS_PAR_COMPTE = ("/media", "/run/media")
 #: liste des volumes. Un seul endroit : les deux doivent dire le meme mot.
 LISTE_DES_VOLUMES = "Volumes"
 
-#: Ce que dit la ligne d'etat quand le chemin saisi ne designe rien. Formulation
-#: d'Egan, verbatim : « le bandeau du bas doit juste dire "aucun dossier n'existe
-#: a cette adresse" ». Et ce **n'est pas un refus** : rien ne passe en
-#: `state-absent`, une frappe en cours n'est pas une erreur.
-ADRESSE_INEXISTANTE = "aucun dossier n'existe a cette adresse"
+#: Ce que dit la ligne d'etat quand le chemin saisi ne designe rien. Et ce
+#: **n'est pas un refus** : rien ne passe en `state-absent`, une frappe en cours
+#: n'est pas une erreur.
+#:
+#: **La phrase ne parle plus de « dossier »** (story 11.15, `EPIC11-ARB-283`).
+#: La formulation d'origine etait celle d'Egan, verbatim -- « le bandeau du bas
+#: doit juste dire "aucun dossier n'existe a cette adresse" » --, et elle etait
+#: juste tant que la barre d'adresse ne savait suivre qu'un dossier. Elle a
+#: cesse de l'etre le jour ou coller un chemin de FICHIER est devenu un geste
+#: servi : la phrase annoncait alors l'absence d'un fichier qui existe. Le NOM
+#: de la constante ne bouge pas -- quatre bancs la lisent --, seul son texte.
+ADRESSE_INEXISTANTE = "rien n'existe a cette adresse"
+
+#: Les trois raisons pour lesquelles un fichier qui EXISTE peut ne pas figurer
+#: dans la liste de son propre dossier. L'ecran va au dossier parent et NOMME
+#: celle qui s'applique, plutot que de rendre une liste ou le fichier manque
+#: sans explication (`EPIC11-ARB-89` : « jamais un blocage sec » ;
+#: `EPIC11-ARB-56` : une mesure, jamais une touche ni un conseil -- aucune de
+#: ces trois phrases ne nomme `Ctrl+H`).
+#:
+#: **Elles sont en ASCII pur, comme `ADRESSE_INEXISTANTE`**, et ce n'est pas un
+#: hasard : `etat()` rend `self._refus` **avant** de construire sa table de
+#: glyphes et sans passer par `_replie`, si bien qu'un accent pose ici fuirait
+#: tel quel en `--ascii`. Une frontiere le mesure.
+FICHIERS_NON_MONTRES = "cet ecran ne montre pas les fichiers"
+FICHIER_CACHE = "ce fichier est cache"
+FICHIER_ABSENT_DE_LA_LISTE = "ce fichier ne figure pas dans la liste"
 
 
 def symbole(nom: str, ascii_seul: bool = False) -> str:
@@ -660,6 +682,12 @@ class Explorateur:
         self.montrer_caches = False
         self.saisie: str | None = None      # `None` : la liste a le focus
         self.caret = 0                      # position d'insertion dans la saisie
+        #: Le FICHIER que la saisie designe, quand elle en designe un (story
+        #: 11.15). Il survit juste ce qu'il faut : le temps que `Tab` rende la
+        #: main a la liste, dont `relire()` remet le curseur a zero. Sans lui,
+        #: la story livrerait un curseur pose qui s'evapore a la frappe
+        #: suivante -- une fonction a moitie, ce qu'elle existe pour fermer.
+        self._pointe: Path | None = None
         self.curseur = 0
         self.premier_visible = 0
         self.caches_masques = 0
@@ -748,6 +776,13 @@ class Explorateur:
             # depuis la saisie. La reprise, elle, arrive de l'exterieur.
             self.saisie = None
             self.caret = 0
+        # **La pointe non plus** (finding de la couche 3 de la revue de 11.15).
+        # `_pointe` est le chemin de FICHIER que la saisie a designe ; il est
+        # consomme par `basculer_la_saisie`, qui est la sortie NORMALE de la
+        # saisie. Celle-ci en est une TROISIEME, et elle arrive de l'exterieur.
+        # Sans cette ligne, le curseur se reposait sur un fichier designe deux
+        # changements de dossier plus tot.
+        self._pointe = None
         # `relire` remet curseur et fenetre a zero : arriver au milieu d'une
         # liste qu'on n'a pas parcourue n'aurait aucun sens.
         self.relire()
@@ -1114,6 +1149,24 @@ class Explorateur:
             # inertes, et le message d'erreur toujours affiche.
             self._oublier_le_refus()
             self.relire()
+            # **Et le curseur pose par un chemin de FICHIER survit a ce
+            # `Tab`** (story 11.15). La relecture ci-dessus est la frontiere
+            # `E7` et elle ne bouge pas ; ce qui s'ajoute est de reposer
+            # ensuite le curseur la ou la saisie l'avait mis. Sans cela, le
+            # geste qu'Egan demande -- coller le chemin, revenir a la liste --
+            # ramenerait a la premiere des cent cinquante lignes qu'il cherche
+            # justement a ne plus defiler.
+            pointe, self._pointe = self._pointe, None
+            if pointe is not None and not self._poser_le_curseur_sur(pointe):
+                # **Le retour de la pose se LIT** (finding `C2-1` de la couche 2
+                # de la revue). Il etait ignore ici alors que
+                # `_suivre_la_saisie` le garde : `_oublier_le_refus()` venait
+                # d'effacer la phrase, le curseur restait au rang 0, et le
+                # geste d'Egan -- coller le chemin, `Tab`, `Entree` -- rendait
+                # **un autre fichier**, sans un mot. Mesure sur les deux
+                # regimes nominaux : un ecran qui ne montre pas les fichiers,
+                # et un fichier cache.
+                self._refus = self._pourquoi_hors_liste(pointe)
             return True
         # Depuis la liste des volumes, la saisie part de la derniere racine
         # visitee : c'est le seul chemin reel que l'ecran ait sous la main, et
@@ -1162,10 +1215,40 @@ class Explorateur:
         return True
 
     def _suivre_la_saisie(self) -> None:
-        """La liste montre le contenu du chemin saisi des qu'il existe.
+        """La liste suit le chemin saisi. **TROIS natures, jamais deux.**
 
-        Un chemin qui n'existe pas **n'est pas un refus** : la liste se vide, la
-        ligne d'etat le dit, et rien ne passe en `state-absent`.
+        Un dossier fait afficher son contenu ; un FICHIER fait afficher son
+        dossier, curseur pose sur lui (story 11.15, `EPIC11-ARB-283`) ; un
+        chemin qui n'existe vraiment pas vide la liste et le dit -- et ce
+        dernier cas **n'est pas un refus** : rien ne passe en `state-absent`,
+        une frappe en cours n'est pas une erreur.
+
+        **Ce que la deuxieme branche repare, mesure avant d'etre ecrite** :
+        `cible_de_validation()` rendait deja le fichier -- donc `⏎` le
+        validait -- pendant que la liste se vidait et que la ligne d'etat
+        annoncait « aucun dossier n'existe a cette adresse ». L'ecran
+        DECOURAGEAIT un geste qu'il savait executer, ce qui est pire qu'une
+        fonction absente. Coller le chemin d'un fichier depuis le Finder ou
+        l'Explorateur est exactement ce que produit un copier/coller, et c'est
+        le geste qu'Egan a demande.
+
+        **L'ordre des trois gestes de la branche fichier est porteur** :
+        `relire()` remet `curseur` et `premier_visible` a zero, donc le curseur
+        se pose APRES, jamais avant. C'est la meme famille que le finding `E7`
+        que ce module porte deja -- un etat pose puis ecrase par une relecture,
+        sans erreur et sans trace.
+
+        **Le cout en appels systeme est borne a un de plus, et seulement quand
+        `is_dir()` a dit non.** Cette methode tourne sur CHAQUE caractere tape :
+        `lexists` n'est donc pas ajoute a `normaliser` (qui reste purement
+        lexicale, cf. son docstring) mais ici, dans la seule branche ou il
+        change quelque chose.
+
+        **`lexists` et non `exists`** : un lien symbolique casse EXISTE comme
+        entree de son dossier, `relire()` le montre (finding `E16` : « un lien
+        casse vers un rush deplace est LE symptome que l'operateur cherche »),
+        et lui repondre « rien n'existe a cette adresse » serait le meme
+        mensonge que celui que cette story ferme.
         """
         # `projets.resoudre` EST `normaliser` (une seule implementation dans
         # toute la TUI). Elle etait appelee ici a chaque frappe quand elle
@@ -1177,13 +1260,96 @@ class Explorateur:
             # rejouerait les volumes et la liste ne suivrait pas ce qu'on tape.
             self.aux_volumes = False
             self.dossier = cible
+            self._pointe = None
             self._refus = ""
             self.relire()
             return
+        if os.path.lexists(cible):
+            self.aux_volumes = False
+            self.dossier = cible.parent
+            self.relire()              # <- remet curseur et premier_visible a 0
+            self._pointe = cible
+            if self._poser_le_curseur_sur(cible):
+                self._refus = ""
+            else:
+                # AC 6 : la liste ne PEUT PAS le montrer, elle le DIT. Un
+                # curseur laisse a zero en silence ferait croire que le fichier
+                # est la premiere entree du dossier.
+                self._refus = self._pourquoi_hors_liste(cible)
+            return
+        self._pointe = None
         self.entrees = []
         self.curseur = 0
         self.premier_visible = 0
         self._refus = ADRESSE_INEXISTANTE
+
+    def _poser_le_curseur_sur(self, chemin: Path) -> bool:
+        """Poser le curseur sur `chemin` dans la liste courante, et recadrer.
+
+        **L'appariement se fait par identite de `Path`, jamais par nom** : deux
+        dossiers peuvent porter le meme nom de fichier, et `normaliser` a deja
+        resolu la forme du chemin saisi -- comparer les noms rendrait vrai pour
+        un homonyme d'un autre dossier.
+
+        Le recadrage passe par :meth:`_recadrer`, jamais par une arithmetique
+        recopiee : la borne haute de la fenetre depend de la presence du `…` de
+        tete, qui depend elle-meme de `premier_visible` (cf.
+        `jetons.recadrer_la_fenetre`).
+        """
+        for rang, entree in enumerate(self.entrees):
+            if entree.chemin == chemin:
+                self.curseur = rang
+                self._recadrer()
+                return True
+        return False
+
+    def _pourquoi_hors_liste(self, cible: Path) -> str:
+        """Laquelle des trois raisons empeche `cible` de figurer dans la liste.
+
+        **Les FAITS d'abord, le reglage du site ensuite** (finding `C2-2` de la
+        couche 2 de la revue). La premiere redaction repondait
+        `montrer_fichiers` avant d'avoir etabli quoi que ce soit, et se
+        trompait donc dans trois regimes mesures : un dossier parent
+        **illisible** (rien n'a ete lu, le reglage n'y est pour rien, et la
+        phrase masquait le compte de sous-dossiers) ; un fichier **disparu**
+        entre le `lexists` et la relecture ; et surtout un **lien symbolique
+        casse**, que :meth:`relire` range parmi les DOSSIERS -- il figure donc
+        dans la liste meme quand les fichiers n'y sont pas, et nommer
+        `montrer_fichiers` designait un obstacle qui n'existait pas.
+
+        Une fois les faits etablis, l'ordre des deux reglages se justifie par
+        ce que l'operateur peut CHANGER. `montrer_caches` est a portee d'une
+        touche ; `montrer_fichiers` est un reglage du SITE, hors de sa main.
+        Sur un fichier cache d'un ecran qui ne montre aucun fichier, les deux
+        s'appliquent -- nommer le masquage suggererait un geste qui, la, ne
+        ferait rien apparaitre. On nomme celle qui BORNE l'autre.
+        """
+        if not self.dossier_lisible or not os.path.lexists(cible):
+            # Rien n'a ete lu, ou il n'y a plus rien a lire : aucun reglage
+            # n'est en cause.
+            return FICHIER_ABSENT_DE_LA_LISTE
+        # Ce que la liste porte de toute facon : les dossiers, et les liens
+        # casses que `relire` range avec eux.
+        porte_par_la_liste = (self._est_dossier(cible)
+                              or _lien_illisible(cible)
+                              or self.montrer_fichiers)
+        if not porte_par_la_liste:
+            return FICHIERS_NON_MONTRES
+        # **`and not self.montrer_caches` est INATTEIGNABLE dans un sens depuis
+        # la reordonnance ci-dessus, et il reste.** Mesure : le retirer ne
+        # change aucun verdict, parce qu'une cible cachee ET montree figure
+        # forcement dans la liste -- donc `_pourquoi_hors_liste` n'est pas
+        # appelee. La clause n'est donc porteuse que dans l'autre sens (cachee
+        # et masquee), ou elle l'est bel et bien.
+        #
+        # Elle est gardee plutot que simplifiee, et c'est un choix : cette nuit
+        # meme, une couche de revue a declare une garde inatteignable qu'une
+        # autre a mesuree atteignable ET porteuse -- sans elle, un lot entier
+        # etait perdu. Une clause juste qui ne coute rien vaut mieux qu'une
+        # simplification qui repose sur l'exhaustivite d'un raisonnement.
+        if _est_cache(cible.name) and not self.montrer_caches:
+            return FICHIER_CACHE
+        return FICHIER_ABSENT_DE_LA_LISTE
 
     # -- validation ----------------------------------------------------------
 
@@ -1936,6 +2102,9 @@ def _tete(texte: str, largeur: int, points: str) -> str:
 
 __all__ = [
     "ADRESSE_INEXISTANTE",
+    "FICHIERS_NON_MONTRES",
+    "FICHIER_ABSENT_DE_LA_LISTE",
+    "FICHIER_CACHE",
     "HAUTEUR_LISTE",
     "Entree",
     "Explorateur",

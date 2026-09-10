@@ -1328,6 +1328,10 @@ def test_valider_une_adresse_INEXISTANTE_ne_MEMORISE_rien(tmp_path):
     absent est le comportement voulu, et `valider()` doit continuer de rendre
     le chemin saisi. Ce qui est corrige, c'est l'ecriture dans la memoire de
     session : elle ne retient que ce qui existe.
+
+    Depuis la story 11.15, `ADRESSE_INEXISTANTE` ne couvre plus que ce qui
+    n'existe VRAIMENT pas -- ni dossier ni fichier. Le chemin vise ici est de
+    ceux-la, et c'est ce qui rend l'assertion encore juste.
     """
     base = arborescence(tmp_path, ["aa_autre", "zz_cible"],
                         {"aa_autre": 2, "zz_cible": 9})
@@ -1404,8 +1408,17 @@ def test_un_fichier_NON_ACCEPTE_ne_se_valide_pas_et_l_etiquette_le_dit(tmp_path)
 
 def test_la_saisie_suit_la_frappe_et_un_chemin_inexistant_n_est_PAS_un_refus(
         tmp_path):
-    """AC 5.3 et 5.4. La formulation de la ligne d'etat est celle d'Egan,
-    verbatim : « aucun dossier n'existe a cette adresse »."""
+    """AC 5.3 et 5.4. La ligne d'etat dit l'absence, et ce n'est pas un refus.
+
+    **La phrase n'est plus celle d'Egan, et c'est voulu** (story 11.15,
+    `EPIC11-ARB-283`). Sa formulation d'origine -- « aucun dossier n'existe a
+    cette adresse » -- etait juste tant que la barre d'adresse ne savait suivre
+    qu'un dossier ; depuis qu'un chemin de FICHIER y est servi, elle annoncait
+    l'absence d'un fichier qui existe. Ce test lit donc la constante par son
+    NOM, jamais son texte : c'est ce qui lui permet de survivre a la
+    reformulation, et le texte lui-meme est mesure dans
+    `test_barre_d_adresse_sur_un_fichier.py`.
+    """
     base = arborescence(tmp_path, ["a", "b"])
     exp = explorateur_sur(base)
     exp.basculer_la_saisie()
@@ -1427,6 +1440,11 @@ def test_sortir_de_la_SAISIE_sur_une_adresse_inexistante_REND_la_liste(tmp_path)
     message d'erreur a demeure, `↑↓`, `→` et toutes les lettres inertes ; seul
     `←` (qui change de dossier) ou `Ctrl+H` en sortait -- et `Ctrl+H` repeuplait
     la liste en laissant le message qui la contredit.
+
+    La story 11.15 ajoute un second devoir a ce meme `Tab` -- reposer le
+    curseur quand la saisie designait un FICHIER --, sans toucher a la
+    relecture mesuree ici. Les deux moities se mesurent separement :
+    `test_barre_d_adresse_sur_un_fichier.py` porte l'autre.
     """
     base = arborescence(tmp_path, ["aa_reste", "zz_reste"],
                         {"aa_reste": 1, "zz_reste": 8})

@@ -53,7 +53,7 @@ from pathlib import Path
 import pytest
 
 RACINE = Path(__file__).resolve().parents[2]
-CI = RACINE / ".github" / "workflows" / "ci.yml"
+CI = RACINE / ".github" / "workflows" / "garde-installation.yml"
 
 #: Le nom du job que cette story etend. Il est aussi la PORTE de release :
 #: `publish.yml` appelle `ci.yml` en entier.
@@ -608,7 +608,7 @@ def test_le_verdict_se_lit_sur_l_ETAT_DE_LA_MACHINE_pas_sur_le_code_de_retour():
             f"le job `{JOB}` ne nomme jamais `{commande}` : il ne peut donc "
             "mesurer ni sa presence apres installation ni son absence apres "
             "desinstallation, et les deux scripts rendent 0 dans les deux cas.")
-    assert "0.1.0" in effectives, (
+    assert _version_du_depot() in effectives, (
         "aucune version attendue n'est nommee : `mmu-test --version` peut "
         "rendre n'importe quoi, y compris la version d'un `mmu` REEL deja "
         "present sur la machine.")
@@ -1107,8 +1107,8 @@ def test_chaque_annonce_d_ERREUR_est_suivie_d_une_SORTIE_en_erreur():
 
 
 @pytest.mark.parametrize("shell,motif", [
-    ("bash", "*0.1.0*)"),
-    ("pwsh", "-notlike '*0.1.0*'"),
+    ("bash", "*{v}*)"),
+    ("pwsh", "-notlike '*{v}*'"),
 ])
 def test_la_version_est_verifiee_de_CHAQUE_cote(shell, motif):
     """Un cote suffisait a satisfaire le banc -- c'est une tautologie croisee.
@@ -1121,12 +1121,32 @@ def test_la_version_est_verifiee_de_CHAQUE_cote(shell, motif):
     Chaque cote est desormais mesure SEPAREMENT, sur la forme qui lui est
     propre : le motif de `case` en bash, le `-notlike` en PowerShell.
     """
+    # **Le motif porte `{v}` et non la version en dur** : ce banc mesure que
+    # `ci.yml` SUIT la source unique, il ne doit pas la recopier lui-meme.
+    motif = motif.format(v=_version_du_depot())
     texte = "\n".join("\n".join(_sans_commentaires(e))
                       for e in _etapes_de_verdict())
     assert motif in texte, (
         f"la verification de version manque du cote {shell} (motif attendu : "
         f"{motif!r}). L'autre cote ne la remplace pas : ils tournent sur des "
         "environnements differents.")
+
+
+def _version_du_depot() -> str:
+    """La version REELLE, lue a sa source unique (`EPIC8-ARB-10`).
+
+    **Ajoutee le 2026-09-09, a la release v0.1.1.** Trois bancs de ce fichier
+    codaient `0.1.0` en dur pour mesurer que `ci.yml` ne le codait pas en dur
+    ailleurs -- ils rougissaient donc a la premiere release, en accusant le
+    workflow d'un defaut qui etait le leur. C'est la troisieme occurrence de
+    cette famille dans la meme soiree, apres `depot_public.py` (relevee par
+    `CLAUDE.md`) et `test_chaine_de_publication.py`.
+    """
+    import re as _re
+    trouve = _re.search(r'__version__\s*=\s*["\']([^"\']+)["\']',
+                        SOURCE_DE_VERSION.read_text(encoding="utf-8"))
+    assert trouve, f"{SOURCE_DE_VERSION} ne porte plus `__version__`"
+    return trouve.group(1)
 
 
 def test_le_litteral_de_version_du_job_SUIT_la_source_unique():

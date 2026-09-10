@@ -2257,11 +2257,57 @@ def test_la_mesure_des_DOUBLONS_mord_sur_un_registre_fautif(tmp_path):
     assert construit["src/b.py"] == "le second motif de B"
 
 
+#: Le seul fichier du coeur qu'une RELEASE fait bouger, et il n'est pas un
+#: changement de coeur : il ne porte que `__version__`.
+#:
+#: **Pourquoi une exemption structurelle plutot qu'une entree au registre**
+#: (pose le 2026-09-09, a la release v0.1.1). `CHANGEMENTS_ACCEPTES` existe
+#: pour les changements de coeur de l'Epic 11 -- un par un, avec leur motif, et
+#: chacun doit gagner sa ligne dans la table de liaison. Une release n'est ni
+#: l'un ni l'autre : elle **recommencera a chaque version**, elle ne se
+#: reporte sur aucune branche (une release se refait, elle ne voyage pas), et
+#: le banc de liaison ne sait de toute facon pas reconnaitre `__init__` comme
+#: un module de coeur. Y mettre la version aurait fait rougir DEUX frontieres
+#: a chaque release, et une garde qui rouge a chaque release cesse d'etre lue.
+#:
+#: **L'exemption est bornee par une MESURE, pas par une promesse** : le test
+#: jumeau ci-dessous verifie que ce fichier ne porte rien d'autre qu'une
+#: affectation de `__version__`. Le jour ou du code y entre, l'exemption cesse
+#: d'etre sure et le banc le dit -- au lieu de couvrir en silence un vrai
+#: changement de coeur.
+FICHIER_DE_VERSION = "src/mixed_media_utility/__init__.py"
+
+
+def test_le_fichier_de_VERSION_ne_porte_QUE_sa_version(racine_depot):
+    """La borne de l'exemption `FICHIER_DE_VERSION`, mesuree sur l'AST.
+
+    `EPIC8-ARB-10` fait de ce fichier la source UNIQUE de version pour les deux
+    distributions. Tant qu'il ne porte que cela, le voir bouger a une release
+    n'apprend rien -- et quatre autres frontieres mesurent deja que toutes les
+    declarations du depot la SUIVENT.
+    """
+    source = (racine_depot / FICHIER_DE_VERSION).read_text(encoding="utf-8")
+    arbre = ast.parse(source)
+    noms = []
+    for noeud in arbre.body:
+        if isinstance(noeud, ast.Expr) and isinstance(noeud.value, ast.Constant):
+            continue                      # docstring
+        if isinstance(noeud, ast.Assign):
+            noms += [c.id for c in noeud.targets if isinstance(c, ast.Name)]
+            continue
+        noms.append(type(noeud).__name__)
+    assert noms == ["__version__"], (
+        f"{FICHIER_DE_VERSION} ne porte plus SEULEMENT `__version__` "
+        f"({noms}). L'exemption de la garde de signature cesse d'etre sure : "
+        "elle couvrirait un vrai changement de coeur en silence.")
+
+
 def test_aucune_signature_du_coeur_n_a_bouge_depuis_le_baseline(racine_depot):
     """AC 5.3 et AC 7.2 : hors `tui/`, zero fichier modifie -- `cli.py` compris."""
     modifies = _fichiers_modifies(racine_depot, BASELINE)
     hors_tui = [c for c in modifies
-                if "/tui/" not in c and c not in CHANGEMENTS_ACCEPTES]
+                if "/tui/" not in c and c not in CHANGEMENTS_ACCEPTES
+                and c != FICHIER_DE_VERSION]
     assert hors_tui == [], (
         "l'Epic 11 ne touche pas le coeur ; fichiers vus : "
         f"{hors_tui}. Si un changement est legitime, il s'inscrit dans "

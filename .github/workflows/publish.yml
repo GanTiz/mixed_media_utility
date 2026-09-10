@@ -958,6 +958,23 @@ jobs:
           echo "  s AMORCENT par jeton (EPIC8-ARB-20) : une fois crees, seule la"
           echo "  page du PROJET sert, et elle n a pas cette contrainte."
 
+  # ETAPE 2bis -- LA GARDE D'INSTALLATION, ET SA PLACE EST LE CORRECTIF.
+  #
+  # Elle etait dans `valider`, donc AVANT `publish`. Or elle installe depuis
+  # TestPyPI et exige la version qu'on publie : elle reclamait sur l'index ce
+  # que seul `publish` pouvait y mettre. Aucune version neuve ne pouvait donc
+  # demarrer -- interblocage constate sur la v0.1.1, quatre jambes rouges sur
+  # quatre. Ici, l'index sert deja l'artefact : la garde eprouve enfin CE
+  # qu'on publie, au lieu de la version precedente.
+  #
+  # `needs: publish` et rien d'autre : `publish` remonte a `build`, qui remonte
+  # a `valider`. La chaine de proche en proche tient, donc ce job ne tourne
+  # toujours pas sur un arbre non teste.
+  garde:
+    name: Garde des scripts d'installation
+    needs: publish
+    uses: ./.github/workflows/garde-installation.yml
+
   # ETAPES 3 ET 4 DE LA SEQUENCE -- l'approbation puis la production. Le job ne
   # part que sur un TAG et que depuis le DEPOT DE DISTRIBUTION : sur `-dev` il
   # est saute, sans demander d'approbation a personne, et le job `build` a dit
@@ -965,7 +982,7 @@ jobs:
   # travail d'atteindre le vrai PyPI.
   release:
     name: Publier sur PyPI (mmu-cli puis mmu-tui)
-    needs: [build, publish]
+    needs: [build, publish, garde]
     if: ${{ github.event_name == 'push' && needs.build.outputs.depot_de_distribution == 'oui' }}
     runs-on: ubuntu-latest
     # C'est CET environnement qui porte l'approbation humaine. Le job attend
