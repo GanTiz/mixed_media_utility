@@ -722,7 +722,7 @@ def active_table() -> PatchValuesTable:
 
 #: Les cinq niveaux par canal du treillis, **mesures** et non choisis: ce sont
 #: ceux de la page 2 de la cible de mesure terrain v3
-#: (`scripts/research/build_lut_target.py`, descripteur
+#: (`scripts/archive/research/build_lut_target.py`, descripteur
 #: `_bmad-output/test-artifacts/cible-de-mesure/cible_lut_v3.json`), la seule
 #: source qui ait produit le 4,66 dE76 ci-dessus. Le plancher est a 8 et non a 0:
 #: 0/0/0 sature l'encrage, et un treillis dont un sommet n'est pas reproductible

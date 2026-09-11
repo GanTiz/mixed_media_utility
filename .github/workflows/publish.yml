@@ -162,16 +162,12 @@ jobs:
       - name: Installer l'outil de construction
         run: python -m pip install --upgrade build
 
-      # SIX artefacts : une roue par distribution, un sdist pour les deux
-      # distributions du coeur seulement, et DEUX jeux -- production et bac a
-      # sable. Ce n'est PAS « une roue et un sdist par distribution » : depuis
-      # `EPIC8-ARB-18`, `mmu-tui` et `mmu-tui-test` partent en ROUE SEULE, et
-      # la garde REFUSE un sdist trouve dans leur dossier. La redaction
-      # precedente enoncait ici la regle que la garde abroge plus bas, et
-      # suggerait exactement le geste qu'elle interdit. Les deux jeux se construisent dans le meme
-      # run parce que la release les enchaine : construire le jeu de test au
-      # moment de publier sur PyPI reviendrait a publier autre chose que ce qui
-      # a ete valide.
+      # HUIT artefacts : une roue ET un sdist par distribution, dans DEUX jeux
+      # -- production et bac a sable. C'etait SIX jusqu'a `EPIC8-ARB-21` :
+      # `mmu-tui` et `mmu-tui-test` partaient en ROUE SEULE, faute d'archive
+      # source constructible. `packaging/mmu-tui/hatch_build.py` a ferme ce
+      # defaut, la dispense est levee, et les quatre distributions sont
+      # desormais traitees pareil -- ce que la garde plus bas mesure.
       #
       # Les dossiers restent SEPARES jusqu'a la publication : `gh-action-pypi-
       # publish` televerse un DOSSIER, un `dist/` unique publierait plusieurs
@@ -182,16 +178,21 @@ jobs:
       # modifie les deux `pyproject.toml` en place et qu'on ne revient pas en
       # arriere.
       #
-      # `--wheel` SUR `mmu-tui` SEULEMENT (EPIC8-ARB-18, 2026-09-07). Sans lui,
-      # `build` construit le sdist PUIS la roue DEPUIS ce sdist -- et le sdist
-      # de mmu-tui ne contient que `packaging/mmu-tui/`, six fichiers, aucune
-      # ligne de code : le `force-include` qui vise `../../src/` n'a plus rien
-      # a inclure et la ROUE N'EST PAS PRODUITE. Le message d'echec ci-dessous
-      # raconte les deux pannes mesurees ce jour-la ; il reste la parce que
-      # l'une d'elles reviendra si quelqu'un recree les liens symboliques.
+      # Les deux jeux se construisent dans le meme run parce que la release les
+      # enchaine : construire le jeu de test au moment de publier sur PyPI
+      # reviendrait a publier autre chose que ce qui a ete valide.
       #
-      # `mmu-cli` se construit par `python -m build` NU : il garde sa roue ET
-      # son sdist. La dispense est nommee par distribution, jamais globale.
+      # `python -m build` NU DES DEUX COTES, et c'est le changement
+      # d'`EPIC8-ARB-21`. `mmu-tui` portait `--wheel` parce que `build`
+      # construit le sdist PUIS la roue DEPUIS ce sdist, et que le sdist de
+      # `mmu-tui` etait creux : le `force-include` visait `../../src/`, qui
+      # n'existe pas dans un sdist extrait. Le crochet resout desormais le
+      # coeur LA OU IL EST -- `../../src` dans l'arbre de travail, `src/` dans
+      # le sdist, ou le `force-include` du sdist l'a depose. Mesure du
+      # 2026-09-10 sur l'arbre reel : sdist de 65 entrees et 53 modules, roue
+      # construite DEPUIS ce sdist a 52 modules, zero `.pyc`, aucun fichier
+      # commun avec la roue `mmu-cli`, et `pip install` du sdist pose la
+      # commande `mmu-tui`.
       - name: Construire les deux distributions de PRODUCTION
         run: |
           set -eu
@@ -204,28 +205,29 @@ jobs:
             echo "::error::La construction de mmu-cli a echoue."
             exit 1
           }
-          python -m build --wheel --outdir dist/tui packaging/mmu-tui || {
+          python -m build --outdir dist/tui packaging/mmu-tui || {
             echo "::error::La construction de mmu-tui a echoue."
             echo "  LA PANNE ATTEIGNABLE ICI est celle du FORCE-INCLUDE, et"
             echo "  son message est :"
             echo "    Forced include not found: <...>/src/mixed_media_utility/tui"
-            echo "  Cette construction passe par --wheel : elle lit l ARBRE DE TRAVAIL,"
-            echo "  pas un sdist. Le force-include de"
-            echo "  packaging/mmu-tui/pyproject.toml vise"
-            echo "  ../../src/mixed_media_utility/tui, qui doit exister ICI."
-            echo "  Il echoue si ce chemin a ete deplace, renomme, ou si le"
-            echo "  checkout est partiel (sparse checkout, sous-module absent)."
-            echo "  Deux issues : retablir le chemin, ou corriger la"
-            echo "  declaration force-include qui le vise."
+            echo "  Depuis EPIC8-ARB-21, ce chemin n est plus ecrit en dur :"
+            echo "  packaging/mmu-tui/hatch_build.py cherche le coeur dans"
+            echo "  ../../src PUIS dans src/, et leve en NOMMANT les deux"
+            echo "  emplacements essayes. Si c est SON message qui sort, aucun"
+            echo "  des deux ne porte mixed_media_utility/tui : le checkout est"
+            echo "  partiel (sparse checkout, sous-module absent) ou le chemin"
+            echo "  a ete deplace. Deux issues : retablir le chemin, ou"
+            echo "  corriger EMPLACEMENTS dans le crochet."
             echo ""
-            echo "  DEUX PANNES HISTORIQUES, mesurees le 2026-09-07, ne sont"
-            echo "  PLUS atteignables par cette commande, et c est voulu :"
-            echo "  LinkOutsideDestinationError (les liens symboliques de"
-            echo "  packaging/mmu-tui/ refuses par le filtre data de tarfile)"
-            echo "  et la roue construite depuis un sdist creux. Les deux"
-            echo "  passaient par la construction du SDIST, que --wheel ne fait"
-            echo "  plus (EPIC8-ARB-18). Si l une d elles reapparait, c est que"
-            echo "  --wheel a ete retire de la ligne ci-dessus."
+            echo "  DEUX PANNES HISTORIQUES, mesurees le 2026-09-07, restent"
+            echo "  atteignables ICI depuis que le SDIST se construit a nouveau,"
+            echo "  et c est voulu -- une archive source qui les reintroduirait"
+            echo "  doit echouer a la construction, pas chez l utilisateur :"
+            echo "  LinkOutsideDestinationError (des liens symboliques dans"
+            echo "  packaging/mmu-tui/, refuses par le filtre data de tarfile ;"
+            echo "  le sdist du 2026-09-10 n en porte AUCUN) et la roue"
+            echo "  construite depuis un sdist creux, que la garde de version"
+            echo "  refuse plus bas par sdist_non_creux()."
             exit 1
           }
           ls -l dist/cli dist/tui
@@ -365,7 +367,7 @@ jobs:
             echo "::error::La construction de mmu-cli-test a echoue."
             exit 1
           }
-          python -m build --wheel --outdir dist/tui-test packaging/mmu-tui || {
+          python -m build --outdir dist/tui-test packaging/mmu-tui || {
             echo "::error::La construction de mmu-tui-test a echoue."
             echo "  Meme piege de liens symboliques que ci-dessus si le message"
             echo "  parle de LinkOutsideDestinationError."
@@ -403,28 +405,34 @@ jobs:
           #: pour l'autre. Mieux vaut refuser ici, en nommant le poids.
           LIMITE_PAR_FICHIER = 100 * 1024 * 1024
 
-          #: Les distributions publiees en ROUE SEULE -- `EPIC8-ARB-18`,
-          #: 2026-09-07, BORNEE a la version ci-dessous.
+          #: Les distributions publiees en ROUE SEULE. VIDE depuis
+          #: `EPIC8-ARB-21` (2026-09-10) : `mmu-tui` en est sorti quand son
+          #: archive source est devenue constructible.
           #:
-          #: Motif mesure : `python -m build packaging/mmu-tui` echoue
-          #: structurellement. `build` construit le sdist PUIS la roue DEPUIS
-          #: ce sdist ; le sdist de mmu-tui ne contient que
-          #: `packaging/mmu-tui/` -- six fichiers, aucune ligne de code --,
-          #: donc le `force-include` qui vise `../../src/mixed_media_utility/
-          #: tui` n'a plus rien a inclure. `--wheel` seul reussit : roue de
-          #: 921 704 octets, 52 modules, `Requires-Dist: mmu-cli==0.1.0`.
+          #: LA MACHINERIE RESTE, ET C'EST DELIBERE. Un registre vide rend la
+          #: garde exigeante partout -- une roue ET un sdist pour les quatre
+          #: distributions --, et la borne ci-dessous ne borne plus rien, donc
+          #: elle se tait. La prochaine dispense se pose en nommant une
+          #: distribution ici et en portant la borne a sa version : elle
+          #: heritera de l'expiration sans qu'on la reecrive.
+          #:
+          #: CE QU'ELLE A COUTE, parce que ca se reproduira. `EPIC8-ARB-18`
+          #: avait borne la dispense a la 0.1.0. La release 0.1.1 a donc ete
+          #: REFUSEE ici, apres 38 minutes de CI verte -- exactement ce que la
+          #: borne devait faire, et exactement ce que personne n'avait regarde
+          #: avant de poser le tag. Le banc `test_la_dispense_de_sdist_EXPIRE_
+          #: a_sa_borne` portait deja le cas « 0.1.1 -> refus » et etait vert :
+          #: la frontiere avait raison, elle n'etait simplement jamais
+          #: confrontee a la version qu'on s'appretait a publier. C'est ce
+          #: rapprochement qui manquait, et il est desormais mesure du cote
+          #: prive par `test_la_version_DU_DEPOT_passe_la_garde_de_publication`.
           #:
           #: LA DISPENSE SE NOMME PAR DISTRIBUTION, et c'est le point. Le
           #: remede evident -- assouplir le comptage en `len(sources) <= 1` --
           #: rendrait `mmu-cli` publiable SANS sdist, et la CI resterait verte.
           #: Personne ne le verrait avant qu'un `pip install --no-binary` ne
           #: le decouvre chez l'utilisateur.
-          #:
-          #: Elle se RETIRE : faire entrer `src/mixed_media_utility/tui` dans
-          #: le sdist de mmu-tui (ou restructurer `packaging/`) rend le sdist
-          #: exploitable, et le nom sort d'ici. La borne est ce qui empeche
-          #: cette liste de devenir un etat permanent.
-          ROUE_SEULE = {"mmu-tui", "mmu-tui-test"}
+          ROUE_SEULE = set()
           BORNE_DE_LA_DISPENSE = "0.1.0"
 
           def normalise(nom):
@@ -439,8 +447,8 @@ jobs:
               `ROUE_SEULE` nomme, qui en attendent ZERO -- exigé, pas tolere.
 
               Un sdist trouve la ou on n'en attend aucun n'est pas un bonus :
-              c'est la coquille de six fichiers que `--wheel` existe pour ne
-              pas produire, et elle se televerse tres bien.
+              c'est la coquille de six fichiers qu'une distribution dispensee
+              ne sait pas produire pleine, et elle se televerse tres bien.
               """
               chemin = pathlib.Path(dossier)
               roues = sorted(chemin.glob("*.whl"))
@@ -455,7 +463,7 @@ jobs:
                   # distribution. La premiere redaction branchait sur
                   # `dispensee` : quand la ROUE manquait -- c'est-a-dire la
                   # panne du `force-include` elle-meme, celle pour laquelle
-                  # `--wheel` existe --, elle imprimait « trouve 0 roue(s) et
+                  # la dispense existait --, elle imprimait « trouve 0 roue(s) et
                   # 0 sdist(s) » suivi de trois lignes expliquant la
                   # declaration du sdist. L'operateur partait sur la mauvaise
                   # piste au pire moment. Mesure par la couche 2 de la revue
@@ -471,11 +479,10 @@ jobs:
                   elif dispensee:
                       print(f"  {nom} est publie en ROUE SEULE "
                             f"(EPIC8-ARB-18, borne a la "
-                            f"{BORNE_DE_LA_DISPENSE}) : sa construction passe "
-                            "par `python -m build --wheel`, qui ne produit pas "
-                            "d'archive source. Un sdist trouve ici est la "
-                            "coquille sans une ligne de code que le "
-                            "`force-include` de mmu-tui rend inexploitable.")
+                            f"{BORNE_DE_LA_DISPENSE}) : sa construction ne "
+                            "produit pas d'archive source. Un sdist trouve "
+                            "ici est la coquille sans une ligne de code "
+                            "qu'un `force-include` non resolu laisse.")
                   else:
                       print(f"  {nom} n'est PAS dispensee de sdist : elle "
                             "garde sa roue ET son archive source.")

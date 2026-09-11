@@ -393,10 +393,15 @@ def test_la_release_est_une_SEQUENCE_et_non_deux_cibles_exclusives():
     besoins_publish = [l.strip() for l in _bloc_de_job("publish")
                        if l.strip().startswith("needs:")]
     assert besoins_publish == ["needs: build"], besoins_publish
-    # `garde` s'est INTERCALE ici le 2026-09-10 : la garde d'installation
-    # vivait dans `valider`, donc AVANT `publish` -- alors qu'elle INSTALLE
-    # depuis TestPyPI et exige la version qu'on publie. Interblocage mesure
-    # sur la v0.1.1, quatre jambes rouges sur quatre.
+    # `garde` s'est INTERCALE ici le 2026-09-10, entre TestPyPI et PyPI, et
+    # c'est un correctif d'interblocage plutot qu'un rangement. La garde
+    # d'installation vivait dans `valider`, donc AVANT `publish` -- alors
+    # qu'elle INSTALLE depuis TestPyPI et exige la version qu'on publie. Elle
+    # reclamait sur l'index ce que seul `publish` pouvait y mettre : aucune
+    # version neuve ne pouvait demarrer. Mesure : release v0.1.1, quatre
+    # jambes rouges sur quatre, « attendait 0.1.1, rendu : 0.1.0.post601 ».
+    # v0.1.0 n'etait passee que par COINCIDENCE, `0.1.0.dev0` trainant sur
+    # l'index -- la garde validait donc la version PRECEDENTE.
     besoins_garde = [l.strip() for l in _bloc_de_job("garde")
                      if l.strip().startswith("needs:")]
     assert besoins_garde == ["needs: publish"], (
@@ -407,8 +412,9 @@ def test_la_release_est_une_SEQUENCE_et_non_deux_cibles_exclusives():
     besoins_release = [l.strip() for l in _bloc_de_job("release")
                        if l.strip().startswith("needs:")]
     assert besoins_release == ["needs: [build, publish, garde]"], (
-        "le job de production ne depend pas du passage par TestPyPI : la "
-        f"sequence est rompue. Lu : {besoins_release}"
+        "le job de production ne depend pas du passage par TestPyPI ET par la "
+        "garde d'installation : la sequence est rompue. Lu : "
+        f"{besoins_release}"
     )
 
 
@@ -582,7 +588,7 @@ def test_le_job_build_construit_les_DEUX_JEUX_de_DEUX_distributions():
     bloc = _bloc_de_job("build")
     production = _script(_etape_nommee(bloc, "distributions de PRODUCTION"))
     assert "python -m build --outdir dist/cli ." in production
-    assert ("python -m build --wheel --outdir dist/tui packaging/mmu-tui"
+    assert ("python -m build --outdir dist/tui packaging/mmu-tui"
             in production)
     assert "packaging/mmu-tui/pyproject.toml" in production, (
         "la construction doit NOMMER la declaration absente plutot que "
@@ -590,17 +596,22 @@ def test_le_job_build_construit_les_DEUX_JEUX_de_DEUX_distributions():
     )
     sable = _script(_etape_nommee(bloc, "distributions du BAC A SABLE"))
     assert "python -m build --outdir dist/cli-test ." in sable
-    assert ("python -m build --wheel --outdir dist/tui-test packaging/mmu-tui"
+    assert ("python -m build --outdir dist/tui-test packaging/mmu-tui"
             in sable)
 
 
-def test_le_drapeau_ROUE_SEULE_ne_porte_QUE_sur_l_interface():
-    """AC1 -- frontiere NEGATIVE, et c'est elle qui protege `mmu-cli`.
+def test_AUCUNE_distribution_ne_se_construit_en_ROUE_SEULE():
+    """Frontiere NEGATIVE, et elle protege desormais les QUATRE.
 
-    `--wheel` pose sur la construction du coeur lui retirerait son archive
-    source SANS QU'AUCUNE AUTRE MESURE NE BOUGE : la garde compterait zero
-    sdist pour une distribution qui n'est pas dispensee, mais elle ne le dirait
-    qu'a l'execution de la CI, apres coup. Ici, c'est lu dans le fichier.
+    `--wheel` retire son archive source a la distribution qui le porte SANS
+    QU'AUCUNE AUTRE MESURE NE BOUGE : la garde compterait zero sdist, mais elle
+    ne le dirait qu'a l'execution de la CI, apres coup. Ici, c'est lu dans le
+    fichier.
+
+    Ce test visait `mmu-cli` SEUL jusqu'au 2026-09-10 : l'interface DEVAIT
+    porter `--wheel`, faute d'archive source constructible (`EPIC8-ARB-18`).
+    `EPIC8-ARB-21` a ferme ce defaut, et la frontiere s'etend donc a
+    l'interface -- c'est ce qui empeche la roue seule de revenir en silence.
 
     Deux etapes, deux jeux : la frontiere porte sur les DEUX, sinon un
     `--wheel` glisse dans le seul bac a sable passerait -- et c'est le jeu qui
@@ -617,14 +628,12 @@ def test_le_drapeau_ROUE_SEULE_ne_porte_QUE_sur_l_interface():
         de_l_interface = [l for l in lignes if f"--outdir {interface} " in l]
         assert len(du_coeur) == 1 and len(de_l_interface) == 1, (
             f"[{fragment}] lignes de construction lues : {lignes}")
-        assert "--wheel" not in du_coeur[0], (
-            f"[{fragment}] le coeur se construit en `--wheel` : il perdrait "
-            f"son archive source, et il n'est PAS dispense. Ligne : "
-            f"{du_coeur[0]!r}")
-        assert "--wheel" in de_l_interface[0], (
-            f"[{fragment}] l'interface ne se construit plus en `--wheel` : "
-            f"`build` repasserait par le sdist creux et la ROUE ne serait pas "
-            f"produite (EPIC8-ARB-18). Ligne : {de_l_interface[0]!r}")
+        for role, ligne in (("le coeur", du_coeur[0]),
+                            ("l'interface", de_l_interface[0])):
+            assert "--wheel" not in ligne, (
+                f"[{fragment}] {role} se construit en `--wheel` : il perdrait "
+                f"son archive source, et AUCUNE distribution n'est dispensee "
+                f"depuis EPIC8-ARB-21. Ligne : {ligne!r}")
 
 
 def test_le_jeu_de_PRODUCTION_se_construit_AVANT_le_renommage():
@@ -1484,25 +1493,34 @@ def _fabrique_les_deux_jeux(tmp_path: Path, *, version="0.1.0",
                             epinglage_test=None,
                             exigences_test_en_plus=(),
                             sdist_creux=(),
-                            sdist_en_trop=(),
+                            sdist_manquant=(),
                             roues_creuses=()) -> None:
     """Les QUATRE distributions : production et bac a sable, distinguables.
 
-    `sdist_creux` nomme les distributions dont le sdist doit sortir en
-    coquille -- « cli », « cli-test ». Il n'a plus de sens sur l'interface,
-    qui depuis `EPIC8-ARB-18` ne produit PAS d'archive source.
+    LES QUATRE PORTENT UN SDIST depuis `EPIC8-ARB-21`. La fabrique produisait
+    l'ABSENCE d'archive source pour l'interface, la dispense d'`EPIC8-ARB-18`
+    l'exigeant ; `packaging/mmu-tui/hatch_build.py` a rendu cette archive
+    constructible, et le registre de dispense est vide.
 
-    `sdist_en_trop` nomme les distributions en ROUE SEULE auxquelles on ajoute
-    quand meme un sdist : c'est le mutant de la dispense, celui qui verifie
-    qu'elle porte sur l'ABSENCE et non sur une tolerance.
+    `sdist_creux` nomme les distributions dont le sdist doit sortir en
+    coquille -- il vaut desormais pour les quatre.
+
+    `sdist_manquant` nomme celles auxquelles on n'en fabrique aucun : c'est le
+    mutant qui verifie que la garde EXIGE l'archive source partout. Il remplace
+    `sdist_en_trop`, dont la mesure -- « la dispense porte sur l'absence, pas
+    sur une tolerance » -- n'a plus de sujet, aucune distribution n'etant
+    dispensee. Cette mesure-la n'est pas perdue : elle est rejouee sur une
+    dispense REARMEE par
+    `test_la_garde_REFUSE_un_sdist_EN_TROP_sur_une_dispense_REARMEE`.
     """
     _roue(tmp_path / "dist" / "cli", nom_cli, version,
           sdist_creux="cli" in sdist_creux,
+          sans_sdist="cli" in sdist_manquant,
           roue_creuse="cli" in roues_creuses)
     _roue(tmp_path / "dist" / "tui", "mmu-tui", version_tui or version,
           ([epinglage] if epinglage else []) + ["textual>=8.2,<9"],
           sdist_creux="tui" in sdist_creux,
-          sans_sdist="tui" not in sdist_en_trop,
+          sans_sdist="tui" in sdist_manquant,
           roue_creuse="tui" in roues_creuses)
     # LE BAC A SABLE PORTE SON RANG DE TENTATIVE PAR DEFAUT, comme le
     # renommage le pose depuis le 2026-09-09 : c'est ce qui rend son nom de
@@ -1514,20 +1532,31 @@ def _fabrique_les_deux_jeux(tmp_path: Path, *, version="0.1.0",
         epinglage_test = f"mmu-cli-test=={version_bac}"
     _roue(tmp_path / "dist" / "cli-test", "mmu-cli-test", version_bac,
           sdist_creux="cli-test" in sdist_creux,
+          sans_sdist="cli-test" in sdist_manquant,
           roue_creuse="cli-test" in roues_creuses)
     _roue(tmp_path / "dist" / "tui-test", "mmu-tui-test", version_bac,
           ([epinglage_test] if epinglage_test else [])
           + list(exigences_test_en_plus) + ["textual>=8.2,<9"],
           sdist_creux="tui-test" in sdist_creux,
-          sans_sdist="tui-test" not in sdist_en_trop,
+          sans_sdist="tui-test" in sdist_manquant,
           roue_creuse="tui-test" in roues_creuses)
 
 
-def _joue_la_garde(tmp_path: Path, *, evenement="push",
-                   ref="v0.1.0") -> subprocess.CompletedProcess:
-    script = tmp_path / "garde.sh"
+def _joue_la_garde(tmp_path: Path, *, evenement="push", ref="v0.1.0",
+                   source=None, nom="garde.sh"
+                   ) -> subprocess.CompletedProcess:
+    """Joue la garde de version. `source` permet d'en jouer une version MUTEE.
+
+    Le mutant est toujours applique au SCRIPT joue, jamais au fichier du depot
+    -- et il passe par ici plutot que par un `subprocess.run` recopie : c'est
+    l'environnement (les quatre `DOSSIER_*`) qu'une recopie oublie, et une
+    garde privee de ses dossiers refuse pour la mauvaise raison, ce qui rend le
+    test vert ou rouge sans rapport avec ce qu'il croit mesurer.
+    """
+    script = tmp_path / nom
     script.write_text(
-        _script(_etape_nommee(_bloc_de_job("build"), "Garde de version")),
+        source if source is not None
+        else _script(_etape_nommee(_bloc_de_job("build"), "Garde de version")),
         encoding="utf-8",
     )
     environnement = dict(os.environ)
@@ -1600,20 +1629,20 @@ def test_la_garde_REFUSE_un_paquet_de_test_qui_depend_de_la_PRODUCTION(tmp_path)
     assert "PRODUCTION" in sortie, sortie
 
 
-def test_la_garde_exige_UNE_roue_par_distribution_MEME_dispensee(tmp_path):
-    """Le cardinal de la ROUE, mesure la ou il compte : sur les six artefacts.
+def test_la_garde_exige_UNE_roue_de_la_DERNIERE_distribution(tmp_path):
+    """Le cardinal de la ROUE, mesure la ou il compte : sur les huit artefacts.
 
-    **Ce test visait `tui-test` et son SDIST jusqu'au 2026-09-07.** Depuis
-    `EPIC8-ARB-18`, cette archive n'existe plus -- l'interface est publiee en
-    roue seule --, et le test serait devenu vert en ne mesurant rien : il
-    supprimait un fichier absent, puis constatait que la garde passe.
+    **Ce test visait `tui-test` et son SDIST jusqu'au 2026-09-07.** La dispense
+    d'`EPIC8-ARB-18` avait fait disparaitre cette archive, et le test serait
+    devenu vert en ne mesurant rien : il supprimait un fichier absent, puis
+    constatait que la garde passe. Il a donc ete reporte sur la ROUE.
 
-    Il vise donc la ROUE, qui reste exigee des quatre distributions, dispensees
-    comprises. La cible est en QUEUE de ce que la garde parcourt.
-
-    Le volet sdist qu'il portait n'est pas perdu : il vit dans
-    `test_la_garde_REFUSE_une_distribution_NON_dispensee_SANS_sdist`, qui le
-    mesure sur les distributions qui en ont vraiment une.
+    `EPIC8-ARB-21` rend le sdist de l'interface a nouveau constructible, mais
+    on ne remet pas ce test sur lui : le volet sdist est desormais mesure sur
+    les QUATRE distributions par
+    `test_la_garde_REFUSE_une_distribution_SANS_sdist`, et celui-ci garde la
+    ROUE -- deux cardinaux distincts, deux frontieres distinctes. La cible
+    reste en QUEUE de ce que la garde parcourt.
     """
     _fabrique_les_deux_jeux(tmp_path)
     for roue in (tmp_path / "dist" / "tui-test").glob("*.whl"):
@@ -1648,12 +1677,15 @@ ARTEFACTS = {
     "roue-du-coeur": ("cli", "*.whl"),
     "sdist-du-coeur": ("cli", "*.tar.gz"),
     "roue-de-l-interface": ("tui", "*.whl"),
+    "sdist-de-l-interface": ("tui", "*.tar.gz"),
     "roue-du-coeur-de-test": ("cli-test", "*.whl"),
     "sdist-du-coeur-de-test": ("cli-test", "*.tar.gz"),
-    # La QUEUE de ce que la garde parcourt. Elle etait tenue par le sdist de
-    # l'interface de test, qui n'existe plus depuis `EPIC8-ARB-18` : c'est sa
-    # ROUE qui prend la place, et le bord reste couvert.
     "roue-de-l-interface-de-test": ("tui-test", "*.whl"),
+    # La QUEUE de ce que la garde parcourt. Elle avait ete reportee sur la ROUE
+    # de l'interface de test, dont le sdist n'existait plus (`EPIC8-ARB-18`) ;
+    # `EPIC8-ARB-21` le rend, et le bord reprend sa place d'origine -- les deux
+    # restent listes, un artefact hors plafond pouvant etre l'un ou l'autre.
+    "sdist-de-l-interface-de-test": ("tui-test", "*.tar.gz"),
 }
 
 
@@ -1708,17 +1740,14 @@ def test_la_borne_du_plafond_est_INCLUSIVE(tmp_path):
     )
 
 
-#: Les sdists qui EXISTENT encore. Depuis `EPIC8-ARB-18`, l'interface est
-#: publiee en ROUE SEULE : ses deux distributions n'ont plus d'archive source,
-#: donc plus de coquille possible -- un sdist trouve la est refuse un cran plus
-#: tot, par le COMPTAGE, et c'est `test_la_garde_REFUSE_un_sdist_EN_TROP` qui
-#: le mesure.
-#:
-#: Le bord de QUEUE que cette liste perd est repris par cette autre famille :
-#: elle vise `tui-test`, dernier des quatre dossiers que la garde parcourt. Les
-#: deux familles ensemble couvrent donc toujours la tete, le milieu et la
+#: Les distributions qui portent une archive source : LES QUATRE depuis
+#: `EPIC8-ARB-21`. Elles etaient deux -- l'interface partait en ROUE SEULE, sa
+#: sdist n'etant pas constructible --, et le bord de QUEUE de la regle des
+#: fabriques devait alors etre emprunte a une autre famille. Il revient ici :
+#: `tui-test` est le dernier des quatre dossiers que la garde parcourt, `cli`
+#: le premier, et cette seule liste couvre desormais la tete, le milieu et la
 #: queue (CLAUDE.md, regle des fabriques, point 4).
-SDISTS = ["cli", "cli-test"]
+SDISTS = ["cli", "tui", "cli-test", "tui-test"]
 
 
 @pytest.mark.parametrize("creux", SDISTS)
@@ -1742,77 +1771,99 @@ def test_la_garde_REFUSE_un_sdist_CREUX(tmp_path, creux):
     assert "force-include" in sortie, sortie
 
 
-#: Les DEUX distributions en roue seule, pour que le sdist en trop soit
-#: cherche au milieu (`tui`) et en QUEUE (`tui-test`) de ce que la garde
-#: parcourt -- l'ordre etant cli, tui, cli-test, tui-test.
-ROUE_SEULE = ["tui", "tui-test"]
+#: Les distributions en roue seule : PLUS AUCUNE depuis `EPIC8-ARB-21`.
+#:
+#: La liste reste, VIDE, parce que la machinerie de dispense reste elle aussi :
+#: `test_les_listes_de_PARAMETRISATION_couvrent_les_QUATRE_distributions` la
+#: lit pour verifier que les deux listes partitionnent bien les quatre. Une
+#: dispense future se pose en nommant ici la distribution ET dans le registre
+#: du workflow -- la partition rougira tant que les deux ne s'accordent pas.
+#:
+#: AUCUN TEST N'EST PARAMETRE DESSUS, et c'est deliberé : une parametrisation
+#: vide ne collecte rien et se tait, ce qui est la pire des issues -- une
+#: mesure qui disparait sans rougir. Les deux familles qui l'employaient sont
+#: rejouees sur une dispense REARMEE dans le script, pas sur cette liste.
+ROUE_SEULE = []
 
 
-@pytest.mark.parametrize("dispensee", ROUE_SEULE)
-def test_la_garde_REFUSE_un_sdist_EN_TROP(tmp_path, dispensee):
-    """AC3 -- la dispense porte sur l'ABSENCE, jamais sur une tolerance.
+def test_la_garde_REFUSE_un_sdist_EN_TROP_sur_une_dispense_REARMEE(tmp_path):
+    """La dispense porte sur l'ABSENCE, jamais sur une tolerance.
 
-    C'est la moitie qui compte. `EPIC8-ARB-18` dispense `mmu-tui` d'avoir une
-    archive source parce que la sienne est structurellement creuse ; il ne la
-    dispense pas de la QUALITE d'une archive qu'elle produirait. Un sdist
-    apparu dans `dist/tui` signifie qu'un `--wheel` a saute, donc que `build`
-    est repasse par le chemin qui ne produit pas la roue -- ou qu'il a produit
-    exactement la coquille de six fichiers.
+    Cette mesure n'a plus de sujet dans l'arbre -- `EPIC8-ARB-21` a vide le
+    registre --, et la SUPPRIMER laisserait la machinerie de dispense sans
+    aucune garde : le jour ou quelqu'un renomme une distribution ici, un
+    comptage tolerant (`len(sources) <= 1`) publierait `mmu-cli` sans archive
+    source et la CI resterait VERTE.
 
-    Un comptage tolerant (`len(sources) <= 1`) laisserait passer les deux.
+    Elle se rejoue donc sur une dispense REARMEE dans le script joue, comme
+    `test_le_REFUS_au_dela_de_la_borne_TOMBE_si_la_dispense_est_VIDE` le fait
+    en sens inverse. Le mutant est applique au SCRIPT, jamais au fichier du
+    depot.
     """
-    _fabrique_les_deux_jeux(tmp_path, sdist_en_trop=(dispensee,))
-    resultat = _joue_la_garde(tmp_path)
+    garde = _script(_etape_nommee(_bloc_de_job("build"), "Garde de version"))
+    assert "ROUE_SEULE = set()" in garde, (
+        "le registre n'a plus la forme attendue : ce test ne sait plus "
+        "l'armer")
+    rearme = garde.replace("ROUE_SEULE = set()",
+                           'ROUE_SEULE = {"mmu-tui"}', 1)
+
+    # La fabrique produit les quatre sdists : celui de `tui` est donc EN TROP
+    # au regard de la dispense qu'on vient d'armer.
+    _fabrique_les_deux_jeux(tmp_path)
+    resultat = _joue_la_garde(tmp_path, source=rearme,
+                              nom="garde-dispense-rearmee.sh")
     sortie = resultat.stdout + resultat.stderr
     assert resultat.returncode != 0, (
-        f"un sdist en trop dans « {dispensee} » passe la garde :\n{sortie}")
+        f"un sdist en trop sur une distribution dispensee passe la garde :"
+        f"\n{sortie}")
     assert "ROUE SEULE" in sortie, sortie
     assert "attendu UNE roue et 0 sdist" in sortie, sortie
 
 
-@pytest.mark.parametrize("non_dispensee", ["cli", "cli-test"])
-def test_la_garde_REFUSE_une_distribution_NON_dispensee_SANS_sdist(
-        tmp_path, non_dispensee):
-    """AC2/AC4 -- la frontiere qui empeche la dispense de FUIR vers le coeur.
+@pytest.mark.parametrize("privee", SDISTS)
+def test_la_garde_REFUSE_une_distribution_SANS_sdist(tmp_path, privee):
+    """La frontiere qui empeche la roue seule de revenir en silence.
 
-    C'est le remede evident et faux que l'arbitrage interdit nommement :
-    assouplir le comptage en `len(sources) <= 1` rendrait `mmu-cli` publiable
-    sans archive source, et la CI resterait VERTE. Personne ne le verrait avant
-    qu'un `pip install --no-binary` ne le decouvre chez l'utilisateur,
-    longtemps apres la release.
+    C'est le remede evident et faux qu'`EPIC8-ARB-18` interdisait nommement :
+    assouplir le comptage en `len(sources) <= 1` rendrait n'importe laquelle
+    des quatre publiable sans archive source, et la CI resterait VERTE.
+    Personne ne le verrait avant qu'un `pip install --no-binary` ne le
+    decouvre chez l'utilisateur, longtemps apres la release.
 
-    Les deux cibles sont la TETE (`cli`) et le troisieme (`cli-test`) de ce que
-    la garde parcourt.
+    Il visait les deux distributions du COEUR jusqu'au 2026-09-10, l'interface
+    etant alors dispensee. `EPIC8-ARB-21` l'etend aux quatre, donc a la TETE
+    (`cli`) comme a la QUEUE (`tui-test`) de ce que la garde parcourt.
     """
-    _fabrique_les_deux_jeux(tmp_path)
-    (sdist,) = (tmp_path / "dist" / non_dispensee).glob("*.tar.gz")
-    sdist.unlink()
+    _fabrique_les_deux_jeux(tmp_path, sdist_manquant=(privee,))
     resultat = _joue_la_garde(tmp_path)
     sortie = resultat.stdout + resultat.stderr
     assert resultat.returncode != 0, (
-        f"« {non_dispensee} » passe la garde sans archive source :\n{sortie}")
+        f"« {privee} » passe la garde sans archive source :\n{sortie}")
     assert "attendu UNE roue et 1 sdist" in sortie, sortie
     assert "n'est PAS dispensee" in sortie, sortie
 
 
-@pytest.mark.parametrize("dispensee", ROUE_SEULE)
-def test_la_garde_REFUSE_DEUX_roues_sur_une_distribution_en_roue_seule(
-        tmp_path, dispensee):
-    """AC3 -- le cardinal de la ROUE reste exige, dispense ou non.
+@pytest.mark.parametrize("distribution", ["tui", "tui-test"])
+def test_la_garde_REFUSE_DEUX_roues_sur_une_distribution(tmp_path,
+                                                        distribution):
+    """Le cardinal de la ROUE reste exige, dispense ou non.
 
-    Sans lui, « zero sdist attendu » pourrait etre lu comme « le dossier n'est
-    plus compte ». Deux roues, c'est deux versions du meme paquet dans le meme
-    dossier : `gh-action-pypi-publish` televerse un DOSSIER, il les enverrait
-    toutes les deux.
+    Sans lui, un dossier dont on a assoupli le comptage du sdist pourrait etre
+    lu comme « plus compte du tout ». Deux roues, c'est deux versions du meme
+    paquet dans le meme dossier : `gh-action-pypi-publish` televerse un
+    DOSSIER, il les enverrait toutes les deux.
+
+    Les cibles sont le MILIEU (`tui`) et la QUEUE (`tui-test`) de ce que la
+    garde parcourt.
     """
     _fabrique_les_deux_jeux(tmp_path)
-    dossier = tmp_path / "dist" / dispensee
+    dossier = tmp_path / "dist" / distribution
     (roue,) = dossier.glob("*.whl")
     (dossier / (roue.stem + "-doublon.whl")).write_bytes(roue.read_bytes())
     resultat = _joue_la_garde(tmp_path)
     sortie = resultat.stdout + resultat.stderr
     assert resultat.returncode != 0, (
-        f"deux roues dans « {dispensee} » passent la garde :\n{sortie}")
+        f"deux roues dans « {distribution} » passent la garde :\n{sortie}")
     assert "trouve 2 roue(s)" in sortie, sortie
 
 
@@ -1847,33 +1898,42 @@ def test_le_cardinal_de_la_ROUE_est_exige_des_QUATRE_distributions(
     assert "trouve 2 roue(s)" in sortie, sortie
 
 
-def test_la_dispense_de_sdist_est_NOMMEE_BORNEE_et_ne_couvre_PAS_le_coeur():
-    """AC4 -- la dispense se lit dans le fichier, avec sa borne et son motif.
+def test_le_registre_de_dispense_est_VIDE_et_sa_MACHINERIE_reste():
+    """La dispense se lit dans le fichier, avec sa borne et son motif.
 
-    Une dispense sans borne devient un etat permanent, et personne ne se
-    rappelle pourquoi elle est la. Ce test lit le SCRIPT DE GARDE, donc ce qui
-    tourne, pas un commentaire pose a cote.
+    Elle est VIDE depuis `EPIC8-ARB-21` : plus aucune distribution ne part en
+    roue seule. Ce test mesure les deux moities de cet etat, et la seconde est
+    la moins evidente.
 
-    Le volet negatif est le plus important : `mmu-cli` et `mmu-cli-test` ne
-    doivent JAMAIS figurer dans le registre. Une garde ou ils figureraient
-    resterait verte partout ailleurs.
+    1. LE REGISTRE EST VIDE. Une distribution qui y reviendrait sans qu'on
+       l'ait voulu -- un copier-coller, une reversion -- publierait sans
+       archive source, et rien d'autre ne rougirait.
+    2. LA MACHINERIE RESTE ECRITE : la borne, et les motifs qui expliquent
+       pourquoi une dispense se pose. La retirer parce qu'elle ne sert plus
+       ferait de la prochaine dispense un etat permanent -- exactement ce
+       qu'`EPIC8-ARB-18` interdisait, et ce que la revue 8.9 avait deja
+       trouve une fois sur cette meme borne.
+
+    Ce test lit le SCRIPT DE GARDE, donc ce qui tourne, pas un commentaire pose
+    a cote.
     """
     garde = _script(_etape_nommee(_bloc_de_job("build"), "Garde de version"))
-    trouve = re.search(r"ROUE_SEULE\s*=\s*\{([^}]*)\}", garde)
+    trouve = re.search(r"ROUE_SEULE\s*=\s*(set\(\)|\{([^}]*)\})", garde)
     assert trouve, ("le registre `ROUE_SEULE` n'est plus dans le script de "
-                    "garde : la dispense n'est plus nommee")
-    nommees = set(re.findall(r'"([^"]+)"', trouve.group(1)))
-    assert nommees == {"mmu-tui", "mmu-tui-test"}, (
-        f"le registre de dispense nomme {sorted(nommees)}. Il ne doit porter "
-        "QUE les deux distributions de l'interface : y faire entrer le coeur "
-        "le rendrait publiable sans archive source (EPIC8-ARB-18)")
-    assert "mmu-cli" not in nommees and "mmu-cli-test" not in nommees
+                    "garde : la machinerie de dispense a disparu")
+    nommees = set(re.findall(r'"([^"]+)"', trouve.group(2) or ""))
+    assert not nommees, (
+        f"le registre de dispense nomme a nouveau {sorted(nommees)}. Il est "
+        "VIDE depuis EPIC8-ARB-21 : une distribution qui y revient est "
+        "publiee SANS archive source, et aucune autre frontiere ne le dirait. "
+        "Si la dispense est voulue, elle se pose avec sa borne et son "
+        "arbitrage, et ce test se reprend dans le meme commit")
 
     assert re.search(r'BORNE_DE_LA_DISPENSE\s*=\s*"0\.1\.0"', garde), (
-        "la borne de la dispense n'est plus ecrite : sans elle, la liste "
-        "cesse d'etre une dette et devient un etat")
+        "la borne de la dispense n'est plus ecrite : sans elle, la prochaine "
+        "dispense cesse d'etre une dette et devient un etat")
     recolle = " ".join(garde.split())
-    for motif in ("EPIC8-ARB-18", "force-include", "--wheel", "len(sources)"):
+    for motif in ("EPIC8-ARB-18", "EPIC8-ARB-21", "len(sources)"):
         assert motif in recolle, (
             f"le registre de dispense n'explique plus « {motif} » -- une "
             "dispense sans motif se perennise")
@@ -1891,20 +1951,31 @@ def test_la_construction_NOMME_la_panne_du_FORCE_INCLUDE():
     # Le message tient sur plusieurs `echo` : on lit le texte RECOLLE, sinon
     # une phrase coupee en deux echapperait a la frontiere.
     recolle = " ".join(script.split())
-    for attendu in ("Forced include not found", "ARBRE DE TRAVAIL",
-                    "src/mixed_media_utility/tui", "Deux issues"):
+    for attendu in ("Forced include not found", "hatch_build.py",
+                    "src/mixed_media_utility/tui", "EMPLACEMENTS",
+                    "Deux issues"):
         assert attendu in recolle, (
             f"l'echec de construction ne nomme pas « {attendu} »"
         )
-    # LE VOLET NEGATIF, et c'est le finding `C1-4` / `C3-2` de la revue 8.9 :
-    # le diagnostic ne doit pas presenter comme un remede une manoeuvre sur le
-    # SDIST. Cette commande passe par `--wheel` et n'en construit aucun ; la
-    # redaction precedente proposait « faire entrer ../../src dans le sdist
-    # ([tool.hatch.build.targets.sdist]) », c'est-a-dire un geste sans effet
-    # sur la panne qu'elle pretendait expliquer.
-    assert "hatch.build.targets.sdist" not in recolle, (
-        "le diagnostic propose encore une manoeuvre sur le sdist, que cette "
-        "construction ne produit pas : le remede est sans effet sur la panne")
+    # LE VOLET NEGATIF A CHANGE DE SUJET, et le dire vaut mieux que le taire.
+    # Il mesurait, depuis le finding `C1-4` / `C3-2` de la revue 8.9, que le
+    # diagnostic ne proposait pas une manoeuvre sur le SDIST -- geste alors
+    # sans effet, la commande passant par `--wheel` et n'en construisant aucun.
+    # `EPIC8-ARB-21` rend le sdist a la construction : la manoeuvre est
+    # redevenue un remede legitime, et l'interdire serait desormais faux.
+    #
+    # Le nouveau sujet TIENT, la ou une simple interdiction du chemin
+    # `../../src` ne tiendrait pas : le diagnostic le NOMME legitimement, comme
+    # l'un des deux emplacements que le crochet essaie. Ce qu'il ne doit pas
+    # faire, c'est proposer `--wheel` -- le remede d'`EPIC8-ARB-18`, qui
+    # retablirait la roue seule SANS arbitrage et sans qu'aucune autre
+    # frontiere ne le dise, la garde de version se taisant sur un registre
+    # qu'on n'a pas touche.
+    assert "--wheel" not in recolle, (
+        "le diagnostic propose `--wheel` : c'est le remede d'EPIC8-ARB-18, "
+        "qui retablit la ROUE SEULE en silence. EPIC8-ARB-21 l'a ferme -- si "
+        "la dispense doit revenir, elle se pose dans le registre avec sa "
+        "borne, pas dans un message d'erreur")
 
 
 def test_la_construction_NOMME_le_piege_des_LIENS_SYMBOLIQUES():
@@ -1925,31 +1996,34 @@ def test_la_construction_NOMME_le_piege_des_LIENS_SYMBOLIQUES():
                                    "distributions de PRODUCTION"))
     recolle = " ".join(script.split())
     for attendu in ("LinkOutsideDestinationError", "PANNES HISTORIQUES",
-                    "--wheel a ete retire"):
+                    "atteignables ICI"):
         assert attendu in recolle, (
             f"l'echec de construction de mmu-tui ne nomme pas « {attendu} » : "
             "il rendrait un message de tarfile que personne ne sait lire."
         )
     # ET LE POINT QUE LA REVUE 8.9 A FAIT VALOIR : cette panne n'est plus
-    # ATTEIGNABLE par la commande que le job lance. Elle passe par la
-    # construction du sdist, que `--wheel` ne fait plus. La garder sans le
-    # dire fait lire a l'operateur un diagnostic pour une panne impossible --
-    # c'est ce que mesure l'assertion ci-dessus sur « PANNES HISTORIQUES ».
-    # Le diagnostic doit donc porter sa propre condition de retour : la panne
-    # ne revient que si `--wheel` sort de la ligne de construction.
+    # ATTEIGNABLE, ET ELLE L'EST A NOUVEAU. La revue 8.9 avait fait valoir
+    # l'inverse : la panne passait par la construction du SDIST, que `--wheel`
+    # ne faisait plus, et un diagnostic pour une panne impossible egare
+    # l'operateur. `EPIC8-ARB-21` a retire `--wheel` -- le sdist se construit,
+    # donc le filtre `data` de `tarfile` est a nouveau sur le chemin.
+    #
+    # La condition de retour du diagnostic s'inverse donc avec lui : la panne
+    # est atteignable TANT QUE la construction ne passe PAS par `--wheel`.
     ligne = [l for l in script.splitlines()
              if "python -m build" in l and "packaging/mmu-tui" in l]
-    assert ligne and "--wheel" in ligne[0], (
-        "la construction de mmu-tui ne passe plus par `--wheel` : les deux "
-        "pannes historiques redeviennent atteignables, et le diagnostic les "
-        f"annonce comme impossibles. Ligne lue : {ligne}")
-    # PIEGE REFERME par la story 8.5 a 16:47 le meme jour : les trois liens
-    # sont devenus des fichiers reels, et `python -m build packaging/mmu-tui`
-    # produit desormais sa roue (remesure : 922 Ko). Cette frontiere ne mesure
-    # donc plus une panne actuelle -- elle mesure que le job saura la NOMMER si
-    # elle revient, ce qu'un lien repose en une commande. On ne retire pas un
-    # diagnostic parce que la panne du jour est fermee : c'est exactement le
-    # role d'une frontiere negative.
+    assert ligne and "--wheel" not in ligne[0], (
+        "la construction de mmu-tui est repassee par `--wheel` : le sdist "
+        "n'est plus produit, la roue seule est de retour sans arbitrage, et ce "
+        f"diagnostic annonce atteignable une panne qui ne l'est plus. Ligne "
+        f"lue : {ligne}")
+    # PIEGE REFERME par la story 8.5 le 2026-09-07 : les trois liens sont
+    # devenus des fichiers reels, et le sdist du 2026-09-10 n'en porte AUCUN
+    # (mesure : 65 entrees, zero lien). Cette frontiere ne mesure donc pas une
+    # panne actuelle -- elle mesure que le job saura la NOMMER si elle revient,
+    # ce qu'un lien repose en une commande. On ne retire pas un diagnostic
+    # parce que la panne du jour est fermee : c'est le role d'une frontiere
+    # negative.
 
 
 # ---------------------------------------------------------------------------
@@ -2390,11 +2464,26 @@ def test_la_dispense_de_sdist_EXPIRE_a_sa_borne(tmp_path, version, attendu, moti
     `C3-9` de la couche 3, qui a vu que le defaut etait dans l'AC et non dans
     le code livre.
     """
+    # LA DISPENSE EST REARMEE DANS LE SCRIPT JOUE. Le registre du depot est
+    # vide depuis `EPIC8-ARB-21`, donc la borne ne borne plus rien : jouee
+    # telle quelle, cette famille passerait sur les six versions et ne
+    # mesurerait plus l'expiration -- une frontiere verte qui ne mesure rien,
+    # exactement ce que la revue 8.9 avait deja trouve sur cette borne.
+    #
+    # C'est la frontiere qui a REFUSE la release 0.1.1 le 2026-09-10 : elle se
+    # garde armee, pour la prochaine dispense.
+    garde = _script(_etape_nommee(_bloc_de_job("build"), "Garde de version"))
+    assert "ROUE_SEULE = set()" in garde, (
+        "le registre n'a plus la forme attendue : ce test ne sait plus l'armer")
+    rearme = garde.replace("ROUE_SEULE = set()",
+                           'ROUE_SEULE = {"mmu-tui", "mmu-tui-test"}', 1)
     _fabrique_les_deux_jeux(
         tmp_path, version=version,
         epinglage=f"mmu-cli=={version}",
-        epinglage_test=f"mmu-cli-test=={version}{SUFFIXE_DU_BAC_A_SABLE}")
-    resultat = _joue_la_garde(tmp_path, ref=f"v{version}")
+        epinglage_test=f"mmu-cli-test=={version}{SUFFIXE_DU_BAC_A_SABLE}",
+        sdist_manquant=("tui", "tui-test"))
+    resultat = _joue_la_garde(tmp_path, ref=f"v{version}", source=rearme,
+                              nom=f"garde-borne-{version}.sh")
     sortie = resultat.stdout + resultat.stderr
 
     assert (resultat.returncode != 0) == bool(attendu), (
@@ -2413,43 +2502,98 @@ def test_la_dispense_de_sdist_EXPIRE_a_sa_borne(tmp_path, version, attendu, moti
             f"version {version} : le refus ne nomme pas la roue seule.\n{sortie}")
 
 
+def _version_du_depot() -> str:
+    """La version que CE depot publierait, lue a sa source unique."""
+    fichier = RACINE / "src" / "mixed_media_utility" / "__init__.py"
+    for ligne in fichier.read_text(encoding="utf-8").splitlines():
+        if ligne.startswith("__version__"):
+            return ligne.split("=", 1)[1].strip().strip("\"'")
+    raise AssertionError(f"aucun `__version__` en colonne zero dans {fichier}")
+
+
+def test_la_version_DU_DEPOT_passe_la_garde_de_publication(tmp_path):
+    """LA FRONTIERE QUI MANQUAIT, et son absence a coute la release 0.1.1.
+
+    Ce que le 2026-09-10 a mesure. `test_la_dispense_de_sdist_EXPIRE_a_sa_borne`
+    portait deja, en toutes lettres, le cas « 0.1.1 -> refus », et il etait
+    VERT. Le tag `v0.1.1` a ete pose, `publish.yml` a joue 38 minutes de tests
+    verts, et le job `build` a refuse -- exactement ce que ce banc annoncait.
+    Personne n'avait rapproche « on publie 0.1.1 » de « le banc dit que 0.1.1
+    est refusee ».
+
+    Le defaut n'etait donc PAS dans la garde, ni dans le banc : il etait dans
+    le fait qu'aucune mesure ne confrontait la garde a la version que le depot
+    s'apprete reellement a publier. Une table de versions parametree mesure un
+    COMPORTEMENT ; elle ne dit rien de l'ETAT du depot. Les deux sont
+    necessaires, et c'est le second qui manquait.
+
+    CE QU'IL MESURE, dit precisement : que la garde de version laisse passer un
+    jeu d'artefacts nominal construit a la version du depot, tag compris. Il
+    tourne du cote PRIVE, sur une branche, avant tout tag -- la ou une release
+    n'a encore rien coute.
+
+    CE QU'IL NE MESURE PAS, dit plutot que tu, et le temoin de vivacite l'a
+    rendu visible. Il ne joue pas la chaine, ne construit aucune vraie roue et
+    ne touche aucun index : un refus venu d'un autre job -- TestPyPI qui
+    connait deja la version, la garde d'installation, l'approbation -- lui
+    reste invisible. Il ferme la classe de defaut qui a mordu ici, pas toutes
+    celles d'une release.
+
+    Et la FABRIQUE MODELISE les artefacts, elle ne les OBSERVE pas. Rejoue sur
+    l'arbre du 2026-09-10, ce banc rougit bien -- mais par le comptage des
+    artefacts, pas par la borne, parce que la fabrique produit desormais un
+    sdist la ou la construction d'alors n'en produisait aucun. Le verdict est
+    bon, le chemin differe. Ce qui tient les deux ensemble n'est pas ce
+    banc-ci : ce sont `test_AUCUNE_distribution_ne_se_construit_en_ROUE_SEULE`
+    et `test_le_registre_de_dispense_est_VIDE_et_sa_MACHINERIE_reste`, qui
+    rougissent des que la construction reelle et le registre divergent du
+    modele.
+    """
+    version = _version_du_depot()
+    _fabrique_les_deux_jeux(
+        tmp_path, version=version,
+        epinglage=f"mmu-cli=={version}",
+        epinglage_test=f"mmu-cli-test=={version}{SUFFIXE_DU_BAC_A_SABLE}")
+    resultat = _joue_la_garde(tmp_path, ref=f"v{version}")
+    sortie = resultat.stdout + resultat.stderr
+    assert resultat.returncode == 0, (
+        f"LA VERSION {version} DE CE DEPOT NE PASSERAIT PAS la garde de "
+        f"publication : poser le tag `v{version}` ferait echouer la release "
+        f"apres les tests, comme le 2026-09-10. Le motif est ci-dessous, et il "
+        f"se corrige ICI, avant tout tag.\n{sortie}")
+    assert f"s'accordent sur {version}" in sortie, (
+        "la garde passe, mais sans se prononcer sur la version du depot : "
+        f"ce banc serait vert sans rien mesurer.\n{sortie}")
+
+
 def test_le_REFUS_au_dela_de_la_borne_TOMBE_si_la_dispense_est_VIDE(tmp_path):
     """NEGATIVE. Sans dispense, la borne n'a rien a borner -- et se tait.
 
-    C'est ce qui fait de la borne une DETTE et non un plafond de version : le
-    jour ou `mmu-tui` produira un sdist exploitable et sortira de
-    `ROUE_SEULE`, une 0.2.0 doit passer. Une garde qui refuserait encore
-    aurait transforme la dispense en interdit permanent -- l'inverse exact de
-    ce qu'`EPIC8-ARB-18` demande.
+    C'est ce qui fait de la borne une DETTE et non un plafond de version. Le
+    jour redoute par la premiere redaction de ce test est ARRIVE le
+    2026-09-10 : `mmu-tui` produit un sdist exploitable (`EPIC8-ARB-21`) et est
+    sorti de `ROUE_SEULE`. Une garde qui refuserait encore aurait transforme la
+    dispense en interdit permanent -- l'inverse exact de ce qu'`EPIC8-ARB-18`
+    demandait.
 
-    Le mutant est applique au SCRIPT joue, pas au fichier du depot.
+    IL NE MUTE DONC PLUS RIEN : le registre du depot EST vide, et ce test joue
+    la garde telle quelle. Il mesure l'etat nominal, pas une hypothese -- ce
+    qui le rend plus fort qu'avant, pas moins. Son symetrique, celui qui garde
+    la machinerie armee, est
+    `test_la_dispense_de_sdist_EXPIRE_a_sa_borne`.
     """
     garde = _script(_etape_nommee(_bloc_de_job("build"), "Garde de version"))
-    assert 'ROUE_SEULE = {"mmu-tui", "mmu-tui-test"}' in garde, (
-        "le registre n'a plus la forme attendue : ce test ne sait plus le vider")
-    sans_dispense = garde.replace(
-        'ROUE_SEULE = {"mmu-tui", "mmu-tui-test"}', "ROUE_SEULE = set()", 1)
+    assert "ROUE_SEULE = set()" in garde, (
+        "le registre de dispense n'est plus vide : une distribution y est "
+        "revenue, et ce test ne mesure plus l'etat nominal du depot")
 
-    # Dispense vide => les quatre distributions gardent leur sdist.
+    # Registre vide => les quatre distributions gardent leur sdist, et une
+    # version tres au-dela de la borne doit passer.
     _fabrique_les_deux_jeux(
         tmp_path, version="0.2.0",
         epinglage="mmu-cli==0.2.0",
-        epinglage_test=f"mmu-cli-test==0.2.0{SUFFIXE_DU_BAC_A_SABLE}",
-        sdist_en_trop=("tui", "tui-test"))
-    script = tmp_path / "garde-sans-dispense.sh"
-    script.write_text(sans_dispense, encoding="utf-8")
-    environnement = dict(os.environ)
-    environnement.update({
-        "EVENEMENT": "push", "REF_NAME": "v0.2.0",
-        "DOSSIER_CLI": str(tmp_path / "dist" / "cli"),
-        "DOSSIER_TUI": str(tmp_path / "dist" / "tui"),
-        "DOSSIER_CLI_TEST": str(tmp_path / "dist" / "cli-test"),
-        "DOSSIER_TUI_TEST": str(tmp_path / "dist" / "tui-test"),
-        "GITHUB_OUTPUT": str(tmp_path / "sortie-sans-dispense.txt"),
-    })
-    resultat = subprocess.run(["bash", str(script)], cwd=tmp_path,
-                              env=environnement, capture_output=True,
-                              text=True, timeout=120)
+        epinglage_test=f"mmu-cli-test==0.2.0{SUFFIXE_DU_BAC_A_SABLE}")
+    resultat = _joue_la_garde(tmp_path, ref="v0.2.0")
     assert resultat.returncode == 0, (
         "sans dispense, une 0.2.0 doit passer : la borne s'est transformee en "
         "plafond de version permanent.\n" + resultat.stdout + resultat.stderr)
@@ -2632,8 +2776,18 @@ def test_quand_le_SDIST_est_en_trop_le_message_parle_BIEN_du_sdist(tmp_path):
     perdu l'explication du sdist -- verte en ne mesurant plus rien, exactement
     le piege que la couche 3 a trouve ailleurs dans cette story.
     """
-    _fabrique_les_deux_jeux(tmp_path, sdist_en_trop=("tui",))
-    resultat = _joue_la_garde(tmp_path)
+    # Comme `test_la_garde_REFUSE_un_sdist_EN_TROP_sur_une_dispense_REARMEE`,
+    # cette explication n'a plus de sujet dans l'arbre : elle se mesure sur une
+    # dispense armee dans le SCRIPT joue. La retirer laisserait la frontiere
+    # ci-dessus verte sur une garde qui aurait perdu l'explication du sdist.
+    garde = _script(_etape_nommee(_bloc_de_job("build"), "Garde de version"))
+    assert "ROUE_SEULE = set()" in garde, (
+        "le registre n'a plus la forme attendue : ce test ne sait plus l'armer")
+    rearme = garde.replace("ROUE_SEULE = set()", 'ROUE_SEULE = {"mmu-tui"}', 1)
+
+    _fabrique_les_deux_jeux(tmp_path)
+    resultat = _joue_la_garde(tmp_path, source=rearme,
+                              nom="garde-message-sdist.sh")
     sortie = resultat.stdout + resultat.stderr
     assert resultat.returncode != 0, sortie
     assert "Un sdist trouve ici" in sortie, (

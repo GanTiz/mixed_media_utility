@@ -11,15 +11,21 @@ name: Garde des scripts d'installation
 #
 # v0.1.0 n'etait pas passee par chance mais par COINCIDENCE : `0.1.0.dev0`
 # trainait sur TestPyPI et satisfaisait le motif `*0.1.0*`. La garde validait
-# donc la version PRECEDENTE, jamais celle qu'on publiait.
+# donc la version PRECEDENTE, jamais celle qu'on publiait. Le docstring de
+# `test_le_litteral_de_version_du_job_SUIT_la_source_unique` decrivait deja ce
+# trou et le classait en « ce que ce test NE ferme PAS ».
 #
-# LE FICHIER SEPARE PLUTOT QU'UN `if:` : conditionner le job aurait demande de
-# lever `test_le_JOB_lui_meme_ne_peut_pas_etre_neutralise_en_silence`, la
-# frontiere qui existe pour qu'on ne puisse pas eteindre cette garde en
-# silence. Ici le job ne porte TOUJOURS AUCUN `if:` -- il est appele plus tard.
+# LE FICHIER SEPARE PLUTOT QU'UN `if:`, et c'est le coeur du choix. Conditionner
+# le job dans `ci.yml` aurait demande de lever
+# `test_le_JOB_lui_meme_ne_peut_pas_etre_neutralise_en_silence` -- la frontiere
+# qui existe precisement pour qu'on ne puisse pas eteindre cette garde sans
+# qu'un rouge le dise. Ici le job ne porte TOUJOURS AUCUN `if:` : il est
+# simplement appele plus tard. La frontiere garde son sens entier.
 #
 # L'ORDRE EST DONC : valider (tests) -> build -> publish (TestPyPI) ->
-# garde-installation -> release (PyPI). Les tests restent la PREMIERE porte.
+# garde-installation -> release (PyPI). Les tests restent la PREMIERE porte,
+# donc rien ne se construit sur un arbre non teste ; et la garde eprouve enfin
+# l'artefact qu'on publie plutot que le precedent.
 
 on:
   workflow_call:

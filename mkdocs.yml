@@ -87,4 +87,6 @@ nav:
       - Commandes: reference/commandes.md
       - Configuration: reference/configuration.md
       - Schémas JSON: reference/schemas.md
+      - Packaging et publication: reference/packaging.md
+      - Amorçage des projets PyPI: reference/amorcage-des-projets-pypi.md
   - Historique des versions: changelog.md

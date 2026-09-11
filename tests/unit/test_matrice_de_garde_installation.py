@@ -53,10 +53,23 @@ from pathlib import Path
 import pytest
 
 RACINE = Path(__file__).resolve().parents[2]
+
+#: Le job a QUITTE `ci.yml` le 2026-09-10, et cette constante est le seul
+#: endroit ou ce banc le localise -- c'est ce qui a rendu le deplacement
+#: possible sans toucher a aucune des vingt-huit frontieres ci-dessous.
+#:
+#: Motif du deplacement : dans `ci.yml`, le job tournait a l'interieur de
+#: `valider`, donc AVANT le job qui publie sur TestPyPI -- alors qu'il INSTALLE
+#: depuis TestPyPI et exige la version qu'on publie. Il reclamait sur l'index
+#: ce que seul un job plus tard pouvait y mettre : aucune version neuve ne
+#: pouvait demarrer (interblocage mesure sur la release v0.1.1, quatre jambes
+#: rouges sur quatre). Le fichier separe plutot qu'un `if:`, pour que
+#: `test_le_JOB_lui_meme_ne_peut_pas_etre_neutralise_en_silence` garde son sens
+#: ENTIER : le job ne porte toujours aucune condition, il est appele plus tard.
 CI = RACINE / ".github" / "workflows" / "garde-installation.yml"
 
-#: Le nom du job que cette story etend. Il est aussi la PORTE de release :
-#: `publish.yml` appelle `ci.yml` en entier.
+#: Le nom du job. Il reste la PORTE de release : `publish.yml` l'appelle par
+#: `uses:` apres le job `publish`, et `release` en depend par `needs:`.
 JOB = "garde-installation"
 
 #: Les QUATRE environnements, et le motif de chacun.

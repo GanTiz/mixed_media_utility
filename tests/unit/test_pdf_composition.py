@@ -2496,7 +2496,7 @@ def test_an_unusable_ratio_keeps_naming_the_print_size_and_the_dpi(monkeypatch) 
 
 # ---------------------------------------------------------------------------
 # Passe de correction de la story 5.18 -- les dix survivants de la campagne de
-# cloture (`scripts/mutation/campagne_5_18.py`).
+# cloture (`scripts/archive/mutation/campagne_5_18.py`).
 #
 # Chacun etait un test manquant, aucun n'etait un defaut de geometrie. Ils sont
 # groupes par mecanisme, comme la revue les a groupes: l'entete et le QR du bord

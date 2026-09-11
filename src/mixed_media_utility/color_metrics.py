@@ -338,7 +338,7 @@ class DivergenceGuard:
 
 
 #: `color-divergence-1`: **1,0 dE76 d'exces de residu**. Derivation, mesuree par
-#: `scripts/research/divergence_threshold.py` sur les sept pages d'un meme tirage:
+#: `scripts/archive/research/divergence_threshold.py` sur les sept pages d'un meme tirage:
 #: 42 couples, pire exces **+0,152 dE76** pour `color-correction-affine-matrix-1` et
 #: **+0,358** pour `color-correction-lab-lightness-chroma-1`. Le seuil retenu est donc
 #: pres de trois fois le pire exces observe, et 6,4 ecarts-types au-dessus de la

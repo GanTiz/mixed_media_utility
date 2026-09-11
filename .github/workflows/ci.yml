@@ -48,7 +48,8 @@ on:
         type: choice
         # `garde-installation` a QUITTE cette liste le 2026-09-10 : le job
         # vit desormais dans `garde-installation.yml`, qui porte son propre
-        # `workflow_dispatch`. Une option morte est pire qu'une option absente.
+        # `workflow_dispatch`. Le laisser ici offrirait un choix qui ne
+        # joue plus rien -- une option morte est pire qu'une option absente.
         options: [tout, tests]
   workflow_call:
   # LE `push: tags` A ETE RETIRE le 2026-09-08 (triage de la revue 8.10,
@@ -299,9 +300,9 @@ jobs:
       # revue 8.9 couche 1 : les huit sautent ici, donc la seule verification
       # de la scission en deux distributions ne tournait nulle part.
       # LES DEUX DISTRIBUTIONS, et l'ORDRE compte : `mmu-tui` epingle
-      # `mmu-cli==0.1.1`, qui n'est pas encore sur l'index public. Installe
+      # `mmu-cli==0.1.0`, qui n'est pas encore sur l'index public. Installe
       # seul, il part chercher cette version sur PyPI et echoue
-      # (« No matching distribution found for mmu-cli==0.1.1 » -- mesure du
+      # (« No matching distribution found for mmu-cli==0.1.0 » -- mesure du
       # 2026-09-08 en environnement jetable). Installe APRES le editable de la
       # racine, pip resout l'epingle sur la distribution deja presente.
       #
@@ -450,7 +451,7 @@ jobs:
           python -m build --wheel --outdir dist packaging/mmu-tui  # mmu-tui : roue SEULE
       # Les deux roues sont installees d'un seul `pip install`, et elles sont
       # VRAIMENT dans le meme dossier depuis la ligne ci-dessus : `mmu-tui`
-      # depend de `mmu-cli==0.1.1`, que pip resout localement puisque les deux
+      # depend de `mmu-cli==0.1.0`, que pip resout localement puisque les deux
       # roues lui sont donnees ensemble.
       - name: Smoke test des DEUX points d'entree
         run: |

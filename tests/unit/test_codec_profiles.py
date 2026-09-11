@@ -663,7 +663,7 @@ def test_build_encode_command_closes_the_overwrite_hole_by_a_mechanism(tmp_path)
 
     La protection reposait sur une hypothese ecrite en commentaire -- "l'appelant
     vient de forger ce chemin, ce n'est jamais le master" -- deja violee dans le
-    depot par `scripts/research/codec_metadata_experiment.py`, qui lui passe un
+    depot par `scripts/archive/research/codec_metadata_experiment.py`, qui lui passe un
     vrai chemin de sortie. Une hypothese ne se verifie pas: elle se remplace.
     """
     master = tmp_path / "master.mov"

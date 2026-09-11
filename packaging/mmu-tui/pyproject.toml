@@ -82,10 +82,14 @@ Issues = "https://github.com/GanTiz/mixed_media_utility/issues"
 Auteur = "https://github.com/GanTiz"
 
 [tool.hatch.version]
-# Le repertoire racine du backend est celui qui porte CE fichier : le chemin
-# remonte donc de deux crans. MESURE le 2026-09-07, pas suppose -- hatchling
-# accepte un chemin de version hors de sa racine.
-path = "../../src/mixed_media_utility/__init__.py"
+# EPIC8-ARB-21 : la version passe par la source `code` de hatchling,
+# qui IMPORTE `hatch_build.py` et evalue l'expression ci-dessous. Un
+# `path` nu ne sait pas etre conditionnel -- il valait dans l'arbre de
+# travail et pas dans un sdist extrait, ou il n'y a pas de `../..`.
+# C'est la moitie « version » de ce qui forcait la ROUE SEULE.
+source = "code"
+path = "hatch_build.py"
+expression = "version_du_coeur()"
 
 [tool.hatch.build.targets.wheel]
 # `packages` est vide DELIBEREMENT : il ne sait designer qu'un repertoire sous
@@ -106,14 +110,28 @@ packages = []
 # `test_aucune_des_deux_roues_n_embarque_de_bytecode` ouvre les roues et
 # rougirait si un backend futur changeait d'avis.
 
-[tool.hatch.build.targets.wheel.force-include]
-# LA forme mesuree le 2026-09-07, et la seule des trois essayees qui rende une
-# roue correcte depuis un sous-repertoire :
+# EPIC8-ARB-21 -- LE FORCE-INCLUDE N'EST PLUS STATIQUE, et c'est ce qui
+# rend l'archive source exploitable. `hatch_build.py` cherche le coeur
+# LA OU IL EST : `../../src` dans l'arbre de travail, `src/` dans un
+# sdist extrait, ou le force-include du sdist l'a depose. La roue sort
+# donc identique des deux contextes -- 52 modules, aucun `.pyc`, aucun
+# fichier commun avec la roue `mmu-cli` (mesure du 2026-09-10).
 #
-#   1. `packages = ["../../src/mixed_media_utility/tui"]` -- refuse par
-#      hatchling, qui exige un chemin sous sa racine ;
-#   2. un second `pyproject.toml` copie a la racine par le job de construction
-#      -- le repli annonce par la story, jamais joue : celle-ci marche ;
-#   3. `force-include` -- 52 fichiers `tui/`, aucun `.pyc`, aucun fichier
-#      commun avec la roue `mmu-cli`.
-"../../src/mixed_media_utility/tui" = "mixed_media_utility/tui"
+# La forme PRECEDENTE, `"../../src/mixed_media_utility/tui" =
+# "mixed_media_utility/tui"`, ne valait que dans l'arbre de travail :
+# `python -m build` construit la roue DEPUIS le sdist, et rendait
+# « Forced include not found ». C'est elle qui a force EPIC8-ARB-18.
+[tool.hatch.build.targets.wheel.hooks.custom]
+path = "hatch_build.py"
+
+# LE SDIST PORTE LE CODE, sans quoi la roue construite depuis lui
+# serait creuse. `__init__.py` du coeur y entre AUSSI : il est la source
+# unique de version (EPIC8-ARB-10), que `version_du_coeur()` relit dans
+# le sdist extrait. Il n'entre PAS dans la roue -- le crochet ne porte
+# que `tui/` --, donc l'intersection avec `mmu-cli` reste vide.
+[tool.hatch.build.targets.sdist]
+only-include = ["."]
+
+[tool.hatch.build.targets.sdist.force-include]
+"../../src/mixed_media_utility/tui" = "src/mixed_media_utility/tui"
+"../../src/mixed_media_utility/__init__.py" = "src/mixed_media_utility/__init__.py"
