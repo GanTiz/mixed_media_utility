@@ -17,7 +17,25 @@ cd mixed_media_utility
 python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
+pip install -e ./packaging/mmu-tui
 ```
+
+**Les DEUX installations sont nécessaires, et la seconde n'est pas un
+supplément.** Le projet livre deux distributions : `mmu-cli` porte le cœur,
+`mmu-tui` porte l'interface texte et, avec elle, `textual`. Or **138 fichiers
+de test sur 139 sous `tests/unit/tui/` importent le paquet `tui`** — 21 d'entre
+eux importent `textual` directement, les autres le tirent par la chaîne
+d'import, `src/mixed_media_utility/tui/` l'employant dans 27 modules.
+
+Sans la seconde installation, ces 138 fichiers **échouent à se charger**, avant
+même qu'un test ne soit joué, et aucune garde ne les saute : `pytest` s'arrête
+sur une erreur de collecte. C'est exactement ce que l'intégration continue
+installe (`.github/workflows/ci.yml`), et c'est pourquoi elle passe là où une
+procédure à une seule ligne échouait.
+
+*(Mesuré le 2026-09-10. `docs/guide-developpeur/contribuer.md` ne donnait
+qu'une installation depuis l'origine du document ; un contributeur qui suivait
+la procédure à la lettre ne pouvait pas jouer la suite.)*
 
 ### Git LFS — nécessaire pour jouer la suite, et pour elle seule
 

@@ -42,14 +42,39 @@ fichiers réels avant et après correctif.
   du fichier » peut désormais apparaître là où il se taisait. C'est l'effet
   voulu.
 
+### Installation
+
+Rien ne change depuis la 0.1.0 : **deux distributions**, sous
+**licence GPL-3.0-or-later** toutes les deux.
+
+- `pip install mmu-cli` — le produit et la ligne de commande, qui pose la
+  commande `mmu` ;
+- `pip install mmu-tui` — l'interface en terminal, qui tire `mmu-cli` et pose
+  la commande `mmu-tui`.
+
+Une mise à jour depuis la 0.1.0 se fait en relançant l'installateur en une
+ligne, ou par `pip install --upgrade` sur la distribution posée.
+
 ## 0.1.0 (2026-08-28)
 
 ### Ajouté
 - Packaging PEP 621 (`pyproject.toml` complet)
-- Entry point `mmu-tui` (console_scripts)
+- **Deux distributions** plutôt qu'une (`EPIC8-ARB-10`) :
+  - `mmu-cli` — le produit et la ligne de commande. Pose la commande `mmu`
+    (`EPIC8-ARB-6` : la commande garde son nom, même si la distribution
+    s'appelle `mmu-cli`) ;
+  - `mmu-tui` — l'interface en terminal, posée par-dessus et **dépendante** de
+    `mmu-cli`. Pose la commande `mmu-tui`.
+- **Licence GPL-3.0-or-later** sur les deux distributions, déclarée en
+  expression SPDX (PEP 639) avec `LICENSE` et `THIRD-PARTY-NOTICES.md` en
+  `license-files`
+- **Une seule source de version** pour les deux distributions,
+  `src/mixed_media_utility/__init__.py`, lue dynamiquement par hatchling
+  (`EPIC8-ARB-10`)
 - Dépendances séparées : `gui`, `dev`, `test`, `full`
 - Documentation MkDocs Material (`docs/`, `mkdocs.yml`)
-- Installation via `pip install mmu-tui`
+- Installation : `pip install mmu-cli` pour la ligne de commande seule,
+  `pip install mmu-tui` pour l'interface en terminal (qui tire `mmu-cli`)
 
 ### Fonctionnalités existantes (déjà dans le dépôt)
 - TUI interactive (textual) : projets, rushs, lots, scan, calibration

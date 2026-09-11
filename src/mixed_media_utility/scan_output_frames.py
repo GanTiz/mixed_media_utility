@@ -44,7 +44,7 @@ une methode privee liee a une fenetre d'affichage): c'est la **recette** qui
 est reprise, avec la reference croisee ci-dessous pour que les deux ne
 divergent pas en silence.
 
-- damier: `scripts/research/aruco_robustness_experiment.py`, corpus `damier`,
+- damier: `scripts/archive/research/aruco_robustness_experiment.py`, corpus `damier`,
   mesure a 0 faux positif ArUco sur quatre dictionnaires
   (`_bmad-output/test-artifacts/aruco-robustness-results.md`);
 - texte: `cadence_previz.CvWindowSink._draw_text` -- contour noir epais puis

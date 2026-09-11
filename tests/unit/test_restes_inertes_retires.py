@@ -326,10 +326,18 @@ def test_aucun_message_de_migration_n_est_prevu_et_le_motif_est_ecrit():
     # Le dossier existe et porte des documents: sans ce temoin, le balayage ci-dessous
     # serait vert sur un `docs/` absent ou renomme, c'est-a-dire vert en ne lisant rien.
     assert docs.is_dir(), docs
-    assert len(list(docs.glob("*.md"))) > 3, sorted(chemin.name for chemin in docs.glob("*"))
+    # `rglob` et non `glob` depuis le lot 4C du 2026-09-10 : les protocoles de
+    # test manuel sont descendus dans `docs/protocoles/`, et un balayage de la
+    # seule RACINE de `docs/` ne les lisait plus. Il ne restait alors que deux
+    # documents a la racine -- le temoin de vivacite ci-dessous l'a dit en
+    # rougissant, ce pour quoi il existe. Balayer tout `docs/` mesure ce que ce
+    # test a toujours voulu mesurer : que le drapeau retire n'est documente
+    # NULLE PART, pas seulement a la racine.
+    assert len(list(docs.rglob("*.md"))) > 3, sorted(
+        chemin.name for chemin in docs.rglob("*"))
     fautifs = [
-        f"{chemin.name}:{numero}"
-        for chemin in sorted(docs.glob("*.md"))
+        f"{chemin.relative_to(docs)}:{numero}"
+        for chemin in sorted(docs.rglob("*.md"))
         for numero, ligne in enumerate(
             chemin.read_text(encoding="utf-8").splitlines(), start=1)
         if _MOTIF_DRAPEAU in ligne

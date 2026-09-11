@@ -146,7 +146,7 @@ DOCUMENTS_TENUS: tuple[str, ...] = (
     "guide-utilisateur/cli.md",
     "guide-utilisateur/tui.md",
     "guide-developpeur/architecture.md",
-    "test-chaine-scan-epic5.md",
+    "protocoles/test-chaine-scan-epic5.md",
     "reference/commandes.md",
     "reference/configuration.md",
 )
@@ -160,12 +160,17 @@ DOCUMENTS_TENUS: tuple[str, ...] = (
 #: `test_la_DETTE_est_encore_reelle` les rendra rouges quand ils seront
 #: corriges -- ce qui force a les promouvoir dans `DOCUMENTS_TENUS` au lieu de
 #: laisser la dette verte pour toujours.
+#: **Deux entrees retirees le 2026-09-10 (lot 4C), et c'est la liste qui se
+#: VIDE comme elle etait faite pour le faire.** `USAGE.md` et `HELP_MENU.md`
+#: etaient les deux manuels de la periode POC. Ils n'ont pas ete corriges : ils
+#: ont ete RETIRES de `docs/`, leur contenu encore vrai etant deja porte par
+#: `reference/commandes.md` (profils, resolutions, `--accept-incomplete-lot`).
+#: `HELP_MENU.md` est archive sous
+#: `_bmad-output/implementation-artifacts/archives-documentation/`, hors du
+#: depot public. Une dette qui disparait avec son document est une dette
+#: eteinte, pas une dette oubliee.
 DETTE_HORS_LOT: dict[str, str] = {
-    "USAGE.md": "manuel de la periode POC : `extract-frames`, `gen-gabarit`, "
-                "`apply-calibration`, sous-commandes qui n'existent plus",
-    "HELP_MENU.md": "menu d'aide de la periode POC : `extract-frames`, "
-                    "`gen-gabarit`",
-    "test-atelier-extraction-tui.md":
+    "protocoles/test-atelier-extraction-tui.md":
         "TROUVE PAR CETTE FRONTIERE le 2026-09-04, et ce n'est pas un reste de "
         "renommage : la commande y est ecrite `--projet` (avec un E) et "
         "`--rush`, la ou `extract` attend `--project` et `--video`. Un lecteur "

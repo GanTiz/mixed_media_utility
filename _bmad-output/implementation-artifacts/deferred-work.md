@@ -21587,6 +21587,134 @@ particulier. `0.1.0` sans `v`, `v0.1` tronqué, un tag posé sur le mauvais
 commit : aucun ne produit de signal non plus. Une garde qui *nomme* le tag
 refusé les attrape tous ; l'élargissement du motif n'en attrape qu'un.
 
+---
+
+## 2026-09-10 — trois findings du lot 4C (rangement de `docs/`), non actionnables sans élargir le scope
+
+**Origine.** Lot 4C du chantier de nettoyage : retourner la garde du `nav` et
+ranger `docs/`. Les trois findings ci-dessous ont été **mesurés** pendant ce
+lot et **refusés** plutôt qu'absorbés — élargir le scope d'un lot pour avaler
+un finding est exactement ce que `CLAUDE.md` interdit.
+
+### `4C-N1` — les deux derniers noms `MAJUSCULES.md` de `docs/`, et pourquoi ils n'ont PAS été renommés
+
+Le lot a tranché pour le **kebab-minuscules**. Sept des neuf fichiers
+`MAJUSCULES.md` de `docs/` ont quitté le dossier (suppression ou archivage), ce
+qui règle leur cas sans renommage. Restent deux, **non renommés délibérément** :
+
+| fichier | occurrences | fichiers citants | dont `tests/` | dont `src/` |
+|---|---|---|---|---|
+| `docs/guide-developpeur/DESIGN.md` | **890** | 322 | 115 | 92 |
+| `docs/guide-developpeur/ARCHITECTURE_DETAILED.md` | **215** | 111 | 13 | 30 |
+
+Ce ne sont pas des documents, ce sont des **sources de vérité** que le code et
+les bancs citent nommément. Un renommage est un diff transverse à `src/` et
+`tests/` au moment où **deux autres agents travaillent la même branche** — le
+coût n'est pas le renommage, c'est le conflit qu'il garantit. À faire dans un
+lot dédié, branche calme, ou jamais.
+
+### `4C-N2` — `ARCHITECTURE_DETAILED.md` cite `ARCHITECTURE.md`, qui n'existe pas
+
+`docs/guide-developpeur/ARCHITECTURE_DETAILED.md`, ligne 301 :
+
+> **Rectificatif 2026-08-02 (code review story 4.3).** Voir ARCHITECTURE.md section 7
+
+`docs/ARCHITECTURE.md` **n'a jamais existé dans le dépôt**. C'est la même cible
+morte qui a fait supprimer `docs/README.md` dans ce lot : le renvoi survit donc
+à un second endroit. Non corrigé ici parce que la cible de remplacement est un
+**arbitrage de contenu** (quelle section, de quel document, remplace la
+« section 7 » d'un fichier qui n'a jamais existé) et non un geste mécanique.
+
+### `4C-N3` — quatre liens morts dans `DESIGN.md` vers un dossier `mockups/` absent
+
+Balayage de tous les liens Markdown relatifs de `docs/` et du `README.md` :
+quatre cassés, **tous préexistants** et tous dans le même fichier —
+`docs/guide-developpeur/DESIGN.md` pointe `mockups/key-chutier.html`,
+`mockups/key-scan-mode-pdf.html`, `mockups/key-atelier-pdf.html` et
+`mockups/key-mode-lecteur.html`. `docs/guide-developpeur/mockups/` n'existe pas.
+
+Ils échappent à `test_aucun_lien_interne_casse` parce que cette frontière ne
+balaie que `PERIMETRE`, et `DESIGN.md` n'y est pas (c'est de la doc
+développeur). **Le geste qui les attraperait** est d'étendre ce balayage à tout
+`docs/`, sur le modèle de la garde retournée par ce lot — mais il ferait rougir
+`DESIGN.md`, fichier à 890 citations qu'on ne touche pas en fin de chantier.
+
+### `REL-N1` — `jusqu_au_resultat` rend parfois l'écran PRÉCÉDENT (course TUI)
+
+Vu le **2026-09-10**, sur la CI publique du dépôt de distribution, run 17
+tentative 1, ref `main` = `a30c018` :
+
+```
+FAILED tests/unit/tui/test_suites_qui_ouvrent_leur_atelier.py::
+       test_composer_les_planches_OUVRE_L_ATELIER_PDF_sur_les_lots_ecrits
+E   AttributeError: 'EcranExecution' object has no attribute 'suites'
+```
+
+`fabriques_extraction.jusqu_au_resultat` a rendu un **`EcranExecution`** là où
+`choisir` attend un `EcranResultat` : l'application n'avait pas fini de
+basculer d'écran quand la fabrique a rendu la main. L'attente ne tient donc pas
+sous charge.
+
+**Pourquoi c'est une course et non un défaut de correction**, mesuré des deux
+côtés : le même commit rend **vert** en Python 3.12 et 3.13, et le même test
+était vert au run précédent sur un arbre au `src/` identique. Il est repassé
+vert au rejeu, seul, sans qu'une ligne change.
+
+**Ce que ça coûte de le laisser** : une release sur deux peut rougir sur un
+test sans rapport avec ce qu'elle publie, et chaque rouge de release coûtait
+jusqu'ici une chirurgie de tag. C'est exactement la classe de nuisance que le
+chantier de publication du jour cherche à éteindre.
+
+**Ce qui n'est pas fait, et pourquoi** : corriger l'attente demande de lire la
+fabrique TUI et de décider ce qu'elle doit attendre — l'écran cible plutôt
+qu'un `pause()` — ce qui est un geste de conception, pas mécanique. Sorti du
+lot pour ne pas élargir un chantier de publication à la TUI.
+
+> **Consigné plutôt qu'enterré.** Un rouge qu'on rejoue jusqu'à ce qu'il passe
+> sans l'écrire nulle part est un rouge perdu — et « flake » n'est pas une
+> cause racine. La relance unique que la doctrine autorise a été dépensée ici,
+> le 2026-09-10 ; la prochaine occurrence n'y aura pas droit.
+
+### `REL-N2` — la frontière du tronc public ne voit pas un banc qui DÉTECTE l'absence sans planter
+
+`tests/unit/test_le_tronc_public_collecte.py::test_les_bancs_qui_LISENT_l_arbre_public_y_PASSENT`
+attrape un banc publié privé de son sujet **quand il plante à l'ouverture**.
+Campagne du 2026-09-10, trois mutants sur les trois familles de la liste
+blanche :
+
+| mutant : fichier retiré de `SCRIPTS_PORTES` | verdict |
+|---|---|
+| `scripts/research/qr_feasibility_experiment.py` | **mort**, en nommant le fichier |
+| `scripts/mesure/mesure.py` | **mort**, en nommant le fichier |
+| `scripts/bac-a-sable/README.md` | **SURVIVANT** |
+
+**Pourquoi le troisième survit.** `test_documentation_utilisateur` ne plante
+pas sur un `open()` : il **balaie** les liens du README et rapporte « liens
+internes cassés » en `AssertionError`. Aucune exception de fichier manquant,
+donc rien à attraper pour un discriminant qui lit les exceptions.
+
+Autrement dit : **un banc peut s'apercevoir de l'absence de son sujet sans
+crasher dessus**, et chercher l'exception revient à deviner le mécanisme au
+lieu de mesurer le fait.
+
+**Ce qui a été essayé et retiré**, parce que le coût dépassait le gain :
+généraliser à « tout chemin suivi, nommé dans la sortie d'échec, absent de
+l'arbre construit ». Mesuré — le **témoin rougit** sur un arbre sain, des
+chemins délibérément privés étant nommés en prose dans des sorties d'échec
+d'environnement. La garde redevenait inutile par l'autre bout. Revert.
+
+**Ce que ça coûte de le laisser** : cette famille-là de défaut n'est vue que
+par la CI publique, pas avant la poussée de `main`. Ce n'est pas rien, mais ce
+n'est plus une release perdue — la CI publique sur `main` est gratuite et
+tourne avant tout tag.
+
+> **Six rédactions, six fois détrompé par la mutation, jamais par la
+> relecture.** Le journal complet des six est dans les messages de commit de
+> `tests/unit/test_le_tronc_public_collecte.py` du 2026-09-10 : contrat vacant
+> (ligne de résumé tronquée par pytest), contrat trop large (arbre non-git),
+> tri qui prenait les bancs produit, tri qui cherchait `scripts/` là où les
+> bancs écrivent `"scripts"`, banc forcé malgré le `conftest` qui l'écarte, et
+> enfin cette généralisation de trop.
 
 ## 2026-09-09 -- tolerances documentees de la revue en trois couches des stories 5.30 et 5.31
 

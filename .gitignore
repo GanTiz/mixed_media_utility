@@ -102,7 +102,12 @@ ipython_config.py
 #   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
 #   This is especially recommended for binary packages to ensure reproducibility, and is more
 #   commonly ignored for libraries.
-# uv.lock
+#   TRANCHE ICI le 2026-09-10 : ce depot declare ses dependances dans
+#   `requirements.txt` et `pyproject.toml`, et `uv` n'apparait dans AUCUN
+#   workflow, AUCUNE page de documentation et AUCUN script. Le `uv.lock`
+#   versionne jusque-la portait TROIS lignes et verrouillait ZERO paquet :
+#   il annoncait une chaine d'outillage qui n'existe pas.
+uv.lock
 
 # poetry
 #   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
@@ -274,3 +279,23 @@ scratchpad/
 # << c est un dossier qui a vocation a rester local, tout fichier qui devra etre
 # partage devra passer par tests/ >>.
 projects/
+
+# --- Residus de racine retires le 2026-09-10 (LOT 4A du nettoyage) ---
+# Trois familles mesurees SANS LECTEUR -- zero construction de chemin sur l AST
+# de `tests/`, `src/` et `scripts/`, et zero lecture ailleurs.
+#
+# `temp/` : quatre comptes rendus d experience d aout 2026 plus un brief. Ils
+# ne sont LUS par rien ; ils sont ECRITS par quatre bancs de recherche
+# (`scripts/research/{qr_feasibility_experiment,codec_metadata_experiment,
+# encode_robustness_bench}.py` et la cible de mesure de
+# `build_measurement_target.py`), qui les REGENERENT a la demande. C est donc
+# exactement le cas de `projects/` : une sortie locale, pas une source. Les
+# stories qui les citent (4.3, 4.6, 6.0, 6.3) citent une PROVENANCE, et leurs
+# chiffres sont deja repris dans les stories elles-memes.
+temp/
+#
+# `.serena/` : configuration d un serveur LSP tiers, entree le 2026-08-17 par
+# un commit tiers, hors perimetre de la story 5.22 qui l a subie (finding
+# `[Review][Defer]` de cette story, et question ouverte de `deferred-work.md`).
+# Le retrait tranche cette question : outillage d un poste, pas du depot.
+.serena/

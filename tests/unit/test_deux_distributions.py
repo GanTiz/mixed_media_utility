@@ -327,13 +327,43 @@ def test_les_deux_pyproject_LISENT_la_version_au_lieu_de_la_recopier():
     Sans ce volet, les deux fichiers pourraient revenir a un `version = "..."`
     litteral et s'accorder par hasard le jour de la mesure.
     """
-    for chemin, remontee in ((PYPROJECT_CLI, ""), (PYPROJECT_TUI, "../../")):
+    for chemin in (PYPROJECT_CLI, PYPROJECT_TUI):
         donnees = tomllib.loads(chemin.read_text(encoding="utf-8"))
         assert donnees["project"].get("dynamic") == ["version"], chemin
         assert "version" not in donnees["project"], (
             f"{chemin} porte encore un litteral de version")
-        assert donnees["tool"]["hatch"]["version"]["path"] == (
-            f"{remontee}src/mixed_media_utility/__init__.py"), chemin
+
+    # LE COEUR lit le fichier directement : sa racine de backend EST celle du
+    # depot, le chemin y vaut tel quel.
+    cli = tomllib.loads(PYPROJECT_CLI.read_text(encoding="utf-8"))
+    assert cli["tool"]["hatch"]["version"]["path"] == (
+        "src/mixed_media_utility/__init__.py"), PYPROJECT_CLI
+
+    # L'INTERFACE passe par un crochet depuis `EPIC8-ARB-21`, et c'est la meme
+    # exigence servie autrement : `[tool.hatch.version] path` ne sait pas etre
+    # conditionnel, or le fichier de version vit en `../../src` dans l'arbre de
+    # travail et en `src/` dans un sdist extrait. Un chemin ecrit en dur valait
+    # dans un contexte et pas dans l'autre -- c'est la moitie « version » de ce
+    # qui forcait la ROUE SEULE.
+    tui = tomllib.loads(PYPROJECT_TUI.read_text(encoding="utf-8"))
+    version_tui = tui["tool"]["hatch"]["version"]
+    assert version_tui.get("source") == "code", (
+        f"{PYPROJECT_TUI} : la version ne passe plus par la source `code`. Si "
+        "elle est revenue a un `path` nu, le sdist ne se construit plus -- "
+        "c'est la panne qu'EPIC8-ARB-21 a fermee")
+    assert version_tui.get("path") == "hatch_build.py", PYPROJECT_TUI
+    assert version_tui.get("expression") == "version_du_coeur()", PYPROJECT_TUI
+
+    # ET LE CROCHET LIT BIEN LA SOURCE UNIQUE. Sans ce volet, `version_du_coeur`
+    # pourrait rendre un litteral et les trois assertions ci-dessus resteraient
+    # vertes : elles mesurent la DECLARATION, pas ce qu'elle appelle.
+    crochet = (PYPROJECT_TUI.parent / "hatch_build.py").read_text(
+        encoding="utf-8")
+    for jeton in ("__version__", "mixed_media_utility", "__init__.py"):
+        assert jeton in crochet, (
+            f"packaging/mmu-tui/hatch_build.py ne nomme plus « {jeton} » : la "
+            "version des deux distributions cesse d'avoir une source unique "
+            "(EPIC8-ARB-10)")
 
 
 def test_l_epinglage_de_mmu_cli_est_STRICT_et_suit_la_source():
@@ -648,50 +678,86 @@ def test_le_texte_juridique_des_deux_distributions_est_IDENTIQUE(nom: str) -> No
         "un texte juridique different de celui du depot")
 
 
-def test_la_distribution_SOURCE_de_mmu_tui_n_est_pas_AUTOPORTANTE(roues):
-    """La limite de la forme `packaging/`, MESUREE plutot que decouverte a la
-    publication.
+def test_la_distribution_SOURCE_de_mmu_tui_est_AUTOPORTANTE(roues):
+    """LA LIMITE S'EST REFERMEE le 2026-09-10, et ce banc s'inverse avec elle.
 
-    L'arbre de construction de `mmu-tui` est `packaging/mmu-tui/`, et son
-    contenu vit deux crans plus haut : le `force-include` et le
-    `[tool.hatch.version]` remontent tous deux en `../../`. Ces chemins n'ont
-    aucun sens dans une sdist extraite, ou il n'y a pas de `../..`. Mesure du
-    2026-09-07 : la sdist de `mmu-tui` porte SIX entrees -- pyproject, les deux
-    textes juridiques, le README, `.gitignore`, `PKG-INFO` -- et pas une ligne
-    de `mixed_media_utility/`.
+    Sa redaction precedente epinglait l'etat inverse -- « la sdist de mmu-tui
+    porte SIX entrees et pas une ligne de `mixed_media_utility/` » -- en
+    annoncant : « le jour ou l'une des deux issues est jouee, ce test rougit et
+    se retire, ce qui est le but ; une limite qui se referme doit se constater,
+    pas se perimer en silence. » C'est arrive : `EPIC8-ARB-21` a joue la
+    seconde issue. Le banc ne se retire pas, il change de sens.
 
-    **Ce banc epingle cet etat, il ne le benit pas.** Deux issues, jamais un
-    blocage sec, et elles appartiennent a la chaine de publication (story 8.7) :
-    ne publier que la ROUE pour `mmu-tui` (elle est `py3-none-any`, donc
-    universelle), ou construire les deux distributions depuis la RACINE avec un
-    `pyproject.toml` genere. Le jour ou l'une des deux est jouee, ce test rougit
-    et se retire -- ce qui est le but : une limite qui se referme doit se
-    constater, pas se perimer en silence.
+    CE QU'IL MESURE, et pourquoi ce n'est pas le cardinal des entrees. Un sdist
+    qui porte les sources n'est pas encore un sdist qui se CONSTRUIT : c'est
+    exactement la nuance qui a coute la release 0.1.1. On construit donc la
+    roue DEPUIS l'archive extraite, ce que `pip install <sdist>` fait, et on
+    mesure qu'elle porte la meme charge utile que la roue directe.
     """
     interpreteur = _interpreteur_de_construction()
     assert interpreteur, "la fixture `roues` aurait deja saute"
     import tarfile
     import tempfile
+    import zipfile
+
     with tempfile.TemporaryDirectory() as dossier:
+        dossier = Path(dossier)
         resultat = subprocess.run(
             [interpreteur, "-c",
              "import sys\nfrom hatchling.build import build_sdist\n"
-             "sys.stdout.write(build_sdist(sys.argv[1]))", dossier],
-            cwd=PYPROJECT_TUI.parent, capture_output=True, text=True, check=False)
+             "sys.stdout.write(build_sdist(sys.argv[1]))", str(dossier)],
+            cwd=PYPROJECT_TUI.parent, capture_output=True, text=True,
+            check=False)
         assert resultat.returncode == 0, resultat.stderr
-        archive = Path(dossier) / resultat.stdout.strip()
+        archive = dossier / resultat.stdout.strip()
+
         with tarfile.open(archive) as tar:
             noms = tar.getnames()
             liens = [m.name for m in tar.getmembers() if m.issym() or m.islnk()]
+            extrait = dossier / "extrait"
+            tar.extractall(extrait, filter="data")
 
-    assert not liens, (
-        f"la sdist de mmu-tui porte des liens : {liens}. `pip install` y "
-        "echouerait par LinkOutsideDestinationError.")
-    sources = [n for n in noms if f"/{PAQUET}/" in n]
-    assert not sources, (
-        "la sdist de mmu-tui porte desormais ses sources : la limite s'est "
-        "refermee. Relire la story 8.7 -- la publication peut inclure la "
-        f"sdist, et ce test se retire. Trouve : {sources[:5]}")
+        # 1 -- LES LIENS restent interdits. La panne historique
+        # `LinkOutsideDestinationError` (PEP 706, filtre `data` de tarfile)
+        # passait par la construction du SDIST, que `--wheel` ne faisait plus ;
+        # elle est a nouveau sur le chemin. L'extraction ci-dessus emploie
+        # d'ailleurs le meme filtre que pip : si un lien revenait, elle
+        # leverait ici plutot que chez l'utilisateur.
+        assert not liens, (
+            f"la sdist de mmu-tui porte des liens : {liens}. `pip install` y "
+            "echouerait par LinkOutsideDestinationError.")
+
+        # 2 -- ELLE PORTE SES SOURCES.
+        sources = [n for n in noms if f"/{PAQUET}/" in n and n.endswith(".py")]
+        assert len(sources) > 40, (
+            "la sdist de mmu-tui ne porte plus ses sources : elle est "
+            f"redevenue la coquille qu'EPIC8-ARB-18 dispensait. Trouve "
+            f"{len(sources)} modules, attendu la cinquantaine de `tui/`")
+
+        # 3 -- ET ELLE SE CONSTRUIT. C'est le volet qui manquait : `pip install`
+        # sur un sdist ne deballe pas des fichiers, il rebatit la roue.
+        (racine_extraite,) = [c for c in extrait.iterdir() if c.is_dir()]
+        depuis_le_sdist = dossier / "depuis-le-sdist"
+        depuis_le_sdist.mkdir()
+        resultat = subprocess.run(
+            [interpreteur, "-c", CROCHET_PEP_517, str(depuis_le_sdist)],
+            cwd=racine_extraite, capture_output=True, text=True, check=False)
+        assert resultat.returncode == 0, (
+            "la roue ne se construit pas DEPUIS la sdist -- c'est la panne "
+            "exacte qu'EPIC8-ARB-18 constatait, et que le crochet ferme :\n"
+            + resultat.stderr)
+        roue = depuis_le_sdist / resultat.stdout.strip()
+        modules = [n for n in zipfile.ZipFile(roue).namelist()
+                   if n.endswith(".py")]
+
+    # 4 -- LA MEME CHARGE UTILE QUE LA ROUE DIRECTE. Une roue qui se construit
+    # mais rendrait moins de modules serait une regression silencieuse : elle
+    # s'installerait sans broncher et tomberait a l'import.
+    directe = [n for n in roues[NOM_TUI].namelist() if n.endswith(".py")]
+    assert sorted(modules) == sorted(directe), (
+        "la roue construite DEPUIS la sdist ne porte pas les memes modules que "
+        "la roue directe : "
+        f"{sorted(set(directe) ^ set(modules))[:5]}")
 
 
 # --------------------------------------------------------------------------

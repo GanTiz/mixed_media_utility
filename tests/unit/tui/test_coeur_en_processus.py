@@ -572,7 +572,7 @@ CHANGEMENTS_ACCEPTES: dict[str, str] = {
         "(`test_l_avance_PAR_DEFAUT_ne_couvre_plus_la_touche_de_boucle`, avec "
         "son volet symetrique : une touche restee non liee avance toujours). "
         "22 mutants injectes en worktree isole "
-        "(`scripts/mutation/campagne_11_4_lot_k2.py`).",
+        "(`scripts/archive/mutation/campagne_11_4_lot_k2.py`).",
     "src/mixed_media_utility/extraction.py":
         "story 11.4, lot B3 (`EPIC11-ARB-75`) : AJOUT PUR. Le module accueille "
         "les cinq codes de sortie d'`extract` (`CODE_SUCCES`, `CODE_ERREUR`, "

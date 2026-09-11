@@ -1288,7 +1288,7 @@ PLAUSIBLE_RANGE = (0.01, 1.0)
 #: que `SENTINEL_DISCRIMINATION_FACTOR` fois le bruit de mesure ne sont pas
 #: distinguables par cette mesure, ce qui est exactement ce que la regle de lecture de
 #: 5.9 demande de constater. Valeur reprise du banc de terrain
-#: (`scripts/research/patch_delta_e_field_measurement.py`), qui a produit les verdicts
+#: (`scripts/archive/research/patch_delta_e_field_measurement.py`), qui a produit les verdicts
 #: publies dans `analyse-2026-08-10-campagne-terrain.md`: le code et le banc doivent
 #: rendre le **meme** verdict sur les memes donnees, sinon le depot porte deux verites.
 SENTINEL_DISCRIMINATION_FACTOR = 2.0

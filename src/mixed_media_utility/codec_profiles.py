@@ -517,7 +517,7 @@ def validate_timecode(timecode: str, fps: float | int | str | Fraction) -> str:
 #
 # Tout ce qui suit est commente en francais (regle du CLAUDE.md du 2026-08-08)
 # et les mesures citees ont ete rejouees le 2026-08-10 avec ffmpeg/ffprobe
-# 6.1.1-3ubuntu5, par le banc `scripts/research/encode_robustness_bench.py`.
+# 6.1.1-3ubuntu5, par le banc `scripts/archive/research/encode_robustness_bench.py`.
 # ---------------------------------------------------------------------------
 
 
@@ -1725,7 +1725,7 @@ def build_encode_command(
 
     **``overwrite`` est un mecanisme, pas un commentaire.** Cette fonction est
     publique, la story la cite partout, et un script du depot lui passait deja un
-    **vrai** chemin de sortie (`scripts/research/codec_metadata_experiment.py`):
+    **vrai** chemin de sortie (`scripts/archive/research/codec_metadata_experiment.py`):
     l'hypothese "l'appelant vient de forger ce chemin, ce n'est jamais le
     master" etait donc **deja violee**, dans une story dont le sujet est
     precisement qu'une hypothese non verifiee detruit un master. Deux gestes,

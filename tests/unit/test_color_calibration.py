@@ -1474,7 +1474,7 @@ def test_agregation_declaree_moyenne_sur_le_carre_et_maximum_entre_repliques():
 # ne sont pas ici: `tests/fixtures/` ne porte que des actifs binaires reels dans ce
 # depot, et les trois captures pesent 408 Mo.
 #
-# Extraction reproductible: `scripts/research/lattice_from_real_scans.py`, qui enchaine
+# Extraction reproductible: `scripts/archive/research/lattice_from_real_scans.py`, qui enchaine
 # `scan_ingest.ingest_scan_lot`, `scan_detection.detect_lot_pages`,
 # `scan_crop.warp_detected_page`, `patch_presets.resolve_calibration_page_patches` et
 # `color_calibration.sample_patches` -- le meme chemin que la production, pas un second.

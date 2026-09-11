@@ -441,14 +441,238 @@ def test_aucun_lien_interne_casse():
     assert not casses, ("Liens internes casses :\n" + "\n".join(casses))
 
 
-def test_toute_page_du_perimetre_est_dans_le_nav_de_mkdocs():
-    """POSITIVE. Une page hors du `nav` n'est atteignable par personne."""
+#: Les pages de `docs/` qui ne sont **pas** dans le `nav`, avec leur MOTIF.
+#:
+#: Le lot 4C du 2026-09-10 a retourne la garde qui vivait ici. L'ancienne
+#: verifiait que les douze pages de `PERIMETRE` -- une liste ECRITE A LA MAIN --
+#: etaient dans le `nav`. Elle ne pouvait donc **structurellement** pas voir un
+#: orphelin : une page absente de `PERIMETRE` et absente du `nav` la laissait
+#: verte. Mesure du jour : **quinze** des trente-quatre documents de `docs/`
+#: n'etaient references par aucune entree de `mkdocs.yml`, et la garde etait
+#: verte sur les quinze.
+#:
+#: Le sens est donc inverse : on part de ce que le DISQUE porte, pas d'une
+#: liste. Toute page `.md` de `docs/` est dans le `nav`, ou bien elle est ici
+#: avec la raison de n'y pas etre. Une page neuve qui n'est ni l'un ni l'autre
+#: fait rougir -- c'est le cas qu'aucune liste ecrite a la main n'attrape.
+#:
+#: Ce que cette liste COUTE, dit plutot que tu : ce qui y entre part quand meme
+#: au depot public, `docs/` etant porte EN ENTIER par `PORTES_A_LA_RACINE` de
+#: `scripts/depot_public.py`. Elle dispense du `nav`, jamais de la publication.
+HORS_NAV: dict[str, str] = {
+    "protocoles/test-atelier-extraction-tui.md":
+        "protocole de test MANUEL. Il s'adresse a qui a le depot sous les yeux "
+        "et peut verifier, pas a un visiteur du site. Cite `--projet` et "
+        "`--rush` la ou `extract` attend `--project` et `--video` : dette "
+        "connue, portee par `DETTE_HORS_LOT` de "
+        "`test_conformite_de_la_documentation.py`.",
+    "protocoles/test-chaine-complete-avec-calibration.md":
+        "protocole de test MANUEL de la chaine extract -> makepdf -> scan -> "
+        "encode, amende le 2026-08-17. C'est la redaction FAISANT FOI : le "
+        "quasi-doublon `testchainecompleteaveccalibration.md` a ete retire le "
+        "2026-09-10.",
+    "protocoles/test-chaine-extract-makepdf.md":
+        "protocole de test MANUEL extract -> makepdf (Epics 3 et 4).",
+    "protocoles/test-chaine-scan-epic5.md":
+        "protocole de test MANUEL de la commande `scan` (Epic 5), de la "
+        "planche imprimee au manifest mis a jour. Tenu par "
+        "`DOCUMENTS_TENUS` de `test_conformite_de_la_documentation.py`.",
+    "protocoles/test-interface-graphique.md":
+        "protocole de test MANUEL de l'interface graphique.",
+}
+
+
+def _pages_de_docs(racine: Path = None) -> list[str]:
+    """Toute page `.md` que `docs/` PORTE, en chemin relatif a `docs/`.
+
+    On part du disque, jamais d'une liste : c'est tout le sens du retournement
+    du 2026-09-10. Une liste ecrite a la main ne voit que ce qu'on y a mis.
+    """
+    racine = (RACINE / "docs") if racine is None else racine
+    return sorted(chemin.relative_to(racine).as_posix()
+                  for chemin in racine.rglob("*.md"))
+
+
+def test_toute_page_de_docs_est_dans_le_NAV_ou_declaree_HORS_NAV():
+    """La garde RETOURNEE. Une page hors du `nav` n'est atteignable par personne.
+
+    L'ancienne redaction partait de `PERIMETRE` et ne pouvait pas voir un
+    orphelin. Celle-ci part de `docs/` : ce que le disque porte doit etre
+    atteignable, ou bien declare et MOTIVE.
+    """
     nav = (RACINE / "mkdocs.yml").read_text(encoding="utf-8")
-    hors_nav = [page for page in PERIMETRE
-                if page.startswith("docs/")
-                and page[len("docs/"):] not in nav]
-    assert not hors_nav, ("Pages absentes du nav de mkdocs.yml : "
-                          + ", ".join(hors_nav))
+    orphelines = [page for page in _pages_de_docs()
+                  if page not in nav and page not in HORS_NAV]
+    assert orphelines == [], (
+        "Ces pages de `docs/` ne sont ni dans le `nav` de `mkdocs.yml` ni "
+        "declarees dans `HORS_NAV` : elles partent au depot public sans que "
+        "personne puisse les atteindre.\n  " + "\n  ".join(orphelines))
+
+
+def test_FRONTIERE_NEGATIVE_aucune_entree_HORS_NAV_n_est_un_FANTOME():
+    """NEGATIVE. Une dispense qui survit a sa page est une tolerance morte.
+
+    Sans elle, `HORS_NAV` grossirait a chaque retrait et ne se viderait
+    jamais -- exactement le defaut que `DETTE_HORS_LOT` ferme a cote, et pour
+    le meme motif : une liste d'exceptions qui ne se vide pas est une
+    tolerance permanente deguisee.
+    """
+    portees = set(_pages_de_docs())
+    fantomes = sorted(page for page in HORS_NAV if page not in portees)
+    assert fantomes == [], (
+        "Ces entrees de `HORS_NAV` ne designent aucune page existante. La "
+        "page a ete retiree ou renommee : retirer aussi sa dispense.\n  "
+        + "\n  ".join(fantomes))
+
+
+def test_FRONTIERE_NEGATIVE_aucune_page_n_est_a_la_fois_au_NAV_et_HORS_NAV():
+    """NEGATIVE. Les deux etats sont exclusifs, sinon la dispense ment.
+
+    Une page atteignable qui porte quand meme sa dispense laisserait croire
+    qu'elle est hors du site, et la dispense ne rougirait jamais.
+    """
+    nav = (RACINE / "mkdocs.yml").read_text(encoding="utf-8")
+    contradictoires = sorted(page for page in HORS_NAV if page in nav)
+    assert contradictoires == [], (
+        "Ces pages sont dans le `nav` ET declarees `HORS_NAV` : retirer leur "
+        "dispense.\n  " + "\n  ".join(contradictoires))
+
+
+def test_chaque_dispense_HORS_NAV_porte_un_MOTIF_reel():
+    """Une dispense sans motif est un enterrement en silence (`CLAUDE.md`)."""
+    muettes = sorted(page for page, motif in HORS_NAV.items()
+                     if len(motif.strip()) < 30)
+    assert muettes == [], (
+        "Ces dispenses ne disent pas POURQUOI la page est hors du `nav` :\n  "
+        + "\n  ".join(muettes))
+
+
+def test_le_releve_des_pages_de_docs_MESURE_encore_quelque_chose():
+    """Temoin de VIVACITE : un collecteur qui ne lit rien est vert.
+
+    C'est le mode de panne que `CLAUDE.md` nomme (« un compteur qui court
+    n'est pas un producteur vivant »), transpose au balayage d'un dossier :
+    un `rglob` casse rendrait zero page et TOUTES les assertions ci-dessus
+    deviendraient des tautologies.
+    """
+    pages = _pages_de_docs()
+    assert len(pages) >= 20, (
+        f"seulement {len(pages)} pages relevees dans `docs/` : le collecteur "
+        "ne lit plus le dossier.")
+    assert "index.md" in pages, (
+        f"`index.md` est absent du releve : {pages[:5]}...")
+    assert "reference/commandes.md" in pages, (
+        "le collecteur ne descend plus dans les SOUS-DOSSIERS de `docs/`.")
+
+
+def test_le_releve_lit_le_PREMIER_et_le_DERNIER_document(tmp_path):
+    """Regle des fabriques, point 4 : une cible a CHAQUE BORD.
+
+    Un balayage tronque -- un `[:-1]` ou un `[1:]` -- reste vert tant que
+    toutes les cibles sont au milieu. Le corpus temoin est ecrit ICI et
+    traverse par le collecteur : le calculer depuis la sortie du collecteur
+    lui-meme serait tautologique, un `[:-1]` deplacant simplement le bord.
+
+    Les trois pages sont DISTINGUABLES -- trois noms differents, dont un dans
+    un sous-dossier : une troncature ou une permutation ne se voit que si les
+    elements different.
+    """
+    (tmp_path / "a-tete.md").write_text("# tete\n", encoding="utf-8")
+    (tmp_path / "m-milieu").mkdir()
+    (tmp_path / "m-milieu" / "page.md").write_text("# milieu\n",
+                                                   encoding="utf-8")
+    (tmp_path / "z-queue.md").write_text("# queue\n", encoding="utf-8")
+    (tmp_path / "pas-une-page.txt").write_text("ignore\n", encoding="utf-8")
+
+    assert _pages_de_docs(racine=tmp_path) == [
+        "a-tete.md", "m-milieu/page.md", "z-queue.md",
+    ], ("Le collecteur ne rend pas le corpus temoin. Une cible perdue en TETE "
+        "ou en QUEUE est un balayage tronque, pas un detail.")
+
+
+# -- frontiere 3 bis : le changelog suit la version DECLAREE -----------------
+
+def _version_declaree() -> str:
+    """La version que `src/mixed_media_utility/__init__.py` declare.
+
+    C'est la source UNIQUE des deux distributions (`EPIC8-ARB-10`) : les deux
+    `pyproject.toml` la lisent dynamiquement par hatchling. La lire ailleurs
+    serait recopier ce que le paquet calcule.
+    """
+    texte = (RACINE / "src" / "mixed_media_utility" / "__init__.py").read_text(
+        encoding="utf-8")
+    trouve = re.search(r'^__version__\s*=\s*["\']([^"\']+)["\']', texte,
+                       re.MULTILINE)
+    assert trouve, ("`__version__` est introuvable dans `__init__.py` : cette "
+                    "frontiere ne mesure plus rien.")
+    return trouve.group(1)
+
+
+def test_le_changelog_porte_une_entree_pour_la_version_DECLAREE():
+    """Une version publiee sans entree de changelog est une version muette.
+
+    Le defaut mesure le 2026-09-10 : l'entree `0.1.0` annoncait UNE
+    distribution (« Entry point `mmu-tui` », « `pip install mmu-tui` ») alors
+    qu'`EPIC8-ARB-10` en a scinde deux, et ne disait rien de la licence. Une
+    entree fausse est pire qu'absente ; celle-ci mesure au moins qu'elle
+    EXISTE, et les deux frontieres ci-dessous ce qu'elle NOMME.
+    """
+    version = _version_declaree()
+    changelog = (RACINE / "docs" / "changelog.md").read_text(encoding="utf-8")
+    titres = re.findall(r"^##\s+(\S+)", changelog, re.MULTILINE)
+    assert version in titres, (
+        f"`__init__.py` declare la version {version!r}, et `docs/changelog.md` "
+        f"n'en porte aucune entree. Titres trouves : {titres}")
+
+
+def _corps_de_la_version(version: str) -> str:
+    """Le corps de la section `## <version>` du changelog, elle SEULE.
+
+    **Premiere redaction trop faible, tuee par mutation (M11).** Elle cherchait
+    les deux distributions dans le fichier ENTIER : une mention egaree dans la
+    « Roadmap » ou dans les notes de migration la satisfaisait, alors que
+    l'entree de la version publiee, elle, pouvait n'en nommer qu'une. On borne
+    donc la lecture a la section de la version DECLAREE.
+    """
+    changelog = (RACINE / "docs" / "changelog.md").read_text(encoding="utf-8")
+    sections = re.split(r"^##\s+", changelog, flags=re.MULTILINE)
+    for section in sections[1:]:
+        if section.split(maxsplit=1)[0] == version:
+            return section
+    raise AssertionError(
+        f"aucune section `## {version}` dans `docs/changelog.md`.")
+
+
+def test_l_entree_du_changelog_NOMME_les_DEUX_distributions():
+    """`EPIC8-ARB-10` : deux distributions, pas une.
+
+    Un lecteur qui suit un changelog annoncant `pip install mmu-tui` seul
+    n'installe jamais la ligne de commande.
+    """
+    corps = _corps_de_la_version(_version_declaree())
+    for distribution in ("mmu-cli", "mmu-tui"):
+        assert distribution in corps, (
+            f"l'entree de version de `docs/changelog.md` ne nomme pas la "
+            f"distribution {distribution!r}. La scission d'`EPIC8-ARB-10` "
+            "reste invisible a qui lit l'historique des versions.")
+
+
+def test_l_entree_du_changelog_NOMME_la_LICENCE_des_paquets():
+    """La licence est ce qu'un paquet publie porte de plus contraignant.
+
+    Elle est declaree en expression SPDX dans les DEUX `pyproject.toml` ; la
+    frontiere la relit la-bas plutot que de la recopier ici, sinon les deux
+    redactions divergeraient -- ce que `CANONICAL_ID_MAX_LENGTH` a paye trois
+    fois.
+    """
+    licence = _pyproject()["project"]["license"]
+    assert licence == _pyproject_tui()["project"]["license"], (
+        "Les deux distributions ne declarent pas la meme licence : "
+        f"{licence!r} contre {_pyproject_tui()['project']['license']!r}.")
+    corps = _corps_de_la_version(_version_declaree())
+    assert licence in corps, (
+        f"l'entree de version de `docs/changelog.md` ne dit pas que les "
+        f"paquets sont sous {licence!r}.")
 
 
 # -- frontiere 4 : les dependances, DANS LES DEUX SENS -----------------------

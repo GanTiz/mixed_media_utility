@@ -36,16 +36,20 @@ incompréhensible. Le geste complet — installation, sonde de pointeurs, et le
 ### Pourquoi
 Les tests classiques vérifient le comportement ; la mutation vérifie que les tests **détectent** les bugs. Un mutant survivant = un test qui ne verrouille rien.
 
-### Campagnes par story
+### Campagnes par story — **archivées depuis le 2026-09-10**
 
-Chaque story a sa campagne dans `scripts/mutation/` :
-- `campagne_5_10.py`, `campagne_5_15.py`, `campagne_5_16_geometrie.py`…
-- `campagne_6_0.py`, `campagne_6_4.py`…
+Jusqu'au 2026-08-12, chaque story avait sa campagne écrite à la main dans
+`scripts/mutation/`. **mutmut les a remplacées**, et elles sont désormais
+figées sous `scripts/archive/mutation/` :
 
-Lancer une campagne ciblée :
 ```bash
-python -B -u scripts/mutation/campagne_5_16_geometrie.py A C E G
+python -B -u scripts/archive/mutation/campagne_5_16_geometrie.py A C E G
 ```
+
+Chacune hardcode les mutants de **sa** story et son bac à sable : elle se
+relit, elle ne se transpose pas. Pour une campagne **neuve**, on passe par
+mutmut et le harnais courant (ci-dessous), jamais par la copie d'une campagne
+archivée.
 
 ### Config mutmut (`pyproject.toml`)
 
@@ -120,5 +124,5 @@ Voir `test_aucun_test_endormi.py` : collecteur pytest qui échoue si un test est
 
 > Utiliser `nohup` pour campagnes longues :
 > ```bash
-> nohup python -B -u scripts/mutation/campagne_5_16_geometrie.py > run.txt 2>&1 &
+> nohup python -B -u scripts/archive/mutation/campagne_5_16_geometrie.py > run.txt 2>&1 &
 > ```
